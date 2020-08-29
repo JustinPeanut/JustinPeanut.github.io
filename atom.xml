@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-08-29T01:02:22.317Z</updated>
+  <updated>2020-08-29T02:13:41.773Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,16 +21,17 @@
     <link href="http://yoursite.com/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
     <id>http://yoursite.com/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</id>
     <published>2020-08-29T00:21:39.000Z</published>
-    <updated>2020-08-29T01:02:22.317Z</updated>
+    <updated>2020-08-29T02:13:41.773Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;1-哈希&quot;&gt;&lt;a href=&quot;#1-哈希&quot; class=&quot;headerlink&quot; title=&quot;1.哈希&quot;&gt;&lt;/a&gt;1.哈希&lt;/h1&gt;&lt;p&gt;​   </summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;1-哈希&quot;&gt;&lt;a href=&quot;#1-哈希&quot; class=&quot;headerlink&quot; title=&quot;1.哈希&quot;&gt;&lt;/a&gt;1.哈希&lt;/h1&gt;&lt;p&gt;​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。&lt;/p&gt;
+&lt;p&gt;比特币用到了密码学的两个内容：哈希和签名&lt;/p&gt;
+&lt;p&gt;哈希在比特币中：&lt;code&gt;cryptographic hash function&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;它在密码学中要求的两个性质：&lt;/p&gt;
+&lt;p&gt;​    ①&lt;code&gt;collision&lt;/code&gt;（哈希碰撞） 和&lt;code&gt; resistance&lt;/code&gt;：没有什么高效的方法人为的制造哈希碰撞，&lt;/p&gt;
+&lt;p&gt;​        解释为对于一个x，没有什么高效的办法，找到另一个y，使&lt;code&gt;H(x) = H(y)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得&lt;code&gt;H(m) = H(m&amp;#39;)&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。&lt;/p&gt;</summary>
     
     
     
