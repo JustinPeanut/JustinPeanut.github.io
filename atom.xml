@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-08-29T02:13:41.773Z</updated>
+  <updated>2020-08-29T02:48:21.336Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>比特币中的数据结构</title>
+    <link href="http://yoursite.com/2020/08/29/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    <id>http://yoursite.com/2020/08/29/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</id>
+    <published>2020-08-29T02:42:45.000Z</published>
+    <updated>2020-08-29T02:48:21.336Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;比特币中的数据结构&quot;&gt;&lt;a href=&quot;#比特币中的数据结构&quot; class=&quot;headerlink&quot; title=&quot;比特币中的数据结构&quot;&gt;&lt;/a&gt;比特币中的数据结构&lt;/h1&gt;&lt;h2 id=&quot;1-区块链&quot;&gt;&lt;a href=&quot;#1-区块链&quot; class=&quot;headerlink&quot; title=&quot;1.区块链&quot;&gt;&lt;/a&gt;1.区块链&lt;/h2&gt;&lt;p&gt;这里要用到一个重要的概念叫做哈希指针。&lt;/p&gt;
+&lt;p&gt;hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）&lt;/p&gt;
+&lt;p&gt;区块链相比较于普通的链表有何区别？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>密码学基础</title>
