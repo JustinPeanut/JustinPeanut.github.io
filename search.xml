@@ -1,6 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>LOL-show项目工程日志</title>
+    <url>/2020/08/30/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
+<p>如果你想要学习该项目，那么你可以访问我的github！</p>
+<a id="more"></a>
+
+<h1 id="工程结构"><a href="#工程结构" class="headerlink" title="工程结构"></a>工程结构</h1><p><img src="/2020/08/30/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/LOL-show-%E5%B7%A5%E7%A8%8B%E5%9B%BE.png"></p>
+<p>端口号规定：</p>
+<p>eureka:1000</p>
+<p>zuul:80</p>
+<p>mysql:2000</p>
+<p>redis:3000</p>
+<p>hero:4000</p>
+<p>member:5000</p>
+<p>market:6000</p>
+<p>order:7000</p>
+<p>pay:8000</p>
+<h1 id="数据库建表语句"><a href="#数据库建表语句" class="headerlink" title="数据库建表语句"></a>数据库建表语句</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_area(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">area_name <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> lol_area(area_name)</span><br><span class="line"> <span class="keyword">values</span></span><br><span class="line"> (<span class="string">&quot;比尔吉沃特&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;德玛西亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;弗雷尔卓德&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;无畏先锋&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;恕瑞玛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;扭曲丛林&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨龙之巢&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;艾欧尼亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;祖安&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;诺克萨斯&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;班德尔城&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;战争学院&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨神峰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;雷瑟守备&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;钢铁烈阳&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;裁决之地&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;黑色玫瑰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;暗影岛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;均衡教派&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;水晶之痕&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;影流&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;守望之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;征服之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;卡拉曼达&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮城警备&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">table</span> lol_member(</span><br><span class="line"> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"> user_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> role_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> age <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line"> <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line"> phone_num <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> area_id <span class="built_in">int</span>(<span class="number">100</span>),</span><br><span class="line"> primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line"> );</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 用户计划表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_plan(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">plan_date <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">plan_event <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">last_time <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">member_id <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">full_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">nick_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">back_story <span class="built_in">text</span>,</span><br><span class="line">price <span class="keyword">double</span>(<span class="number">5</span>,<span class="number">3</span>),</span><br><span class="line"><span class="comment">-- 英雄类型</span></span><br><span class="line">hero_type_id <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"><span class="comment">-- 英雄页面小图</span></span><br><span class="line">img_small <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_big <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_scot <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_stick <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">text1 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">text2 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 英雄类型表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_type(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄位置表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_position(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">position</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 外键关联表（英雄和位置）</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> position_inner_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">hero_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">position_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h1 id="SpringBoot-pageHelper插件"><a href="#SpringBoot-pageHelper插件" class="headerlink" title="SpringBoot   pageHelper插件"></a>SpringBoot   pageHelper插件</h1><p>添加依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用法：在需要分页的方法中启动分页，需要注意的是，分页的是在开启分页之后的第一个查询语句</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageInfo <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum, Integer pageSize, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(pageNum,pageSize);</span><br><span class="line">        PlanPOExample example = <span class="keyword">new</span> PlanPOExample();</span><br><span class="line">        PlanPOExample.Criteria criteria = example.createCriteria();</span><br><span class="line">        criteria.andMemberIdEqualTo(id);</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        List&lt;PlanPO&gt; planPOList = planPOMapper.selectByExample(example);</span><br><span class="line">        <span class="comment">// 判断结果</span></span><br><span class="line">        <span class="keyword">if</span>(planPOList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnKnowNetWorkException(<span class="string">&quot;没有查询到任何数据，快去添加计划吧！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 结果正确就返回</span></span><br><span class="line">        List&lt;PlanVO&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(PlanPO planPO : planPOList)&#123;</span><br><span class="line">            PlanVO planVO = <span class="keyword">new</span> PlanVO();</span><br><span class="line">            BeanUtils.copyProperties(planPO,planVO);</span><br><span class="line">            list.add(planVO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装PageInfo对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>查询出来的list结果封装到PageInfo实例对象中</p>
+<p>注意的是，在后台远程方法调用的时候，PageInfo的泛型并不是PageInfo&lt;List<xxx>&gt;</xxx></p>
+<p>而是对应的JavaBean类型例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">PageInfo&lt;PlanVO&gt; <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum,Integer pageSize,Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>否则会报一个</p>
+<p>pagehelper 返回前台的json转换异常com.fasterxml.jackson.databind.exc.Mismatch的异常</p>
+<h1 id="使用了layui的日期插件"><a href="#使用了layui的日期插件" class="headerlink" title="使用了layui的日期插件"></a>使用了layui的日期插件</h1><p>点击输入框可以弹出日期选择框，如下图所示效果</p>
+<p><img src="/2020/08/30/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804102439.png"></p>
+<p>加入layui的css样式和js</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;layui/css/layui.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;layui/layui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加日期插件</span></span><br><span class="line">layui.use(<span class="string">&#x27;laydate&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 生成一个日期实例，这个实例变量名自己指定</span></span><br><span class="line">    <span class="keyword">var</span> laydate = layui.laydate;</span><br><span class="line">    <span class="comment">//执行一个laydate实例</span></span><br><span class="line">    laydate.render(&#123;</span><br><span class="line">        <span class="comment">// 指定在哪里生成日期控件</span></span><br><span class="line">        elem: <span class="string">&#x27;#dateText&#x27;</span>, <span class="comment">//指定元素</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用了谷歌Kaptcha-生成验证码插件"><a href="#使用了谷歌Kaptcha-生成验证码插件" class="headerlink" title="使用了谷歌Kaptcha 生成验证码插件"></a>使用了谷歌Kaptcha 生成验证码插件</h1><p>加入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Google Kaptcha --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.penggle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kaptcha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>相关的配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KaptchaConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultKaptcha <span class="title">getDefaultKaptcha</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = <span class="keyword">new</span> com.google.code.kaptcha.impl.DefaultKaptcha();</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 图片边框</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border&quot;</span>, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="comment">// 边框颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border.color&quot;</span>, <span class="string">&quot;105,179,90&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片宽</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.width&quot;</span>, <span class="string">&quot;110&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片高</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.height&quot;</span>, <span class="string">&quot;40&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体大小</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.size&quot;</span>, <span class="string">&quot;30&quot;</span>);</span><br><span class="line">        <span class="comment">// session key</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.session.key&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">// 验证码长度</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.char.length&quot;</span>, <span class="string">&quot;4&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.names&quot;</span>, <span class="string">&quot;宋体,楷体,微软雅黑&quot;</span>);</span><br><span class="line"></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.noise.color&quot;</span>, <span class="string">&quot;35,37,38&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Config config = <span class="keyword">new</span> Config(properties);</span><br><span class="line">        defaultKaptcha.setConfig(config);</span><br><span class="line">        <span class="keyword">return</span> defaultKaptcha;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>controller代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/kaptcha&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCode</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DefaultKaptcha defaultKaptcha;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/defaultKaptcha&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultKaptcha</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] captchaChallengeAsJpeg = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream jpegOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 生产验证码字符串并保存到session中</span></span><br><span class="line">            String createText = defaultKaptcha.createText();</span><br><span class="line">            System.out.println(createText);</span><br><span class="line">            httpServletRequest.getSession().setAttribute(<span class="string">&quot;verificationCode&quot;</span>, createText);</span><br><span class="line">            <span class="comment">// 使用生成的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中</span></span><br><span class="line">            BufferedImage challenge = defaultKaptcha.createImage(createText);</span><br><span class="line">            ImageIO.write(challenge, <span class="string">&quot;jpg&quot;</span>, jpegOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组</span></span><br><span class="line">        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store&quot;</span>);</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);</span><br><span class="line">        httpServletResponse.setDateHeader(<span class="string">&quot;Expires&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        httpServletResponse.setContentType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();</span><br><span class="line">        responseOutputStream.write(captchaChallengeAsJpeg);</span><br><span class="line">        responseOutputStream.flush();</span><br><span class="line">        responseOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前台显示</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;verificationCodeImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/api/kaptcha/defaultKaptcha&quot;</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;看不清？换一张&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>添加点击“看不清？换一张”的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新验证码</span></span><br><span class="line">            $(<span class="string">&quot;#verificationCodeImg&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                $(<span class="built_in">this</span>).hide().attr(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;http://localhost/api/kaptcha/defaultKaptcha?&#x27;</span>).fadeIn();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="/2020/08/30/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804103206.png"></p>
+<h1 id="改变文本输入框获取值"><a href="#改变文本输入框获取值" class="headerlink" title="改变文本输入框获取值"></a>改变文本输入框获取值</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为输入英雄名称的文本框绑定文本改变的事件</span></span><br><span class="line">            $(<span class="string">&quot;.inputSearch&quot;</span>).on(<span class="string">&quot;input&quot;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">let</span> heroName = $(<span class="built_in">this</span>).val()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="mybatis模糊查询的三种方式"><a href="#mybatis模糊查询的三种方式" class="headerlink" title="mybatis模糊查询的三种方式"></a>mybatis模糊查询的三种方式</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,name,age,score from star where name like &quot;%&quot; #&#123;name&#125; &quot;%&quot;</span><br><span class="line"></span><br><span class="line">&lt;!--concat拼接字符串  mysql独有的函数--&gt;</span><br><span class="line">select id,name,age,score from star where name like concat(&quot;%&quot;,#&#123;name&#125;,&quot;%&quot;)</span><br><span class="line"></span><br><span class="line">&lt;!-- 如果传入的参数是简单数据类型，$&#123;&#125;里面必须写value --&gt;</span><br><span class="line">select id,name,age,score from star where name like &quot;%$&#123;value&#125;%&quot;</span><br><span class="line"></span><br><span class="line">作者：叫我不矜持</span><br><span class="line">链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;6d244e194859</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+<h1 id="thymeleaf循环的状态变量"><a href="#thymeleaf循环的状态变量" class="headerlink" title="thymeleaf循环的状态变量"></a>thymeleaf循环的状态变量</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">th:each属性用于迭代循环，语法：th:each&#x3D;&quot;obj,iterStat:$&#123;objList&#125;&quot;</span><br><span class="line">迭代对象可以是Java.util.List,java.util.Map,数组等;</span><br><span class="line">iterStat称作状态变量，属性有：</span><br><span class="line">    index:当前迭代对象的index（从0开始计算）</span><br><span class="line">    count: 当前迭代对象的index(从1开始计算)</span><br><span class="line">    size:被迭代对象的大小</span><br><span class="line">    current:当前迭代变量</span><br><span class="line">    even&#x2F;odd:布尔值，当前循环是否是偶数&#x2F;奇数（从0开始计算）</span><br><span class="line">    first:布尔值，当前循环是否是第一个</span><br><span class="line">    last:布尔值，当前循环是否是最后一个</span><br></pre></td></tr></table></figure>
+
+<h1 id="mysql-根据拼音首字母查询"><a href="#mysql-根据拼音首字母查询" class="headerlink" title="mysql 根据拼音首字母查询"></a>mysql 根据拼音首字母查询</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT id,full_name ,</span><br><span class="line"></span><br><span class="line">ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) AS PY</span><br><span class="line"></span><br><span class="line">FROM lol_hero WHERE ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) &#x3D; &#39;A&#39;</span><br></pre></td></tr></table></figure>
+
+<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>包含第三方jar包的工程的build</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                第三方jar包目录</span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources/lib<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/lib/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/classes/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;maven-compiler-plugin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其余的，如果依赖springboot父工程，加上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果不依赖任何工程，直接打包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn clean install -Dmaven.test.skip=true // 忽略test</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备服务器环境"><a href="#准备服务器环境" class="headerlink" title="准备服务器环境"></a>准备服务器环境</h2><p>安装jdk</p>
+<p>在/etc/profile文件的最后配置java环境</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/sorftware/jdk1.8.0_251</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export JAVA_HOME PATH</span><br></pre></td></tr></table></figure>
+
+<p>安装mysql</p>
+<p><a href="https://www.cnblogs.com/cannel/p/11104195.html">参考</a></p>
+<p>缺少 libaio</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
+
+<p>修改密码需要设置密码的级别：注意！</p>
+<p>授权远程连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;rootroot&#39; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>微服务远程调用报错找不到主机，因为我的redisServer以及mysqlServer在另一个服务器上，所以consumer想要调用这两个server的服务，必须找到我的另一个服务器，但是我发现服务器的名字没有使用ip地址，所以依照<code>参考</code>的调试最后成功了！</p>
+<p>报错：UnknownHostException</p>
+<p><a href="https://blog.csdn.net/weixin_39032575/article/details/83011334?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考</a></p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC三---协议</title>
+    <url>/2020/08/30/%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><h2 id="1-需要解决的问题"><a href="#1-需要解决的问题" class="headerlink" title="1.需要解决的问题"></a>1.需要解决的问题</h2><p>举个例子，央行可以发行数字货币，每张数字货币上都有央行的私钥的签名</p>
+<a id="more"></a>
+
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810202143.png"></p>
+<p>央行的公钥我们大家都知道，所以我收到一个数字货币，我可以验证一下是不是真的，买东西的时候，我把数字货币发给你，同理你也可以验证确实是央行发行的，这就完成了支付的一个过程。</p>
+<p>这里用到了密码学中的非对称加密体系，但是没有用到区块链，这样会带来什么问题？</p>
+<p>这个数字货币是个文件，我们不能篡改，但是可以复制，可以复制很多份，这和人民币不一样，我把人民币给你了，我就没有人民币了。这就是数字货币和纸质货币的区别</p>
+<p>double spending attack（双花攻击），数字货币面临的一个主要挑战，就是防范double spending attack</p>
+<p>改进的方案：</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810203047.png"></p>
+<p>央行发行的货币，再每个数字货币上添加一个编号，并且在数据库中保存这个编号对应的货币目前在谁手上，收款方不仅验证数字货币的真实性，还需要验证付款方是否合法，央行的 数据库进而修改017对应的数字货币的所有者。</p>
+<p>这样做是没有问题的，但是这是一个中心化的方案，数字货币的发行是由央行统一控制的，而且每次交易也是由央行控制的。</p>
+<p>那么有没有去中心化的方案呢？将央行这个职能，改成由广大用户共同承担，这就是比特币，这个数字货币系统要解决的问题。</p>
+<p>去中心化的货币要解决两个问题：数字货币的发行（没有央行了，都是普通群众，那怎么决定数字货币的发行：什么时候发行，该发行多少）、怎么验证交易的有效性（如何防止double spending attack）</p>
+<p>①谁来发行货币？在比特币系统中，是由挖矿来决定的，这个在后面详细讲</p>
+<p>②如何防止double spending attack：也是维护一个数据结构，检测数字货币有没有花过，被谁花过，只不过这个数据结构不是由央行来维护，而是由所有的用户来维护，这个数据结构就是区块链</p>
+<p>比如用户A，拥有了发行货币的能力</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810204843.png"></p>
+<p><strong>比特币中的交易都包含输入和输出两部分，输入部分说明币的来源，输出部分要给出收款人公钥的哈希</strong></p>
+<p>这里有两个哈希指针，一个哈希指针是用来连接各个区块，把他们串起来构成一个链表，还有一个指针是用来说明币的来源的（用于证明这个数字货币不是凭空捏造的，同时防范double spending attack）</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810205441.png"></p>
+<p>A要给B转钱，需要知道B的地址，这个地址是由B的公钥取哈希，经过一些转换推算得到的，那A要怎么知道B的地址呢？</p>
+<p>比特币系统没有提供一种功能去查询某个指定人的所对应的比特币地址，这个需要其他的渠道来获得</p>
+<p>A要给B转钱，B要知道A的什么信息？币的来源？（B不需要知道，这个其实是A要知道的）</p>
+<p>答案是B要知道A的公钥。B要知道A的身份，好知道这笔钱是哪来的。但是不仅仅是B需要知道A的公钥，所有结点都需要知道A的公钥—-&gt;为了验证A的签名，那问题又来了，怎么知道A的公钥？</p>
+<p>输入当中不仅要说明币的来源，还需要说明A的公钥是什么</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810211410.png"></p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810211619.png"></p>
+<p>在比特币系统中，这些验证的过程，是通过执行脚本来实现的—–&gt;BitCoin Script</p>
+<p>将后面交易的输入的执行脚本和前面交易的输出的执行脚本拼接，如果能顺利执行，那么这个验证就是通过的</p>
+<p>每个区块由block header 和 block body组成</p>
+<p>block header：保存每个区块的一些宏观的信息，包括</p>
+<p>①：用的是比特币哪个版本的协议</p>
+<p>②hash of previous block header：区块中指向前一个区块的指针</p>
+<p><strong>注意：</strong>前一个区块的哈希只算的是区块的块头</p>
+<p>③Merkle root hash：整棵Merkle tree的根哈希值</p>
+<p>④target：挖矿的难度目标阈值</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810213647.png"></p>
+<p>block header存的就是target的一个编码：nBits</p>
+<p>⑤nonce：随机数nonce    </p>
+<p>block body：</p>
+<p>①transaction list：交易列表</p>
+<p>貌似所有的结点都需要验证区块链中的每一个交易</p>
+<p>实际上区块链分为全节点full node 和轻结点light node 两种结点</p>
+<p>full node ：保存所有的信息，验证每一个交易，也叫做fully validating node</p>
+<p>light node：并不参数验证，只是利用区块链的一些信息做一些查询之类的工作</p>
+<p>交易如何写入区块链，按照什么顺序？账本的内容要取得分布式的共识（distributed consensus）</p>
+<p>分布式的共识？举个例子，就是简单的哈希表distributed hash table，就是，一台机器在hash表中插入了一条数据（key-value pair），在别的机器也能查询到。</p>
+<h2 id="2-分布式系统中的结论和协议"><a href="#2-分布式系统中的结论和协议" class="headerlink" title="2.分布式系统中的结论和协议"></a>2.分布式系统中的结论和协议</h2><p>分布式系统有很多的不可能结论impossibility result，最著名的一个叫做FLP impossibility result:</p>
+<p>在一个异步的系统里（asynchronous system），网络传输时延没有上限，即时只有一个成员是有问题的（faulty），也不可能取得共识</p>
+<p>还有一个结论CAP Theorem：</p>
+<p>C：consistency（一致性）   A：Availability（可用性）   P：Partition tolerance（分区容错性）</p>
+<p>任何一个分布式系统CAP三个性质最多只能满足两个，不可能三个性质都满足。</p>
+<p>分布式共识的一个重要协议：Paxos，这个协议能够保证Consistency，如果这个协议达成了共识，那么这个共识一定是一致的，不会说一个成员认为的共识和另外一个成员认为的共识不一样。但是，某些情况下，Paxos协议有可能一直没有办法达成共识，这种可能性在实际系统中是比较小的，但是是客观存在的</p>
+<h2 id="3-比特币系统中的分布式共识协议"><a href="#3-比特币系统中的分布式共识协议" class="headerlink" title="3.比特币系统中的分布式共识协议"></a>3.比特币系统中的分布式共识协议</h2><p>需要解决的问题是，某些节点可能是有恶意的，我们假设系统中大多数节点是好的，如何去设计共识协议？</p>
+<p>一种想法，既然大多数结点是好的，那直接投票行不行，比如说：某一个结点提出一个候选区块，他根据收到的交易信息，选一下那些交易是合法的，然后把这些交易按照某个顺序打包到一个区块里，候选区块发布给所有的结点，每个结点收到这个区块之后，检查这里面的交易是不是都是合法的，如果都是合法的，那么这个结点就投赞成票，如果有个交易是非法的，就投反对票，最后算出得票，如果超过半数，就将这个候选区块正式接受，写道区块链中</p>
+<p>会带来什么问题？</p>
+<p>①某个结点提出候选区块，万一这个节点是有恶意的呢，就不停的产生一些非法的交易让系统一直投票，会阻塞系统的发展</p>
+<p>②并不能强迫每个节点都投票（行政不作为）</p>
+<p>③效率的问题，网络的延迟状况不是很清楚</p>
+<p>最大的问题：所有基于投票的方案，首先要确定谁有投票权（需要有membership）。如果这个系统的membership是有严格定义的，不是谁都可以加入的，比如hyperledger，只有某些符合条件的大公司才能加入，这种情况下，基于投票的方案是可行的。</p>
+<p>但是比特币系统不是这样的，比特币系统中创建一个账户是很容易的，在本地产生一个公私钥对其他人其实都不知道，只有在你和外部交易的时候别人会知道，这种情况下，有恶意的结点，用一台超级计算机，不停的创建账户，当账户超过总数的一半时，就会对投票产生控制权，这种攻击叫做女巫攻击（sybil attack）。</p>
+<p>所以简单的随机投票是不行的</p>
+<p>比特币中采用了一个巧妙地机制来解决这个问题，也是投票，但不是按照账户的数目投票，而是用计算力来投票，每个结点都可以在本地组装出一个候选区块，把他认为合法的交易放在这个区块里，就开始尝试各种nonce值，看那个结点可以满足不等式的要求，求出的hash落在指定的范围之内，如果某个节点找到了符合要求的nonce，我们就说他获得了记账权（向比特币这个去中心化的账本里写入下一个区块的权力），只有这样的结点，才有权力发布下一个区块，其他节点要先验证这个区块的合法性，block header 中的nBits（挖矿的难度要求）是否正确，然后验证nonce，总的来说，就是先查询block header中的各种值，然后验证block body中的交易是否合法（是否有合法的签名、是否被花过）</p>
+<p>有没有可能这个区块的所有内容都符合要求，但是我们仍然不愿意接受他？</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812212804.png"></p>
+<p>分叉攻击，通过像区块链中间插入一个区块，来回滚某个已经发生的交易，但是区块链在正常情况下也会出现分叉，</p>
+<p>如果同时有两个结点获得了记账权，就有可能发生，可能会出现两个等长的分叉</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812213645.png"></p>
+<p>比特币系统中，缺省情况下，每个结点是接受他最早收到的那个，不同的结点在网络中的位置不同，接受的结点可能也不同，什么叫做接受？在接受一个区块之后会向后扩展区块</p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812214435.png"></p>
+<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812214518.png"></p>
+<p>那么为什么要争夺记账权？</p>
+<p>记账的结点可以拥有某些权力，决定那些交易被写到区块链里，但是设计的时候不应该让这个权力称为争夺记账权的主要动力，因为我们希望所有的合法的交易都应该被写进区块链里</p>
+<p>比特币系统规定，获得记账权的哪个结点，在发布的区块里可以有一个特殊的交易，就是铸币交易，可以发布一定数量的比特币。coinbase transaction（交易）</p>
+<p>比特币系统要解决两个问题，一个是谁来决定发行货币，另一个是验证交易的合法性，回过头来说明第一个问题：</p>
+<p>coninbase transaction （交易）是比特币系统中发行货币的唯一方法，其他所有的交易都是把已有的比特币从一个账户转移到另一个账户，coinbase transaction不用指明币的来源，那能铸多少个币呢</p>
+<p>比特币刚上线时，每一个新增的区块可以铸50 BTC，但是每21万个区块之后，这个奖励就要减半，现在的情况就是12.5 BTC</p>
+<p><strong>注意：orphan block中的奖励的比特币就无效了</strong></p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>最后，那么比特币要取得的共识是什么？去中心化账本中的内容要取得共识，只有获得记账权的结点才能往里面写东西，</p>
+<p>我们通过算例来获得记账权，每秒钟能够试多少个nonce的数目（hash rate），hash rate越高，得到出块奖励的概率越大</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC一---密码学基础</title>
     <url>/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
@@ -132,98 +323,6 @@
 <p> 能不能不把某些合法的交易写道区块链里？这是可以的，但是会少交易费，比特币规定某个区块的大小是有限制的，最多不能超过1M字节，某个节点交易太多，这些交易就只能等到下个区块在发布</p>
 <p>selfish mining：在商家等待6个区块的时候，M-&gt;M’先不发布，在私下偷偷的挖矿，但是不发布，等挖矿创建的区块比6个区块多的时候，一下子全部发布，M-&gt;M’这条链就成了最长合法链；正常的情况是，挖到区块，立马发布，要不然就被别人抢了，所以selfish mining有一个前提，恶意的结点的算力要超过诚实的结点的算力，但是是不可能的</p>
 <p>selfish mining还有什么目的，上述是分叉攻击的目的，假设我们能不是为了回滚以前的交易，就是为了正常的挖矿，赚取出块奖励，selfish mining有没有什么好处？减少竞争：别人挖了一个，我已经挖了两个，然后直接抛出去两个,让别人做一些无用功。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC三---协议</title>
-    <url>/2020/08/30/%E5%8D%8F%E8%AE%AE/</url>
-    <content><![CDATA[<h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><h2 id="1-需要解决的问题"><a href="#1-需要解决的问题" class="headerlink" title="1.需要解决的问题"></a>1.需要解决的问题</h2><p>举个例子，央行可以发行数字货币，每张数字货币上都有央行的私钥的签名</p>
-<a id="more"></a>
-
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810202143.png"></p>
-<p>央行的公钥我们大家都知道，所以我收到一个数字货币，我可以验证一下是不是真的，买东西的时候，我把数字货币发给你，同理你也可以验证确实是央行发行的，这就完成了支付的一个过程。</p>
-<p>这里用到了密码学中的非对称加密体系，但是没有用到区块链，这样会带来什么问题？</p>
-<p>这个数字货币是个文件，我们不能篡改，但是可以复制，可以复制很多份，这和人民币不一样，我把人民币给你了，我就没有人民币了。这就是数字货币和纸质货币的区别</p>
-<p>double spending attack（双花攻击），数字货币面临的一个主要挑战，就是防范double spending attack</p>
-<p>改进的方案：</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810203047.png"></p>
-<p>央行发行的货币，再每个数字货币上添加一个编号，并且在数据库中保存这个编号对应的货币目前在谁手上，收款方不仅验证数字货币的真实性，还需要验证付款方是否合法，央行的 数据库进而修改017对应的数字货币的所有者。</p>
-<p>这样做是没有问题的，但是这是一个中心化的方案，数字货币的发行是由央行统一控制的，而且每次交易也是由央行控制的。</p>
-<p>那么有没有去中心化的方案呢？将央行这个职能，改成由广大用户共同承担，这就是比特币，这个数字货币系统要解决的问题。</p>
-<p>去中心化的货币要解决两个问题：数字货币的发行（没有央行了，都是普通群众，那怎么决定数字货币的发行：什么时候发行，该发行多少）、怎么验证交易的有效性（如何防止double spending attack）</p>
-<p>①谁来发行货币？在比特币系统中，是由挖矿来决定的，这个在后面详细讲</p>
-<p>②如何防止double spending attack：也是维护一个数据结构，检测数字货币有没有花过，被谁花过，只不过这个数据结构不是由央行来维护，而是由所有的用户来维护，这个数据结构就是区块链</p>
-<p>比如用户A，拥有了发行货币的能力</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810204843.png"></p>
-<p><strong>比特币中的交易都包含输入和输出两部分，输入部分说明币的来源，输出部分要给出收款人公钥的哈希</strong></p>
-<p>这里有两个哈希指针，一个哈希指针是用来连接各个区块，把他们串起来构成一个链表，还有一个指针是用来说明币的来源的（用于证明这个数字货币不是凭空捏造的，同时防范double spending attack）</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810205441.png"></p>
-<p>A要给B转钱，需要知道B的地址，这个地址是由B的公钥取哈希，经过一些转换推算得到的，那A要怎么知道B的地址呢？</p>
-<p>比特币系统没有提供一种功能去查询某个指定人的所对应的比特币地址，这个需要其他的渠道来获得</p>
-<p>A要给B转钱，B要知道A的什么信息？币的来源？（B不需要知道，这个其实是A要知道的）</p>
-<p>答案是B要知道A的公钥。B要知道A的身份，好知道这笔钱是哪来的。但是不仅仅是B需要知道A的公钥，所有结点都需要知道A的公钥—-&gt;为了验证A的签名，那问题又来了，怎么知道A的公钥？</p>
-<p>输入当中不仅要说明币的来源，还需要说明A的公钥是什么</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810211410.png"></p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810211619.png"></p>
-<p>在比特币系统中，这些验证的过程，是通过执行脚本来实现的—–&gt;BitCoin Script</p>
-<p>将后面交易的输入的执行脚本和前面交易的输出的执行脚本拼接，如果能顺利执行，那么这个验证就是通过的</p>
-<p>每个区块由block header 和 block body组成</p>
-<p>block header：保存每个区块的一些宏观的信息，包括</p>
-<p>①：用的是比特币哪个版本的协议</p>
-<p>②hash of previous block header：区块中指向前一个区块的指针</p>
-<p><strong>注意：</strong>前一个区块的哈希只算的是区块的块头</p>
-<p>③Merkle root hash：整棵Merkle tree的根哈希值</p>
-<p>④target：挖矿的难度目标阈值</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200810213647.png"></p>
-<p>block header存的就是target的一个编码：nBits</p>
-<p>⑤nonce：随机数nonce    </p>
-<p>block body：</p>
-<p>①transaction list：交易列表</p>
-<p>貌似所有的结点都需要验证区块链中的每一个交易</p>
-<p>实际上区块链分为全节点full node 和轻结点light node 两种结点</p>
-<p>full node ：保存所有的信息，验证每一个交易，也叫做fully validating node</p>
-<p>light node：并不参数验证，只是利用区块链的一些信息做一些查询之类的工作</p>
-<p>交易如何写入区块链，按照什么顺序？账本的内容要取得分布式的共识（distributed consensus）</p>
-<p>分布式的共识？举个例子，就是简单的哈希表distributed hash table，就是，一台机器在hash表中插入了一条数据（key-value pair），在别的机器也能查询到。</p>
-<h2 id="2-分布式系统中的结论和协议"><a href="#2-分布式系统中的结论和协议" class="headerlink" title="2.分布式系统中的结论和协议"></a>2.分布式系统中的结论和协议</h2><p>分布式系统有很多的不可能结论impossibility result，最著名的一个叫做FLP impossibility result:</p>
-<p>在一个异步的系统里（asynchronous system），网络传输时延没有上限，即时只有一个成员是有问题的（faulty），也不可能取得共识</p>
-<p>还有一个结论CAP Theorem：</p>
-<p>C：consistency（一致性）   A：Availability（可用性）   P：Partition tolerance（分区容错性）</p>
-<p>任何一个分布式系统CAP三个性质最多只能满足两个，不可能三个性质都满足。</p>
-<p>分布式共识的一个重要协议：Paxos，这个协议能够保证Consistency，如果这个协议达成了共识，那么这个共识一定是一致的，不会说一个成员认为的共识和另外一个成员认为的共识不一样。但是，某些情况下，Paxos协议有可能一直没有办法达成共识，这种可能性在实际系统中是比较小的，但是是客观存在的</p>
-<h2 id="3-比特币系统中的分布式共识协议"><a href="#3-比特币系统中的分布式共识协议" class="headerlink" title="3.比特币系统中的分布式共识协议"></a>3.比特币系统中的分布式共识协议</h2><p>需要解决的问题是，某些节点可能是有恶意的，我们假设系统中大多数节点是好的，如何去设计共识协议？</p>
-<p>一种想法，既然大多数结点是好的，那直接投票行不行，比如说：某一个结点提出一个候选区块，他根据收到的交易信息，选一下那些交易是合法的，然后把这些交易按照某个顺序打包到一个区块里，候选区块发布给所有的结点，每个结点收到这个区块之后，检查这里面的交易是不是都是合法的，如果都是合法的，那么这个结点就投赞成票，如果有个交易是非法的，就投反对票，最后算出得票，如果超过半数，就将这个候选区块正式接受，写道区块链中</p>
-<p>会带来什么问题？</p>
-<p>①某个结点提出候选区块，万一这个节点是有恶意的呢，就不停的产生一些非法的交易让系统一直投票，会阻塞系统的发展</p>
-<p>②并不能强迫每个节点都投票（行政不作为）</p>
-<p>③效率的问题，网络的延迟状况不是很清楚</p>
-<p>最大的问题：所有基于投票的方案，首先要确定谁有投票权（需要有membership）。如果这个系统的membership是有严格定义的，不是谁都可以加入的，比如hyperledger，只有某些符合条件的大公司才能加入，这种情况下，基于投票的方案是可行的。</p>
-<p>但是比特币系统不是这样的，比特币系统中创建一个账户是很容易的，在本地产生一个公私钥对其他人其实都不知道，只有在你和外部交易的时候别人会知道，这种情况下，有恶意的结点，用一台超级计算机，不停的创建账户，当账户超过总数的一半时，就会对投票产生控制权，这种攻击叫做女巫攻击（sybil attack）。</p>
-<p>所以简单的随机投票是不行的</p>
-<p>比特币中采用了一个巧妙地机制来解决这个问题，也是投票，但不是按照账户的数目投票，而是用计算力来投票，每个结点都可以在本地组装出一个候选区块，把他认为合法的交易放在这个区块里，就开始尝试各种nonce值，看那个结点可以满足不等式的要求，求出的hash落在指定的范围之内，如果某个节点找到了符合要求的nonce，我们就说他获得了记账权（向比特币这个去中心化的账本里写入下一个区块的权力），只有这样的结点，才有权力发布下一个区块，其他节点要先验证这个区块的合法性，block header 中的nBits（挖矿的难度要求）是否正确，然后验证nonce，总的来说，就是先查询block header中的各种值，然后验证block body中的交易是否合法（是否有合法的签名、是否被花过）</p>
-<p>有没有可能这个区块的所有内容都符合要求，但是我们仍然不愿意接受他？</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812212804.png"></p>
-<p>分叉攻击，通过像区块链中间插入一个区块，来回滚某个已经发生的交易，但是区块链在正常情况下也会出现分叉，</p>
-<p>如果同时有两个结点获得了记账权，就有可能发生，可能会出现两个等长的分叉</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812213645.png"></p>
-<p>比特币系统中，缺省情况下，每个结点是接受他最早收到的那个，不同的结点在网络中的位置不同，接受的结点可能也不同，什么叫做接受？在接受一个区块之后会向后扩展区块</p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812214435.png"></p>
-<p><img src="/2020/08/30/%E5%8D%8F%E8%AE%AE/QQ%E6%88%AA%E5%9B%BE20200812214518.png"></p>
-<p>那么为什么要争夺记账权？</p>
-<p>记账的结点可以拥有某些权力，决定那些交易被写到区块链里，但是设计的时候不应该让这个权力称为争夺记账权的主要动力，因为我们希望所有的合法的交易都应该被写进区块链里</p>
-<p>比特币系统规定，获得记账权的哪个结点，在发布的区块里可以有一个特殊的交易，就是铸币交易，可以发布一定数量的比特币。coinbase transaction（交易）</p>
-<p>比特币系统要解决两个问题，一个是谁来决定发行货币，另一个是验证交易的合法性，回过头来说明第一个问题：</p>
-<p>coninbase transaction （交易）是比特币系统中发行货币的唯一方法，其他所有的交易都是把已有的比特币从一个账户转移到另一个账户，coinbase transaction不用指明币的来源，那能铸多少个币呢</p>
-<p>比特币刚上线时，每一个新增的区块可以铸50 BTC，但是每21万个区块之后，这个奖励就要减半，现在的情况就是12.5 BTC</p>
-<p><strong>注意：orphan block中的奖励的比特币就无效了</strong></p>
-<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>最后，那么比特币要取得的共识是什么？去中心化账本中的内容要取得共识，只有获得记账权的结点才能往里面写东西，</p>
-<p>我们通过算例来获得记账权，每秒钟能够试多少个nonce的数目（hash rate），hash rate越高，得到出块奖励的概率越大</p>
 ]]></content>
       <categories>
         <category>区块链</category>
