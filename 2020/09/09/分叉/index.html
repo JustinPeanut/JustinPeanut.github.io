@@ -21,32 +21,27 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="挖矿难度为什么要调整挖矿难度调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例 比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。">
+  <meta name="description" content="分叉fork:原来是一条链，现在是两条链形成了分叉。有两种情况： ①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。 ②比特币的协议发生了改变，要修改比特币的协议，需">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BTC六---挖矿难度">
-<meta property="og:url" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/index.html">
+<meta property="og:title" content="分叉">
+<meta property="og:url" content="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/index.html">
 <meta property="og:site_name" content="Blog of DengFeng">
-<meta property="og:description" content="挖矿难度为什么要调整挖矿难度调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例 比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。">
+<meta property="og:description" content="分叉fork:原来是一条链，现在是两条链形成了分叉。有两种情况： ①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。 ②比特币的协议发生了改变，要修改比特币的协议，需">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png">
-<meta property="article:published_time" content="2020-08-30T02:40:19.000Z">
-<meta property="article:modified_time" content="2020-08-30T02:53:27.254Z">
+<meta property="og:image" content="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907211038.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212426.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212813.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907214138.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200909193415.png">
+<meta property="article:published_time" content="2020-09-09T12:21:04.000Z">
+<meta property="article:modified_time" content="2020-09-09T12:24:47.499Z">
 <meta property="article:author" content="Deng Feng">
 <meta property="article:tag" content="区块链">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907211038.png">
 
 
-<link rel="canonical" href="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/">
+<link rel="canonical" href="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/">
 
 
 <script class="page-configurations">
@@ -59,7 +54,7 @@
   };
 </script>
 
-  <title>BTC六---挖矿难度 | Blog of DengFeng</title>
+  <title>分叉 | Blog of DengFeng</title>
   
 
 
@@ -222,7 +217,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">挖矿难度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%B0%83%E6%95%B4%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要调整挖矿难度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%B4%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">如何调整挖矿难度</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%8F%89"><span class="nav-number">1.</span> <span class="nav-text">分叉</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hard-fork"><span class="nav-number">1.1.</span> <span class="nav-text">hard fork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#soft-fork"><span class="nav-number">1.2.</span> <span class="nav-text">soft fork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -300,7 +295,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/09/%E5%88%86%E5%8F%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpg">
@@ -316,7 +311,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          BTC六---挖矿难度
+          分叉
         </h1>
 
         <div class="post-meta-container">
@@ -328,7 +323,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2020-08-30 10:40:19 / 修改时间：10:53:27" itemprop="dateCreated datePublished" datetime="2020-08-30T10:40:19+08:00">2020-08-30</time>
+      <time title="创建时间：2020-09-09 20:21:04 / 修改时间：20:24:47" itemprop="dateCreated datePublished" datetime="2020-09-09T20:21:04+08:00">2020-09-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -356,8 +351,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/09/09/%E5%88%86%E5%8F%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/09/%E5%88%86%E5%8F%89/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -369,14 +364,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1k</span>
+      <span>2.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -387,37 +382,52 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
-<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
+        <h1 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h1><p>fork:原来是一条链，现在是两条链形成了分叉。有两种情况：</p>
+<p>①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。</p>
+<p>②比特币的协议发生了改变，要修改比特币的协议，需要软件升级，在一个去中心化的系统里，在升级软件的时候，没有办法保证所有的结点同时都升级软件，我们假设大部分结点升级了软件，少数结点因为种种原因没有升级，有可能还没有来的及升级，也可能是不同意这个协议的修改，这种分叉叫做protocol fork，因为对比特币的协议产生了分歧，因为使用不同的协议造成了分叉。</p>
 <a id="more"></a>
 
-<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
-<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
-<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
-<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
-<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
-<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
-<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
-<p>调整的公式：</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
-<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
-<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
-<p><code>比特币系统中总算力的变化情况</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
-<p><code>算力难度的增长情况</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
-<p>符合难度调整的设计目标</p>
-<p><code>难度调整曲线</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
-<p>说明挖矿的人越来越多，设备越来越先进</p>
-<p><code>每天的出块时间</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
-<p><code>最近半年的出块事件</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
+<blockquote>
+<p>可以根据对协议修改的内容的不同，分为硬分叉（hard fork）和软分叉（soft fork）</p>
+</blockquote>
+<p>什么是硬分叉？什么是软分叉？</p>
+<h2 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h2><p>出现硬分叉的情况，如果对比特币协议增加新的特性，有一些new feature，这些没有升级软件的那些旧的节点，他是不认可这些新特性的，他认为这些new feature是不合法的。这个时候就属于我们对比特币协议的内容产生了意见分歧，就会导致分叉。一个例子就是：比特币中的区块大小限制（block size limit）。</p>
+<blockquote>
+<p>比特币规定每个区块是1M字节，有些人认为1M这个限制太小了，增加了比特币的延迟。</p>
+<p>一个交易差不多可以认为是250个字节，所以1000000字节大概是4000个交易左右，平均十分钟一个区块，算下来大概是每秒钟七笔交易</p>
+<p><img src="/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907211038.png"></p>
+<p>我们用信用卡处理交易和这个完全不是一个数量级的，很多电商网站很多都不止这些，所以有的人认为这个区块太小了，限制了比特币的throw put（不知道老师是不是说的这个），同时也增加了延迟，因为你区块就只能装这么多区块，如果交易太多了的话，那可能有些交易，就得等到下一个区块才能被发布，平均要等十分钟</p>
+</blockquote>
+<p>我们假设有人发布了软件更新，把这个block size limit从1M增加到了4M（大多数结点更新了这个软件，少数节点没有更新【这里所说的节点数目不是按照账户的数目来算的，是按照算力的多少来算的】），这个时候系统运行起来会有什么结果？</p>
+<p><img src="/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212426.png"></p>
+<p>备注：图中的解释有错误，应该是新产生的区块，旧结点不认可</p>
+<p><img src="/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212813.png"></p>
+<p>备注：图中的“就”为“旧”</p>
+<p>只要这些旧结点不更新软件，分叉就不会消失，这就是为什么管他叫硬分叉（hard fork）。</p>
+<p>比特币社区中，有些人是比较保守的，像这种block size limit这种new feature，有些人真的是不会同意，而且，区块的大小不是越大越好（详情看比特币网络）。</p>
+<p>如果存在了硬分叉，那么下面的那一条链的出块奖励还有吗？</p>
+<blockquote>
+<p>是有的（在各自的链上是承认的），会造成社区的分裂，如果一直存在下去，就会分家了，相当于变成了两种币，原来没有分裂的币，应该变成上下两条链都认可。</p>
+<p><img src="/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907214138.png"></p>
+<p>后来有了一个措施：在各自的链上加上一个chain ID</p>
+</blockquote>
+<h2 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h2><p>软分叉出现的情况？如果我们对比特币协议加一些限制。加这个限制之后，原来合法的交易或者是合法的区块，在新的协议中，有可能变得不是合法了，这就引起软分叉。</p>
+<p>举例：</p>
+<p>如果有人发布了软件更新，block size limit缩小了，由1M变成0.5M（实际上不会这样做，因为1M已经是比较小的了）</p>
+<p><img src="/2020/09/09/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200909193415.png"></p>
+<p>实际当中可能出现软分叉的情况</p>
+<p>①给某些目前协议中没有规定的域增加一些新的含义，赋予他们一些新的规则：coinBase域，每个发布的区块里可以有一个铸币交易，coinBase可以有个特别的用途（作为extra nonce 拿出8bytes），其实coinBase不止8个字节，那其他字节干嘛用呢？有人就建议，把他作为UTXO集合的根哈希值，目前这个集合只是全节点自己在内存中维护这样一个集合，主要是为了快速查找能够交易是不是double spending，但是这个集合的内容并没有写到区块链，这个和我们说的Merkle proof不太一样。</p>
+<p>如果你要证明某个账户上有多少钱，如果你是全节点的话，可以算一下，就是看一下A这个账户在这个UTXO里对应的输出上面一共收到多少个币，就是A账户上有多少钱。</p>
+<p>有很多区块链钱包（手机上的app），他不可能在手机上维护一个全结点，他需要知道账户的余额，需要询问其他的全节点，那么全节点返回一个结果，你怎么知道他是不是对的？</p>
+<blockquote>
+<p>你现在是证不出来的，你自己如果没有维护一个UTXO集合，是没有办法用Merkle proof证出来的，所以有人就提议：</p>
+<p>把UTXO集合当中的内容也组织成一条Merkle tree，这个Merkle tree有一个根哈希值，这个哈希值写在coinBase中，因为你block header没有办法再改了（block header动静太大了），coinBase中的内容在网上传递的时候，最终会传递到block header中，这样的话，你就可以用Merkle proof证出来</p>
+</blockquote>
+<p>有人发布软件更新，规定coinBase域要这样写，这样是硬分叉还是软分叉？软分叉，因为新节点发布的区块，旧结点认为是合法的，因为旧结点不管你coinBase什么内容，都认为是合法的，但是旧结点发布的区块，新节点可能是不认的。</p>
+<p>比特币历史上，一个比较著名的软分叉的例子，是P2SH（Pay to Script Hash），这个在最初的比特币版本里是没有的，是后来通过软分叉加进去的：</p>
+<p>你支付的时候，不是付给一个Public Key的哈希，而是付给一个赎回脚本的哈希，这是新节点要做的；而对于旧结点，他不理解P2SH的特性，他只会做第一阶段的验证，所以，旧结点认为合法的交易，新节点可能认为是非法的</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>soft fork：只要系统中有半数以上的结点更新了软件，就不会出现永久的分叉，可能会出现临时的分叉。</p>
+<p>hard fork：必须是所有的节点都要更新软件，系统才不会出现永久性的分叉，如果有小部分节点不愿意更新，那么这个系统就会分成两条链。</p>
 
     </div>
 
@@ -471,14 +481,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/08/30/%E7%BD%91%E7%BB%9C/" rel="prev" title="BTC五---网络">
-                  <i class="fa fa-chevron-left"></i> BTC五---网络
+                <a href="/2020/09/02/%E6%AF%94%E7%89%B9%E5%B8%81%E8%84%9A%E6%9C%AC/" rel="prev" title="BTC八---比特币脚本">
+                  <i class="fa fa-chevron-left"></i> BTC八---比特币脚本
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/08/30/%E6%8C%96%E7%9F%BF/" rel="next" title="BTC七---挖矿">
-                  BTC七---挖矿 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -613,7 +620,7 @@ NexT.utils.loadComments('#valine-comments', () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: "/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/",
+      path: "/2020/09/09/%E5%88%86%E5%8F%89/",
     }, {"enable":true,"appId":"yVOlBzIi3aYyQQz57UbRr2UY-gzGzoHsz","appKey":"JUN29c5FMssB0c1y8MYYyvvg","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
     ));
   }, window.Valine);
