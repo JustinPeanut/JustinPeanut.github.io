@@ -105,6 +105,59 @@
       </tags>
   </entry>
   <entry>
+    <title>java随笔</title>
+    <url>/2020/09/10/java%E9%9A%8F%E7%AC%94/</url>
+    <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
+<p>  我自认为，在学习的时候，应该自己主动思考，如果这样的话，结果是怎么样，那样的话，结果是怎么样，我们在整个小学、初中、高中，甚至是大学，都被灌输了一种思想，就是，这样就是对的，那么当我们碰到问题的时候，往往就会一头雾水，不知如何下手，如果有主动思考的能力的话，这种问题是不是就会没有那么棘手呢？</p>
+<a id="more"></a>
+
+<p>2020.9.10</p>
+<p>在阅读《疯狂java讲义》一书中HashMap的介绍，书中实例HashMap类实例的put方法，发现他有一个返回值，并且是Object类型的，这我就纳闷了，添加元素，一般不是返回true就是false啊？我在一篇博客的评论下发现了答案，原来是</p>
+<blockquote>
+<p>如果此前存在一个相同的key，那么put方法返回的是前面key的value值，这时候后来put的value就会覆盖前面put进去的值；如果当前put方法，put的是一个新的key，那么返回值就是null。</p>
+</blockquote>
+<h1 id><a href="#" class="headerlink" title></a></h1>]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>peanutMallFollowCoderwhy工程日志</title>
+    <url>/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="项目工程概述"><a href="#项目工程概述" class="headerlink" title="项目工程概述"></a>项目工程概述</h1><p>项目github仓库地址：<a href="https://github.com/JustinPeanut/peanutMallFollowCoderwhy">peanutMallFollowCoderwhy</a></p>
+<p><code>talk is cheap, show me your code</code></p>
+<p>一下记录我跟随coderwhy老师开发mall商城应用中碰到的一些问题和需要注意的点。</p>
+<a id="more"></a>
+
+<h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>在创建项目的时候，不能使用大写或者一些其他特殊字符</p>
+<p><code>git remove add origin respostity url</code>:将远程仓库和本地仓库联系起来</p>
+<p>划分目录结构：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">assets				<span class="comment">// 资源</span></span><br><span class="line"> --img</span><br><span class="line"> --css</span><br><span class="line">    --normalize.css	<span class="comment">// 对不同浏览器的标签样式统一(在github下载)</span></span><br><span class="line">    --base.css		<span class="comment">// 初始化css设置</span></span><br><span class="line">views				<span class="comment">// 视图</span></span><br><span class="line">componets			<span class="comment">// 公共组件</span></span><br><span class="line"> --common			<span class="comment">// 完全公共的组件，可以给别的项目使用</span></span><br><span class="line"> --content			<span class="comment">// 和当前组件业务相关的组件</span></span><br><span class="line">router				<span class="comment">// 路由相关</span></span><br><span class="line">store				<span class="comment">// vuex公共状态管理</span></span><br><span class="line">network				<span class="comment">// 网络相关封装</span></span><br><span class="line">common				<span class="comment">// 公共的一些常量，或者工具类</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录下创建vue.config.js配置别名。</p>
+<p>在根目录下创建代码规范文件<code>.editorConfig</code>。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="tabBar"><a href="#tabBar" class="headerlink" title="tabBar"></a>tabBar</h3><p>如果你配置了别名，那么dom中引用url的时候，一定要加上~</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;~assets/img/tabbar/home.svg&quot;</span> <span class="attr">slot</span>=<span class="string">&quot;img-common-slot&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>要不然就获取不到相应的图片。</p>
+<p>设置点击之后active的样式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;tab-item&quot;</span> @click=<span class="string">&quot;itemClick&quot;</span>&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">if</span>=<span class="string">&quot;!isActive&quot;</span> name=<span class="string">&quot;img-common-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">else</span> name=<span class="string">&quot;img-active-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;div :style=<span class="string">&quot;isTextActive&quot;</span>&gt;</span><br><span class="line">        &lt;slot name=<span class="string">&quot;textSlot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">&quot;TabBarItem&quot;</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">      path: &#123;</span><br><span class="line">        type: <span class="built_in">String</span></span><br><span class="line">        &#125;,</span><br><span class="line">      <span class="comment">// 父组件给子组件传值</span></span><br><span class="line">      textColor: &#123;</span><br><span class="line">        type: <span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="string">&quot;red&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      itemClick()&#123;</span><br><span class="line">        <span class="built_in">this</span>.$router.replace(<span class="built_in">this</span>.path);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">      isActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$route.path.indexOf(<span class="built_in">this</span>.path) != <span class="number">-1</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      isTextActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.isActive ? &#123;<span class="attr">color</span>: <span class="built_in">this</span>.textColor&#125;: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .tab-item&#123;</span><br><span class="line">    height: <span class="number">49</span>px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    flex: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .tab-item img&#123;</span><br><span class="line">    width: <span class="number">24</span>px;</span><br><span class="line">    height: <span class="number">24</span>px;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">    margin: <span class="number">4</span>px <span class="number">0</span> <span class="number">2</span>px <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .active&#123;</span><br><span class="line">    color: red</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="navBar"><a href="#navBar" class="headerlink" title="navBar"></a>navBar</h3><p>注意：插槽如果有多个，要使用具名插槽，在使用的时候也要指定替换哪一个插槽，效果图如下</p>
+<p><img src="/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200911105742.png"></p>
+<h3 id="封装网络请求"><a href="#封装网络请求" class="headerlink" title="封装网络请求"></a>封装网络请求</h3><p>我们知道axios是第三方框架，如果有那一天这个第三方框架不更新的话，我们如果在项目中多处使用了axios，代码的重构就会带来很多不必要的麻烦。</p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC九---分叉</title>
     <url>/2020/09/09/%E5%88%86%E5%8F%89/</url>
     <content><![CDATA[<h1 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h1><p>fork:原来是一条链，现在是两条链形成了分叉。有两种情况：</p>

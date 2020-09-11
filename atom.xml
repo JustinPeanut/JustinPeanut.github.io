@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-09-09T12:31:15.424Z</updated>
+  <updated>2020-09-11T03:10:47.928Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,47 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>peanutMallFollowCoderwhy工程日志</title>
+    <link href="http://yoursite.com/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/"/>
+    <id>http://yoursite.com/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</id>
+    <published>2020-09-11T03:07:33.000Z</published>
+    <updated>2020-09-11T03:10:47.928Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;项目工程概述&quot;&gt;&lt;a href=&quot;#项目工程概述&quot; class=&quot;headerlink&quot; title=&quot;项目工程概述&quot;&gt;&lt;/a&gt;项目工程概述&lt;/h1&gt;&lt;p&gt;项目github仓库地址：&lt;a href=&quot;https://github.com/JustinPeanut/peanutMallFollowCoderwhy&quot;&gt;peanutMallFollowCoderwhy&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;talk is cheap, show me your code&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;一下记录我跟随coderwhy老师开发mall商城应用中碰到的一些问题和需要注意的点。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="项目" scheme="http://yoursite.com/categories/%E9%A1%B9%E7%9B%AE/"/>
+    
+    
+    <category term="Vue" scheme="http://yoursite.com/tags/Vue/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java随笔</title>
+    <link href="http://yoursite.com/2020/09/10/java%E9%9A%8F%E7%AC%94/"/>
+    <id>http://yoursite.com/2020/09/10/java%E9%9A%8F%E7%AC%94/</id>
+    <published>2020-09-10T15:38:57.000Z</published>
+    <updated>2020-09-11T03:06:50.121Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。&lt;/p&gt;
+&lt;p&gt;  我自认为，在学习的时候，应该自己主动思考，如果这样的话，结果是怎么样，那样的话，结果是怎么样，我们在整个小学、初中、高中，甚至是大学，都被灌输了一种思想，就是，这样就是对的，那么当我们碰到问题的时候，往往就会一头雾水，不知如何下手，如果有主动思考的能力的话，这种问题是不是就会没有那么棘手呢？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="随笔" scheme="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+    <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>BTC九---分叉</title>
@@ -62,7 +103,7 @@
     <link href="http://yoursite.com/2020/08/30/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/"/>
     <id>http://yoursite.com/2020/08/30/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</id>
     <published>2020-08-30T10:47:02.000Z</published>
-    <updated>2020-09-10T01:51:40.453Z</updated>
+    <updated>2020-09-10T01:53:08.230Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;初衷&quot;&gt;&lt;a href=&quot;#初衷&quot; class=&quot;headerlink&quot; title=&quot;初衷&quot;&gt;&lt;/a&gt;初衷&lt;/h1&gt;&lt;p&gt;  在我学习完了ssm框架，以及跟着B站视频练习了一个&lt;code&gt;尚筹网&lt;/code&gt;的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。&lt;/p&gt;
