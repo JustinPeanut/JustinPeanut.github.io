@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-09-11T03:10:47.928Z</updated>
+  <updated>2020-09-14T15:30:09.141Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BTC十---回顾问答</title>
+    <link href="http://yoursite.com/2020/09/14/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/"/>
+    <id>http://yoursite.com/2020/09/14/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/</id>
+    <published>2020-09-14T15:27:13.000Z</published>
+    <updated>2020-09-14T15:30:09.141Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;BTC问答回顾&quot;&gt;&lt;a href=&quot;#BTC问答回顾&quot; class=&quot;headerlink&quot; title=&quot;BTC问答回顾&quot;&gt;&lt;/a&gt;BTC问答回顾&lt;/h1&gt;&lt;p&gt;1.转账交易的时候，如果接收者不在线（你转账给A，但是A那时候没有连接到比特币网络上）怎么办？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt; 这个时候不需要接收者在线，转账交易只不过要在区块链上记录一下。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;2.假设某个全节点收到了一个转账交易，有没有可能转账交易中接收者的收款地址是这个结点以前从来没有听说过的？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可能，比特币系统在创建账户的时候是不需要通知其他人的，在本地产生一个公私钥对就可以了，只有在以后产生的收款地址收到钱的时候，其他结点才知道这个账户的存在。&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>peanutMallFollowCoderwhy工程日志</title>
@@ -42,7 +68,7 @@
     <link href="http://yoursite.com/2020/09/10/java%E9%9A%8F%E7%AC%94/"/>
     <id>http://yoursite.com/2020/09/10/java%E9%9A%8F%E7%AC%94/</id>
     <published>2020-09-10T15:38:57.000Z</published>
-    <updated>2020-09-11T03:06:50.121Z</updated>
+    <updated>2020-09-14T15:16:21.187Z</updated>
     
     
     <summary type="html">&lt;p&gt;  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。&lt;/p&gt;
