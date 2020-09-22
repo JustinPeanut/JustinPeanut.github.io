@@ -105,6 +105,39 @@
       </tags>
   </entry>
   <entry>
+    <title>peanutMallFollowCoderwhy工程日志</title>
+    <url>/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="项目工程概述"><a href="#项目工程概述" class="headerlink" title="项目工程概述"></a>项目工程概述</h1><p>项目github仓库地址：<a href="https://github.com/JustinPeanut/peanutMallFollowCoderwhy">peanutMallFollowCoderwhy</a></p>
+<p><code>talk is cheap, show me your code</code></p>
+<p>一下记录我跟随coderwhy老师开发mall商城应用中碰到的一些问题和需要注意的点。</p>
+<a id="more"></a>
+
+<h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>在创建项目的时候，不能使用大写或者一些其他特殊字符</p>
+<p><code>git remove add origin respostity url</code>:将远程仓库和本地仓库联系起来</p>
+<p>划分目录结构：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">assets				<span class="comment">// 资源</span></span><br><span class="line"> --img</span><br><span class="line"> --css</span><br><span class="line">    --normalize.css	<span class="comment">// 对不同浏览器的标签样式统一(在github下载)</span></span><br><span class="line">    --base.css		<span class="comment">// 初始化css设置</span></span><br><span class="line">views				<span class="comment">// 视图</span></span><br><span class="line">componets			<span class="comment">// 公共组件</span></span><br><span class="line"> --common			<span class="comment">// 完全公共的组件，可以给别的项目使用</span></span><br><span class="line"> --content			<span class="comment">// 和当前组件业务相关的组件</span></span><br><span class="line">router				<span class="comment">// 路由相关</span></span><br><span class="line">store				<span class="comment">// vuex公共状态管理</span></span><br><span class="line">network				<span class="comment">// 网络相关封装</span></span><br><span class="line">common				<span class="comment">// 公共的一些常量，或者工具类</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录下创建vue.config.js配置别名。</p>
+<p>在根目录下创建代码规范文件<code>.editorConfig</code>。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="tabBar"><a href="#tabBar" class="headerlink" title="tabBar"></a>tabBar</h3><p>如果你配置了别名，那么dom中引用url的时候，一定要加上~</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;~assets/img/tabbar/home.svg&quot;</span> <span class="attr">slot</span>=<span class="string">&quot;img-common-slot&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>要不然就获取不到相应的图片。</p>
+<p>设置点击之后active的样式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;tab-item&quot;</span> @click=<span class="string">&quot;itemClick&quot;</span>&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">if</span>=<span class="string">&quot;!isActive&quot;</span> name=<span class="string">&quot;img-common-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">else</span> name=<span class="string">&quot;img-active-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;div :style=<span class="string">&quot;isTextActive&quot;</span>&gt;</span><br><span class="line">        &lt;slot name=<span class="string">&quot;textSlot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">&quot;TabBarItem&quot;</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">      path: &#123;</span><br><span class="line">        type: <span class="built_in">String</span></span><br><span class="line">        &#125;,</span><br><span class="line">      <span class="comment">// 父组件给子组件传值</span></span><br><span class="line">      textColor: &#123;</span><br><span class="line">        type: <span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="string">&quot;red&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      itemClick()&#123;</span><br><span class="line">        <span class="built_in">this</span>.$router.replace(<span class="built_in">this</span>.path);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">      isActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$route.path.indexOf(<span class="built_in">this</span>.path) != <span class="number">-1</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      isTextActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.isActive ? &#123;<span class="attr">color</span>: <span class="built_in">this</span>.textColor&#125;: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .tab-item&#123;</span><br><span class="line">    height: <span class="number">49</span>px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    flex: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .tab-item img&#123;</span><br><span class="line">    width: <span class="number">24</span>px;</span><br><span class="line">    height: <span class="number">24</span>px;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">    margin: <span class="number">4</span>px <span class="number">0</span> <span class="number">2</span>px <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .active&#123;</span><br><span class="line">    color: red</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="navBar"><a href="#navBar" class="headerlink" title="navBar"></a>navBar</h3><p>注意：插槽如果有多个，要使用具名插槽，在使用的时候也要指定替换哪一个插槽，效果图如下</p>
+<p><img src="/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200911105742.png"></p>
+<h3 id="封装网络请求"><a href="#封装网络请求" class="headerlink" title="封装网络请求"></a>封装网络请求</h3><p>我们知道axios是第三方框架，如果有那一天这个第三方框架不更新的话，我们如果在项目中多处使用了axios，代码的重构就会带来很多不必要的麻烦。</p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java随笔</title>
     <url>/2020/09/10/java%E9%9A%8F%E7%AC%94/</url>
     <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
@@ -140,39 +173,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>peanutMallFollowCoderwhy工程日志</title>
-    <url>/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<h1 id="项目工程概述"><a href="#项目工程概述" class="headerlink" title="项目工程概述"></a>项目工程概述</h1><p>项目github仓库地址：<a href="https://github.com/JustinPeanut/peanutMallFollowCoderwhy">peanutMallFollowCoderwhy</a></p>
-<p><code>talk is cheap, show me your code</code></p>
-<p>一下记录我跟随coderwhy老师开发mall商城应用中碰到的一些问题和需要注意的点。</p>
-<a id="more"></a>
-
-<h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>在创建项目的时候，不能使用大写或者一些其他特殊字符</p>
-<p><code>git remove add origin respostity url</code>:将远程仓库和本地仓库联系起来</p>
-<p>划分目录结构：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">assets				<span class="comment">// 资源</span></span><br><span class="line"> --img</span><br><span class="line"> --css</span><br><span class="line">    --normalize.css	<span class="comment">// 对不同浏览器的标签样式统一(在github下载)</span></span><br><span class="line">    --base.css		<span class="comment">// 初始化css设置</span></span><br><span class="line">views				<span class="comment">// 视图</span></span><br><span class="line">componets			<span class="comment">// 公共组件</span></span><br><span class="line"> --common			<span class="comment">// 完全公共的组件，可以给别的项目使用</span></span><br><span class="line"> --content			<span class="comment">// 和当前组件业务相关的组件</span></span><br><span class="line">router				<span class="comment">// 路由相关</span></span><br><span class="line">store				<span class="comment">// vuex公共状态管理</span></span><br><span class="line">network				<span class="comment">// 网络相关封装</span></span><br><span class="line">common				<span class="comment">// 公共的一些常量，或者工具类</span></span><br></pre></td></tr></table></figure>
-
-<p>在根目录下创建vue.config.js配置别名。</p>
-<p>在根目录下创建代码规范文件<code>.editorConfig</code>。</p>
-<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="tabBar"><a href="#tabBar" class="headerlink" title="tabBar"></a>tabBar</h3><p>如果你配置了别名，那么dom中引用url的时候，一定要加上~</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;~assets/img/tabbar/home.svg&quot;</span> <span class="attr">slot</span>=<span class="string">&quot;img-common-slot&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>要不然就获取不到相应的图片。</p>
-<p>设置点击之后active的样式</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;tab-item&quot;</span> @click=<span class="string">&quot;itemClick&quot;</span>&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">if</span>=<span class="string">&quot;!isActive&quot;</span> name=<span class="string">&quot;img-common-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">else</span> name=<span class="string">&quot;img-active-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;div :style=<span class="string">&quot;isTextActive&quot;</span>&gt;</span><br><span class="line">        &lt;slot name=<span class="string">&quot;textSlot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">&quot;TabBarItem&quot;</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">      path: &#123;</span><br><span class="line">        type: <span class="built_in">String</span></span><br><span class="line">        &#125;,</span><br><span class="line">      <span class="comment">// 父组件给子组件传值</span></span><br><span class="line">      textColor: &#123;</span><br><span class="line">        type: <span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="string">&quot;red&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      itemClick()&#123;</span><br><span class="line">        <span class="built_in">this</span>.$router.replace(<span class="built_in">this</span>.path);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">      isActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$route.path.indexOf(<span class="built_in">this</span>.path) != <span class="number">-1</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      isTextActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.isActive ? &#123;<span class="attr">color</span>: <span class="built_in">this</span>.textColor&#125;: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .tab-item&#123;</span><br><span class="line">    height: <span class="number">49</span>px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    flex: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .tab-item img&#123;</span><br><span class="line">    width: <span class="number">24</span>px;</span><br><span class="line">    height: <span class="number">24</span>px;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">    margin: <span class="number">4</span>px <span class="number">0</span> <span class="number">2</span>px <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .active&#123;</span><br><span class="line">    color: red</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="navBar"><a href="#navBar" class="headerlink" title="navBar"></a>navBar</h3><p>注意：插槽如果有多个，要使用具名插槽，在使用的时候也要指定替换哪一个插槽，效果图如下</p>
-<p><img src="/2020/09/11/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200911105742.png"></p>
-<h3 id="封装网络请求"><a href="#封装网络请求" class="headerlink" title="封装网络请求"></a>封装网络请求</h3><p>我们知道axios是第三方框架，如果有那一天这个第三方框架不更新的话，我们如果在项目中多处使用了axios，代码的重构就会带来很多不必要的麻烦。</p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -235,7 +235,7 @@
   <entry>
     <title>BTC十一---匿名性</title>
     <url>/2020/09/17/%E5%8C%BF%E5%90%8D%E6%80%A7/</url>
-    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><p>BitCoin and anonymity</p>
+    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><h2 id="匿名性介绍"><a href="#匿名性介绍" class="headerlink" title="匿名性介绍"></a>匿名性介绍</h2><p>BitCoin and anonymity</p>
 <p>一般来说，大家说的匿名是和隐私保护联系（privacy）在一起的，比特币不要求是真名，是需要公钥产生的地址即可，因此有一定的匿名性，但不是说完全没有名字，他用的是“化名”，因此有人称它为“preudonymity”，就好像很多作家有笔名一样，比特币系统中的“匿名”其实不是真的匿名。</p>
 <a id="more"></a>
 
@@ -258,7 +258,53 @@
 </blockquote>
 <p>这就说明，信用卡记录不能公开，去了哈希值之后依然是不应该公开的，但是比特币系统本来就是公开的，这时候你去咖啡店，你把你的账户的地址告诉了营业员，你周围有其他认识你的人都会意识到这时候你在比特币网络上做了一笔消费，然后就可以在区块链中查出来。所以比特币的匿名性并不像我们想象中的那么好</p>
 <p>实际上那些用比特币的人，匿名性保存的有多好？中本聪！（因为他根本没有花钱）</p>
-<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念</p>
+<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念。</p>
+<blockquote>
+<p>以前有个叫silk road的网站：通过比特币卖各种违禁品，最后运行了两三年就被政府查封了，这个人通过这个网站赚了很多钱，但是他只是在纸面上很多钱，十几万个比特币一个都没花，因为一花就暴露身份了。所以，比特币的匿名性没有我们想象的那么好。</p>
+</blockquote>
+<p>所以，过去的经验表明，凡是用比特币从事违法活动的，最后都能被抓起来，中本聪能这么好的保持匿名性，实际上是一个个例，而且他没有干坏事</p>
+<p>hide your indetiny from whom？</p>
+<blockquote>
+<p>如果你只是像让你的亲戚朋友不知道你的账户上有多少钱，这个是很容易办到的，如果是像silk road这样的想逃避fbi，是很难的。</p>
+</blockquote>
+<h2 id="如何提高匿名性"><a href="#如何提高匿名性" class="headerlink" title="如何提高匿名性"></a>如何提高匿名性</h2><p>假设你是一个比特币用户，你能用什么方法来提高你的匿名性？</p>
+<blockquote>
+<p>我们知道，比特币是运行在应用层的应用程序，它的底层是P2P的network，所以提高匿名性，是从两个方面入手。</p>
+<p>network layer：如果很多交易都是从一个ip地址发出来的，那么从物理世界中，通过ip地址就可以知道是谁。这个我们已经有解决方案了，比较普遍的一种方法就是使用多路径转发的方法（TOR的原理），sender不是直接发给reciever，而是中间经过很多跳，中间的结点只是知道它的上一跳是谁，而不知道最早发出这个消息的是谁，中间的结点可能是坏的，但是只要中间有一个结点是诚实的，就可以将发件人的身份隐藏起来。</p>
+<p>application layer：破坏匿名性的原因之一是，同一个人的不同的比特币账户之间会被关联起来。其中一个做法是</p>
+<p>coin mixing：把你的身份和周围的人的身份混在一起，让别人分不清谁是谁。如何做到coin mixing？有些网站专门提供coin mixing的服务，收取一定的服务费，所有想使用coin mixing的用户，把币发给这些网站，内部进行一些重组，再取回来，取回来的币就不是原来的币了，实际上是一个复杂的过程。还有一个问题是，现在这个区块里世界里，没有什么信誉度非常高的coin mixing的服务，很多提供这个服务的网站，他自己也是匿名的，卷款跑路我们一点办法也没有。</p>
+<p>我们不一定要刻意的coin mixing，我们使用的一些软件，有些自己就带有coin mixing的一些性质，比如在线钱包，存进去的币，他可能会把其他人的币混合起来，但是在线钱包并不一定要履行coin mixing的功能</p>
+<p>还有一些交易所，他天然的有coin mixing的性质，我把一些比特币存进交易所，一段时间，我觉得它的价格会下跌，于是我把他换成美元，我有可能买入以太币，又可能换成莱特币，折腾几次之后，我又可能把他买回来，这时候我账户上的比特币，就不一定是我存进去的比特币了。（coin mixing的性质）。当然这个的前提是，这个交易所不是泄漏相关的记录（相关的提币存币的记录）</p>
+</blockquote>
+<p>为什么比特币的匿名性很差，其中一个本质原因是他是公开的，而且他是不可篡改的，好像不可篡改性对比特币有好处，其实堆隐私保护是灾难性的，因为一旦你在一个交易里把你的身份暴露了，这个交易永久地写在区块链里，你想抹都抹不掉了。这也是为什么我们说账户之间的关联性也是我们需要小心的，如果账户是单独出去的，如果你暴露了一个账户，这个影响还是比较有限的，如果是关联的，一个账户暴露了，后面的就都完了。</p>
+<h2 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h2><p><img src="/2020/09/17/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195428.png"></p>
+<p>比如，我要证明某个比特币账户是我的，我要证明这一点，我要怎么证明？</p>
+<blockquote>
+<p>实际上是要证明我有这个比特币账户的私钥，但是我不能把这个私钥告诉你，这时候就可以签名，你是知道这个账户的公钥的，你可以验证这个签名的合法性</p>
+</blockquote>
+<p>这个例子作为零知识证明，实际上是有争议的，我虽然没有泄露我的私钥，但是我泄露了我私钥的签名，这个和零知识证明中的无需透露该陈述是正确的外的任何信息是有冲突的。但是这里透露的额外信息要看你实际的应用场景。</p>
+<p><img src="/2020/09/17/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195956.png"></p>
+<p>零知识证明的数学基础是同态隐藏。</p>
+<p>①不会出现哈希碰撞，如果x、y不相等，那么加密值也不相等，反过来说，如果两个加密函数值是相等的，那么原来的函数值也是相等的。</p>
+<p>②说明加密函数不可逆，密码学的哈希函数的性质和这个是类似的，hiding propetry，知道哈希值没有办法知道它的输入值。</p>
+<p>③对这些加密后的函数进行函数运算，等价于，对进行运算的函数，然后在进行加密。</p>
+<p><img src="/2020/09/17/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200714.png"></p>
+<p><img src="/2020/09/17/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200915.png"></p>
+<p>说明：</p>
+<p><code>E(X+Y) = E(7)</code>,说明没有碰撞</p>
+<p>这个版本实际上有些缺陷，Bob可以用蛮力的方式，猜出原始的x、y是多少，Bob虽然通过E(x)不能知道x是多少，但是他可以通过遍历x的取值，Alice需要在发送E(x)和E(y)之前，对x、y进行随机化处理（使得x、y加起来还是不变的）。</p>
+<p>在比特币的共识协议中，央行发行货币，有个属于他自己的签名，在前面所讲的，这样会产生double spending，所以可以在每张货币上加上一个id，记录现在这张货币在谁手里。这样的话，央行不是什么都知道了？</p>
+<p>那么，有没有什么办法，让央行做中心化的记账，但是又不让他知道呢？</p>
+<blockquote>
+<p>这个虚拟货币的编号不能是央行产生的，这个编号得是我自己产生的，我在本地产生一个编号，但是不告诉央行，这样的话，央行怎么知道这个编号是不是正确的呢？这就引入了盲签。</p>
+<p>用户A提供编号，银行是要签名的，但是他看不到内容,Token就是银行对序号的签名。</p>
+<p><img src="/2020/09/17/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202409.png"></p>
+</blockquote>
+<h2 id="零币和零钞"><a href="#零币和零钞" class="headerlink" title="零币和零钞"></a>零币和零钞</h2><p><img src="/2020/09/17/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202540.png"></p>
+<p>基础币可以是比特币，你用的时候，你要证明，本来是有一个基础币的，你把这个基础币搞得是不能花了，然后换取一个零币，零币在花的时候，只需要用零知识证明你花掉的币是系统中存在的某一个合法的币就行了，但是不用透露你花的是系统中的哪一个币。</p>
+<p>这样就把关联性破坏掉了。</p>
+<p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
+<p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -411,6 +457,73 @@
       </tags>
   </entry>
   <entry>
+    <title>BTC一---密码学基础</title>
+    <url>/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
+<p>比特币用到了密码学的两个内容：哈希和签名</p>
+<p>哈希在比特币中：<code>cryptographic hash function</code></p>
+<p>它在密码学中要求的两个性质：</p>
+<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
+<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
+<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
+<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
+<a id="more"></a>
+
+<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
+<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
+<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
+<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
+<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
+<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
+<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
+<p>x—-&gt;H(x)</p>
+<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
+<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
+<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
+<p>在比特币中还要求<code>puzzle friendly</code></p>
+<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
+<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
+<blockquote>
+<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
+<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
+<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
+<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
+<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
+</blockquote>
+<p>比特币中用到的哈希函数叫做SHA-256。</p>
+<p>SHA:<code>secure Hash Algorithm</code> </p>
+<p>我们上面所说的三个性质，他都是满足的</p>
+<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
+<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
+<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
+<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
+<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
+<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
+<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
+<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
+<blockquote>
+<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
+<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
+</blockquote>
+<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
+<blockquote>
+<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
+<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
+<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
+<p>这个概率比地球爆炸的概率还要小！</p>
+</blockquote>
+<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
+<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC四---实现</title>
     <url>/2020/08/30/%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="transaction-based-ledger"><a href="#transaction-based-ledger" class="headerlink" title="transaction-based ledger"></a>transaction-based ledger</h2><p>BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算</p>
@@ -484,64 +597,39 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC一---密码学基础</title>
-    <url>/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
-<p>比特币用到了密码学的两个内容：哈希和签名</p>
-<p>哈希在比特币中：<code>cryptographic hash function</code></p>
-<p>它在密码学中要求的两个性质：</p>
-<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
-<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
-<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
-<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
+    <title>BTC六---挖矿难度</title>
+    <url>/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
+    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
+<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
 <a id="more"></a>
 
-<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
-<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
-<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
-<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
-<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
-<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
-<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
-<p>x—-&gt;H(x)</p>
-<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
-<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
-<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
-<p>在比特币中还要求<code>puzzle friendly</code></p>
-<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
-<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
-<blockquote>
-<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
-<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
-<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
-<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
-<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
-</blockquote>
-<p>比特币中用到的哈希函数叫做SHA-256。</p>
-<p>SHA:<code>secure Hash Algorithm</code> </p>
-<p>我们上面所说的三个性质，他都是满足的</p>
-<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
-<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
-<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
-<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
-<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
-<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
-<p><img src="/2020/08/29/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
-<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
-<blockquote>
-<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
-<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
-</blockquote>
-<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
-<blockquote>
-<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
-<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
-<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
-<p>这个概率比地球爆炸的概率还要小！</p>
-</blockquote>
-<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
-<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
-<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
+<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
+<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
+<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
+<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
+<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
+<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
+<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
+<p>调整的公式：</p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
+<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
+<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
+<p><code>比特币系统中总算力的变化情况</code></p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
+<p><code>算力难度的增长情况</code></p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
+<p>符合难度调整的设计目标</p>
+<p><code>难度调整曲线</code></p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
+<p>说明挖矿的人越来越多，设备越来越先进</p>
+<p><code>每天的出块时间</code></p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
+<p><code>最近半年的出块事件</code></p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
+<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -620,48 +708,6 @@
 <p>另外，不要把51%的阈值，当成一个门槛，这个其实都是概率，而且，每个矿池所占的算力比重，本身也是一种估计而已，而且实时变化</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大型矿池的出现，有一定的好处：给矿工减轻了负担，收入分配也更加稳定。</p>
 <p>也有一定的危害：发动51攻击更容易了 <code>on demand mining</code></p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC六---挖矿难度</title>
-    <url>/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
-    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
-<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
-<a id="more"></a>
-
-<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
-<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
-<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
-<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
-<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
-<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
-<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
-<p>调整的公式：</p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
-<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
-<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
-<p><code>比特币系统中总算力的变化情况</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
-<p><code>算力难度的增长情况</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
-<p>符合难度调整的设计目标</p>
-<p><code>难度调整曲线</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
-<p>说明挖矿的人越来越多，设备越来越先进</p>
-<p><code>每天的出块时间</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
-<p><code>最近半年的出块事件</code></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
-<p><img src="/2020/08/30/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
 ]]></content>
       <categories>
         <category>区块链</category>
