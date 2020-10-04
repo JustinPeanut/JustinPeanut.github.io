@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-09-22T12:21:00.574Z</updated>
+  <updated>2020-10-04T03:18:24.781Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,87 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ETH三---状态树</title>
+    <link href="http://yoursite.com/2020/10/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/"/>
+    <id>http://yoursite.com/2020/10/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/</id>
+    <published>2020-10-04T03:16:42.000Z</published>
+    <updated>2020-10-04T03:18:24.781Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;ETH-状态树&quot;&gt;&lt;a href=&quot;#ETH-状态树&quot; class=&quot;headerlink&quot; title=&quot;ETH-状态树&quot;&gt;&lt;/a&gt;ETH-状态树&lt;/h1&gt;&lt;p&gt;以太坊的账户是基于账户的模式，系统中显示的维护每个账户有多少余额。&lt;/p&gt;
+&lt;p&gt;我们需要完成的是账户地址，到账户状态的映射（addr(160 bits == 表示成40个16进制的数)-&amp;gt;state）,这里的状态指的是外部账户和合约账户的状态。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ETH二---账户</title>
+    <link href="http://yoursite.com/2020/10/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/"/>
+    <id>http://yoursite.com/2020/10/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/</id>
+    <published>2020-10-04T03:14:37.000Z</published>
+    <updated>2020-10-04T03:16:05.150Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;以太坊的账户&quot;&gt;&lt;a href=&quot;#以太坊的账户&quot; class=&quot;headerlink&quot; title=&quot;以太坊的账户&quot;&gt;&lt;/a&gt;以太坊的账户&lt;/h1&gt;&lt;p&gt;比特币是基于交易的账本模式，这种模式下，并没有显式地记录每个账户有多少钱，这种模式的好处是，隐私保护得比较好，你有多少钱，可能连你自己都说不清楚，别人就更搞不明白了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;别人转到你账上的钱，你一定要花出去，比如别人转给你10个，你花了3个比特币，你必须把剩余的7个比特币再转回给自己的另外一个账户，要不然这7个比特币全都会被当成tx fee给矿工了&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ETH一---概述</title>
+    <link href="http://yoursite.com/2020/10/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%A6%82%E8%BF%B0/"/>
+    <id>http://yoursite.com/2020/10/04/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%A6%82%E8%BF%B0/</id>
+    <published>2020-10-04T03:12:45.000Z</published>
+    <updated>2020-10-04T03:13:46.213Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;以太坊概述&quot;&gt;&lt;a href=&quot;#以太坊概述&quot; class=&quot;headerlink&quot; title=&quot;以太坊概述&quot;&gt;&lt;/a&gt;以太坊概述&lt;/h1&gt;&lt;p&gt;比特币和以太坊是区块链中的最主要的两种加密货币，比特币被称为区块链1.0，以太坊被称为2.0&lt;/p&gt;
+&lt;p&gt;以太坊对比特币运行过程中出现的问题做出了改进，比如说出块时间，比特币是十分钟，有人认为太长了，以太坊当中出块时间大幅度地降低到了十几秒，而且，为了这种出块时间，以太坊还设计了一套ghost的共识机制；另一个重大的改进是mining puzzle：比特币的mining puzzle是计算密集型的，比拼的是挖矿的计算能力，这种结果就造就了现在的挖矿设备专业化。以太坊对内存的要求是很高的，memory hard mining puzzle，这样就在一定程度上限制了ASIC芯片的使用，我们管它叫做ASIC resistance，将来以太坊还会有一些更高的改进，用proof of stake（权益证明，不挖矿，而是按照股份和权益，用类似于投票的方式来决定下一个区块该怎么产生）替换proof of work。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BTC十二---思考</title>
+    <link href="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/"/>
+    <id>http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/</id>
+    <published>2020-10-04T03:08:39.000Z</published>
+    <updated>2020-10-04T03:12:05.204Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;思考&quot;&gt;&lt;a href=&quot;#思考&quot; class=&quot;headerlink&quot; title=&quot;思考&quot;&gt;&lt;/a&gt;思考&lt;/h1&gt;&lt;h2 id=&quot;哈希指针&quot;&gt;&lt;a href=&quot;#哈希指针&quot; class=&quot;headerlink&quot; title=&quot;哈希指针&quot;&gt;&lt;/a&gt;哈希指针&lt;/h2&gt;&lt;p&gt;比特币系统在设计的时候，很多地方都使用到了哈希指针，比如区块的块头，就包括了前一个区块的指针，指针保存的是本地内存的地址，那么只是在本地计算机上才有意义，发布到别的计算机上就没有意义了，那么哈希指针是怎么通过网络进行传输的呢？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>BTC十一---匿名性</title>
