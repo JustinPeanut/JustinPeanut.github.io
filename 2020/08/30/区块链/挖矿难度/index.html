@@ -21,18 +21,32 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="没有人一生下来就是天才">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog of DengFeng">
-<meta property="og:url" content="http://yoursite.com/tags/Java/index.html">
+  <meta name="description" content="挖矿难度为什么要调整挖矿难度调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例 比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BTC六---挖矿难度">
+<meta property="og:url" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/index.html">
 <meta property="og:site_name" content="Blog of DengFeng">
-<meta property="og:description" content="没有人一生下来就是天才">
+<meta property="og:description" content="挖矿难度为什么要调整挖矿难度调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例 比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png">
+<meta property="og:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png">
+<meta property="article:published_time" content="2020-08-30T02:40:19.000Z">
+<meta property="article:modified_time" content="2020-08-30T02:53:27.254Z">
 <meta property="article:author" content="Deng Feng">
+<meta property="article:tag" content="区块链">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png">
 
 
-<link rel="canonical" href="http://yoursite.com/tags/Java/">
+<link rel="canonical" href="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/">
 
 
 <script class="page-configurations">
@@ -40,12 +54,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: Java | Blog of DengFeng</title>
+  <title>BTC六---挖矿难度 | Blog of DengFeng</title>
   
 
 
@@ -196,7 +210,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -208,6 +222,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">挖矿难度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%B0%83%E6%95%B4%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6"><span class="nav-number">1.1.</span> <span class="nav-text">为什么要调整挖矿难度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%B0%83%E6%95%B4%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">如何调整挖矿难度</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -276,78 +291,206 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
       
 
       
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="Deng Feng">
+      <meta itemprop="description" content="没有人一生下来就是天才">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of DengFeng">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          BTC六---挖矿难度
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-08-30 10:40:19 / 修改时间：10:53:27" itemprop="dateCreated datePublished" datetime="2020-08-30T10:40:19+08:00">2020-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" itemprop="url" rel="index"><span itemprop="name">区块链</span></a>
+        </span>
+    </span>
+
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">Java
-          <small>标签</small>
-        </h2>
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
       </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
+<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
+<a id="more"></a>
+
+<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
+<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
+<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
+<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
+<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
+<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
+<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
+<p>调整的公式：</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
+<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
+<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
+<p><code>比特币系统中总算力的变化情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
+<p><code>算力难度的增长情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
+<p>符合难度调整的设计目标</p>
+<p><code>难度调整曲线</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
+<p>说明挖矿的人越来越多，设备越来越先进</p>
+<p><code>每天的出块时间</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
+<p><code>最近半年的出块事件</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2020-09-10T23:38:57+08:00"
-              content="2020-09-10">
-          09-10
-        </time>
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Deng Feng 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Deng Feng 支付宝">
+        <span>支付宝</span>
       </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/" itemprop="url">
-            <span itemprop="name">java随笔</span>
+  </div>
+</div>
+
+          
+
+  <div class="followme">
+    <span>欢迎关注我的其它发布渠道</span>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
           </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2020-08-30T18:47:02+08:00"
-              content="2020-08-30">
-          08-30
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/" itemprop="url">
-            <span itemprop="name">LOL-show项目工程日志</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
+        </div>
     </div>
   </div>
-  
-  
-  
 
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/" rel="prev" title="BTC五---网络">
+                  <i class="fa fa-chevron-left"></i> BTC五---网络
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/" rel="next" title="BTC七---挖矿">
+                  BTC七---挖矿 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
   
 
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -470,7 +613,7 @@ NexT.utils.loadComments('#valine-comments', () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: "/tags/Java/",
+      path: "/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/",
     }, {"enable":true,"appId":"yVOlBzIi3aYyQQz57UbRr2UY-gzGzoHsz","appKey":"JUN29c5FMssB0c1y8MYYyvvg","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
     ));
   }, window.Valine);

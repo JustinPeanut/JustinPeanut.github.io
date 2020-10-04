@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/header.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/header.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/header.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="ETH-状态树以太坊的账户是基于账户的模式，系统中显示的维护每个账户有多少余额。 我们需要完成的是账户地址，到账户状态的映射（addr(160 bits &#x3D;&#x3D; 表示成40个16进制的数)-&gt;state）,这里的状态指的是外部账户和合约账户的状态。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ETH三---状态树">
+<meta property="og:url" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/index.html">
+<meta property="og:site_name" content="Blog of DengFeng">
+<meta property="og:description" content="ETH-状态树以太坊的账户是基于账户的模式，系统中显示的维护每个账户有多少余额。 我们需要完成的是账户地址，到账户状态的映射（addr(160 bits &#x3D;&#x3D; 表示成40个16进制的数)-&gt;state）,这里的状态指的是外部账户和合约账户的状态。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928200145.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928202332.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181750.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181926.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003184519.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003185717.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003190631.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191125.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191918.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003192042.png">
+<meta property="article:published_time" content="2020-10-04T03:16:42.000Z">
+<meta property="article:modified_time" content="2020-10-04T03:18:24.781Z">
+<meta property="article:author" content="Deng Feng">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928200145.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ETH三---状态树 | Blog of DengFeng</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Blog of DengFeng" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband">	
+<a target="_blank" rel="noopener" href="https://github.com/JustinPeanut" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+</div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Blog of DengFeng</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ETH-%E7%8A%B6%E6%80%81%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text">ETH-状态树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MPT"><span class="nav-number">1.1.</span> <span class="nav-text">MPT</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Deng Feng"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">Deng Feng</p>
+  <div class="site-description" itemprop="description">没有人一生下来就是天才</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JustinPeanut" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JustinPeanut" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jutinpeanut@gmail.com" title="E-Mail → mailto:jutinpeanut@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?uin=1820840828&Site=&menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?uin&#x3D;1820840828&amp;Site&#x3D;&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/JustinPeanut" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="Deng Feng">
+      <meta itemprop="description" content="没有人一生下来就是天才">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of DengFeng">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ETH三---状态树
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-10-04 11:16:42 / 修改时间：11:18:24" itemprop="dateCreated datePublished" datetime="2020-10-04T11:16:42+08:00">2020-10-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" itemprop="url" rel="index"><span itemprop="name">区块链</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="ETH-状态树"><a href="#ETH-状态树" class="headerlink" title="ETH-状态树"></a>ETH-状态树</h1><p>以太坊的账户是基于账户的模式，系统中显示的维护每个账户有多少余额。</p>
+<p>我们需要完成的是账户地址，到账户状态的映射（addr(160 bits == 表示成40个16进制的数)-&gt;state）,这里的状态指的是外部账户和合约账户的状态。</p>
+<a id="more"></a>
+
+<p>①这有点像key-value对，给出一个账户地址，要找出一个相应的状态。如果就用一个哈希表怎么样？每创建一个账户就存入哈希表（不考虑哈希碰撞，它的效率是常量级的）</p>
+<blockquote>
+<p>用这个表的话，如果要提供Merkle proof，怎么提供？</p>
+<p>比如说，你要和一个人签合同，希望他能证明一下他有多少钱，一种方法是，把这个哈希表中的元素（内容）组织成一个Merkle tree，然后算出一个根哈希值，这个根哈希值得保存在block header里，公布出去，那么这个根哈希值只要是正确的，就能保证底下的树不会被篡改。那如果有新的交易怎么办，新的交易必然会导致哈希表的内容变化，然后我们发布下一个区块的时候，要把这些哈希表中的内容在组织成一棵Merkle tree吗？这个代价会不会太大了点，实际上发生变化的状态只是一小部分。难道，比特币在构建新区块的时候就不用构建一颗新的Merkle tree吗？那个为什么没有这个问题？因为比特币发布的区块中的Merkle tree是通过区块中的交易来构建的，每个区块中的交易都不一样。如果像以太坊中的所有账户都构成一个Merkle tree来比较，代价就太大了（这比交易构成Merkle tree要高出好几个数量级）。</p>
+<p>除了提供Merkle proof 证明账户上有多少钱之外，这个Merkle tree还有另外的作用：维护各个全节点之间状态的一致性（这也就是为什么比特币把根哈希值写在块头里的一个原因，对于这个区块中包含那些交易，全节点要有一个共识）。</p>
+</blockquote>
+<p>所以如果就简单的全节点在本地维护一个哈希表，然后需要Merkle tree的时候构建Merkle tree，根哈希值放在块头，这个方法是不行的。</p>
+<p>②我们不需要哈希表了，直接就把所有的账户放进去，你要改的时候直接在Merkle tree里改，因为你每次更新的都是一小部分账户，所以你每次修改的都是Merkle tree中的一小部分？</p>
+<blockquote>
+<p>这个方法的问题在于，没有提供一个高效的查找和更新的方法，还有一个问题在于，我们这个Merkle tree要排序吗？如果不排序会怎么样？</p>
+<p>​    如果不规定这些账户在叶子节点的顺序，那么构建出来的Merkle tree不是唯一的。系统中有很多的全节点，每个    全节点按照自己的某个顺序，构建一颗Merkle tree，最后构建出来的Merkle tree是不一样的。比特币中不也是不    排序吗？为什么比特币中就没有这个问题？</p>
+<p>​    比特币中每个结点收到的交易顺序也是不一样的，所以理论上说，这样构建的Merkle tree也是不一样的，但是比    特币中的Merkle tree最终是获得记账权的结点说了算。</p>
+<p>​    如果以太坊也这么做的话，需要把账户的状态发布到区块里（也就是每个全节点决定怎么把账户组织成一个Merkle tree），但是你是发布的账户的状态，不是交易的状态，差了好几个数量级。</p>
+<p>如果使用排序的Merkle tree呢？</p>
+<p>如果你新增一个账户怎么办，这个账户地址生成的时候是随机的，可能是在中间，那么后面的这些账户的结构都得变。其实可以这样：你产生一个新账户，其他人其实是没有必要知道的，当你产生交互的时候或者别人往里面转账别人才需要知道，当产生交易需要把这个账户加入到数据结构中，问题在于，这个代价有多大？如果你用哈希表的话，代价是常量级的，如果直接使用账户的哈希，这个代价可能得重构这个数据结构。</p>
+</blockquote>
+<p>以太坊采用的做法：</p>
+<p>首先介绍trie（中文叫做字典树）的数据结构。</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928200145.png"></p>
+<p>这个结构的特点：</p>
+<blockquote>
+<p>①在trie中，每个节点的分支数目，取决于这个key值里每个元素得取值范围，这个例子中，每个结点得分支个数最多是26个加上一个结束标志位，表示这个单词到这是不是就结束了。</p>
+<p>②trie的查找效率，取决于这个key的长度。</p>
+<p>③如果使用哈希表来存储这个key-value对，从理论上说，是有可能出现哈希碰撞（两个地址不一样，但是它的内容碰巧一样）的，但是trie是如果两个的地址不一样，最后肯定映射到树中的不同分支，所以trie不会出现碰撞</p>
+<p>④我们前面讲的Merkle tree，如果你不排序，一个问题是，你的账户插入到Merkle tree中的顺序不一样 ，Merkle tree的结构也不一样，trie中只要给定一组输入，这个输入不变，最后插入这个trie当中是一样的。</p>
+<p>⑤每次发布一个区块，系统中的绝大多数状态是不变的，只有个别受到影响的状态才会变，所以更新操作的局部性很重要，要想访问genesis，只要访问对应的分支即可，更新的局部性也是很好的</p>
+</blockquote>
+<p>但是trie也有缺点：只有一个分支的情况很浪费内存，如果能把一个分支的分支合并起来，就能够提高存储的开销，同时提高查找和更新的开销，这就引入了我们的Patricia tree（trie）[经过路径压缩的前缀树]，如果经过路径压缩，上例就变成了下图：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928202332.png"></p>
+<p>对于Patricia tree来说，如果你需要添加结点，原来压缩的结点可能会需要扩展开来，路径压缩在什么情况下比较好？</p>
+<blockquote>
+<p>树中插入的这些键值的分布如果是比较稀疏的情况下。比如上图中的，每个单词都很长，但是总共没有多少个单词的时候。</p>
+<p>例如：下图的三个单词插入一个普通的tria中，效率就变得特别低</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181750.png"></p>
+<p>如果用Patricia tree，如下图</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181926.png"></p>
+</blockquote>
+<p>在以太坊中是怎么样的？</p>
+<p>我们在前面讲过，地址表示成40个16进制的数，所以这个分叉数目，有时候管他叫做branching factor（17 == 16个[0 - f] 加上一个结束标志位），比特币和以太坊的地址是不通用的，两个地址的格式、长度都是不一样的，有一点是一样的，以太坊中的地址，也是公钥经过转化得来的（公钥取哈希，截一段，前面不要，只要后面的一部分）</p>
+<p>那么我们这个应用场景（以太坊）中键值是否是稀疏的呢？</p>
+<blockquote>
+<p>键值是地址，160位，总共的地址空间有2^160，以太坊中全世界的账户数目加在一起也远远没有这么大，所以以太坊的账户是非常非常稀疏的。</p>
+</blockquote>
+<p>为什么不把账户地址缩短一点？这样访问效率还快，也没必要那么稀疏了</p>
+<blockquote>
+<p>更大地避免哈希碰撞，这是一个去中心化的系统防止账户冲突的唯一办法。</p>
+</blockquote>
+<h2 id="MPT"><a href="#MPT" class="headerlink" title="MPT"></a>MPT</h2><p>Merkle Patricia tree</p>
+<p>和Patricia tree有什么区别？</p>
+<blockquote>
+<p>把普通指针换成了哈希指针，所有的账户组织成一个Patricia tree，用路劲压缩提高效率，然后把普通指针换成哈希指针，所以就能计算出一个根哈希值，存放在block header里。比特币有一个根哈希值（这个区块里所有交易组成的根哈希值），以太坊中有三个，这里讲的是状态树。</p>
+</blockquote>
+<p>这个根哈希值有什么用？</p>
+<blockquote>
+<p>①防止篡改，只要根哈希值不变，整棵树的任何部分都没有办法被篡改。</p>
+<p>②Merkle Proof，这棵树能证明什么？能证明每个账户的余额：这个账户所在的分支，作为Merkle Proof，发给轻结点，轻结点就可以验证账户上有多少钱。</p>
+<p>③能不能证明一个账户是不存在的？你想给一个账户转账之前，你想验证一下节点里，有没有这个账户信息，证明方法和sorted Merkle tree类似，如果存在是存在什么样的分支里，把这个分支作为Merkle tree发出去，可以证明它是不存在的。</p>
+</blockquote>
+<p>以太坊中用到的还不是原生的MPT，以太坊中使用的是Modified MPT：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003184519.png"></p>
+<p>根节点取得的根哈希值KECCAK256是要写在块头里的，这里的指针都是哈希指针。</p>
+<p>每次发布一个新的区块的时候，这个状态树中有一些结点的值会发生变化，这些改变不是在原地改的，而是新建一些分支，原来的状态其实是保留下来的：</p>
+<p>我们可以看到，虽然每个区块都有一个状态树，但是这两棵树的大部分节点，是共享的，只有那些发生改变的节点，是需要新建一个分支的，这个例子中合约账户发生了变化（因为他有code，还有存储），合约账户的存储也是用MPT的形式保存下来的，这个存储其实也是一个key-value，维护的是从变量到这个变量取值的映射，所以以太坊中的结构是一个大的MPT，包含很多小的MPT（每个合约账户的存储都是一棵小的MPT） </p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003185717.png"></p>
+<p>这个例子中，nonce、balance发生了变化，code不变，所以Codehash指向原来树中的节点，存储中大部分结点也是没有变化，只有一个节点发生了变化，整数变量从29变为了45，所以新建了一个分支。</p>
+<p>所以，系统中的全节点维护的不是一棵MPT，而是每次出现一个区块，都要新建一个MPT，只不过这些状态树中大部分节点是共享的，只有少数发生变化的节点是需要新建分支的，那么，为什么要保留历史状态？（为什么不在原地直接改了）</p>
+<blockquote>
+<p>系统中可能会出现分叉，临时性的分叉实际上是很普遍的，以太坊把出块时间降到十几秒之后，临时性的分叉是常态。</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003190631.png"></p>
+<p>回滚的话，就需要维护这些历史记录，不是为了证明我以前有多少钱，而是因为当前这个交易有可能要undo，</p>
+<p>比特币中简单的转账交易是很容易的，以太坊中为什么不行？</p>
+<p>以太坊中有智能合约，以太坊如果不保存原来的状态，智能合约执行完成之后，你想要roll back，这是不可能的。</p>
+</blockquote>
+<p>以太坊中代码的数据结构：</p>
+<p>block header：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191125.png"></p>
+<p>ParentHash：前一个区块块头的哈希值</p>
+<p>uncleHash：叔父区块的哈希值（ghost协议中会提到）[uncle可能回避parent大很多辈分]</p>
+<p>CoinBase：挖出这个区块的矿工的地址</p>
+<p>Root：状态数的根哈希</p>
+<p>TxHash：交易树的根哈希值</p>
+<p>ReceiptHash：收据树的根哈希值</p>
+<p>Bloom：和收据树相关，提供一种高效的查询，符合某种条件的交易的执行结果</p>
+<p>Difficulty：挖矿的难度，会根据需要调整</p>
+<p>GasLimit、GasUsed：和汽油费相关，有点类似比特币中的交易费</p>
+<p>Time：这个区块大致的产生时间</p>
+<p>MixDigest、Nonce：和挖矿过程相关，Nonce：类似于比特币中的随机数；MixDigest是从Nonce通过一些计算出来的哈希值。</p>
+<p>区块的结构：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191918.png"> </p>
+<p>header：指向block header的指针</p>
+<p>uncles：指向叔父区块block header的指针（数组类型）</p>
+<p>transactions：交易列表</p>
+<p>区块真正在网上发布的信息：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003192042.png"></p>
+<p>状态树中保存的是key-value pair，key就是地址， 我们前面所讲的都是key（地址的管理方式），那么这个value（账户的状态）呢？</p>
+<blockquote>
+<p>实际上是要经过一个序列化的过程：RLP（Recursive Length Prefix），极简主义，和protocal buffer相比；它只支持一种类型：nested array of bytes，说白了就是字节数组，以太坊的其他所有类型（整数、哈希表），最后都得变成nested array of bytes，所以你要实现一个RLP，比较容易。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Deng Feng 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Deng Feng 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+  <div class="followme">
+    <span>欢迎关注我的其它发布渠道</span>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/" rel="prev" title="ETH二---账户">
+                  <i class="fa fa-chevron-left"></i> ETH二---账户
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Deng Feng</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">52k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">47 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+  
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: "/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/",
+    }, {"enable":true,"appId":"yVOlBzIi3aYyQQz57UbRr2UY-gzGzoHsz","appKey":"JUN29c5FMssB0c1y8MYYyvvg","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
