@@ -105,39 +105,6 @@
       </tags>
   </entry>
   <entry>
-    <title>peanutMallFollowCoderwhy工程日志</title>
-    <url>/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<h1 id="项目工程概述"><a href="#项目工程概述" class="headerlink" title="项目工程概述"></a>项目工程概述</h1><p>项目github仓库地址：<a href="https://github.com/JustinPeanut/peanutMallFollowCoderwhy">peanutMallFollowCoderwhy</a></p>
-<p><code>talk is cheap, show me your code</code></p>
-<p>一下记录我跟随coderwhy老师开发mall商城应用中碰到的一些问题和需要注意的点。</p>
-<a id="more"></a>
-
-<h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>在创建项目的时候，不能使用大写或者一些其他特殊字符</p>
-<p><code>git remove add origin respostity url</code>:将远程仓库和本地仓库联系起来</p>
-<p>划分目录结构：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">assets				<span class="comment">// 资源</span></span><br><span class="line"> --img</span><br><span class="line"> --css</span><br><span class="line">    --normalize.css	<span class="comment">// 对不同浏览器的标签样式统一(在github下载)</span></span><br><span class="line">    --base.css		<span class="comment">// 初始化css设置</span></span><br><span class="line">views				<span class="comment">// 视图</span></span><br><span class="line">componets			<span class="comment">// 公共组件</span></span><br><span class="line"> --common			<span class="comment">// 完全公共的组件，可以给别的项目使用</span></span><br><span class="line"> --content			<span class="comment">// 和当前组件业务相关的组件</span></span><br><span class="line">router				<span class="comment">// 路由相关</span></span><br><span class="line">store				<span class="comment">// vuex公共状态管理</span></span><br><span class="line">network				<span class="comment">// 网络相关封装</span></span><br><span class="line">common				<span class="comment">// 公共的一些常量，或者工具类</span></span><br></pre></td></tr></table></figure>
-
-<p>在根目录下创建vue.config.js配置别名。</p>
-<p>在根目录下创建代码规范文件<code>.editorConfig</code>。</p>
-<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="tabBar"><a href="#tabBar" class="headerlink" title="tabBar"></a>tabBar</h3><p>如果你配置了别名，那么dom中引用url的时候，一定要加上~</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;~assets/img/tabbar/home.svg&quot;</span> <span class="attr">slot</span>=<span class="string">&quot;img-common-slot&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>要不然就获取不到相应的图片。</p>
-<p>设置点击之后active的样式</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;tab-item&quot;</span> @click=<span class="string">&quot;itemClick&quot;</span>&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">if</span>=<span class="string">&quot;!isActive&quot;</span> name=<span class="string">&quot;img-common-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">else</span> name=<span class="string">&quot;img-active-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;div :style=<span class="string">&quot;isTextActive&quot;</span>&gt;</span><br><span class="line">        &lt;slot name=<span class="string">&quot;textSlot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">&quot;TabBarItem&quot;</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">      path: &#123;</span><br><span class="line">        type: <span class="built_in">String</span></span><br><span class="line">        &#125;,</span><br><span class="line">      <span class="comment">// 父组件给子组件传值</span></span><br><span class="line">      textColor: &#123;</span><br><span class="line">        type: <span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="string">&quot;red&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      itemClick()&#123;</span><br><span class="line">        <span class="built_in">this</span>.$router.replace(<span class="built_in">this</span>.path);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">      isActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$route.path.indexOf(<span class="built_in">this</span>.path) != <span class="number">-1</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      isTextActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.isActive ? &#123;<span class="attr">color</span>: <span class="built_in">this</span>.textColor&#125;: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .tab-item&#123;</span><br><span class="line">    height: <span class="number">49</span>px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    flex: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .tab-item img&#123;</span><br><span class="line">    width: <span class="number">24</span>px;</span><br><span class="line">    height: <span class="number">24</span>px;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">    margin: <span class="number">4</span>px <span class="number">0</span> <span class="number">2</span>px <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .active&#123;</span><br><span class="line">    color: red</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="navBar"><a href="#navBar" class="headerlink" title="navBar"></a>navBar</h3><p>注意：插槽如果有多个，要使用具名插槽，在使用的时候也要指定替换哪一个插槽，效果图如下</p>
-<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200911105742.png"></p>
-<h3 id="封装网络请求"><a href="#封装网络请求" class="headerlink" title="封装网络请求"></a>封装网络请求</h3><p>我们知道axios是第三方框架，如果有那一天这个第三方框架不更新的话，我们如果在项目中多处使用了axios，代码的重构就会带来很多不必要的麻烦。</p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java随笔</title>
     <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
     <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
@@ -173,6 +140,39 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>peanutMallFollowCoderwhy工程日志</title>
+    <url>/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="项目工程概述"><a href="#项目工程概述" class="headerlink" title="项目工程概述"></a>项目工程概述</h1><p>项目github仓库地址：<a href="https://github.com/JustinPeanut/peanutMallFollowCoderwhy">peanutMallFollowCoderwhy</a></p>
+<p><code>talk is cheap, show me your code</code></p>
+<p>一下记录我跟随coderwhy老师开发mall商城应用中碰到的一些问题和需要注意的点。</p>
+<a id="more"></a>
+
+<h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><h2 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h2><p>在创建项目的时候，不能使用大写或者一些其他特殊字符</p>
+<p><code>git remove add origin respostity url</code>:将远程仓库和本地仓库联系起来</p>
+<p>划分目录结构：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">assets				<span class="comment">// 资源</span></span><br><span class="line"> --img</span><br><span class="line"> --css</span><br><span class="line">    --normalize.css	<span class="comment">// 对不同浏览器的标签样式统一(在github下载)</span></span><br><span class="line">    --base.css		<span class="comment">// 初始化css设置</span></span><br><span class="line">views				<span class="comment">// 视图</span></span><br><span class="line">componets			<span class="comment">// 公共组件</span></span><br><span class="line"> --common			<span class="comment">// 完全公共的组件，可以给别的项目使用</span></span><br><span class="line"> --content			<span class="comment">// 和当前组件业务相关的组件</span></span><br><span class="line">router				<span class="comment">// 路由相关</span></span><br><span class="line">store				<span class="comment">// vuex公共状态管理</span></span><br><span class="line">network				<span class="comment">// 网络相关封装</span></span><br><span class="line">common				<span class="comment">// 公共的一些常量，或者工具类</span></span><br></pre></td></tr></table></figure>
+
+<p>在根目录下创建vue.config.js配置别名。</p>
+<p>在根目录下创建代码规范文件<code>.editorConfig</code>。</p>
+<h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="tabBar"><a href="#tabBar" class="headerlink" title="tabBar"></a>tabBar</h3><p>如果你配置了别名，那么dom中引用url的时候，一定要加上~</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;~assets/img/tabbar/home.svg&quot;</span> <span class="attr">slot</span>=<span class="string">&quot;img-common-slot&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>要不然就获取不到相应的图片。</p>
+<p>设置点击之后active的样式</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;tab-item&quot;</span> @click=<span class="string">&quot;itemClick&quot;</span>&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">if</span>=<span class="string">&quot;!isActive&quot;</span> name=<span class="string">&quot;img-common-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">        &lt;slot v-<span class="keyword">else</span> name=<span class="string">&quot;img-active-slot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;div :style=<span class="string">&quot;isTextActive&quot;</span>&gt;</span><br><span class="line">        &lt;slot name=<span class="string">&quot;textSlot&quot;</span>&gt;&lt;/slot&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    name: <span class="string">&quot;TabBarItem&quot;</span>,</span><br><span class="line">    props: &#123;</span><br><span class="line">      path: &#123;</span><br><span class="line">        type: <span class="built_in">String</span></span><br><span class="line">        &#125;,</span><br><span class="line">      <span class="comment">// 父组件给子组件传值</span></span><br><span class="line">      textColor: &#123;</span><br><span class="line">        type: <span class="built_in">String</span>,</span><br><span class="line">        <span class="keyword">default</span>: <span class="string">&quot;red&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">      itemClick()&#123;</span><br><span class="line">        <span class="built_in">this</span>.$router.replace(<span class="built_in">this</span>.path);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed: &#123;</span><br><span class="line">      isActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.$route.path.indexOf(<span class="built_in">this</span>.path) != <span class="number">-1</span>;</span><br><span class="line">      &#125;,</span><br><span class="line">      isTextActive()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.isActive ? &#123;<span class="attr">color</span>: <span class="built_in">this</span>.textColor&#125;: &#123;&#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">  .tab-item&#123;</span><br><span class="line">    height: <span class="number">49</span>px;</span><br><span class="line">    text-align: center;</span><br><span class="line">    flex: <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .tab-item img&#123;</span><br><span class="line">    width: <span class="number">24</span>px;</span><br><span class="line">    height: <span class="number">24</span>px;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">    margin: <span class="number">4</span>px <span class="number">0</span> <span class="number">2</span>px <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  .active&#123;</span><br><span class="line">    color: red</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="navBar"><a href="#navBar" class="headerlink" title="navBar"></a>navBar</h3><p>注意：插槽如果有多个，要使用具名插槽，在使用的时候也要指定替换哪一个插槽，效果图如下</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200911105742.png"></p>
+<h3 id="封装网络请求"><a href="#封装网络请求" class="headerlink" title="封装网络请求"></a>封装网络请求</h3><p>我们知道axios是第三方框架，如果有那一天这个第三方框架不更新的话，我们如果在项目中多处使用了axios，代码的重构就会带来很多不必要的麻烦。</p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
       </tags>
   </entry>
   <entry>
@@ -705,6 +705,79 @@
       </tags>
   </entry>
   <entry>
+    <title>BTC四---实现</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="transaction-based-ledger"><a href="#transaction-based-ledger" class="headerlink" title="transaction-based ledger"></a>transaction-based ledger</h2><p>BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算</p>
+<p>比特币的全节点要维护一个UTXO的数据结构</p>
+<a id="more"></a>
+
+<p>UTXO:Unspent Transaction Output,还没有被花出去的交易的输出，区块链中有很多交易，有些交易的输出可能被花掉了，有些还没有被花掉，没有被花掉的交易的输出的集合叫做UTXO</p>
+<p>UTXO中的每个元素要给出产生这个输出的交易的hash值，以及他在这个交易里是第几个输出，就可以定位到这个UTXO中的输出，那么这个UTXO集合的作用是什么？为什么要维护这样一个数据结构</p>
+<p>作用：防范double spending attack，所以全节点要在内存中维护UTXO数据结构，以便快速检测double spending attack，</p>
+<p>随着交易的发布，每个交易要消耗UTXO中的输出，同时也会产生一些新的输出</p>
+<p>每个交易所有输入的金额，要等于所有输出的金额：total inputs = total outputs</p>
+<p>发布区块的那个结点为什么要把你的交易打包在区块里？这样做对她有什么好处吗？</p>
+<p>如果只有出块奖励，那么自私的结点就只会打包他自己的交易，同时也节省带宽</p>
+<p>所以比特币系统设定了第二个激励机制：交易费（transaction fee），你把我的交易打包在区块里，我给你点小费，所以就会出现total inputs &gt;= total outputs的情况，多的比特币充当了小费</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817210059.png"></p>
+<p>目前矿工去争取记账权，主要还是为了得到出块奖励，但是因为21个区块都会减少出块奖励</p>
+<p>比特币系统中差不多10分钟会创建一个区块，计算下来差不多每四年就会减半（出块奖励）</p>
+<h2 id="区块的例子"><a href="#区块的例子" class="headerlink" title="区块的例子"></a>区块的例子</h2><p>account-based ledger</p>
+<p>以太坊就是这种模式，在这种模式总，系统显式的记录每个账户上有多少个币，比特币的隐私保护就比较好一些</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/image-20200817210819638.png"></p>
+<p>Height:是区块的序号，Difficulty：挖矿的难度（每隔2016个区块要调整这个难度，保持出块时间在10分钟左右）</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211158.png"></p>
+<p>注意：计算hash值都是计算block header的哈希值，不包含block body的哈希值</p>
+<p>所谓的挖矿，就是不断地调整随机数nonce，使得整个block header的哈希值小于等于给定的目标阈值，这个目标阈值表示成16进制就是前面有一长串的0，所以凡是符合难度要求的区块，它的块头的哈希值，算出来都是要有一长串的0</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211615.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211913.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212243.png"></p>
+<p>每个发布的区块里都包含一个特殊的铸币交易</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212744.png"></p>
+<p>这个对Merkle tree的根哈希值有什么影响吗</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213102.png"></p>
+<p>coinbase中的前八个字节当作extra nonce来用nonce从2^32-&gt;2^96</p>
+<p>所以真正挖矿的时候是有两层循环的，外层循环调整coinbase域的extra nonce ，算出block header中的根哈希值之后，内层循环在调整header里的nonce</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213639.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213948.png"></p>
+<h2 id="概率分析"><a href="#概率分析" class="headerlink" title="概率分析"></a>概率分析</h2><p>每次尝试nonce可以看作是Bernoulli trial：a random experiment with binary outcome</p>
+<p>挖矿，每次尝试nonce，成功的概率是微乎其微的，大概率是不行的，如果我们做很多的Bernoulli trial，每个实验都是随机的，这些Bernoulli trial就构成了Bernoulli process：a sequence of independent Bernoulli trials，Bernoulli trial的一个性质是无记忆性：memory less，你做大量的实验，前面的结果和后面的结果是没有关系的</p>
+<p>实验很多，每次成功的概率很小，多重伯努利可以用Poisson process来近似，我们关心的是，系统中产生下一个区块的时间，这个在概率中可以推导出来出块时间是服从指数分布的exponential distribution</p>
+<p>整个系统平均的出块时间是十分钟，这个时间是比特币协议设计出来的</p>
+<p>具体到每个矿工，他能够挖到下一个区块的时间，取决于这个矿工的算力占系统算力的百分比，比如说，你的算力占到系统算力的1%，平均下来，系统里每产生一百个区块，其中有一个区块就是你挖矿挖到的，平均你要等1000分钟才能产生一个区块</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817215856.png"></p>
+<p>这个性质有时候也叫：process free，过去的process是不算数的</p>
+<p>假设一下，如果有某个puzzle不满足process free，会出现什么情况：算力强的矿工具有不成比例的优势，因为算力强的矿工过去做的工作肯定是多的，比如有两个矿工，一个矿工的算力是另一个的十倍，那么他挖到矿的概率也是另一个的十倍，这样就满足process free，如果不满足，就会大于十倍！其实process free 恰恰是挖矿公平性的保证。</p>
+<h2 id="比特币的总量"><a href="#比特币的总量" class="headerlink" title="比特币的总量"></a>比特币的总量</h2><p>挖矿获得的出矿奖励，是比特币长生的唯一途径，然而这个值每四年就会减半，比特币的总量呈现几何趋势</p>
+<p>genmetric series</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819203300.png"></p>
+<p>挖矿对维护比特币系统的安全是至关重要的：Bitcoin is secured by mining，只要大部分算力在诚实的结点手里，系统的安全就可以得到保证。出矿奖励随着出块会减半，那么人们的动力是否会减少呢？从过去的几年来看，恰恰是相反的，比特币的价格是飙升的，如果趋于0之后，是不是就没有动力挖矿了呢？还有第二种激励机制：交易费</p>
+<p>比特币的安全性的分析，①假设大部分算力是掌握在诚实的矿工手里，我们能得到什么样的安全保证，能不能保证写入区块里的交易都是合法的？如果落在了10%的不诚实的结点手里，这个节点能不能偷币？能不能把别人账上的钱转给自己？不能，因为他无法伪造别人的签名（需要知道别人的私钥）。如果把这个交易硬写道区块链里呢？</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819204852.png"></p>
+<p>②恶意的结点能不能double spending？</p>
+<p>如果M-&gt;A存在某种不可逆的效果，那么M-&gt;M’就可以从中获得不当的利益，比如网上购物，M购买了一些商品，然后网站接受比特币支付，M把帐转给这个网站，网站监听到这个交易写入到区块链里了，以为， 支付成功了，所以把商品给了M，M拿到商品之后，又发起了一个交易M-&gt;M’把钱转给自己，然后按照下面这个区块扩展最长合法链，这样上面那个交易就作废了。</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819205358.png"></p>
+<p>如何防范double spending？类似上面这种攻击</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210210.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210314.png"></p>
+<p>区块链是不可篡改的账本：irrevocable ledger，那是不是说凡是写入区块链的内容，永远改不了呢？根据上面的分析可知，这种不可篡改性，只是一种概率上的保证</p>
+<p>其实，还有一种zero confirmation，0个确认，这个意思是说，这个转账交易发布出去了，但是还没有被写入区块链里，商家就确认了这个交易，这种在现实生活中还是比较普遍的，</p>
+<p>原因：</p>
+<p>①比特币协议缺省的设置是：结点接收最先听到的那个交易，两个交易有冲突，最先听到哪个，接收哪个，所以发布一个M-&gt;A,最先听到这个，在zero confirmation的这个位置，诚实的结点有比较大的几率是不会接收M-&gt;M’这个交易的 </p>
+<p>②很多购物网站，从你支付成功，到他把货品发给你，是有一定的时间间隔的，如果发现M-&gt;M’这个转账交易没有在最长合法链里，电商就可以选择取消发货。</p>
+<p>假设某个有恶意的结点获得了记账权，他还能干什么坏事？</p>
+<p> 能不能不把某些合法的交易写道区块链里？这是可以的，但是会少交易费，比特币规定某个区块的大小是有限制的，最多不能超过1M字节，某个节点交易太多，这些交易就只能等到下个区块在发布</p>
+<p>selfish mining：在商家等待6个区块的时候，M-&gt;M’先不发布，在私下偷偷的挖矿，但是不发布，等挖矿创建的区块比6个区块多的时候，一下子全部发布，M-&gt;M’这条链就成了最长合法链；正常的情况是，挖到区块，立马发布，要不然就被别人抢了，所以selfish mining有一个前提，恶意的结点的算力要超过诚实的结点的算力，但是是不可能的</p>
+<p>selfish mining还有什么目的，上述是分叉攻击的目的，假设我们能不是为了回滚以前的交易，就是为了正常的挖矿，赚取出块奖励，selfish mining有没有什么好处？减少竞争：别人挖了一个，我已经挖了两个，然后直接抛出去两个,让别人做一些无用功。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC一---密码学基础</title>
     <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
@@ -772,70 +845,39 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC四---实现</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="transaction-based-ledger"><a href="#transaction-based-ledger" class="headerlink" title="transaction-based ledger"></a>transaction-based ledger</h2><p>BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算</p>
-<p>比特币的全节点要维护一个UTXO的数据结构</p>
+    <title>BTC六---挖矿难度</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
+    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
+<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
 <a id="more"></a>
 
-<p>UTXO:Unspent Transaction Output,还没有被花出去的交易的输出，区块链中有很多交易，有些交易的输出可能被花掉了，有些还没有被花掉，没有被花掉的交易的输出的集合叫做UTXO</p>
-<p>UTXO中的每个元素要给出产生这个输出的交易的hash值，以及他在这个交易里是第几个输出，就可以定位到这个UTXO中的输出，那么这个UTXO集合的作用是什么？为什么要维护这样一个数据结构</p>
-<p>作用：防范double spending attack，所以全节点要在内存中维护UTXO数据结构，以便快速检测double spending attack，</p>
-<p>随着交易的发布，每个交易要消耗UTXO中的输出，同时也会产生一些新的输出</p>
-<p>每个交易所有输入的金额，要等于所有输出的金额：total inputs = total outputs</p>
-<p>发布区块的那个结点为什么要把你的交易打包在区块里？这样做对她有什么好处吗？</p>
-<p>如果只有出块奖励，那么自私的结点就只会打包他自己的交易，同时也节省带宽</p>
-<p>所以比特币系统设定了第二个激励机制：交易费（transaction fee），你把我的交易打包在区块里，我给你点小费，所以就会出现total inputs &gt;= total outputs的情况，多的比特币充当了小费</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817210059.png"></p>
-<p>目前矿工去争取记账权，主要还是为了得到出块奖励，但是因为21个区块都会减少出块奖励</p>
-<p>比特币系统中差不多10分钟会创建一个区块，计算下来差不多每四年就会减半（出块奖励）</p>
-<h2 id="区块的例子"><a href="#区块的例子" class="headerlink" title="区块的例子"></a>区块的例子</h2><p>account-based ledger</p>
-<p>以太坊就是这种模式，在这种模式总，系统显式的记录每个账户上有多少个币，比特币的隐私保护就比较好一些</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/image-20200817210819638.png"></p>
-<p>Height:是区块的序号，Difficulty：挖矿的难度（每隔2016个区块要调整这个难度，保持出块时间在10分钟左右）</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211158.png"></p>
-<p>注意：计算hash值都是计算block header的哈希值，不包含block body的哈希值</p>
-<p>所谓的挖矿，就是不断地调整随机数nonce，使得整个block header的哈希值小于等于给定的目标阈值，这个目标阈值表示成16进制就是前面有一长串的0，所以凡是符合难度要求的区块，它的块头的哈希值，算出来都是要有一长串的0</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211615.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211913.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212243.png"></p>
-<p>每个发布的区块里都包含一个特殊的铸币交易</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212744.png"></p>
-<p>这个对Merkle tree的根哈希值有什么影响吗</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213102.png"></p>
-<p>coinbase中的前八个字节当作extra nonce来用nonce从2^32-&gt;2^96</p>
-<p>所以真正挖矿的时候是有两层循环的，外层循环调整coinbase域的extra nonce ，算出block header中的根哈希值之后，内层循环在调整header里的nonce</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213639.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213948.png"></p>
-<h2 id="概率分析"><a href="#概率分析" class="headerlink" title="概率分析"></a>概率分析</h2><p>每次尝试nonce可以看作是Bernoulli trial：a random experiment with binary outcome</p>
-<p>挖矿，每次尝试nonce，成功的概率是微乎其微的，大概率是不行的，如果我们做很多的Bernoulli trial，每个实验都是随机的，这些Bernoulli trial就构成了Bernoulli process：a sequence of independent Bernoulli trials，Bernoulli trial的一个性质是无记忆性：memory less，你做大量的实验，前面的结果和后面的结果是没有关系的</p>
-<p>实验很多，每次成功的概率很小，多重伯努利可以用Poisson process来近似，我们关心的是，系统中产生下一个区块的时间，这个在概率中可以推导出来出块时间是服从指数分布的exponential distribution</p>
-<p>整个系统平均的出块时间是十分钟，这个时间是比特币协议设计出来的</p>
-<p>具体到每个矿工，他能够挖到下一个区块的时间，取决于这个矿工的算力占系统算力的百分比，比如说，你的算力占到系统算力的1%，平均下来，系统里每产生一百个区块，其中有一个区块就是你挖矿挖到的，平均你要等1000分钟才能产生一个区块</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817215856.png"></p>
-<p>这个性质有时候也叫：process free，过去的process是不算数的</p>
-<p>假设一下，如果有某个puzzle不满足process free，会出现什么情况：算力强的矿工具有不成比例的优势，因为算力强的矿工过去做的工作肯定是多的，比如有两个矿工，一个矿工的算力是另一个的十倍，那么他挖到矿的概率也是另一个的十倍，这样就满足process free，如果不满足，就会大于十倍！其实process free 恰恰是挖矿公平性的保证。</p>
-<h2 id="比特币的总量"><a href="#比特币的总量" class="headerlink" title="比特币的总量"></a>比特币的总量</h2><p>挖矿获得的出矿奖励，是比特币长生的唯一途径，然而这个值每四年就会减半，比特币的总量呈现几何趋势</p>
-<p>genmetric series</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819203300.png"></p>
-<p>挖矿对维护比特币系统的安全是至关重要的：Bitcoin is secured by mining，只要大部分算力在诚实的结点手里，系统的安全就可以得到保证。出矿奖励随着出块会减半，那么人们的动力是否会减少呢？从过去的几年来看，恰恰是相反的，比特币的价格是飙升的，如果趋于0之后，是不是就没有动力挖矿了呢？还有第二种激励机制：交易费</p>
-<p>比特币的安全性的分析，①假设大部分算力是掌握在诚实的矿工手里，我们能得到什么样的安全保证，能不能保证写入区块里的交易都是合法的？如果落在了10%的不诚实的结点手里，这个节点能不能偷币？能不能把别人账上的钱转给自己？不能，因为他无法伪造别人的签名（需要知道别人的私钥）。如果把这个交易硬写道区块链里呢？</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819204852.png"></p>
-<p>②恶意的结点能不能double spending？</p>
-<p>如果M-&gt;A存在某种不可逆的效果，那么M-&gt;M’就可以从中获得不当的利益，比如网上购物，M购买了一些商品，然后网站接受比特币支付，M把帐转给这个网站，网站监听到这个交易写入到区块链里了，以为， 支付成功了，所以把商品给了M，M拿到商品之后，又发起了一个交易M-&gt;M’把钱转给自己，然后按照下面这个区块扩展最长合法链，这样上面那个交易就作废了。</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819205358.png"></p>
-<p>如何防范double spending？类似上面这种攻击</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210210.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210314.png"></p>
-<p>区块链是不可篡改的账本：irrevocable ledger，那是不是说凡是写入区块链的内容，永远改不了呢？根据上面的分析可知，这种不可篡改性，只是一种概率上的保证</p>
-<p>其实，还有一种zero confirmation，0个确认，这个意思是说，这个转账交易发布出去了，但是还没有被写入区块链里，商家就确认了这个交易，这种在现实生活中还是比较普遍的，</p>
-<p>原因：</p>
-<p>①比特币协议缺省的设置是：结点接收最先听到的那个交易，两个交易有冲突，最先听到哪个，接收哪个，所以发布一个M-&gt;A,最先听到这个，在zero confirmation的这个位置，诚实的结点有比较大的几率是不会接收M-&gt;M’这个交易的 </p>
-<p>②很多购物网站，从你支付成功，到他把货品发给你，是有一定的时间间隔的，如果发现M-&gt;M’这个转账交易没有在最长合法链里，电商就可以选择取消发货。</p>
-<p>假设某个有恶意的结点获得了记账权，他还能干什么坏事？</p>
-<p> 能不能不把某些合法的交易写道区块链里？这是可以的，但是会少交易费，比特币规定某个区块的大小是有限制的，最多不能超过1M字节，某个节点交易太多，这些交易就只能等到下个区块在发布</p>
-<p>selfish mining：在商家等待6个区块的时候，M-&gt;M’先不发布，在私下偷偷的挖矿，但是不发布，等挖矿创建的区块比6个区块多的时候，一下子全部发布，M-&gt;M’这条链就成了最长合法链；正常的情况是，挖到区块，立马发布，要不然就被别人抢了，所以selfish mining有一个前提，恶意的结点的算力要超过诚实的结点的算力，但是是不可能的</p>
-<p>selfish mining还有什么目的，上述是分叉攻击的目的，假设我们能不是为了回滚以前的交易，就是为了正常的挖矿，赚取出块奖励，selfish mining有没有什么好处？减少竞争：别人挖了一个，我已经挖了两个，然后直接抛出去两个,让别人做一些无用功。</p>
+<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
+<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
+<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
+<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
+<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
+<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
+<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
+<p>调整的公式：</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
+<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
+<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
+<p><code>比特币系统中总算力的变化情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
+<p><code>算力难度的增长情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
+<p>符合难度调整的设计目标</p>
+<p><code>难度调整曲线</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
+<p>说明挖矿的人越来越多，设备越来越先进</p>
+<p><code>每天的出块时间</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
+<p><code>最近半年的出块事件</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -923,39 +965,58 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC六---挖矿难度</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
-    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
-<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
+    <title>BTC二---比特币中的数据结构</title>
+    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="比特币中的数据结构"><a href="#比特币中的数据结构" class="headerlink" title="比特币中的数据结构"></a>比特币中的数据结构</h1><h2 id="1-区块链"><a href="#1-区块链" class="headerlink" title="1.区块链"></a>1.区块链</h2><p>这里要用到一个重要的概念叫做哈希指针。</p>
+<p>hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）</p>
+<p>区块链相比较于普通的链表有何区别？</p>
 <a id="more"></a>
 
-<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
-<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
-<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
-<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
-<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
-<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
-<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
-<p>调整的公式：</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
-<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
-<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
-<p><code>比特币系统中总算力的变化情况</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
-<p><code>算力难度的增长情况</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
-<p>符合难度调整的设计目标</p>
-<p><code>难度调整曲线</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
-<p>说明挖矿的人越来越多，设备越来越先进</p>
-<p><code>每天的出块时间</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
-<p><code>最近半年的出块事件</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
+<p>①用哈希指针替代了普通的指针</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193317.png"></p>
+<p>区块链示例</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193910.png"></p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802194121.png"></p>
+<p>这样做的好处是</p>
+<p>tamper-evident log：篡改-证明 日志，当有人篡改了区块链中某一个区块的某个内容，则它的下一个区块的哈希值就对不上了，以此类推，直到最后一个保存在系统中的哈希值也对不上了，这样我们只需要记住保存在系统中的那最后一个哈希值，就可以检测出对任意区块的修改。这也是区块链和普通链表的一个区别。（多米诺骨牌效应）</p>
+<p>有了这个性质，系统中就不需要保存整条区块链的内容，比如它可以只保存最近的几千个区块，如果要用到以前的区块怎么办？</p>
+<blockquote>
+<p>可以问系统中的其他节点，去要这个区块，有些节点可能是有恶意的（去中心化系统），那么如何知道别人给你的区块是不是正确的呢？就用到哈希指针的这个性质！别人给你的最后的那个区块，算一下哈希值，如果和系统中保存的与之对应的后一个区块的哈希值对比之后相同，则正确</p>
+</blockquote>
+<h2 id="2-Merkle-tree-默克尔树"><a href="#2-Merkle-tree-默克尔树" class="headerlink" title="2.Merkle tree(默克尔树)"></a>2.Merkle tree(默克尔树)</h2><p>和binary tree（二叉树）的区别是，用哈希指针代替了普通的指针</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200344.png"></p>
+<p>和链式结构一样，“牵一发而动全身”。</p>
+<p>各个区块由哈希指针连接在一起的，每个区块所包含的交易，是组织成一个Merkle tree的形式，最底层的数据块实际上是某个交易。</p>
+<p>每个区块都是由block header和block body组成，block header 保存这个Merkle tree 的根哈希值，不保存这个区块的交易信息，而block body保存交易信息</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200930.png"></p>
+<p>Merkle tree的作用？</p>
+<p>①提供Merkle proof</p>
+<p>比特币中的结点分为两类，一类时全节点，还有一类是轻结点</p>
+<p>全节点：保存整个区块的内容，block header和block body都有</p>
+<p>轻结点：比如手机上的比特币钱包的应用就属于轻结点，只有一个block header</p>
+<p>这样就带来一个问题，如果你想向一个轻结点证明某个交易是写入到了区块链中的 ，该怎么证明？</p>
+<p>​    比如我想买你的东西，我就需要向你转钱，我对你说，我对你转钱的交易，已经写到了区块链中了，支付已经完成了，</p>
+<p>那么你怎么知道，这个交易已经被写入区块链里了呢？这里就需要用到Merkle proof</p>
+<p>一个轻结点，向某个全节点发出请求，请求一个能够证明黄色结点这个交易，被包含在这棵Merkle tree里面的Merkle proof</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802202232.png"></p>
+<p>最后算出的根哈希值，和block header中存储的root hash比较，就可以证明出tx是否在区块链中</p>
+<p>这种证明也叫做：</p>
+<p>proof of membership</p>
+<p>或</p>
+<p>proof of inclusion</p>
+<p>如果最底下有n个交易：时间复杂度为O(log(n))</p>
+<p>那么可不可以证明，区块链中没有某个交易？也就是proof of non-membership</p>
+<p>有一种比较笨的方法，就是把这一整颗Merkle tree都传给轻结点，如果hash值都正确，如果某个交易不在叶结点中，则证明了proof of non-membership，时间复杂度为O(n)，有没有比较高效的方法证明不存在？</p>
+<p>如果我们对叶结点的排列顺序不了解，那么是没有办法证明交易不在里面的</p>
+<p>如果我们对叶结点的排列顺序做一些要求：对每个交易取哈希值，按照这个哈希值从小到大排序，这个时候是有一个好的证明方法的：但是代价是需要排序</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204313.png"></p>
+<p>sorted Merkle tree：排好序的Merkle tree</p>
+<p>比特币中没有这种排好序的Merkle tree，因为比特币中根本不需要作这种不存在证明，没有硬性需求，所以比特币中的Merkle tree 不要求排序</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>比特币中的两种数据结构：区块链和Merkle tree</p>
+<p>除了这两种数据结构，哈希指针还用在什么地方？</p>
+<p>只要这个数据结构是无环的，都可以用哈希指针来代替普通指针，有环会带来一定的问题</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204834.png"></p>
+<p>会出现循环依赖的问题，定不下来任何一个区块，找不到创世纪块</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1092,67 +1153,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC二---比特币中的数据结构</title>
-    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="比特币中的数据结构"><a href="#比特币中的数据结构" class="headerlink" title="比特币中的数据结构"></a>比特币中的数据结构</h1><h2 id="1-区块链"><a href="#1-区块链" class="headerlink" title="1.区块链"></a>1.区块链</h2><p>这里要用到一个重要的概念叫做哈希指针。</p>
-<p>hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）</p>
-<p>区块链相比较于普通的链表有何区别？</p>
-<a id="more"></a>
-
-<p>①用哈希指针替代了普通的指针</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193317.png"></p>
-<p>区块链示例</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193910.png"></p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802194121.png"></p>
-<p>这样做的好处是</p>
-<p>tamper-evident log：篡改-证明 日志，当有人篡改了区块链中某一个区块的某个内容，则它的下一个区块的哈希值就对不上了，以此类推，直到最后一个保存在系统中的哈希值也对不上了，这样我们只需要记住保存在系统中的那最后一个哈希值，就可以检测出对任意区块的修改。这也是区块链和普通链表的一个区别。（多米诺骨牌效应）</p>
-<p>有了这个性质，系统中就不需要保存整条区块链的内容，比如它可以只保存最近的几千个区块，如果要用到以前的区块怎么办？</p>
-<blockquote>
-<p>可以问系统中的其他节点，去要这个区块，有些节点可能是有恶意的（去中心化系统），那么如何知道别人给你的区块是不是正确的呢？就用到哈希指针的这个性质！别人给你的最后的那个区块，算一下哈希值，如果和系统中保存的与之对应的后一个区块的哈希值对比之后相同，则正确</p>
-</blockquote>
-<h2 id="2-Merkle-tree-默克尔树"><a href="#2-Merkle-tree-默克尔树" class="headerlink" title="2.Merkle tree(默克尔树)"></a>2.Merkle tree(默克尔树)</h2><p>和binary tree（二叉树）的区别是，用哈希指针代替了普通的指针</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200344.png"></p>
-<p>和链式结构一样，“牵一发而动全身”。</p>
-<p>各个区块由哈希指针连接在一起的，每个区块所包含的交易，是组织成一个Merkle tree的形式，最底层的数据块实际上是某个交易。</p>
-<p>每个区块都是由block header和block body组成，block header 保存这个Merkle tree 的根哈希值，不保存这个区块的交易信息，而block body保存交易信息</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200930.png"></p>
-<p>Merkle tree的作用？</p>
-<p>①提供Merkle proof</p>
-<p>比特币中的结点分为两类，一类时全节点，还有一类是轻结点</p>
-<p>全节点：保存整个区块的内容，block header和block body都有</p>
-<p>轻结点：比如手机上的比特币钱包的应用就属于轻结点，只有一个block header</p>
-<p>这样就带来一个问题，如果你想向一个轻结点证明某个交易是写入到了区块链中的 ，该怎么证明？</p>
-<p>​    比如我想买你的东西，我就需要向你转钱，我对你说，我对你转钱的交易，已经写到了区块链中了，支付已经完成了，</p>
-<p>那么你怎么知道，这个交易已经被写入区块链里了呢？这里就需要用到Merkle proof</p>
-<p>一个轻结点，向某个全节点发出请求，请求一个能够证明黄色结点这个交易，被包含在这棵Merkle tree里面的Merkle proof</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802202232.png"></p>
-<p>最后算出的根哈希值，和block header中存储的root hash比较，就可以证明出tx是否在区块链中</p>
-<p>这种证明也叫做：</p>
-<p>proof of membership</p>
-<p>或</p>
-<p>proof of inclusion</p>
-<p>如果最底下有n个交易：时间复杂度为O(log(n))</p>
-<p>那么可不可以证明，区块链中没有某个交易？也就是proof of non-membership</p>
-<p>有一种比较笨的方法，就是把这一整颗Merkle tree都传给轻结点，如果hash值都正确，如果某个交易不在叶结点中，则证明了proof of non-membership，时间复杂度为O(n)，有没有比较高效的方法证明不存在？</p>
-<p>如果我们对叶结点的排列顺序不了解，那么是没有办法证明交易不在里面的</p>
-<p>如果我们对叶结点的排列顺序做一些要求：对每个交易取哈希值，按照这个哈希值从小到大排序，这个时候是有一个好的证明方法的：但是代价是需要排序</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204313.png"></p>
-<p>sorted Merkle tree：排好序的Merkle tree</p>
-<p>比特币中没有这种排好序的Merkle tree，因为比特币中根本不需要作这种不存在证明，没有硬性需求，所以比特币中的Merkle tree 不要求排序</p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>比特币中的两种数据结构：区块链和Merkle tree</p>
-<p>除了这两种数据结构，哈希指针还用在什么地方？</p>
-<p>只要这个数据结构是无环的，都可以用哈希指针来代替普通指针，有环会带来一定的问题</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204834.png"></p>
-<p>会出现循环依赖的问题，定不下来任何一个区块，找不到创世纪块</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BTC五---网络</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
     <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
@@ -1172,6 +1172,37 @@
       </categories>
       <tags>
         <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CCF一---202006</title>
+    <url>/2020/08/29/ccf/202006/</url>
+    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
+
+<a id="more"></a>
+
+<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
+
+<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
+
+<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
+<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
+<p>以下就是我写的代码（测试为100分）:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>CCF</tag>
       </tags>
   </entry>
 </search>
