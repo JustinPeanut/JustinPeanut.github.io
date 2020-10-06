@@ -29,8 +29,19 @@
 <meta property="og:description" content="项目工程概述项目github仓库地址：peanutMallFollowCoderwhy talk is cheap, show me your code 一下记录我跟随coderwhy老师开发mall商城应用中碰到的一些问题和需要注意的点。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200911105742.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200921105012.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200921105558.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200921112812.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200922150027.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200922154540.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200928104118.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200928104759.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200928152425.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200929173815.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200929173937.png">
+<meta property="og:image" content="http://yoursite.com/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20201006155249.png">
 <meta property="article:published_time" content="2020-09-11T03:07:33.000Z">
-<meta property="article:modified_time" content="2020-09-11T03:10:47.928Z">
+<meta property="article:modified_time" content="2020-10-06T10:13:42.121Z">
 <meta property="article:author" content="Deng Feng">
 <meta property="article:tag" content="Vue">
 <meta name="twitter:card" content="summary">
@@ -213,7 +224,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">项目工程概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">碰到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.</span> <span class="nav-text">创建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91"><span class="nav-number">2.2.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tabBar"><span class="nav-number">2.2.1.</span> <span class="nav-text">tabBar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#navBar"><span class="nav-number">2.2.2.</span> <span class="nav-text">navBar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="nav-number">2.2.3.</span> <span class="nav-text">封装网络请求</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">项目工程概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A2%B0%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.</span> <span class="nav-text">碰到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.</span> <span class="nav-text">创建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91"><span class="nav-number">2.2.</span> <span class="nav-text">开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tabBar"><span class="nav-number">2.2.1.</span> <span class="nav-text">tabBar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#navBar"><span class="nav-number">2.2.2.</span> <span class="nav-text">navBar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82"><span class="nav-number">2.2.3.</span> <span class="nav-text">封装网络请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E8%BD%AE%E6%92%AD%E5%9B%BE"><span class="nav-number">2.2.4.</span> <span class="nav-text">封装轮播图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91FeatureView"><span class="nav-number">2.2.5.</span> <span class="nav-text">开发FeatureView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TabControl"><span class="nav-number">2.2.6.</span> <span class="nav-text">TabControl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%86%E5%93%81%E5%88%97%E8%A1%A8%E9%A1%B5"><span class="nav-number">2.2.7.</span> <span class="nav-text">商品列表页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E7%82%B9%E5%87%BB%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%AF%B9%E5%BA%94%E7%8E%B0%E5%AE%9E%E7%9A%84%E5%95%86%E5%93%81"><span class="nav-number">2.2.8.</span> <span class="nav-text">切换点击的类型对应现实的商品</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#better-scoll%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.9.</span> <span class="nav-text">better-scoll的安装和使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.9.1.</span> <span class="nav-text">出现的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backtop"><span class="nav-number">2.2.10.</span> <span class="nav-text">backtop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E6%8B%89%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%A4%9A"><span class="nav-number">2.2.11.</span> <span class="nav-text">上拉加载更多</span></a></li></ol></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -317,10 +328,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-09-11 11:07:33 / 修改时间：11:10:47" itemprop="dateCreated datePublished" datetime="2020-09-11T11:07:33+08:00">2020-09-11</time>
+      <time title="创建时间：2020-09-11 11:07:33" itemprop="dateCreated datePublished" datetime="2020-09-11T11:07:33+08:00">2020-09-11</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-10-06 18:13:42" itemprop="dateModified" datetime="2020-10-06T18:13:42+08:00">2020-10-06</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -360,14 +377,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.9k</span>
+      <span>5.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -400,6 +417,94 @@
 <h3 id="navBar"><a href="#navBar" class="headerlink" title="navBar"></a>navBar</h3><p>注意：插槽如果有多个，要使用具名插槽，在使用的时候也要指定替换哪一个插槽，效果图如下</p>
 <p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200911105742.png"></p>
 <h3 id="封装网络请求"><a href="#封装网络请求" class="headerlink" title="封装网络请求"></a>封装网络请求</h3><p>我们知道axios是第三方框架，如果有那一天这个第三方框架不更新的话，我们如果在项目中多处使用了axios，代码的重构就会带来很多不必要的麻烦。</p>
+<p>①下载axios插件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install axios</span><br></pre></td></tr></table></figure>
+
+<p>②使用的时候不需要Vue.use命令install</p>
+<p>直接导入axios即可使用，详情课参照官方文档            <a target="_blank" rel="noopener" href="http://www.axios-js.com/zh-cn/docs/">axios官方文档</a></p>
+<p>github xowen</p>
+<p>出现的问题：在传回axios实例之后，发现调用then方法失败，原因是：应当返回axiosInstance(config)配置过后的axiosInstance</p>
+<p>错误代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">config</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 创建axios实例，设置baseConfig</span></span><br><span class="line">  <span class="keyword">const</span> axiosInstance = Axios.create(&#123;</span><br><span class="line">    baseURL: <span class="string">&quot;http://123.207.32.32:8000&quot;</span>,</span><br><span class="line">    timeout: <span class="number">5000</span></span><br><span class="line">  &#125;);</span><br><span class="line">  axiosInstance(config);</span><br><span class="line">  <span class="keyword">return</span> axiosInstance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    原因是因为axios实例配置过后的实例返回的是一个promise，所以可以调用then方法</p>
+<p>正确代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Axios <span class="keyword">from</span> <span class="string">&quot;axios&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">config</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// 创建axios实例，设置baseConfig</span></span><br><span class="line">  <span class="keyword">const</span> axiosInstance = Axios.create(&#123;</span><br><span class="line">    baseURL: <span class="string">&quot;http://123.207.32.32:8000&quot;</span>,</span><br><span class="line">    timeout: <span class="number">5000</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// 拦截器</span></span><br><span class="line">  axiosInstance.interceptors.request.use(<span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(config);</span><br><span class="line">    <span class="keyword">return</span> config;</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> axiosInstance(config);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="封装轮播图"><a href="#封装轮播图" class="headerlink" title="封装轮播图"></a>封装轮播图</h3><p>注意：在每次滚动之后，都要验证位置，如果位置超过了图片的长度</p>
+<h3 id="开发FeatureView"><a href="#开发FeatureView" class="headerlink" title="开发FeatureView"></a>开发FeatureView</h3><p>点击FeatureView图片之后跳转的超链接</p>
+<p><a target="_blank" rel="noopener" href="https://act.mogujie.com/zzlx67">https://act.mogujie.com/zzlx67</a></p>
+<h3 id="TabControl"><a href="#TabControl" class="headerlink" title="TabControl"></a>TabControl</h3><p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200921105012.png"></p>
+<p>如果只是文字不一样的话，就没有必要用插槽</p>
+<p>取而代之：</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200921105558.png"></p>
+<p>当需要设置点击active的样式，使用currentIndex标记当前所处于的标签，使用循环中的index和currentIndex判断是不是相等，如果相等，就是处于活跃的标签</p>
+<p>其中定义的变量</p>
+<p><code>--color-high-text</code>:文字高亮颜色</p>
+<p><code>--color-tint</code>:下划线高亮</p>
+<p>如果希望滚动的时候，停留在页面的顶端，可以设置css</p>
+<p>在没有达到top：xxpx之前，position的属性默认是一个static，当达到xxpx时，浏览器会自动将posiotion的属性改成fixed</p>
+<p>（如果需要适配ie浏览器，这个属性就不能随便用了）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attribute">position</span>: sticky;</span><br><span class="line">    <span class="attribute">top</span>: xxpx; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="商品列表页"><a href="#商品列表页" class="headerlink" title="商品列表页"></a>商品列表页</h3><p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200921112812.png"></p>
+<p>create函数中些主要逻辑，主要是实现的方法在methods中执行</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200922150027.png"></p>
+<p>push方法可以传入可变参数，如果希望把一个数组push到另一个数组中，可以使用数组1.push(…数组2)</p>
+<p>关于样式调整：</p>
+<p><code>flex-wrap：wrap</code>根据子元素的宽度适配每一行占多少个子元素。</p>
+<p><code>justify-content:space-around</code>：子元素占据每一行并均等分，但是中间的宽度是左右宽度的2倍</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200922154540.png"></p>
+<h3 id="切换点击的类型对应现实的商品"><a href="#切换点击的类型对应现实的商品" class="headerlink" title="切换点击的类型对应现实的商品"></a>切换点击的类型对应现实的商品</h3><p>注意的问题是，子组件向父组件传递参数的方法：</p>
+<p>子组件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">setActive(index)&#123;</span><br><span class="line">        <span class="built_in">this</span>.currentIndex = index;</span><br><span class="line">        <span class="comment">// 传回父组件，监听当前index的点击，对应修改展示的商品信息</span></span><br><span class="line">        <span class="built_in">this</span>.$emit(<span class="string">&#x27;tabClick&#x27;</span>,index);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>父组件(其中，父组件用来接收子组件传递的方法的那个方法中不需要携带index形参)：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;tab-control <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;tab-control&quot;</span> :titles=<span class="string">&quot;[&#x27;流行&#x27;,&#x27;新款&#x27;,&#x27;精选&#x27;]&quot;</span> @tabClick=<span class="string">&quot;tabClick&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="better-scoll的安装和使用"><a href="#better-scoll的安装和使用" class="headerlink" title="better-scoll的安装和使用"></a>better-scoll的安装和使用</h3><p>使用原生的滚动（内容多余整个屏幕的时候），在移动端滚动的时候会非常的卡顿，以前为了适配移动端滚动的问题，使用了<code>iscoll</code>框架，但是现在他没有更新了，所以我们使用国内开发的一个<code>better-scoll</code></p>
+<p>安装</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install better-scroll --save</span><br></pre></td></tr></table></figure>
+
+<p>如果想实现原生的局部js滚动，可以使用如下方式，但是前提是必须给父标签一个固定的高度才行。</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200928104118.png"></p>
+<p>第三方的框架， 要注意封装，万一他不更新，就凉凉了，下次如果项目中有很多地方使用到了这个框架，改起来很要命的</p>
+<p>使用</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200928104759.png"></p>
+<p>上述使用是错误的，因为这个方法会在创建组建的时候被调用，这时候还没有挂载template，所以一直拿不到content。</p>
+<p>在使用的时候，根据官方文档的说明，必须在管理的标签外面加一层<code>wrapper</code>,并且管理的内容必须是一个标签</p>
+<p>如果向监听用户滚动到哪一个位置了：并对当前状态添加一些业务功能</p>
+<p>但是默认情况下，Bscroll是不能实时监听滚动的位置的，如果想要实时监听滚动的化，必须给他传参数</p>
+<p>参数：</p>
+<p>①probeType：是否侦测。0，1都是不侦测；2表示在手指滚动的过程中侦测，手指离开后的惯性滚动过程不侦测；3表示只要是滚动都侦测。（配合<code>scroll</code>事件使用）</p>
+<p>②click：默认值位false，在<code>wrapper</code>中管理的<code>content</code>如果有监听click事件，默认是不会生效的，如果将click属性改为true，才会传派事件。</p>
+<p>③pullUpload：上拉加载更多(配合<code>pullingUp</code>使用)，但是当前页面只能调用一次上拉加载的回调函数，需要在最后调用一个<code>finishPullUp</code>方法，结束当前上拉加载，才能监听下一次上拉加载。</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200928152425.png"></p>
+<p>封装better-scroll：封装一个vue文件，这个vue文件对better-scroll有依赖，其他的vue文件只要引用这个vue文件就可以了。</p>
+<p>使用document.query获取<code>wrapper</code>的方式不是特别好，如果在其他组件中也有class为<code>wrapper</code>的标签，那么获取的时候就会有一些问题（query获取的是同一个页面上的第一个查询到的元素），在vue开发的时候经常出现类似的这种问题，值得注意，推荐的方法：</p>
+<blockquote>
+<p>在vue中给标签绑定一个ref属性</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">ref</span>=<span class="string">&quot;aaa&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>之后再下面就可以通过this.$refs.aaa拿到上述标记的标签，但是在前面所讲的ref是在父组件中给子组件标记，然后拿到相应的子组件的方法。这里标记普通的标签也是可行的。</p>
+</blockquote>
+<p>在给组件中的元素添加样式的时候，如果style标签中没有加上scoped属性，那么这个style中设置的样式就是全局的，例如</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>为某个div设置高度</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    其中vh是 视口的高度100vh == 100 %</span><br><span class="line">    <span class="selector-tag">height</span>: 100<span class="selector-tag">vh</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200929173815.png"></p>
+<p>可以动态计算高度，也可以使用定位</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200929173937.png"></p>
+<h4 id="出现的问题"><a href="#出现的问题" class="headerlink" title="出现的问题"></a>出现的问题</h4><p>然而在我加入better-scroll之后，页面上的元素都动不了了，就好像里面没有东西一样，这就很奇怪了，我封装的scroll应该没有问题（因为我在分类中测试了），问题应该处在home页的css上面，但是并不知道哪里的问题。</p>
+<p>上百度看了，滚动不了的问题无非是<code>wrapper</code>的高度要比<code>content</code>的低，<code>content</code>下只能有一个子标签，这些问题我都注意了，但是还是不管用，无能为力。</p>
+<p>但是反复测试，在pc端换设备测试的时候发现，换来换去怎么又好使了？这也太玄学了吧。看来better-scroll插件还不是很稳定。</p>
+<p>想到可能是版本太高？所以就换了个低版本，1.15.2（和coderwhy一样的版本测试），果然，换了版本之后就好用了。</p>
+<h3 id="backtop"><a href="#backtop" class="headerlink" title="backtop"></a>backtop</h3><p>如果想要监听组件的点击，需要添加修饰符<code>native</code></p>
+<p>给子组件添加ref属性，可以直接访问子组件中的内容。</p>
+<p><img src="/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20201006155249.png"></p>
+<h3 id="上拉加载更多"><a href="#上拉加载更多" class="headerlink" title="上拉加载更多"></a>上拉加载更多</h3><p>做完一次上拉加载更多，加载数据之后，不要忘了调用scroll对象中的finishPullUp方法</p>
 
     </div>
 
@@ -520,14 +625,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">54k</span>
+    <span title="站点总字数">57k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">49 分钟</span>
+    <span title="站点阅读时长">52 分钟</span>
   </span>
 </div>
 <div class="busuanzi-count">
