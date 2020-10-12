@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/header.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/header.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/header.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="ETH-交易树和收据树​    每次发布一个区块的时候，这个区块所包含的交易，会组织成一棵交易树，也是一棵Merkle tree，和比特币的情况是类似的，同时，以太坊还增加了一个收据树，每个交易执行完之后，会形成一个交易，记录这个交易的相关信息，也就是说，收据树和交易树上面的结点是一一对应的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ETH四---交易树和收据树">
+<meta property="og:url" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/index.html">
+<meta property="og:site_name" content="Blog of DengFeng">
+<meta property="og:description" content="ETH-交易树和收据树​    每次发布一个区块的时候，这个区块所包含的交易，会组织成一棵交易树，也是一棵Merkle tree，和比特币的情况是类似的，同时，以太坊还增加了一个收据树，每个交易执行完之后，会形成一个交易，记录这个交易的相关信息，也就是说，收据树和交易树上面的结点是一一对应的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192207.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192340.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192401.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192445.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192547.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192610.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192708.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192750.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192820.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012191502.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012193342.png">
+<meta property="article:published_time" content="2020-10-12T12:18:14.000Z">
+<meta property="article:modified_time" content="2020-10-12T12:20:31.233Z">
+<meta property="article:author" content="Deng Feng">
+<meta property="article:tag" content="区块链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192207.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ETH四---交易树和收据树 | Blog of DengFeng</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Blog of DengFeng" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband">	
+<a target="_blank" rel="noopener" href="https://github.com/JustinPeanut" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+</div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Blog of DengFeng</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ETH-%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text">ETH-交易树和收据树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bloom-filter"><span class="nav-number">1.1.</span> <span class="nav-text">bloom filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Deng Feng"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">Deng Feng</p>
+  <div class="site-description" itemprop="description">没有人一生下来就是天才</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JustinPeanut" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JustinPeanut" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jutinpeanut@gmail.com" title="E-Mail → mailto:jutinpeanut@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?uin=1820840828&Site=&menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?uin&#x3D;1820840828&amp;Site&#x3D;&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/JustinPeanut" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="Deng Feng">
+      <meta itemprop="description" content="没有人一生下来就是天才">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of DengFeng">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ETH四---交易树和收据树
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-10-12 20:18:14 / 修改时间：20:20:31" itemprop="dateCreated datePublished" datetime="2020-10-12T20:18:14+08:00">2020-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/" itemprop="url" rel="index"><span itemprop="name">区块链</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="ETH-交易树和收据树"><a href="#ETH-交易树和收据树" class="headerlink" title="ETH-交易树和收据树"></a>ETH-交易树和收据树</h1><p>​    每次发布一个区块的时候，这个区块所包含的交易，会组织成一棵交易树，也是一棵Merkle tree，和比特币的情况是类似的，同时，以太坊还增加了一个收据树，每个交易执行完之后，会形成一个交易，记录这个交易的相关信息，也就是说，收据树和交易树上面的结点是一一对应的。</p>
+<a id="more"></a>
+
+<p>​    增加这个收据树主要是考虑到以太坊的智能合约执行过程比较复杂，增加收据树的结构有利于我们快速查询一些执行的结果，从数据结构上来看，收据树和交易树都是MPT（Merkle Patricia tree），和比特币有所区别，比特币中的交易树，就是用普通的Merkle tree。为什么有这个区别？可能是为了方便，以太坊中的三棵树都用同样的结构，代码比较统一，不一定有什么深层次的原因，当然，用MPT的一个好处是：它支持查找操作，它支持通过键值，从顶向下，沿着树进行查找，对于状态树来说，查找的键值，就是这个账户的地址；对于交易树和收据树来说，查找的键值就是这个交易在发布的区块里面的序号（交易的发布顺序是由发布区块的那个结点决定的）。</p>
+<p>​    交易树和收据树都是只把当前发布的区块里的交易组织起来的，而状态树，是把系统中所有账户的状态都要包含进去，不管这些账户和当前交易有没有关系。</p>
+<p>​    多个区块的状态树是共享结点的，每次新发布一个区块的时候，只有这个区块里的交易影响了账户状态那些结点需要新建一个分支，其他的结点都是沿用原来状态树上的结点就行了。相比之下，每个区块的交易树和收据树都是独立的，他们是不会共享节点的，每个区块中发布的交易本身我们也认为是独立的。</p>
+<p>​    交易树和收据树的用途？</p>
+<blockquote>
+<p>①提供Merkle Proof，就像比特币当中，交易树可以向轻结点证明某个交易被打包到某个区块里了；收据树也是类似的，你要证明某个交易的执行结果也是在收据树中提供一个Merkle Proof。</p>
+<p>②除此之外，以太坊还支持一些更加复杂的查询操作，比如说，你想找到过去十天当中，所有跟智能合约有关的交易：一种办法是，把过去十天产生交易的区块都扫描一遍，看看其中有哪些交易和智能合约相关（复杂度比较高，而且对于轻结点来说，没有交易列表，它只有一个块头信息，所有轻结点也没有办法通过扫描所有交易列表的方法，找到符合条件的交易）；以太坊中引入了bloom filter。</p>
+</blockquote>
+<h2 id="bloom-filter"><a href="#bloom-filter" class="headerlink" title="bloom filter"></a>bloom filter</h2><p>bloom filter：这个数据结构可以支持比较高效的查找某个元素是不是在一个比较大的集合里面，比如有个很大的集合，你先知道某个指定的元素是不是在这个集合里，怎么办？</p>
+<blockquote>
+<p>一种比较笨的方法，遍历集合，但是这个复杂度是线性的（这个的前提是你得有足够的存储来保存整个集合的元素），对于轻结点来说，他没有交易列表（没有整个集合的元素信息）；</p>
+<p>bloom filter使用了一种比较巧妙的思想，给这个大的集合，计算出一个很紧凑的摘要</p>
+</blockquote>
+<p>​    比如有一个128位的向量，集合中的每一个函数通过哈希函数取哈希，找到向量中的对应位置，然后把他置成1（向量每个位置的初始值为0），所有的元素都处理完了，得到的这个向量，就是原来集合的摘要，这个摘要比原来的集合要小很多，比如我们这个例子中，用一个128位的向量就可以代表一个集合了。</p>
+<p>​    这个摘要有什么用？</p>
+<blockquote>
+<p>我们现在有一个元素d，想知道d是不是在集合中，但是这个集合本身我们不一定能够保存下来，应该怎么办？</p>
+<p>我们用给定的哈希函数，给d取哈希值，看他映射的位置，如果该位置向量的值为0，说明这个元素一定不在这个集合里，假设是1，①确实是集合中的元素；②也有可能不在集合中，恰好出现了哈希碰撞而已</p>
+</blockquote>
+<p>​    所以，使用bloom filter，有可能会出现false positive，但是不会出现false negative（在里面他一定在里面，不在里面他有可能在里面）。</p>
+<p>​    有的bloom filter的设计，不是用的一种哈希函数，而是用的一组哈希函数，那么每个哈希函数，独立地把这个函数映射到向量中的某一个位置，用一组哈希函数的好处是，不会所有的哈希函数都出现碰撞。</p>
+<p>​    如果从集合中删除一个元素，该怎么操作？</p>
+<blockquote>
+<p>bloom filter的一个局限性是，不支持删除操作，把映射为1的位置改成0，可能其他的元素也映射到这里（哈希碰撞是可能的），所以简单的bloom filter是不支持删除操作的，如果要支持删除操作，就不能是0/1表示有还是没有了，得改成计数器得形式，还要考虑这个计数器会不会overflow，这样这个数据结构就很复杂了，与初衷是相违背的。</p>
+</blockquote>
+<p>​    以太坊中bloom filter的作用？</p>
+<blockquote>
+<p>每个交易执行完之后会形成一个收据，这个收据里面就会有一个bloom filter，记录这个交易的类型，地址等其他信息，发布的区块的块头里，也有一个总的bloom filter，这个总的bloom filter是这个区块里所有交易的bloom filter的一个并集</p>
+</blockquote>
+<p>​    所以你要根据条件查找交易（我要最近十天之内和智能合约相关的交易）？</p>
+<blockquote>
+<p>先查一下哪个区块的块头里的bloom filter有我要的这个交易的类型，如果块头里的bloom filter没有的话，那么这个区块就不是我们想要的，如果有的话，我们再去查找这个区块里包含的交易所对应的收据树里的那些bloom filter，有可能都没有（false positive），如果是有的话，找到相对应的交易确认。</p>
+</blockquote>
+<p>这个好处是什么？</p>
+<blockquote>
+<p>好处是能够快速过滤掉大量无关的区块，剩下的一些少数的“候选区块”我们再仔细查看，比如你是轻结点，你只有块头信息，那么根据块头，就已经可以过滤掉很多区块了，剩下有可能是你想要的区块，可以问全节点要一些进一步的信息。</p>
+</blockquote>
+<hr>
+<p>​    以太坊的三棵树的哈希值都包含在块头里面的，以太坊的运行过程可以把它看成transaction-driven state machine（交易驱动状态机），这个状态机的状态是：所有账户的状态，就是状态树中包含的内容，那么交易是：每个发布的区块中包含的交易，通过执行这些交易，驱动当前系统从当前状态转移到下一个状态。</p>
+<p>​    比特币你也可以认为是一个交易驱动的状态机，那么比特币中的状态是：UTXO（没有被花掉的交易的输出），每次新发布一个区块，会从UTXO用掉一些输出，又会增加一些输出，所以发布的这个区块会驱动这个状态机从当前状态转移到下一个状态。</p>
+<p>​    比特币和以太坊中的状态机有一个共同特点，就是状态转移得是确定性的：对一个给定的当前状态，一组给定的交易，能够确定性的转移到下一个状态，因为所有的全节点，所有的矿工，都要执行相同的状态转移，所以状态转移必须是确定性的。</p>
+<p>​    有人在以太坊上发布了一个交易，某个结点收到这个交易（A转账给B），有没有可能这个收款人的地址，以前从来没有听说过？</p>
+<blockquote>
+<p>可能的，创建账户的时候不需要通知其他人的，只有这个账户第一次收到钱的时候，其他账户才会知道这个账户的存在，这个时候要在状态树中新插入一个结点</p>
+</blockquote>
+<p>​    我们前面所讲的交易树，收据树，状态树的一个区别是状态树要包含所有账户的状态，能不能把这个状态树的设计改一下，改成状态树也只包含这个区块相关的那些账户的状态，这样就和交易树和收据树一致了，而且还大幅度的削减每个区块所对应的状态树的大小？</p>
+<blockquote>
+<p>你要想查找某个账户的状态就不方便了，还有另外一个问题在于：A要赚钱给B，你要知道A的状态才能转钱给B，也要知道B的状态是什么，当前余额是多少，因为你要收钱，所以A、B的状态都要找到，而B这个账户有可能是新创建的账户，这个时候你要找到创世纪块去，才发现B这个账户不存在。</p>
+</blockquote>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192207.png"></p>
+<blockquote>
+<p>上图第一个判断是交易树的代码，如果交易列表是空的话，那么交易树的根哈希值就是一个空哈希值，否则的话，通过调用DeriveSha来得到交易树的根哈希值，然后创建这个区块的交易列表；</p>
+<p>中间的代码是收据树，同样判断收据列表是否为空，如果是空的话，收据列表块头的哈希值就是一个空哈希值，否则的话，和交易树相同，交易列表的长度和收据列表的长度是相同的</p>
+<p>下面的代码是处理叔父区块的，首先判断叔父列表是否为空，如果是的话，舒服区块的根哈希值就是个空哈希值，否则，通过调用CalcUncleHash计算哈希值，然后通过一个循环构建区块里的叔父数组（叔父列表和交易树和收据树没有关系）</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192340.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192401.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192445.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192547.png"></p>
+<blockquote>
+<p>创建交易树和收据树使用的都是这个函数，这里创建的数据结构（收据树和交易树）是一个trie</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192610.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192708.png"></p>
+<blockquote>
+<p>上图是Receipt的数据结构，每个交易执行完之后，形成一个收据，记录这个交易的执行结构，Bloom域就是Bloom filter，Logs为数组，每个收据可以包含多个Logs，这个收据的Bloom filter就是根据这些Logs产生出来的。</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192750.png"></p>
+<blockquote>
+<p>上图为区块的块头的数据结构，Bloom域是整个区块的Bloom filter，是由每个收据的bloom filter合并在一起得到的</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192820.png"></p>
+<blockquote>
+<p>上图中的红框中的代码就是创建区块的块头中的Bloom filter，通过调用CreateBloom这个函数</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012191502.png"></p>
+<blockquote>
+<p>三个相关的代码实现，CreateBloom的三个参数是这个区块中的所有收据，这个for循环对每个收据再通过调用LogsBloom函数生成这个收据的bloom filter，然后把生成的bloom filter使用Or操作合并起来得到整个区块的bloom filter；</p>
+<p>LogsBloom的功能是生成每个收据的bloom filter，他的参数是这个收据的Logs数组，每个收据里面包含一个Logs数组，这个函数有两层for循环，外层循环对每个一Log进行处理，首先把这个Log的地址取哈希之后加到Bloom filter里面，bloom9是bloom filter中使用的哈希函数，内层循环把这个Log中包含的每个topic加入到Bloom filter里，这样就得到了这个收据的bloom filter</p>
+<p>bloom9是bloom filter中使用的哈希函数，和我们讲的有所区别，我们例子中的哈希函数是把集合中的每个元素映射到digest中的某一个位置，我们说这个集合要生成一个digest，哈希函数就是把每个函数映射到这个digest中的某一个位置，把这个位置置为1。这里所说的bloom9是把输入映射到digest中的三个位置（也就是说，把三个位置都置为1）：b为32个字节的哈希值，r是最后返回的bloom filter，这里初始化为0，接下来循环，把刚才生成的32个字节的哈希值前六个字节，每两个字节组成一组，拼接在一起，然后&amp;2047（相当于对2048取余），得到了一个位于0-2047区间里的数，之所以要这样做，是因为以太坊中bloom filter的长度是2048位，循环的最后一行把1左移 ，然后合并到上一轮得到的bloom filter里（通过Or运算），经过三轮循环，把三个位置置为1后，返回创建的bloom filter</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012193342.png"></p>
+<blockquote>
+<p>查询某个bloom fiter里是否包含了感兴趣的topic呢？</p>
+<p>通过调用BloomLookup函数来实现，查找bin这个bloom filter里有没有包含我们要找的topic，首先用bloom9函数将topic转换成一个byte vector，然后把他和bloom filter取And操作，看看得到的结果是不是和byte vector相等（这个bloom fiter中可能还包含别的topic，所以要先做一个And，然后再和他自身比较），相当于判断一下我们要找的topic在bloom fiter中对应的位置是不是都是1</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Deng Feng 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Deng Feng 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+  <div class="followme">
+    <span>欢迎关注我的其它发布渠道</span>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" rel="tag"># 区块链</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/" rel="prev" title="ETH三---状态树">
+                  <i class="fa fa-chevron-left"></i> ETH三---状态树
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Deng Feng</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">63k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">57 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+  
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: "/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/",
+    }, {"enable":true,"appId":"yVOlBzIi3aYyQQz57UbRr2UY-gzGzoHsz","appKey":"JUN29c5FMssB0c1y8MYYyvvg","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

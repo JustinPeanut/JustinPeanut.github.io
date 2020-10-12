@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-10-04T03:18:24.781Z</updated>
+  <updated>2020-10-12T12:20:31.233Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ETH四---交易树和收据树</title>
+    <link href="http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/"/>
+    <id>http://yoursite.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/</id>
+    <published>2020-10-12T12:18:14.000Z</published>
+    <updated>2020-10-12T12:20:31.233Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;ETH-交易树和收据树&quot;&gt;&lt;a href=&quot;#ETH-交易树和收据树&quot; class=&quot;headerlink&quot; title=&quot;ETH-交易树和收据树&quot;&gt;&lt;/a&gt;ETH-交易树和收据树&lt;/h1&gt;&lt;p&gt;​    每次发布一个区块的时候，这个区块所包含的交易，会组织成一棵交易树，也是一棵Merkle tree，和比特币的情况是类似的，同时，以太坊还增加了一个收据树，每个交易执行完之后，会形成一个交易，记录这个交易的相关信息，也就是说，收据树和交易树上面的结点是一一对应的。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>ETH三---状态树</title>
