@@ -1,148 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>LOL-show项目工程日志</title>
-    <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
-<p>如果你想要学习该项目，那么你可以访问我的github！</p>
-<a id="more"></a>
-
-<h1 id="工程结构"><a href="#工程结构" class="headerlink" title="工程结构"></a>工程结构</h1><p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/LOL-show-%E5%B7%A5%E7%A8%8B%E5%9B%BE.png"></p>
-<p>端口号规定：</p>
-<p>eureka:1000</p>
-<p>zuul:80</p>
-<p>mysql:2000</p>
-<p>redis:3000</p>
-<p>hero:4000</p>
-<p>member:5000</p>
-<p>market:6000</p>
-<p>order:7000</p>
-<p>pay:8000</p>
-<h1 id="数据库建表语句"><a href="#数据库建表语句" class="headerlink" title="数据库建表语句"></a>数据库建表语句</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_area(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">area_name <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> lol_area(area_name)</span><br><span class="line"> <span class="keyword">values</span></span><br><span class="line"> (<span class="string">&quot;比尔吉沃特&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;德玛西亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;弗雷尔卓德&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;无畏先锋&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;恕瑞玛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;扭曲丛林&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨龙之巢&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;艾欧尼亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;祖安&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;诺克萨斯&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;班德尔城&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;战争学院&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨神峰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;雷瑟守备&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;钢铁烈阳&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;裁决之地&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;黑色玫瑰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;暗影岛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;均衡教派&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;水晶之痕&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;影流&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;守望之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;征服之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;卡拉曼达&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮城警备&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">table</span> lol_member(</span><br><span class="line"> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"> user_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> role_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> age <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line"> <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line"> phone_num <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> area_id <span class="built_in">int</span>(<span class="number">100</span>),</span><br><span class="line"> primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line"> );</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 用户计划表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_plan(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">plan_date <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">plan_event <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">last_time <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">member_id <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">full_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">nick_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">back_story <span class="built_in">text</span>,</span><br><span class="line">price <span class="keyword">double</span>(<span class="number">5</span>,<span class="number">3</span>),</span><br><span class="line"><span class="comment">-- 英雄类型</span></span><br><span class="line">hero_type_id <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"><span class="comment">-- 英雄页面小图</span></span><br><span class="line">img_small <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_big <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_scot <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_stick <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">text1 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">text2 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 英雄类型表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_type(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄位置表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_position(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">position</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 外键关联表（英雄和位置）</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> position_inner_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">hero_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">position_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h1 id="SpringBoot-pageHelper插件"><a href="#SpringBoot-pageHelper插件" class="headerlink" title="SpringBoot   pageHelper插件"></a>SpringBoot   pageHelper插件</h1><p>添加依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>用法：在需要分页的方法中启动分页，需要注意的是，分页的是在开启分页之后的第一个查询语句</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageInfo <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum, Integer pageSize, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(pageNum,pageSize);</span><br><span class="line">        PlanPOExample example = <span class="keyword">new</span> PlanPOExample();</span><br><span class="line">        PlanPOExample.Criteria criteria = example.createCriteria();</span><br><span class="line">        criteria.andMemberIdEqualTo(id);</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        List&lt;PlanPO&gt; planPOList = planPOMapper.selectByExample(example);</span><br><span class="line">        <span class="comment">// 判断结果</span></span><br><span class="line">        <span class="keyword">if</span>(planPOList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnKnowNetWorkException(<span class="string">&quot;没有查询到任何数据，快去添加计划吧！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 结果正确就返回</span></span><br><span class="line">        List&lt;PlanVO&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(PlanPO planPO : planPOList)&#123;</span><br><span class="line">            PlanVO planVO = <span class="keyword">new</span> PlanVO();</span><br><span class="line">            BeanUtils.copyProperties(planPO,planVO);</span><br><span class="line">            list.add(planVO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装PageInfo对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>查询出来的list结果封装到PageInfo实例对象中</p>
-<p>注意的是，在后台远程方法调用的时候，PageInfo的泛型并不是PageInfo&lt;List<xxx>&gt;</xxx></p>
-<p>而是对应的JavaBean类型例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">PageInfo&lt;PlanVO&gt; <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum,Integer pageSize,Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>否则会报一个</p>
-<p>pagehelper 返回前台的json转换异常com.fasterxml.jackson.databind.exc.Mismatch的异常</p>
-<h1 id="使用了layui的日期插件"><a href="#使用了layui的日期插件" class="headerlink" title="使用了layui的日期插件"></a>使用了layui的日期插件</h1><p>点击输入框可以弹出日期选择框，如下图所示效果</p>
-<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804102439.png"></p>
-<p>加入layui的css样式和js</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;layui/css/layui.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;layui/layui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加日期插件</span></span><br><span class="line">layui.use(<span class="string">&#x27;laydate&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 生成一个日期实例，这个实例变量名自己指定</span></span><br><span class="line">    <span class="keyword">var</span> laydate = layui.laydate;</span><br><span class="line">    <span class="comment">//执行一个laydate实例</span></span><br><span class="line">    laydate.render(&#123;</span><br><span class="line">        <span class="comment">// 指定在哪里生成日期控件</span></span><br><span class="line">        elem: <span class="string">&#x27;#dateText&#x27;</span>, <span class="comment">//指定元素</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h1 id="使用了谷歌Kaptcha-生成验证码插件"><a href="#使用了谷歌Kaptcha-生成验证码插件" class="headerlink" title="使用了谷歌Kaptcha 生成验证码插件"></a>使用了谷歌Kaptcha 生成验证码插件</h1><p>加入依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Google Kaptcha --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.penggle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kaptcha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>相关的配置</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KaptchaConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultKaptcha <span class="title">getDefaultKaptcha</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = <span class="keyword">new</span> com.google.code.kaptcha.impl.DefaultKaptcha();</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 图片边框</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border&quot;</span>, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="comment">// 边框颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border.color&quot;</span>, <span class="string">&quot;105,179,90&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片宽</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.width&quot;</span>, <span class="string">&quot;110&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片高</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.height&quot;</span>, <span class="string">&quot;40&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体大小</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.size&quot;</span>, <span class="string">&quot;30&quot;</span>);</span><br><span class="line">        <span class="comment">// session key</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.session.key&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">// 验证码长度</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.char.length&quot;</span>, <span class="string">&quot;4&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.names&quot;</span>, <span class="string">&quot;宋体,楷体,微软雅黑&quot;</span>);</span><br><span class="line"></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.noise.color&quot;</span>, <span class="string">&quot;35,37,38&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Config config = <span class="keyword">new</span> Config(properties);</span><br><span class="line">        defaultKaptcha.setConfig(config);</span><br><span class="line">        <span class="keyword">return</span> defaultKaptcha;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>controller代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/kaptcha&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCode</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DefaultKaptcha defaultKaptcha;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/defaultKaptcha&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultKaptcha</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] captchaChallengeAsJpeg = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream jpegOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 生产验证码字符串并保存到session中</span></span><br><span class="line">            String createText = defaultKaptcha.createText();</span><br><span class="line">            System.out.println(createText);</span><br><span class="line">            httpServletRequest.getSession().setAttribute(<span class="string">&quot;verificationCode&quot;</span>, createText);</span><br><span class="line">            <span class="comment">// 使用生成的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中</span></span><br><span class="line">            BufferedImage challenge = defaultKaptcha.createImage(createText);</span><br><span class="line">            ImageIO.write(challenge, <span class="string">&quot;jpg&quot;</span>, jpegOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组</span></span><br><span class="line">        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store&quot;</span>);</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);</span><br><span class="line">        httpServletResponse.setDateHeader(<span class="string">&quot;Expires&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        httpServletResponse.setContentType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();</span><br><span class="line">        responseOutputStream.write(captchaChallengeAsJpeg);</span><br><span class="line">        responseOutputStream.flush();</span><br><span class="line">        responseOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>前台显示</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;verificationCodeImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/api/kaptcha/defaultKaptcha&quot;</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;看不清？换一张&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>添加点击“看不清？换一张”的事件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新验证码</span></span><br><span class="line">            $(<span class="string">&quot;#verificationCodeImg&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                $(<span class="built_in">this</span>).hide().attr(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;http://localhost/api/kaptcha/defaultKaptcha?&#x27;</span>).fadeIn();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>效果图</p>
-<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804103206.png"></p>
-<h1 id="改变文本输入框获取值"><a href="#改变文本输入框获取值" class="headerlink" title="改变文本输入框获取值"></a>改变文本输入框获取值</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为输入英雄名称的文本框绑定文本改变的事件</span></span><br><span class="line">            $(<span class="string">&quot;.inputSearch&quot;</span>).on(<span class="string">&quot;input&quot;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">let</span> heroName = $(<span class="built_in">this</span>).val()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
-
-<h1 id="mybatis模糊查询的三种方式"><a href="#mybatis模糊查询的三种方式" class="headerlink" title="mybatis模糊查询的三种方式"></a>mybatis模糊查询的三种方式</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,name,age,score from star where name like &quot;%&quot; #&#123;name&#125; &quot;%&quot;</span><br><span class="line"></span><br><span class="line">&lt;!--concat拼接字符串  mysql独有的函数--&gt;</span><br><span class="line">select id,name,age,score from star where name like concat(&quot;%&quot;,#&#123;name&#125;,&quot;%&quot;)</span><br><span class="line"></span><br><span class="line">&lt;!-- 如果传入的参数是简单数据类型，$&#123;&#125;里面必须写value --&gt;</span><br><span class="line">select id,name,age,score from star where name like &quot;%$&#123;value&#125;%&quot;</span><br><span class="line"></span><br><span class="line">作者：叫我不矜持</span><br><span class="line">链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;6d244e194859</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
-
-<h1 id="thymeleaf循环的状态变量"><a href="#thymeleaf循环的状态变量" class="headerlink" title="thymeleaf循环的状态变量"></a>thymeleaf循环的状态变量</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">th:each属性用于迭代循环，语法：th:each&#x3D;&quot;obj,iterStat:$&#123;objList&#125;&quot;</span><br><span class="line">迭代对象可以是Java.util.List,java.util.Map,数组等;</span><br><span class="line">iterStat称作状态变量，属性有：</span><br><span class="line">    index:当前迭代对象的index（从0开始计算）</span><br><span class="line">    count: 当前迭代对象的index(从1开始计算)</span><br><span class="line">    size:被迭代对象的大小</span><br><span class="line">    current:当前迭代变量</span><br><span class="line">    even&#x2F;odd:布尔值，当前循环是否是偶数&#x2F;奇数（从0开始计算）</span><br><span class="line">    first:布尔值，当前循环是否是第一个</span><br><span class="line">    last:布尔值，当前循环是否是最后一个</span><br></pre></td></tr></table></figure>
-
-<h1 id="mysql-根据拼音首字母查询"><a href="#mysql-根据拼音首字母查询" class="headerlink" title="mysql 根据拼音首字母查询"></a>mysql 根据拼音首字母查询</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT id,full_name ,</span><br><span class="line"></span><br><span class="line">ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) AS PY</span><br><span class="line"></span><br><span class="line">FROM lol_hero WHERE ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) &#x3D; &#39;A&#39;</span><br></pre></td></tr></table></figure>
-
-<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>包含第三方jar包的工程的build</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                第三方jar包目录</span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources/lib<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/lib/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/classes/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;maven-compiler-plugin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其余的，如果依赖springboot父工程，加上</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果不依赖任何工程，直接打包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn clean install -Dmaven.test.skip=true // 忽略test</span><br></pre></td></tr></table></figure>
-
-<h2 id="准备服务器环境"><a href="#准备服务器环境" class="headerlink" title="准备服务器环境"></a>准备服务器环境</h2><p>安装jdk</p>
-<p>在/etc/profile文件的最后配置java环境</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/sorftware/jdk1.8.0_251</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export JAVA_HOME PATH</span><br></pre></td></tr></table></figure>
-
-<p>安装mysql</p>
-<p><a href="https://www.cnblogs.com/cannel/p/11104195.html">参考</a></p>
-<p>缺少 libaio</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
-
-<p>修改密码需要设置密码的级别：注意！</p>
-<p>授权远程连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;rootroot&#39; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
-
-<p>微服务远程调用报错找不到主机，因为我的redisServer以及mysqlServer在另一个服务器上，所以consumer想要调用这两个server的服务，必须找到我的另一个服务器，但是我发现服务器的名字没有使用ip地址，所以依照<code>参考</code>的调试最后成功了！</p>
-<p>运行jar包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup java -jar xxx.jar &gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>报错：UnknownHostException</p>
-<p><a href="https://blog.csdn.net/weixin_39032575/article/details/83011334?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考</a></p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java随笔</title>
-    <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
-    <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
-<p>  我自认为，在学习的时候，应该自己主动思考，如果这样的话，结果是怎么样，那样的话，结果是怎么样，我们在整个小学、初中、高中，甚至是大学，都被灌输了一种思想，就是，这样就是对的，那么当我们碰到问题的时候，往往就会一头雾水，不知如何下手，如果有主动思考的能力的话，这种问题是不是就会没有那么棘手呢？</p>
-<a id="more"></a>
-
-<p>2020.9.10</p>
-<p>在阅读《疯狂java讲义》一书中HashMap的介绍，书中实例HashMap类实例的put方法，发现他有一个返回值，并且是Object类型的，这我就纳闷了，添加元素，一般不是返回true就是false啊？我在一篇博客的评论下发现了答案，原来是</p>
-<blockquote>
-<p>如果此前存在一个相同的key，那么put方法返回的是前面key的value值，这时候后来put的value就会覆盖前面put进去的值；如果当前put方法，put的是一个新的key，那么返回值就是null。</p>
-</blockquote>
-<p>2020.9.14</p>
-<p>关于将线程不安全的HashSet、HashMap、ArrayList类转化成线程安全的类的介绍中</p>
-<p>使用Collections.synchronizeXXX</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"> Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	 <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		 Integer integer = (Integer) iterator.next();</span><br><span class="line">		 System.out.println(integer);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>如上所示：因为迭代器不是线程安全的，所以还需要同步allList，使获得迭代器的过程也是同步的，这样在操作同步后的集合在遍历的时候就被锁住，不能在进行别的操作。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"><span class="keyword">synchronized</span>（allList ）&#123;</span><br><span class="line">	Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	<span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		Integer integer = (Integer) iterator.next();</span><br><span class="line">		System.out.println(integer);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>peanutMallFollowCoderwhy工程日志</title>
     <url>/2020/09/11/Java/peanutMallFollowCoderwhy%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
     <content><![CDATA[<h1 id="项目工程概述"><a href="#项目工程概述" class="headerlink" title="项目工程概述"></a>项目工程概述</h1><p>项目github仓库地址：<a href="https://github.com/JustinPeanut/peanutMallFollowCoderwhy">peanutMallFollowCoderwhy</a></p>
@@ -284,6 +142,110 @@
       </tags>
   </entry>
   <entry>
+    <title>LOL-show项目工程日志</title>
+    <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
+<p>如果你想要学习该项目，那么你可以访问我的github！</p>
+<a id="more"></a>
+
+<h1 id="工程结构"><a href="#工程结构" class="headerlink" title="工程结构"></a>工程结构</h1><p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/LOL-show-%E5%B7%A5%E7%A8%8B%E5%9B%BE.png"></p>
+<p>端口号规定：</p>
+<p>eureka:1000</p>
+<p>zuul:80</p>
+<p>mysql:2000</p>
+<p>redis:3000</p>
+<p>hero:4000</p>
+<p>member:5000</p>
+<p>market:6000</p>
+<p>order:7000</p>
+<p>pay:8000</p>
+<h1 id="数据库建表语句"><a href="#数据库建表语句" class="headerlink" title="数据库建表语句"></a>数据库建表语句</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_area(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">area_name <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> lol_area(area_name)</span><br><span class="line"> <span class="keyword">values</span></span><br><span class="line"> (<span class="string">&quot;比尔吉沃特&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;德玛西亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;弗雷尔卓德&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;无畏先锋&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;恕瑞玛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;扭曲丛林&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨龙之巢&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;艾欧尼亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;祖安&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;诺克萨斯&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;班德尔城&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;战争学院&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨神峰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;雷瑟守备&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;钢铁烈阳&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;裁决之地&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;黑色玫瑰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;暗影岛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;均衡教派&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;水晶之痕&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;影流&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;守望之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;征服之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;卡拉曼达&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮城警备&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">table</span> lol_member(</span><br><span class="line"> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"> user_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> role_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> age <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line"> <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line"> phone_num <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> area_id <span class="built_in">int</span>(<span class="number">100</span>),</span><br><span class="line"> primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line"> );</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 用户计划表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_plan(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">plan_date <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">plan_event <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">last_time <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">member_id <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">full_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">nick_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">back_story <span class="built_in">text</span>,</span><br><span class="line">price <span class="keyword">double</span>(<span class="number">5</span>,<span class="number">3</span>),</span><br><span class="line"><span class="comment">-- 英雄类型</span></span><br><span class="line">hero_type_id <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"><span class="comment">-- 英雄页面小图</span></span><br><span class="line">img_small <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_big <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_scot <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_stick <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">text1 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">text2 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 英雄类型表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_type(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄位置表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_position(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">position</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 外键关联表（英雄和位置）</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> position_inner_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">hero_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">position_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h1 id="SpringBoot-pageHelper插件"><a href="#SpringBoot-pageHelper插件" class="headerlink" title="SpringBoot   pageHelper插件"></a>SpringBoot   pageHelper插件</h1><p>添加依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用法：在需要分页的方法中启动分页，需要注意的是，分页的是在开启分页之后的第一个查询语句</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageInfo <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum, Integer pageSize, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(pageNum,pageSize);</span><br><span class="line">        PlanPOExample example = <span class="keyword">new</span> PlanPOExample();</span><br><span class="line">        PlanPOExample.Criteria criteria = example.createCriteria();</span><br><span class="line">        criteria.andMemberIdEqualTo(id);</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        List&lt;PlanPO&gt; planPOList = planPOMapper.selectByExample(example);</span><br><span class="line">        <span class="comment">// 判断结果</span></span><br><span class="line">        <span class="keyword">if</span>(planPOList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnKnowNetWorkException(<span class="string">&quot;没有查询到任何数据，快去添加计划吧！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 结果正确就返回</span></span><br><span class="line">        List&lt;PlanVO&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(PlanPO planPO : planPOList)&#123;</span><br><span class="line">            PlanVO planVO = <span class="keyword">new</span> PlanVO();</span><br><span class="line">            BeanUtils.copyProperties(planPO,planVO);</span><br><span class="line">            list.add(planVO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装PageInfo对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>查询出来的list结果封装到PageInfo实例对象中</p>
+<p>注意的是，在后台远程方法调用的时候，PageInfo的泛型并不是PageInfo&lt;List<xxx>&gt;</xxx></p>
+<p>而是对应的JavaBean类型例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">PageInfo&lt;PlanVO&gt; <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum,Integer pageSize,Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>否则会报一个</p>
+<p>pagehelper 返回前台的json转换异常com.fasterxml.jackson.databind.exc.Mismatch的异常</p>
+<h1 id="使用了layui的日期插件"><a href="#使用了layui的日期插件" class="headerlink" title="使用了layui的日期插件"></a>使用了layui的日期插件</h1><p>点击输入框可以弹出日期选择框，如下图所示效果</p>
+<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804102439.png"></p>
+<p>加入layui的css样式和js</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;layui/css/layui.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;layui/layui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加日期插件</span></span><br><span class="line">layui.use(<span class="string">&#x27;laydate&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 生成一个日期实例，这个实例变量名自己指定</span></span><br><span class="line">    <span class="keyword">var</span> laydate = layui.laydate;</span><br><span class="line">    <span class="comment">//执行一个laydate实例</span></span><br><span class="line">    laydate.render(&#123;</span><br><span class="line">        <span class="comment">// 指定在哪里生成日期控件</span></span><br><span class="line">        elem: <span class="string">&#x27;#dateText&#x27;</span>, <span class="comment">//指定元素</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用了谷歌Kaptcha-生成验证码插件"><a href="#使用了谷歌Kaptcha-生成验证码插件" class="headerlink" title="使用了谷歌Kaptcha 生成验证码插件"></a>使用了谷歌Kaptcha 生成验证码插件</h1><p>加入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Google Kaptcha --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.penggle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kaptcha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>相关的配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KaptchaConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultKaptcha <span class="title">getDefaultKaptcha</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = <span class="keyword">new</span> com.google.code.kaptcha.impl.DefaultKaptcha();</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 图片边框</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border&quot;</span>, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="comment">// 边框颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border.color&quot;</span>, <span class="string">&quot;105,179,90&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片宽</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.width&quot;</span>, <span class="string">&quot;110&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片高</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.height&quot;</span>, <span class="string">&quot;40&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体大小</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.size&quot;</span>, <span class="string">&quot;30&quot;</span>);</span><br><span class="line">        <span class="comment">// session key</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.session.key&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">// 验证码长度</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.char.length&quot;</span>, <span class="string">&quot;4&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.names&quot;</span>, <span class="string">&quot;宋体,楷体,微软雅黑&quot;</span>);</span><br><span class="line"></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.noise.color&quot;</span>, <span class="string">&quot;35,37,38&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Config config = <span class="keyword">new</span> Config(properties);</span><br><span class="line">        defaultKaptcha.setConfig(config);</span><br><span class="line">        <span class="keyword">return</span> defaultKaptcha;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>controller代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/kaptcha&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCode</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DefaultKaptcha defaultKaptcha;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/defaultKaptcha&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultKaptcha</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] captchaChallengeAsJpeg = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream jpegOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 生产验证码字符串并保存到session中</span></span><br><span class="line">            String createText = defaultKaptcha.createText();</span><br><span class="line">            System.out.println(createText);</span><br><span class="line">            httpServletRequest.getSession().setAttribute(<span class="string">&quot;verificationCode&quot;</span>, createText);</span><br><span class="line">            <span class="comment">// 使用生成的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中</span></span><br><span class="line">            BufferedImage challenge = defaultKaptcha.createImage(createText);</span><br><span class="line">            ImageIO.write(challenge, <span class="string">&quot;jpg&quot;</span>, jpegOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组</span></span><br><span class="line">        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store&quot;</span>);</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);</span><br><span class="line">        httpServletResponse.setDateHeader(<span class="string">&quot;Expires&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        httpServletResponse.setContentType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();</span><br><span class="line">        responseOutputStream.write(captchaChallengeAsJpeg);</span><br><span class="line">        responseOutputStream.flush();</span><br><span class="line">        responseOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前台显示</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;verificationCodeImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/api/kaptcha/defaultKaptcha&quot;</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;看不清？换一张&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>添加点击“看不清？换一张”的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新验证码</span></span><br><span class="line">            $(<span class="string">&quot;#verificationCodeImg&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                $(<span class="built_in">this</span>).hide().attr(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;http://localhost/api/kaptcha/defaultKaptcha?&#x27;</span>).fadeIn();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804103206.png"></p>
+<h1 id="改变文本输入框获取值"><a href="#改变文本输入框获取值" class="headerlink" title="改变文本输入框获取值"></a>改变文本输入框获取值</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为输入英雄名称的文本框绑定文本改变的事件</span></span><br><span class="line">            $(<span class="string">&quot;.inputSearch&quot;</span>).on(<span class="string">&quot;input&quot;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">let</span> heroName = $(<span class="built_in">this</span>).val()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="mybatis模糊查询的三种方式"><a href="#mybatis模糊查询的三种方式" class="headerlink" title="mybatis模糊查询的三种方式"></a>mybatis模糊查询的三种方式</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,name,age,score from star where name like &quot;%&quot; #&#123;name&#125; &quot;%&quot;</span><br><span class="line"></span><br><span class="line">&lt;!--concat拼接字符串  mysql独有的函数--&gt;</span><br><span class="line">select id,name,age,score from star where name like concat(&quot;%&quot;,#&#123;name&#125;,&quot;%&quot;)</span><br><span class="line"></span><br><span class="line">&lt;!-- 如果传入的参数是简单数据类型，$&#123;&#125;里面必须写value --&gt;</span><br><span class="line">select id,name,age,score from star where name like &quot;%$&#123;value&#125;%&quot;</span><br><span class="line"></span><br><span class="line">作者：叫我不矜持</span><br><span class="line">链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;6d244e194859</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+<h1 id="thymeleaf循环的状态变量"><a href="#thymeleaf循环的状态变量" class="headerlink" title="thymeleaf循环的状态变量"></a>thymeleaf循环的状态变量</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">th:each属性用于迭代循环，语法：th:each&#x3D;&quot;obj,iterStat:$&#123;objList&#125;&quot;</span><br><span class="line">迭代对象可以是Java.util.List,java.util.Map,数组等;</span><br><span class="line">iterStat称作状态变量，属性有：</span><br><span class="line">    index:当前迭代对象的index（从0开始计算）</span><br><span class="line">    count: 当前迭代对象的index(从1开始计算)</span><br><span class="line">    size:被迭代对象的大小</span><br><span class="line">    current:当前迭代变量</span><br><span class="line">    even&#x2F;odd:布尔值，当前循环是否是偶数&#x2F;奇数（从0开始计算）</span><br><span class="line">    first:布尔值，当前循环是否是第一个</span><br><span class="line">    last:布尔值，当前循环是否是最后一个</span><br></pre></td></tr></table></figure>
+
+<h1 id="mysql-根据拼音首字母查询"><a href="#mysql-根据拼音首字母查询" class="headerlink" title="mysql 根据拼音首字母查询"></a>mysql 根据拼音首字母查询</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT id,full_name ,</span><br><span class="line"></span><br><span class="line">ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) AS PY</span><br><span class="line"></span><br><span class="line">FROM lol_hero WHERE ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) &#x3D; &#39;A&#39;</span><br></pre></td></tr></table></figure>
+
+<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>包含第三方jar包的工程的build</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                第三方jar包目录</span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources/lib<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/lib/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/classes/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;maven-compiler-plugin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其余的，如果依赖springboot父工程，加上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果不依赖任何工程，直接打包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn clean install -Dmaven.test.skip=true // 忽略test</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备服务器环境"><a href="#准备服务器环境" class="headerlink" title="准备服务器环境"></a>准备服务器环境</h2><p>安装jdk</p>
+<p>在/etc/profile文件的最后配置java环境</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/sorftware/jdk1.8.0_251</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export JAVA_HOME PATH</span><br></pre></td></tr></table></figure>
+
+<p>安装mysql</p>
+<p><a href="https://www.cnblogs.com/cannel/p/11104195.html">参考</a></p>
+<p>缺少 libaio</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
+
+<p>修改密码需要设置密码的级别：注意！</p>
+<p>授权远程连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;rootroot&#39; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>微服务远程调用报错找不到主机，因为我的redisServer以及mysqlServer在另一个服务器上，所以consumer想要调用这两个server的服务，必须找到我的另一个服务器，但是我发现服务器的名字没有使用ip地址，所以依照<code>参考</code>的调试最后成功了！</p>
+<p>运行jar包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup java -jar xxx.jar &gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>报错：UnknownHostException</p>
+<p><a href="https://blog.csdn.net/weixin_39032575/article/details/83011334?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考</a></p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CCF一---202006</title>
     <url>/2020/08/29/ccf/202006/</url>
     <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
@@ -312,6 +274,44 @@
       </categories>
       <tags>
         <tag>CCF</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>java随笔</title>
+    <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
+    <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
+<p>  我自认为，在学习的时候，应该自己主动思考，如果这样的话，结果是怎么样，那样的话，结果是怎么样，我们在整个小学、初中、高中，甚至是大学，都被灌输了一种思想，就是，这样就是对的，那么当我们碰到问题的时候，往往就会一头雾水，不知如何下手，如果有主动思考的能力的话，这种问题是不是就会没有那么棘手呢？</p>
+<a id="more"></a>
+
+<p>2020.9.10</p>
+<p>在阅读《疯狂java讲义》一书中HashMap的介绍，书中实例HashMap类实例的put方法，发现他有一个返回值，并且是Object类型的，这我就纳闷了，添加元素，一般不是返回true就是false啊？我在一篇博客的评论下发现了答案，原来是</p>
+<blockquote>
+<p>如果此前存在一个相同的key，那么put方法返回的是前面key的value值，这时候后来put的value就会覆盖前面put进去的值；如果当前put方法，put的是一个新的key，那么返回值就是null。</p>
+</blockquote>
+<p>2020.9.14</p>
+<p>关于将线程不安全的HashSet、HashMap、ArrayList类转化成线程安全的类的介绍中</p>
+<p>使用Collections.synchronizeXXX</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"> Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	 <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		 Integer integer = (Integer) iterator.next();</span><br><span class="line">		 System.out.println(integer);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上所示：因为迭代器不是线程安全的，所以还需要同步allList，使获得迭代器的过程也是同步的，这样在操作同步后的集合在遍历的时候就被锁住，不能在进行别的操作。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"><span class="keyword">synchronized</span>（allList ）&#123;</span><br><span class="line">	Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	<span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		Integer integer = (Integer) iterator.next();</span><br><span class="line">		System.out.println(integer);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -1017,73 +1017,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC一---密码学基础</title>
-    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
-<p>比特币用到了密码学的两个内容：哈希和签名</p>
-<p>哈希在比特币中：<code>cryptographic hash function</code></p>
-<p>它在密码学中要求的两个性质：</p>
-<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
-<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
-<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
-<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
-<a id="more"></a>
-
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
-<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
-<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
-<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
-<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
-<p>x—-&gt;H(x)</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
-<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
-<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
-<p>在比特币中还要求<code>puzzle friendly</code></p>
-<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
-<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
-<blockquote>
-<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
-<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
-<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
-<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
-</blockquote>
-<p>比特币中用到的哈希函数叫做SHA-256。</p>
-<p>SHA:<code>secure Hash Algorithm</code> </p>
-<p>我们上面所说的三个性质，他都是满足的</p>
-<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
-<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
-<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
-<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
-<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
-<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
-<blockquote>
-<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
-<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
-</blockquote>
-<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
-<blockquote>
-<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
-<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
-<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
-<p>这个概率比地球爆炸的概率还要小！</p>
-</blockquote>
-<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
-<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
-<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BTC七---挖矿</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/</url>
     <content><![CDATA[<h1 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h1><h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png"></p>
@@ -1162,6 +1095,73 @@
       </tags>
   </entry>
   <entry>
+    <title>BTC一---密码学基础</title>
+    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
+<p>比特币用到了密码学的两个内容：哈希和签名</p>
+<p>哈希在比特币中：<code>cryptographic hash function</code></p>
+<p>它在密码学中要求的两个性质：</p>
+<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
+<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
+<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
+<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
+<a id="more"></a>
+
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
+<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
+<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
+<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
+<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
+<p>x—-&gt;H(x)</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
+<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
+<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
+<p>在比特币中还要求<code>puzzle friendly</code></p>
+<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
+<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
+<blockquote>
+<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
+<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
+<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
+<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
+</blockquote>
+<p>比特币中用到的哈希函数叫做SHA-256。</p>
+<p>SHA:<code>secure Hash Algorithm</code> </p>
+<p>我们上面所说的三个性质，他都是满足的</p>
+<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
+<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
+<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
+<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
+<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
+<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
+<blockquote>
+<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
+<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
+</blockquote>
+<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
+<blockquote>
+<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
+<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
+<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
+<p>这个概率比地球爆炸的概率还要小！</p>
+</blockquote>
+<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
+<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC六---挖矿难度</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
     <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
@@ -1195,6 +1195,67 @@
 <p><code>最近半年的出块事件</code></p>
 <p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
 <p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC二---比特币中的数据结构</title>
+    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="比特币中的数据结构"><a href="#比特币中的数据结构" class="headerlink" title="比特币中的数据结构"></a>比特币中的数据结构</h1><h2 id="1-区块链"><a href="#1-区块链" class="headerlink" title="1.区块链"></a>1.区块链</h2><p>这里要用到一个重要的概念叫做哈希指针。</p>
+<p>hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）</p>
+<p>区块链相比较于普通的链表有何区别？</p>
+<a id="more"></a>
+
+<p>①用哈希指针替代了普通的指针</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193317.png"></p>
+<p>区块链示例</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193910.png"></p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802194121.png"></p>
+<p>这样做的好处是</p>
+<p>tamper-evident log：篡改-证明 日志，当有人篡改了区块链中某一个区块的某个内容，则它的下一个区块的哈希值就对不上了，以此类推，直到最后一个保存在系统中的哈希值也对不上了，这样我们只需要记住保存在系统中的那最后一个哈希值，就可以检测出对任意区块的修改。这也是区块链和普通链表的一个区别。（多米诺骨牌效应）</p>
+<p>有了这个性质，系统中就不需要保存整条区块链的内容，比如它可以只保存最近的几千个区块，如果要用到以前的区块怎么办？</p>
+<blockquote>
+<p>可以问系统中的其他节点，去要这个区块，有些节点可能是有恶意的（去中心化系统），那么如何知道别人给你的区块是不是正确的呢？就用到哈希指针的这个性质！别人给你的最后的那个区块，算一下哈希值，如果和系统中保存的与之对应的后一个区块的哈希值对比之后相同，则正确</p>
+</blockquote>
+<h2 id="2-Merkle-tree-默克尔树"><a href="#2-Merkle-tree-默克尔树" class="headerlink" title="2.Merkle tree(默克尔树)"></a>2.Merkle tree(默克尔树)</h2><p>和binary tree（二叉树）的区别是，用哈希指针代替了普通的指针</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200344.png"></p>
+<p>和链式结构一样，“牵一发而动全身”。</p>
+<p>各个区块由哈希指针连接在一起的，每个区块所包含的交易，是组织成一个Merkle tree的形式，最底层的数据块实际上是某个交易。</p>
+<p>每个区块都是由block header和block body组成，block header 保存这个Merkle tree 的根哈希值，不保存这个区块的交易信息，而block body保存交易信息</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200930.png"></p>
+<p>Merkle tree的作用？</p>
+<p>①提供Merkle proof</p>
+<p>比特币中的结点分为两类，一类时全节点，还有一类是轻结点</p>
+<p>全节点：保存整个区块的内容，block header和block body都有</p>
+<p>轻结点：比如手机上的比特币钱包的应用就属于轻结点，只有一个block header</p>
+<p>这样就带来一个问题，如果你想向一个轻结点证明某个交易是写入到了区块链中的 ，该怎么证明？</p>
+<p>​    比如我想买你的东西，我就需要向你转钱，我对你说，我对你转钱的交易，已经写到了区块链中了，支付已经完成了，</p>
+<p>那么你怎么知道，这个交易已经被写入区块链里了呢？这里就需要用到Merkle proof</p>
+<p>一个轻结点，向某个全节点发出请求，请求一个能够证明黄色结点这个交易，被包含在这棵Merkle tree里面的Merkle proof</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802202232.png"></p>
+<p>最后算出的根哈希值，和block header中存储的root hash比较，就可以证明出tx是否在区块链中</p>
+<p>这种证明也叫做：</p>
+<p>proof of membership</p>
+<p>或</p>
+<p>proof of inclusion</p>
+<p>如果最底下有n个交易：时间复杂度为O(log(n))</p>
+<p>那么可不可以证明，区块链中没有某个交易？也就是proof of non-membership</p>
+<p>有一种比较笨的方法，就是把这一整颗Merkle tree都传给轻结点，如果hash值都正确，如果某个交易不在叶结点中，则证明了proof of non-membership，时间复杂度为O(n)，有没有比较高效的方法证明不存在？</p>
+<p>如果我们对叶结点的排列顺序不了解，那么是没有办法证明交易不在里面的</p>
+<p>如果我们对叶结点的排列顺序做一些要求：对每个交易取哈希值，按照这个哈希值从小到大排序，这个时候是有一个好的证明方法的：但是代价是需要排序</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204313.png"></p>
+<p>sorted Merkle tree：排好序的Merkle tree</p>
+<p>比特币中没有这种排好序的Merkle tree，因为比特币中根本不需要作这种不存在证明，没有硬性需求，所以比特币中的Merkle tree 不要求排序</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>比特币中的两种数据结构：区块链和Merkle tree</p>
+<p>除了这两种数据结构，哈希指针还用在什么地方？</p>
+<p>只要这个数据结构是无环的，都可以用哈希指针来代替普通指针，有环会带来一定的问题</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204834.png"></p>
+<p>会出现循环依赖的问题，定不下来任何一个区块，找不到创世纪块</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1331,67 +1392,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC二---比特币中的数据结构</title>
-    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="比特币中的数据结构"><a href="#比特币中的数据结构" class="headerlink" title="比特币中的数据结构"></a>比特币中的数据结构</h1><h2 id="1-区块链"><a href="#1-区块链" class="headerlink" title="1.区块链"></a>1.区块链</h2><p>这里要用到一个重要的概念叫做哈希指针。</p>
-<p>hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）</p>
-<p>区块链相比较于普通的链表有何区别？</p>
-<a id="more"></a>
-
-<p>①用哈希指针替代了普通的指针</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193317.png"></p>
-<p>区块链示例</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193910.png"></p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802194121.png"></p>
-<p>这样做的好处是</p>
-<p>tamper-evident log：篡改-证明 日志，当有人篡改了区块链中某一个区块的某个内容，则它的下一个区块的哈希值就对不上了，以此类推，直到最后一个保存在系统中的哈希值也对不上了，这样我们只需要记住保存在系统中的那最后一个哈希值，就可以检测出对任意区块的修改。这也是区块链和普通链表的一个区别。（多米诺骨牌效应）</p>
-<p>有了这个性质，系统中就不需要保存整条区块链的内容，比如它可以只保存最近的几千个区块，如果要用到以前的区块怎么办？</p>
-<blockquote>
-<p>可以问系统中的其他节点，去要这个区块，有些节点可能是有恶意的（去中心化系统），那么如何知道别人给你的区块是不是正确的呢？就用到哈希指针的这个性质！别人给你的最后的那个区块，算一下哈希值，如果和系统中保存的与之对应的后一个区块的哈希值对比之后相同，则正确</p>
-</blockquote>
-<h2 id="2-Merkle-tree-默克尔树"><a href="#2-Merkle-tree-默克尔树" class="headerlink" title="2.Merkle tree(默克尔树)"></a>2.Merkle tree(默克尔树)</h2><p>和binary tree（二叉树）的区别是，用哈希指针代替了普通的指针</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200344.png"></p>
-<p>和链式结构一样，“牵一发而动全身”。</p>
-<p>各个区块由哈希指针连接在一起的，每个区块所包含的交易，是组织成一个Merkle tree的形式，最底层的数据块实际上是某个交易。</p>
-<p>每个区块都是由block header和block body组成，block header 保存这个Merkle tree 的根哈希值，不保存这个区块的交易信息，而block body保存交易信息</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200930.png"></p>
-<p>Merkle tree的作用？</p>
-<p>①提供Merkle proof</p>
-<p>比特币中的结点分为两类，一类时全节点，还有一类是轻结点</p>
-<p>全节点：保存整个区块的内容，block header和block body都有</p>
-<p>轻结点：比如手机上的比特币钱包的应用就属于轻结点，只有一个block header</p>
-<p>这样就带来一个问题，如果你想向一个轻结点证明某个交易是写入到了区块链中的 ，该怎么证明？</p>
-<p>​    比如我想买你的东西，我就需要向你转钱，我对你说，我对你转钱的交易，已经写到了区块链中了，支付已经完成了，</p>
-<p>那么你怎么知道，这个交易已经被写入区块链里了呢？这里就需要用到Merkle proof</p>
-<p>一个轻结点，向某个全节点发出请求，请求一个能够证明黄色结点这个交易，被包含在这棵Merkle tree里面的Merkle proof</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802202232.png"></p>
-<p>最后算出的根哈希值，和block header中存储的root hash比较，就可以证明出tx是否在区块链中</p>
-<p>这种证明也叫做：</p>
-<p>proof of membership</p>
-<p>或</p>
-<p>proof of inclusion</p>
-<p>如果最底下有n个交易：时间复杂度为O(log(n))</p>
-<p>那么可不可以证明，区块链中没有某个交易？也就是proof of non-membership</p>
-<p>有一种比较笨的方法，就是把这一整颗Merkle tree都传给轻结点，如果hash值都正确，如果某个交易不在叶结点中，则证明了proof of non-membership，时间复杂度为O(n)，有没有比较高效的方法证明不存在？</p>
-<p>如果我们对叶结点的排列顺序不了解，那么是没有办法证明交易不在里面的</p>
-<p>如果我们对叶结点的排列顺序做一些要求：对每个交易取哈希值，按照这个哈希值从小到大排序，这个时候是有一个好的证明方法的：但是代价是需要排序</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204313.png"></p>
-<p>sorted Merkle tree：排好序的Merkle tree</p>
-<p>比特币中没有这种排好序的Merkle tree，因为比特币中根本不需要作这种不存在证明，没有硬性需求，所以比特币中的Merkle tree 不要求排序</p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>比特币中的两种数据结构：区块链和Merkle tree</p>
-<p>除了这两种数据结构，哈希指针还用在什么地方？</p>
-<p>只要这个数据结构是无环的，都可以用哈希指针来代替普通指针，有环会带来一定的问题</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204834.png"></p>
-<p>会出现循环依赖的问题，定不下来任何一个区块，找不到创世纪块</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BTC五---网络</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
     <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
@@ -1411,6 +1411,387 @@
       </categories>
       <tags>
         <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JVM一---运行时数据区</title>
+    <url>/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/</url>
+    <content><![CDATA[<h1 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h1><p>写在前面，感谢尚硅谷宋红康老师的讲解，本文根据宋红康老师的ppt完成，仅供个人学习参考，更多的JVM相关的知识请访问Oracle官网</p>
+<a id="more"></a>
+
+<h2 id="1-内部结构"><a href="#1-内部结构" class="headerlink" title="1.内部结构"></a>1.内部结构</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728210959.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211336.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211523.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211756.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212041.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212559.png"></p>
+<h2 id="2-线程"><a href="#2-线程" class="headerlink" title="2.线程"></a>2.线程</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212937.png"></p>
+<p>1.说的一个线程准备好之后，那这个准备是什么意思：</p>
+<p>每个java线程都有自己的程序计数器，虚拟机栈，本地方法栈等，都需要准备</p>
+<p>2.如果在run方法中碰到了未捕获的异常，java线程就会终止，但是操作系统本地线程不会立即终止，由它来决定jvm进程要不要终止，jvm要不要终止，又取决于当前的java线程是不是最后一个非守护线程</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728213604.png"></p>
+<h2 id="3-pc寄存器（程序计数器）"><a href="#3-pc寄存器（程序计数器）" class="headerlink" title="3.pc寄存器（程序计数器）"></a>3.pc寄存器（程序计数器）</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214231.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214447.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214622.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728215104.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731211604.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731211933.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212357.png"></p>
+<p>两个常见的问题</p>
+<p>①<img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212559.png"></p>
+<p>②<img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212742.png"></p>
+<h2 id="4-虚拟机栈"><a href="#4-虚拟机栈" class="headerlink" title="4.虚拟机栈"></a>4.虚拟机栈</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214026.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214229.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214810.png"></p>
+<p>一个线程，对应一个java虚拟机栈</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731215443.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731215746.png"></p>
+<h3 id="java虚拟机栈常见的异常"><a href="#java虚拟机栈常见的异常" class="headerlink" title="java虚拟机栈常见的异常"></a>java虚拟机栈常见的异常</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731220315.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731220810.png"></p>
+<h3 id="栈的存储结构和运行原理"><a href="#栈的存储结构和运行原理" class="headerlink" title="栈的存储结构和运行原理"></a>栈的存储结构和运行原理</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804215450.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804215851.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804220030.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804221220.png"></p>
+<p>遇到异常如果在当前栈帧中没有处理，则会向上抛，如果还没有，在向上抛，直到main方法，main方法如果还没有处理，当前线程就结束了</p>
+<h3 id="栈帧的内部结构"><a href="#栈帧的内部结构" class="headerlink" title="栈帧的内部结构"></a>栈帧的内部结构</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804222347.png"></p>
+<h3 id="局部变量表的结构的认识"><a href="#局部变量表的结构的认识" class="headerlink" title="局部变量表的结构的认识"></a>局部变量表的结构的认识</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811204445.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811205919.png"></p>
+<p>局部变量表是一个<strong>数字数组</strong>：里面的变量都可以用数值来表示</p>
+<p>这里的这个Maximum local variables是在编译的时候就已经确定了长度了</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811205442.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811210833.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811210900.png"></p>
+<h3 id="字节码中方法内部结构"><a href="#字节码中方法内部结构" class="headerlink" title="字节码中方法内部结构"></a>字节码中方法内部结构</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811211636.png"></p>
+<p>上图中的L指的是引用类型的变量</p>
+<p>Access flags：访问标识</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811211919.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811212043.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811212846.png"></p>
+<h3 id="slot理解"><a href="#slot理解" class="headerlink" title="slot理解"></a>slot理解</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811213336.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811213640.png"></p>
+<p><strong>注意，如果是非静态的方法，该对象引用this将会存放在index为0的slot处</strong>，静态方法中不可以引用this，所以在静态方法中没有</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214212.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214713.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214825.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811215035.png"></p>
+<h3 id="静态变量和局部变量的对比"><a href="#静态变量和局部变量的对比" class="headerlink" title="静态变量和局部变量的对比"></a>静态变量和局部变量的对比</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818204321.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818204555.png"></p>
+<h3 id="操作数栈的特点"><a href="#操作数栈的特点" class="headerlink" title="操作数栈的特点"></a>操作数栈的特点</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205205.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205543.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205727.png"></p>
+<h3 id="操作数栈的字节码指令分析"><a href="#操作数栈的字节码指令分析" class="headerlink" title="操作数栈的字节码指令分析"></a>操作数栈的字节码指令分析</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818210902.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818210951.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211019.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211327.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211758.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818212259.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818212725.png"></p>
+<h3 id="栈顶缓存技术Top-of-Stack-Cashing"><a href="#栈顶缓存技术Top-of-Stack-Cashing" class="headerlink" title="栈顶缓存技术Top of  Stack Cashing"></a>栈顶缓存技术Top of  Stack Cashing</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818213110.png"></p>
+<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827215750.png"></p>
+<p>大部分字节码指令在执行的时候，都需要进行常量池的访问，帧数据区中，就保存着可以访问常量池中的一个指针，方便程序访问常量池，这里就是我们所说的动态链接</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827220007.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827220843.png"></p>
+<p>以上这些符号就是所谓的动态链接，常量池在运行的时候被放到方法区，所以叫做运行时常量池。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827221440.png"></p>
+<p>那为什么不把“方法”直接放在栈帧中呢？java对象中有很多的方法，所以，总不可能每个栈帧，都放一个符号方法吧</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827221934.png"></p>
+<h3 id="方法的调用–静态绑定与动态绑定"><a href="#方法的调用–静态绑定与动态绑定" class="headerlink" title="方法的调用–静态绑定与动态绑定"></a>方法的调用–静态绑定与动态绑定</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827222502.png"></p>
+<p>如果在编译器就知道符号引用对应方法的直接引用，就称为静态链接</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827222815.png"></p>
+<p>在多态中可以体现</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827223851.png"></p>
+<p>虚函数 == 具备晚期绑定的特点的方法</p>
+<h3 id="虚方法和非虚方法"><a href="#虚方法和非虚方法" class="headerlink" title="虚方法和非虚方法"></a>虚方法和非虚方法</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827224404.png"></p>
+<p>非虚方法，不涉及方法的重写</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827224834.png"></p>
+<p>注意：子类自己声明的普通方法也叫做invokevirtual，父类中子类没有重写的方法，在子类中没有super.显示调用也叫做invokevirtual</p>
+<h3 id="invokedynamic指令的使用"><a href="#invokedynamic指令的使用" class="headerlink" title="invokedynamic指令的使用"></a>invokedynamic指令的使用</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901211432.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901211522.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901212213.png"></p>
+<h3 id="方法重写的本质"><a href="#方法重写的本质" class="headerlink" title="方法重写的本质"></a>方法重写的本质</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901212555.png"></p>
+<p>IllegalAccessException在maven管理jar包的时候经常会出现，因为jar包冲突，或者没有部署到服务器上，都有可能会出现这个异常，但是具体情况具体分析。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901213325.png"></p>
+<p>虚方法表在链接的解析阶段创建：将常量池内的符号引用（类、属性、方法的符号等）转换为直接引用的过程</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214008.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214246.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214339.png"></p>
+<h3 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214828.png"></p>
+<p>在一个A方法中调用了B方法，当B返回的时候，pc寄存器的值当作方法返回地址返回给A，A就按照下一条指令的地址执行B方法之后的代码，此处又分为异常退出和正常退出。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901215248.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901215555.png"></p>
+<p><strong>引用类型时areturn</strong></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901220306.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901220543.png"></p>
+<h3 id="虚拟机栈的五道面试题"><a href="#虚拟机栈的五道面试题" class="headerlink" title="虚拟机栈的五道面试题"></a>虚拟机栈的五道面试题</h3><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901222057.png"></p>
+<h2 id="5-本地方法栈"><a href="#5-本地方法栈" class="headerlink" title="5.本地方法栈"></a>5.本地方法栈</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210234.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210521.png"></p>
+<h2 id="6-本地方法接口"><a href="#6-本地方法接口" class="headerlink" title="6.本地方法接口"></a>6.本地方法接口</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204113.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204248.png"></p>
+<p>native不意味着是抽象方法，和abstract关键字不能共用</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204917.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903205402.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210042.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903211630.png"></p>
+<h1 id="堆空间"><a href="#堆空间" class="headerlink" title="堆空间"></a>堆空间</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h2><p>堆和方法区对一个进程来说，都是唯一的，一个进程就对应一个JVM的实例，一个JVM实例中就会有一个运行时数据区，一个进程有多个线程，所以线程共享一个堆空间和方法区</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908193652.png"></p>
+<p>-Xms 初始的堆内存空间；-Xmx最大允许的堆内存空间</p>
+<p>在jdk自带的工具包中可以使用jvisualvm，可以查看运行的java进程</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194304.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194454.png"></p>
+<p>每个进程都各自有一份堆内存</p>
+<p>堆内存逻辑上连续（实现比较简单，存储也比较高效），但是硬盘上不一定连续，物理内存和虚拟内存可以建立一张映射表，这张表，可以将物理上不连续的内存在虚拟内存中看作是连续的，方便存储数据。</p>
+<p>上面所说的所有的线程都共享堆空间，那么这肯定会带来线程安全的问题，如果用同步的方式处理，堆空间的并发性就会变得非常差，如何处理？</p>
+<blockquote>
+<p>在堆空间中分配出一些小块，每个线程一人一份，每个小块就称为TLAB，在这里就体现了另外一点，就是并发性更好一些</p>
+</blockquote>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908195505.png"></p>
+<p><strong>注意：</strong></p>
+<p>①这里所说的是“几乎”所有的对象都会在堆内存中分配内存，表示还有一部份对象可能不会在堆内存中分配（还有可能在栈上分配）。</p>
+<p>②堆中的对象不会在方法结束以后马上被移除，而是在垃圾回收的时候才会被移除。（在方法执行结束后对象依次弹出栈，但是是在GC中判断是否这两个对象当前是不是垃圾，等到相应的空间内存不足时JVM会主动的调用GC），如果是像我们所理解的方法执行结束就进行垃圾回收，那这样的话，垃圾回收的频率就会特别高，会影响用户线程去执行（在《深入java虚拟机》中提到的“stop the world”的问题就出现了）</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908200119.png"></p>
+<p>堆空间中的实例，所属的类类型信息，以及类中的方法都存放于方法区中</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908201147.png"></p>
+<p>一旦执行了new这个字节码指令的时候，就会在堆空间中创建对象，开辟空间，之后JVM为堆空间的实例变量初始化。</p>
+<h2 id="2-内存细分"><a href="#2-内存细分" class="headerlink" title="2.内存细分"></a>2.内存细分</h2><p>分代垃圾回收算法就是针对于堆的分代来讲的</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908201845.png"></p>
+<p>现在所说的堆空间，主要就分为了新生区和养老区，这里所说的永久区是在方法区中的实现。</p>
+<p>上文所看的对的内存分配的图可以看出</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194454.png"></p>
+<p>堆内存中只有新生代和老年代，并没有所谓的永久区。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908202845.png"></p>
+<p>运行java程序时指定：-XX: +PrintGCDetails，即可打印垃圾回收器的执行细节</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203214.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203402.png"></p>
+<h2 id="3-堆空间的大小的设置和查看"><a href="#3-堆空间的大小的设置和查看" class="headerlink" title="3.堆空间的大小的设置和查看"></a>3.堆空间的大小的设置和查看</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203548.png"></p>
+<p>这里所说的指令，也可以使用等价于后面的哪个指令，他们的效果是一样的。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908204058.png"></p>
+<p>默认情况下，对内存的初始化大小是……最大内存大小是……</p>
+<p>但是，一般情况而言，这里的内存总是会比电脑的实际内存要小一点：原因之一是实际上使用的时候，有很多必须要加载的数据，他要占用一点内存。</p>
+<p>再手动设置堆内存的大小的时候，通常将最大值和最小值设置成一样大小的值：初始的时候要设置的一个值之后，如果堆空间不够会进行扩容，后续如果内存用不到，他也会往下降，我们如果在服务器中不设置成一样大小的值，就会出现频繁的扩容和释放的情况，会造成不必要的系统的压力。</p>
+<p>出现的一个问题？这个数怎么算出来的？</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908205429.png"></p>
+<p>查看设置的参数，方式一、<code>JPS</code>        <code>jstat -gc 进程ID</code></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908205803.png"></p>
+<p>老年代：OC(其中C是总量)     OU(U是use)</p>
+<p>伊甸园区：EC    EU</p>
+<p>幸存者区：S0C    S1C    S0U    S1U</p>
+<p>将各个区域的总量加起来（S0C+S1C+EC+OC/1024），发现正好是600M，那为什么在上面的程序中是575呢？</p>
+<blockquote>
+<p>伊甸园区能放对象，S0C或者S1C他们只能二选一的去用，所以如果少加一个S区，会发现，正好是575，主要用到的是垃圾回收，新生代使用的复制算法，S0C、S1C他俩始终有一个区域是空的</p>
+</blockquote>
+<p>方式二、运行java程序的时候加上<code>-XX: +PrintGCDetails </code></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908211214.png"></p>
+<p>其中PSYoungGen中的total是通过eden总量加上from/to其中一个得出。</p>
+<h2 id="4-oom的说明和举例"><a href="#4-oom的说明和举例" class="headerlink" title="4.oom的说明和举例"></a>4.oom的说明和举例</h2><p>关于异常相关的类叫做Throwable</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910192655.png"></p>
+<p>我们这里所说的oom指的是 error，在面试中我们讲到的异常，实际上就是Throwable（包括Error或者Exception）</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910193856.png"></p>
+<h2 id="5-年轻代与老年代中相关参数的设置"><a href="#5-年轻代与老年代中相关参数的设置" class="headerlink" title="5.年轻代与老年代中相关参数的设置"></a>5.年轻代与老年代中相关参数的设置</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910194125.png"></p>
+<p>注意：幸存者0区不一定是from 1区也不一定就是to</p>
+<p>前面我们讲到了设置堆空间的大小，那么如何控制新生代和老年代的大小呢？</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910194801.png"></p>
+<p>-XX：NewRatio   设置新生代和老年代的比例。默认值是2，一般情况下不会去修改这个空间的。</p>
+<p>如果你知道有很多对象声明周期比较长，这个时候你就可以把老年代的空间调大一点</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910195546.png"></p>
+<p>伊甸园区和幸存者0、1区的比例在官方给出的默认值是8：1：1，但是我们在jvisualvm中看到的却是下图所示的结果</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910195925.png"></p>
+<p>这是为什么？</p>
+<blockquote>
+<p>所以我们想到jvm底层有一个自适应的机制，可以使用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-XX:-UseAdaptiveSizePolicy <span class="comment">// 减号代表关闭自适应</span></span><br></pre></td></tr></table></figure>
+
+<p>但是我们操作了之后，发现还是不起效果。</p>
+<p>要想比例是原来默认的8：1：1，我们仍需要显示地指定一下才行。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">-XX:SurvivorRatio=<span class="number">8</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910200827.png"></p>
+<p>注意：设置了NewRatio制定了新生代和老年代的比例，又设置了-Xmn参数，这时候就会有矛盾，以-Xmn为准（-Xmn一般不设置）</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910201007.png"></p>
+<h2 id="6-对象分配的过程"><a href="#6-对象分配的过程" class="headerlink" title="6.对象分配的过程"></a>6.对象分配的过程</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910201513.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910204209.png"></p>
+<p>对象刚开始放在伊甸园区，如果伊甸园区放满了，这时候会进行垃圾回收（YGC/Minor GC）,那谁是垃圾，谁不是垃圾，怎么进行判断，（涉及到引用计数算法、可达性分析算法，在java中我们使用后者）</p>
+<p>  垃圾回收完成之后，如果还有对象被引用，这时候就把存活的对象放进幸存者区（s0、s1都是空的，这时候先把他放在0区，为幸存的对象的年龄计数器赋值为1）</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910202357.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910202834.png"></p>
+<p>这个to表示，下一次YGC的时候，一点远去的对象要往哪里放</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910203220.png"></p>
+<p>这里有个问题，伊甸园区空间放满了的时候，触发YGC，我们知道伊甸园区和幸存者区的比利时8：1：1，那万一幸存者区满了怎么办？会触发YGC吗？</p>
+<blockquote>
+<p>不会触发，这不意味着幸存者区不会有垃圾回收（当伊甸园区发生YGC的时候，伊甸园区和幸存者区都会发生垃圾回收），幸存者区满了，这里会存在特殊的规则（会直接晋升到老年代）</p>
+</blockquote>
+<p>有没有可能对象一上来就被分配到老年代？</p>
+<blockquote>
+<p>有可能的，对象所占用的内存比较大的情况</p>
+</blockquote>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910204331.png"></p>
+<h2 id="7-对象分配的特殊过程"><a href="#7-对象分配的特殊过程" class="headerlink" title="7.对象分配的特殊过程"></a>7.对象分配的特殊过程</h2><p>注意，YGC之后，Eden区一定是空的，如果这个时候Eden区还是放不下的话，那只有可能对象是超大对象，这时候会考虑直接一步到老年区是不是能够放下这个对象，如果这个时候放不下，会Full GC（Major GC），如果还是放不下那么就OOM。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915192906.png"></p>
+<h2 id="8-常用的调优工具"><a href="#8-常用的调优工具" class="headerlink" title="8.常用的调优工具"></a>8.常用的调优工具</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915193544.png"></p>
+<p>电脑上安装Jprofiler</p>
+<p>idea下载Jprofiler插件</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915194015.png"></p>
+<h2 id="9-Minor-GC-，Full-GC和Major-Gc的对比"><a href="#9-Minor-GC-，Full-GC和Major-Gc的对比" class="headerlink" title="9.Minor GC ，Full GC和Major Gc的对比"></a>9.Minor GC ，Full GC和Major Gc的对比</h2><p>YGC == Minor GC</p>
+<p>调优的目的就是希望垃圾回收的次数少一些，注意的是，Major GC和Full GC所占用时间比Minor GC占用的时间多十倍以上（出现“Stop The World”）。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915194554.png"></p>
+<p>上图中所说的三个内存区域分别指的是：新生代、老年代；方法区。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915195436.png"></p>
+<p>但是因为新生代比较小的原因，“STW”的时间也不会很长，虽然频率特别高，但是执行的速度特别快。</p>
+<p>为什么会有STW:</p>
+<p>如果出现，垃圾回收的线程和制造垃圾的线程同时运行，在垃圾回收线程判断完那个是垃圾，准备回收垃圾的时候，制造垃圾的线程这时候又制造了几个对象， 不知道是不是垃圾，这个时候就不合适了。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915200107.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915200311.png"></p>
+<p>Full GC覆盖了整个堆空间，包括我们所讲的方法区。</p>
+<h2 id="10-GC举例和日志分析"><a href="#10-GC举例和日志分析" class="headerlink" title="10.GC举例和日志分析"></a>10.GC举例和日志分析</h2><p>字符串常量池是存放在堆空间的，在jdk8之后修改成了存放在堆空间，以前是在方法区。</p>
+<p>堆空间报OOM之前通常会进行一次Full GC，垃圾回收之后仍然发现空间不足，才会报这个OOM</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915201539.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915201834.png"></p>
+<p>后面的secs是此次GC花费的时间</p>
+<h2 id="11-小结内存分配的策略"><a href="#11-小结内存分配的策略" class="headerlink" title="11.小结内存分配的策略"></a>11.小结内存分配的策略</h2><p>​    为什么要将java堆分代，分代的好处是什么？</p>
+<p>为了优化GC的性能</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917191004.png"></p>
+<p>一些不容易销毁的对象放在老年代中，不让他进行频繁的垃圾回收，这样就可以优化性能</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917191547.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917192109.png"></p>
+<p>注意：如果年龄相同的所有对象的综合大于Survivor中空间的一般，这些对象就可以直接进入老年代，空间分配担保指的是进行了minor GC之后，对象在Survivor中放不下，这时候就会直接进入老年代，但是它的前提是老年代必须有这个空间来容纳这个对象（需要用到-XX:HandlePromotionFailure）</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193154.png"></p>
+<h2 id="12-堆空间为每个线程分配的TLAB"><a href="#12-堆空间为每个线程分配的TLAB" class="headerlink" title="12.堆空间为每个线程分配的TLAB"></a>12.堆空间为每个线程分配的TLAB</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193348.png"></p>
+<p>那么这个时候TLAB就应运而生</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193602.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193746.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193935.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917194447.png"></p>
+<p>所以在面试中就会有个问题，堆空间的内存都是共享的吗？</p>
+<p>不一定，因为Eden区为每个线程分配了TLAB。</p>
+<h2 id="13-总结"><a href="#13-总结" class="headerlink" title="13.总结"></a>13.总结</h2><p>小结堆空间的参数设置</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917194925.png"></p>
+<p>如果Eden区设置的比较大，会出现什么问题？</p>
+<blockquote>
+<p>Eden区太大，Survivor就会比较小，那么当进行YGC的时候，Survivor只能存放一小部分的对象，这会导致某一部分的对象，直接就进入Old区，即时这个对象的生命周期非常短，这样不利于系统性能 （导致minor GC失去意义了）</p>
+</blockquote>
+<p>Eden区设置的不够大，Survivor设置的反而比较大，出现的问题？</p>
+<blockquote>
+<p>YGC触发地更加频繁，会影响用户线程</p>
+</blockquote>
+<p>关于参数<code>-XX:HandlePromotionFailure</code>的说明：</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917200829.png"></p>
+<h2 id="14-拓展"><a href="#14-拓展" class="headerlink" title="14.拓展"></a>14.拓展</h2><p>堆是分配对象存储的唯一选择吗？</p>
+<p>我们堆JVM性能地调优，主要是针对于老年代的GC，因为老年代的GC的‘STW’时间比较长</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917201312.png"></p>
+<p>最终目的都是希望在堆上分配的对象少一些（因为不用进行垃圾回收）</p>
+<h1 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h1><h2 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h2><p>通过逃逸分析，发现对象没有逃逸的，才作为栈上分配</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922185900.png"></p>
+<p>逃逸：通常是返回一个对象，这个对象在另一个方法外可能会被使用得到，此时就分配在堆空间中</p>
+<p>开启逃逸分析：<code>-XX:+DoEscapeAnalysis</code>,（当开启逃逸分析的时候，如果对象没有发生逃逸，那么就会考虑栈上分配）关闭逃逸分析：<code>-XX:-DoEscapeAnalysis</code>。（JDK7之后默认是开启的）</p>
+<p>当开启逃逸分析的时候，因为是在站上分配的，所以根本不会发生GC,真正维护的对象的个数也不足我们创建的个数</p>
+<h2 id="同步省略"><a href="#同步省略" class="headerlink" title="同步省略"></a>同步省略</h2><p>如果一个对象被发现只能从一个线程被访问到，那么对于这个对象的操作可以考虑不同步</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191114.png"></p>
+<p>就是说，如果一个对象没有发生逃逸，就没有必要使用加锁，因为他根本就不会被其他线程访问到</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191319.png"></p>
+<p>上面的方法，每次线程调用方法是，对象总是自己new出来的，所以这时候加锁就没有必要。JVM虚拟机有了逃逸分析，会自动帮你确定</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191857.png"></p>
+<p>只是在运行的时候，才考虑把它去掉，加载的时候还是会加载原来的文件</p>
+<h2 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192101.png"></p>
+<p>对象被称作聚合量，聚合量可以分解成最小的标量，标量是不可以再分的量</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192240.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192511.png"></p>
+<p>相当于，将对象拆解开来，分散在栈上</p>
+<p>开启标量替换<code>-XX:+EliminateAllocations</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>堆空间是对象分配地唯一选择吗？</p>
+<p>逃逸分析在java地服务器端模式才会开启的。</p>
+<p>逃逸分析本身并不成熟，分析逃逸分析，无法保证其本身的性能一定高于它的消耗，如果经过逃逸分析，发现没有一个对象是不逃逸的，那么逃逸分析的性能就被白白浪费掉了。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922193736.png"></p>
+<p>注意：这里所说的所有对象都创建在堆上，这是正确的。这里我们先否定了所有的对象都是分配在堆上的，这里我们有否定了。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922193954.png"></p>
+<h1 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h1><h2 id="栈、堆、方法区的关系"><a href="#栈、堆、方法区的关系" class="headerlink" title="栈、堆、方法区的关系"></a>栈、堆、方法区的关系</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922194757.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922195203.png"></p>
+<h2 id="方法区的理解"><a href="#方法区的理解" class="headerlink" title="方法区的理解"></a>方法区的理解</h2><p>逻辑上我们把方法区当作堆的一部分，但是实际上，方法区的简单实现既没有GC，也没有压缩。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200314.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200419.png"></p>
+<p>在实际操作过程中，我们设置堆空间的大小的情况下，实际上也没有影响到方法区空间的大小</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200910.png"></p>
+<p>因为是共享的，在加载类得对象的时候，多个线程加载对象，只有一个对象可以被加载，其他的线程都必须等待。</p>
+<p>如果加载了过多的第三方jar包，这个时候就可能出现oom；Tomcat部署的应用程序太多；大量动态地生成反射类</p>
+<h2 id="Hotspot中方法区的演进"><a href="#Hotspot中方法区的演进" class="headerlink" title="Hotspot中方法区的演进"></a>Hotspot中方法区的演进</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924190716.png"></p>
+<p>注意，方法区说成永久代，主要是对于hotspot而言的。</p>
+<p>永久代仍然使用的是java虚拟机的内存，更容易oom。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924191817.png"></p>
+<p>生产JRockit的BEA公司被Oracle公司收购，JRockit是世界上公认的最快的虚拟机。</p>
+<p>注意：方法区无法满足新的内存分配需求时，将会抛出OOM异常，即使它使用的是本地内存。</p>
+<h2 id="设置方法区的大小"><a href="#设置方法区的大小" class="headerlink" title="设置方法区的大小"></a>设置方法区的大小</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924192503.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924192926.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193054.png"></p>
+<p>如果想要设置参数：</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193607.png"></p>
+<p>如果在jdk8当中设置jdk7中设置的<code>PermSize</code>会报错。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193820.png"></p>
+<h2 id="如果解决oom的问题"><a href="#如果解决oom的问题" class="headerlink" title="如果解决oom的问题"></a>如果解决oom的问题</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924194747.png"></p>
+<p>内存泄露：堆中有对象，栈中存在着引用指向他，但是这个数据我们也没有使用，因为它始终和GC Roots有过关联，所以会导致这个对象始终不会被回收，这样的对象多了之后，就造成了OOM。</p>
+<h2 id="方法区的内部结构"><a href="#方法区的内部结构" class="headerlink" title="方法区的内部结构"></a>方法区的内部结构</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195511.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195645.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195959.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924200031.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924200215.png"></p>
+<p>字节码文件是通过类的加载器加载进来的，所以方法区中还存放了这个字节码文件是由那个类加载器加载进来的，这个classLoader也会记载他加载过谁（彼此互相记录）。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924201850.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924201952.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924202428.png"></p>
+<h2 id="class文件中常量池的理解"><a href="#class文件中常量池的理解" class="headerlink" title="class文件中常量池的理解"></a>class文件中常量池的理解</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929190639.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191119.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191234.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191929.png"></p>
+<p>这还仅仅只是一个方法中的符号引用，如果不把他们管理起来的话，每个方法中都有这个结构的话，字节码文件就会非常的大了。我们使用的方法的相关细节都是从常量池中调用的</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929192449.png"></p>
+<h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929192654.png"></p>
+<p>字节码中的常量池通过类的加载器放在内存中以后，对应的这个结构称为运行时常量池，运行时常量池就是字节码文件当中每一个类或者接口对应的常量池表对应的一个运行时候的表示形式。并且，运行时常量池具有动态性。</p>
+<p>这里所说的动态性的一个具体例子就是String.intern()方法。</p>
+<h2 id="图示方法区的使用"><a href="#图示方法区的使用" class="headerlink" title="图示方法区的使用"></a>图示方法区的使用</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194158.png"></p>
+<p>针对上图执行过程图示如下</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194346.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194446.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194500.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194531.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194549.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194758.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194826.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195121.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195145.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195221.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195245.png"></p>
+<h2 id="方法区的演进细节"><a href="#方法区的演进细节" class="headerlink" title="方法区的演进细节"></a>方法区的演进细节</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004180851.png"></p>
+<p>方法区存储的经典结构如上所示，但是jdk在不同版本的演进当中，方法区的实现也发生了一些变化。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181010.png"></p>
+<p>注意的是：jdk8之后，网上很多帖子或者书中，说的是静态变量放到了元空间中，实际上仍然在堆中。</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181842.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181912.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181925.png"></p>
+<p>永久代为什么要被元空间替换呢？</p>
+<blockquote>
+<p>相当于把jRockit和J9虚拟机结合hotspot虚拟机了，JRockit认为方法区中的类信息和方法信息等，生命周期比较长，所以把他放在虚拟机内存之外，而hotspot虚拟机则是所有的内存都有我自己来分配（完全受虚拟机控制）</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004182516.png"></p>
+</blockquote>
+<p>为什么JRockit没有永久代？</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004182834.png"></p>
+<p>判断常量或者类是否需要再被使用其实也挺花时间的。</p>
+<h2 id="StringTable为什么要调整位置"><a href="#StringTable为什么要调整位置" class="headerlink" title="StringTable为什么要调整位置"></a>StringTable为什么要调整位置</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004184629.png"></p>
+<h2 id="如何证明静态变量的位置？"><a href="#如何证明静态变量的位置？" class="headerlink" title="如何证明静态变量的位置？"></a>如何证明静态变量的位置？</h2><p>使用JHSDB（JDK9引入的工具）：监控进程的细节</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004185504.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004185739.png"></p>
+<p>上图证明的是，三个对象的实体都是放在堆空间当中的（只要是new的对象都放在堆空间当中）</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004190030.png"></p>
+<h2 id="方法区的垃圾回收行为"><a href="#方法区的垃圾回收行为" class="headerlink" title="方法区的垃圾回收行为"></a>方法区的垃圾回收行为</h2><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013184715.png"></p>
+<p>如果不进行gc的话，就真的成了永久代了（永久也仅限于当前的进程存在的生命周期之内），方法区的垃圾回收也主要是针对于针对运行时常量池和类型信息</p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013185607.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013185656.png"></p>
+<p>类的卸载实际上是很苛刻的。</p>
+<h1 id="总结：运行时数据区"><a href="#总结：运行时数据区" class="headerlink" title="总结：运行时数据区"></a>总结：运行时数据区</h1><p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190547.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190742.png"></p>
+<p><img src="/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190804.png"></p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
 </search>

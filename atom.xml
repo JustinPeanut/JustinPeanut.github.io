@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-10-12T12:20:31.233Z</updated>
+  <updated>2020-10-13T11:38:08.276Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM一---运行时数据区</title>
+    <link href="http://yoursite.com/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/"/>
+    <id>http://yoursite.com/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/</id>
+    <published>2020-10-13T11:27:14.000Z</published>
+    <updated>2020-10-13T11:38:08.276Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;运行时数据区&quot;&gt;&lt;a href=&quot;#运行时数据区&quot; class=&quot;headerlink&quot; title=&quot;运行时数据区&quot;&gt;&lt;/a&gt;运行时数据区&lt;/h1&gt;&lt;p&gt;写在前面，感谢尚硅谷宋红康老师的讲解，本文根据宋红康老师的ppt完成，仅供个人学习参考，更多的JVM相关的知识请访问Oracle官网&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="JVM" scheme="http://yoursite.com/categories/JVM/"/>
+    
+    
+    <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>ETH四---交易树和收据树</title>
@@ -393,32 +412,6 @@
     <summary type="html">&lt;h1 id=&quot;比特币中的数据结构&quot;&gt;&lt;a href=&quot;#比特币中的数据结构&quot; class=&quot;headerlink&quot; title=&quot;比特币中的数据结构&quot;&gt;&lt;/a&gt;比特币中的数据结构&lt;/h1&gt;&lt;h2 id=&quot;1-区块链&quot;&gt;&lt;a href=&quot;#1-区块链&quot; class=&quot;headerlink&quot; title=&quot;1.区块链&quot;&gt;&lt;/a&gt;1.区块链&lt;/h2&gt;&lt;p&gt;这里要用到一个重要的概念叫做哈希指针。&lt;/p&gt;
 &lt;p&gt;hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）&lt;/p&gt;
 &lt;p&gt;区块链相比较于普通的链表有何区别？&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BTC一---密码学基础</title>
-    <link href="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/"/>
-    <id>http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</id>
-    <published>2020-08-29T00:21:39.000Z</published>
-    <updated>2020-08-30T02:50:12.391Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;密码学基础&quot;&gt;&lt;a href=&quot;#密码学基础&quot; class=&quot;headerlink&quot; title=&quot;密码学基础&quot;&gt;&lt;/a&gt;密码学基础&lt;/h1&gt;&lt;h1 id=&quot;1-哈希&quot;&gt;&lt;a href=&quot;#1-哈希&quot; class=&quot;headerlink&quot; title=&quot;1.哈希&quot;&gt;&lt;/a&gt;1.哈希&lt;/h1&gt;&lt;p&gt;​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。&lt;/p&gt;
-&lt;p&gt;比特币用到了密码学的两个内容：哈希和签名&lt;/p&gt;
-&lt;p&gt;哈希在比特币中：&lt;code&gt;cryptographic hash function&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;它在密码学中要求的两个性质：&lt;/p&gt;
-&lt;p&gt;​    ①&lt;code&gt;collision&lt;/code&gt;（哈希碰撞） 和&lt;code&gt; resistance&lt;/code&gt;：没有什么高效的方法人为的制造哈希碰撞，&lt;/p&gt;
-&lt;p&gt;​        解释为对于一个x，没有什么高效的办法，找到另一个y，使&lt;code&gt;H(x) = H(y)&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得&lt;code&gt;H(m) = H(m&amp;#39;)&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。&lt;/p&gt;</summary>
     
     
     
