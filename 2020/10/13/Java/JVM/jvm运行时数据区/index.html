@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/header.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/header.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/header.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="运行时数据区写在前面，感谢尚硅谷宋红康老师的讲解，本文根据宋红康老师的ppt完成，仅供个人学习参考，更多的JVM相关的知识请访问Oracle官网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM一---运行时数据区">
+<meta property="og:url" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/index.html">
+<meta property="og:site_name" content="Blog of DengFeng">
+<meta property="og:description" content="运行时数据区写在前面，感谢尚硅谷宋红康老师的讲解，本文根据宋红康老师的ppt完成，仅供个人学习参考，更多的JVM相关的知识请访问Oracle官网">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728210959.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211336.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211523.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211756.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212041.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212559.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212937.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728213604.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214231.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214447.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214622.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728215104.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731211604.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731211933.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212357.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212559.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212742.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214026.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214229.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214810.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731215443.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731215746.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731220315.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731220810.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804215450.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804215851.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804220030.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804221220.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804222347.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811204445.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811205919.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811205442.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811210833.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811210900.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811211636.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811211919.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811212043.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811212846.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811213336.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811213640.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214212.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214713.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214825.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811215035.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818204321.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818204555.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205205.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205543.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205727.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818210902.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818210951.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211019.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211327.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211758.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818212259.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818212725.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818213110.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827215750.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827220007.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827220843.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827221440.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827221934.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827222502.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827222815.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827223851.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827224404.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827224834.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901211432.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901211522.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901212213.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901212555.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901213325.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214008.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214246.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214339.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214828.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901215248.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901215555.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901220306.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901220543.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901222057.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210234.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210521.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204113.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204248.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204917.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903205402.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210042.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903211630.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908193652.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194304.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194454.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908195505.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908200119.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908201147.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908201845.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194454.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908202845.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203214.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203402.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203548.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908204058.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908205429.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908205803.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908211214.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910192655.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910193856.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910194125.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910194801.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910195546.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910195925.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910200827.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910201007.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910201513.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910204209.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910202357.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910202834.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910203220.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910204331.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915192906.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915193544.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915194015.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915194554.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915195436.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915200107.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915200311.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915201539.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915201834.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917191004.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917191547.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917192109.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193154.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193348.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193602.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193746.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193935.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917194447.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917194925.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917200829.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917201312.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922185900.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191114.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191319.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191857.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192101.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192240.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192511.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922193736.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922193954.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922194757.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922195203.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200314.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200419.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200910.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924190716.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924191817.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924192503.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924192926.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193054.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193607.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193820.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924194747.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195511.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195645.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195959.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924200031.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924200215.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924201850.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924201952.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924202428.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929190639.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191119.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191234.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191929.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929192449.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929192654.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194158.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194346.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194446.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194500.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194531.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194549.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194758.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194826.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195121.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195145.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195221.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195245.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004180851.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181010.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181842.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181912.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181925.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004182516.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004182834.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004184629.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004185504.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004185739.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004190030.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013184715.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013185607.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013185656.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190547.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190742.png">
+<meta property="og:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190804.png">
+<meta property="article:published_time" content="2020-10-13T11:27:14.000Z">
+<meta property="article:modified_time" content="2020-10-13T11:38:08.276Z">
+<meta property="article:author" content="Deng Feng">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728210959.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JVM一---运行时数据区 | Blog of DengFeng</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Blog of DengFeng" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband">	
+<a target="_blank" rel="noopener" href="https://github.com/JustinPeanut" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+</div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Blog of DengFeng</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">1.</span> <span class="nav-text">运行时数据区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">1.内部结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BA%BF%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">2.线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-pc%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">3.pc寄存器（程序计数器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88"><span class="nav-number">1.4.</span> <span class="nav-text">4.虚拟机栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.4.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%E5%B8%B8%E8%A7%81%E7%9A%84%E5%BC%82%E5%B8%B8"><span class="nav-number">1.4.2.</span> <span class="nav-text">java虚拟机栈常见的异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E5%92%8C%E8%BF%90%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.3.</span> <span class="nav-text">栈的存储结构和运行原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E5%B8%A7%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.4.</span> <span class="nav-text">栈帧的内部结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84%E7%9A%84%E8%AE%A4%E8%AF%86"><span class="nav-number">1.4.5.</span> <span class="nav-text">局部变量表的结构的认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E7%A0%81%E4%B8%AD%E6%96%B9%E6%B3%95%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.6.</span> <span class="nav-text">字节码中方法内部结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slot%E7%90%86%E8%A7%A3"><span class="nav-number">1.4.7.</span> <span class="nav-text">slot理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E5%92%8C%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">1.4.8.</span> <span class="nav-text">静态变量和局部变量的对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.4.9.</span> <span class="nav-text">操作数栈的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%95%B0%E6%A0%88%E7%9A%84%E5%AD%97%E8%8A%82%E7%A0%81%E6%8C%87%E4%BB%A4%E5%88%86%E6%9E%90"><span class="nav-number">1.4.10.</span> <span class="nav-text">操作数栈的字节码指令分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E9%A1%B6%E7%BC%93%E5%AD%98%E6%8A%80%E6%9C%AFTop-of-Stack-Cashing"><span class="nav-number">1.4.11.</span> <span class="nav-text">栈顶缓存技术Top of  Stack Cashing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5"><span class="nav-number">1.4.12.</span> <span class="nav-text">动态链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E7%9A%84%E8%B0%83%E7%94%A8%E2%80%93%E9%9D%99%E6%80%81%E7%BB%91%E5%AE%9A%E4%B8%8E%E5%8A%A8%E6%80%81%E7%BB%91%E5%AE%9A"><span class="nav-number">1.4.13.</span> <span class="nav-text">方法的调用–静态绑定与动态绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%96%B9%E6%B3%95%E5%92%8C%E9%9D%9E%E8%99%9A%E6%96%B9%E6%B3%95"><span class="nav-number">1.4.14.</span> <span class="nav-text">虚方法和非虚方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#invokedynamic%E6%8C%87%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.4.15.</span> <span class="nav-text">invokedynamic指令的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E9%87%8D%E5%86%99%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-number">1.4.16.</span> <span class="nav-text">方法重写的本质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%BF%94%E5%9B%9E%E5%9C%B0%E5%9D%80"><span class="nav-number">1.4.17.</span> <span class="nav-text">方法返回地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%88%E7%9A%84%E4%BA%94%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">1.4.18.</span> <span class="nav-text">虚拟机栈的五道面试题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%A0%88"><span class="nav-number">1.5.</span> <span class="nav-text">5.本地方法栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%9C%AC%E5%9C%B0%E6%96%B9%E6%B3%95%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.6.</span> <span class="nav-text">6.本地方法接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A0%86%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">堆空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">1.概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%86%85%E5%AD%98%E7%BB%86%E5%88%86"><span class="nav-number">2.2.</span> <span class="nav-text">2.内存细分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%A0%86%E7%A9%BA%E9%97%B4%E7%9A%84%E5%A4%A7%E5%B0%8F%E7%9A%84%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%9F%A5%E7%9C%8B"><span class="nav-number">2.3.</span> <span class="nav-text">3.堆空间的大小的设置和查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-oom%E7%9A%84%E8%AF%B4%E6%98%8E%E5%92%8C%E4%B8%BE%E4%BE%8B"><span class="nav-number">2.4.</span> <span class="nav-text">4.oom的说明和举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%B9%B4%E8%BD%BB%E4%BB%A3%E4%B8%8E%E8%80%81%E5%B9%B4%E4%BB%A3%E4%B8%AD%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.5.</span> <span class="nav-text">5.年轻代与老年代中相关参数的设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">2.6.</span> <span class="nav-text">6.对象分配的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E7%9A%84%E7%89%B9%E6%AE%8A%E8%BF%87%E7%A8%8B"><span class="nav-number">2.7.</span> <span class="nav-text">7.对象分配的特殊过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%B8%B8%E7%94%A8%E7%9A%84%E8%B0%83%E4%BC%98%E5%B7%A5%E5%85%B7"><span class="nav-number">2.8.</span> <span class="nav-text">8.常用的调优工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-Minor-GC-%EF%BC%8CFull-GC%E5%92%8CMajor-Gc%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">2.9.</span> <span class="nav-text">9.Minor GC ，Full GC和Major Gc的对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-GC%E4%B8%BE%E4%BE%8B%E5%92%8C%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90"><span class="nav-number">2.10.</span> <span class="nav-text">10.GC举例和日志分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-%E5%B0%8F%E7%BB%93%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E7%AD%96%E7%95%A5"><span class="nav-number">2.11.</span> <span class="nav-text">11.小结内存分配的策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-%E5%A0%86%E7%A9%BA%E9%97%B4%E4%B8%BA%E6%AF%8F%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%88%86%E9%85%8D%E7%9A%84TLAB"><span class="nav-number">2.12.</span> <span class="nav-text">12.堆空间为每个线程分配的TLAB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-%E6%80%BB%E7%BB%93"><span class="nav-number">2.13.</span> <span class="nav-text">13.总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-%E6%8B%93%E5%B1%95"><span class="nav-number">2.14.</span> <span class="nav-text">14.拓展</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">代码优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E4%B8%8A%E5%88%86%E9%85%8D"><span class="nav-number">3.1.</span> <span class="nav-text">栈上分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E7%9C%81%E7%95%A5"><span class="nav-number">3.2.</span> <span class="nav-text">同步省略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E9%87%8F%E6%9B%BF%E6%8D%A2"><span class="nav-number">3.3.</span> <span class="nav-text">标量替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.4.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA"><span class="nav-number">4.</span> <span class="nav-text">方法区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E3%80%81%E5%A0%86%E3%80%81%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.1.</span> <span class="nav-text">栈、堆、方法区的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">4.2.</span> <span class="nav-text">方法区的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hotspot%E4%B8%AD%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="nav-number">4.3.</span> <span class="nav-text">Hotspot中方法区的演进</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.4.</span> <span class="nav-text">设置方法区的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E8%A7%A3%E5%86%B3oom%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.5.</span> <span class="nav-text">如果解决oom的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">4.6.</span> <span class="nav-text">方法区的内部结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class%E6%96%87%E4%BB%B6%E4%B8%AD%E5%B8%B8%E9%87%8F%E6%B1%A0%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">4.7.</span> <span class="nav-text">class文件中常量池的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E5%B8%B8%E9%87%8F%E6%B1%A0"><span class="nav-number">4.8.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%A4%BA%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">4.9.</span> <span class="nav-text">图示方法区的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E6%BC%94%E8%BF%9B%E7%BB%86%E8%8A%82"><span class="nav-number">4.10.</span> <span class="nav-text">方法区的演进细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StringTable%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%B0%83%E6%95%B4%E4%BD%8D%E7%BD%AE"><span class="nav-number">4.11.</span> <span class="nav-text">StringTable为什么要调整位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AF%81%E6%98%8E%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%9F"><span class="nav-number">4.12.</span> <span class="nav-text">如何证明静态变量的位置？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E8%A1%8C%E4%B8%BA"><span class="nav-number">4.13.</span> <span class="nav-text">方法区的垃圾回收行为</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA"><span class="nav-number">5.</span> <span class="nav-text">总结：运行时数据区</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Deng Feng"
+      src="/images/header.jpg">
+  <p class="site-author-name" itemprop="name">Deng Feng</p>
+  <div class="site-description" itemprop="description">没有人一生下来就是天才</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JustinPeanut" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JustinPeanut" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:jutinpeanut@gmail.com" title="E-Mail → mailto:jutinpeanut@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="tencent://message/?uin=1820840828&Site=&menu=yes" title="QQ → tencent:&#x2F;&#x2F;message&#x2F;?uin&#x3D;1820840828&amp;Site&#x3D;&amp;menu&#x3D;yes" rel="noopener" target="_blank"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/JustinPeanut" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/header.jpg">
+      <meta itemprop="name" content="Deng Feng">
+      <meta itemprop="description" content="没有人一生下来就是天才">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of DengFeng">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JVM一---运行时数据区
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-10-13 19:27:14 / 修改时间：19:38:08" itemprop="dateCreated datePublished" datetime="2020-10-13T19:27:14+08:00">2020-10-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JVM/" itemprop="url" rel="index"><span itemprop="name">JVM</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="运行时数据区"><a href="#运行时数据区" class="headerlink" title="运行时数据区"></a>运行时数据区</h1><p>写在前面，感谢尚硅谷宋红康老师的讲解，本文根据宋红康老师的ppt完成，仅供个人学习参考，更多的JVM相关的知识请访问Oracle官网</p>
+<a id="more"></a>
+
+<h2 id="1-内部结构"><a href="#1-内部结构" class="headerlink" title="1.内部结构"></a>1.内部结构</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728210959.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211336.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211523.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728211756.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212041.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212559.png"></p>
+<h2 id="2-线程"><a href="#2-线程" class="headerlink" title="2.线程"></a>2.线程</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728212937.png"></p>
+<p>1.说的一个线程准备好之后，那这个准备是什么意思：</p>
+<p>每个java线程都有自己的程序计数器，虚拟机栈，本地方法栈等，都需要准备</p>
+<p>2.如果在run方法中碰到了未捕获的异常，java线程就会终止，但是操作系统本地线程不会立即终止，由它来决定jvm进程要不要终止，jvm要不要终止，又取决于当前的java线程是不是最后一个非守护线程</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728213604.png"></p>
+<h2 id="3-pc寄存器（程序计数器）"><a href="#3-pc寄存器（程序计数器）" class="headerlink" title="3.pc寄存器（程序计数器）"></a>3.pc寄存器（程序计数器）</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214231.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214447.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728214622.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200728215104.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731211604.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731211933.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212357.png"></p>
+<p>两个常见的问题</p>
+<p>①<img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212559.png"></p>
+<p>②<img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731212742.png"></p>
+<h2 id="4-虚拟机栈"><a href="#4-虚拟机栈" class="headerlink" title="4.虚拟机栈"></a>4.虚拟机栈</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214026.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214229.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731214810.png"></p>
+<p>一个线程，对应一个java虚拟机栈</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731215443.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731215746.png"></p>
+<h3 id="java虚拟机栈常见的异常"><a href="#java虚拟机栈常见的异常" class="headerlink" title="java虚拟机栈常见的异常"></a>java虚拟机栈常见的异常</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731220315.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200731220810.png"></p>
+<h3 id="栈的存储结构和运行原理"><a href="#栈的存储结构和运行原理" class="headerlink" title="栈的存储结构和运行原理"></a>栈的存储结构和运行原理</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804215450.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804215851.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804220030.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804221220.png"></p>
+<p>遇到异常如果在当前栈帧中没有处理，则会向上抛，如果还没有，在向上抛，直到main方法，main方法如果还没有处理，当前线程就结束了</p>
+<h3 id="栈帧的内部结构"><a href="#栈帧的内部结构" class="headerlink" title="栈帧的内部结构"></a>栈帧的内部结构</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200804222347.png"></p>
+<h3 id="局部变量表的结构的认识"><a href="#局部变量表的结构的认识" class="headerlink" title="局部变量表的结构的认识"></a>局部变量表的结构的认识</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811204445.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811205919.png"></p>
+<p>局部变量表是一个<strong>数字数组</strong>：里面的变量都可以用数值来表示</p>
+<p>这里的这个Maximum local variables是在编译的时候就已经确定了长度了</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811205442.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811210833.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811210900.png"></p>
+<h3 id="字节码中方法内部结构"><a href="#字节码中方法内部结构" class="headerlink" title="字节码中方法内部结构"></a>字节码中方法内部结构</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811211636.png"></p>
+<p>上图中的L指的是引用类型的变量</p>
+<p>Access flags：访问标识</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811211919.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811212043.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811212846.png"></p>
+<h3 id="slot理解"><a href="#slot理解" class="headerlink" title="slot理解"></a>slot理解</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811213336.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811213640.png"></p>
+<p><strong>注意，如果是非静态的方法，该对象引用this将会存放在index为0的slot处</strong>，静态方法中不可以引用this，所以在静态方法中没有</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214212.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214713.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811214825.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200811215035.png"></p>
+<h3 id="静态变量和局部变量的对比"><a href="#静态变量和局部变量的对比" class="headerlink" title="静态变量和局部变量的对比"></a>静态变量和局部变量的对比</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818204321.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818204555.png"></p>
+<h3 id="操作数栈的特点"><a href="#操作数栈的特点" class="headerlink" title="操作数栈的特点"></a>操作数栈的特点</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205205.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205543.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818205727.png"></p>
+<h3 id="操作数栈的字节码指令分析"><a href="#操作数栈的字节码指令分析" class="headerlink" title="操作数栈的字节码指令分析"></a>操作数栈的字节码指令分析</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818210902.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818210951.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211019.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211327.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818211758.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818212259.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818212725.png"></p>
+<h3 id="栈顶缓存技术Top-of-Stack-Cashing"><a href="#栈顶缓存技术Top-of-Stack-Cashing" class="headerlink" title="栈顶缓存技术Top of  Stack Cashing"></a>栈顶缓存技术Top of  Stack Cashing</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200818213110.png"></p>
+<h3 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827215750.png"></p>
+<p>大部分字节码指令在执行的时候，都需要进行常量池的访问，帧数据区中，就保存着可以访问常量池中的一个指针，方便程序访问常量池，这里就是我们所说的动态链接</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827220007.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827220843.png"></p>
+<p>以上这些符号就是所谓的动态链接，常量池在运行的时候被放到方法区，所以叫做运行时常量池。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827221440.png"></p>
+<p>那为什么不把“方法”直接放在栈帧中呢？java对象中有很多的方法，所以，总不可能每个栈帧，都放一个符号方法吧</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827221934.png"></p>
+<h3 id="方法的调用–静态绑定与动态绑定"><a href="#方法的调用–静态绑定与动态绑定" class="headerlink" title="方法的调用–静态绑定与动态绑定"></a>方法的调用–静态绑定与动态绑定</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827222502.png"></p>
+<p>如果在编译器就知道符号引用对应方法的直接引用，就称为静态链接</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827222815.png"></p>
+<p>在多态中可以体现</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827223851.png"></p>
+<p>虚函数 == 具备晚期绑定的特点的方法</p>
+<h3 id="虚方法和非虚方法"><a href="#虚方法和非虚方法" class="headerlink" title="虚方法和非虚方法"></a>虚方法和非虚方法</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827224404.png"></p>
+<p>非虚方法，不涉及方法的重写</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200827224834.png"></p>
+<p>注意：子类自己声明的普通方法也叫做invokevirtual，父类中子类没有重写的方法，在子类中没有super.显示调用也叫做invokevirtual</p>
+<h3 id="invokedynamic指令的使用"><a href="#invokedynamic指令的使用" class="headerlink" title="invokedynamic指令的使用"></a>invokedynamic指令的使用</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901211432.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901211522.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901212213.png"></p>
+<h3 id="方法重写的本质"><a href="#方法重写的本质" class="headerlink" title="方法重写的本质"></a>方法重写的本质</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901212555.png"></p>
+<p>IllegalAccessException在maven管理jar包的时候经常会出现，因为jar包冲突，或者没有部署到服务器上，都有可能会出现这个异常，但是具体情况具体分析。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901213325.png"></p>
+<p>虚方法表在链接的解析阶段创建：将常量池内的符号引用（类、属性、方法的符号等）转换为直接引用的过程</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214008.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214246.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214339.png"></p>
+<h3 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901214828.png"></p>
+<p>在一个A方法中调用了B方法，当B返回的时候，pc寄存器的值当作方法返回地址返回给A，A就按照下一条指令的地址执行B方法之后的代码，此处又分为异常退出和正常退出。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901215248.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901215555.png"></p>
+<p><strong>引用类型时areturn</strong></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901220306.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901220543.png"></p>
+<h3 id="虚拟机栈的五道面试题"><a href="#虚拟机栈的五道面试题" class="headerlink" title="虚拟机栈的五道面试题"></a>虚拟机栈的五道面试题</h3><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200901222057.png"></p>
+<h2 id="5-本地方法栈"><a href="#5-本地方法栈" class="headerlink" title="5.本地方法栈"></a>5.本地方法栈</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210234.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210521.png"></p>
+<h2 id="6-本地方法接口"><a href="#6-本地方法接口" class="headerlink" title="6.本地方法接口"></a>6.本地方法接口</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204113.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204248.png"></p>
+<p>native不意味着是抽象方法，和abstract关键字不能共用</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903204917.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903205402.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903210042.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200903211630.png"></p>
+<h1 id="堆空间"><a href="#堆空间" class="headerlink" title="堆空间"></a>堆空间</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h2><p>堆和方法区对一个进程来说，都是唯一的，一个进程就对应一个JVM的实例，一个JVM实例中就会有一个运行时数据区，一个进程有多个线程，所以线程共享一个堆空间和方法区</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908193652.png"></p>
+<p>-Xms 初始的堆内存空间；-Xmx最大允许的堆内存空间</p>
+<p>在jdk自带的工具包中可以使用jvisualvm，可以查看运行的java进程</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194304.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194454.png"></p>
+<p>每个进程都各自有一份堆内存</p>
+<p>堆内存逻辑上连续（实现比较简单，存储也比较高效），但是硬盘上不一定连续，物理内存和虚拟内存可以建立一张映射表，这张表，可以将物理上不连续的内存在虚拟内存中看作是连续的，方便存储数据。</p>
+<p>上面所说的所有的线程都共享堆空间，那么这肯定会带来线程安全的问题，如果用同步的方式处理，堆空间的并发性就会变得非常差，如何处理？</p>
+<blockquote>
+<p>在堆空间中分配出一些小块，每个线程一人一份，每个小块就称为TLAB，在这里就体现了另外一点，就是并发性更好一些</p>
+</blockquote>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908195505.png"></p>
+<p><strong>注意：</strong></p>
+<p>①这里所说的是“几乎”所有的对象都会在堆内存中分配内存，表示还有一部份对象可能不会在堆内存中分配（还有可能在栈上分配）。</p>
+<p>②堆中的对象不会在方法结束以后马上被移除，而是在垃圾回收的时候才会被移除。（在方法执行结束后对象依次弹出栈，但是是在GC中判断是否这两个对象当前是不是垃圾，等到相应的空间内存不足时JVM会主动的调用GC），如果是像我们所理解的方法执行结束就进行垃圾回收，那这样的话，垃圾回收的频率就会特别高，会影响用户线程去执行（在《深入java虚拟机》中提到的“stop the world”的问题就出现了）</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908200119.png"></p>
+<p>堆空间中的实例，所属的类类型信息，以及类中的方法都存放于方法区中</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908201147.png"></p>
+<p>一旦执行了new这个字节码指令的时候，就会在堆空间中创建对象，开辟空间，之后JVM为堆空间的实例变量初始化。</p>
+<h2 id="2-内存细分"><a href="#2-内存细分" class="headerlink" title="2.内存细分"></a>2.内存细分</h2><p>分代垃圾回收算法就是针对于堆的分代来讲的</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908201845.png"></p>
+<p>现在所说的堆空间，主要就分为了新生区和养老区，这里所说的永久区是在方法区中的实现。</p>
+<p>上文所看的对的内存分配的图可以看出</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908194454.png"></p>
+<p>堆内存中只有新生代和老年代，并没有所谓的永久区。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908202845.png"></p>
+<p>运行java程序时指定：-XX: +PrintGCDetails，即可打印垃圾回收器的执行细节</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203214.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203402.png"></p>
+<h2 id="3-堆空间的大小的设置和查看"><a href="#3-堆空间的大小的设置和查看" class="headerlink" title="3.堆空间的大小的设置和查看"></a>3.堆空间的大小的设置和查看</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908203548.png"></p>
+<p>这里所说的指令，也可以使用等价于后面的哪个指令，他们的效果是一样的。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908204058.png"></p>
+<p>默认情况下，对内存的初始化大小是……最大内存大小是……</p>
+<p>但是，一般情况而言，这里的内存总是会比电脑的实际内存要小一点：原因之一是实际上使用的时候，有很多必须要加载的数据，他要占用一点内存。</p>
+<p>再手动设置堆内存的大小的时候，通常将最大值和最小值设置成一样大小的值：初始的时候要设置的一个值之后，如果堆空间不够会进行扩容，后续如果内存用不到，他也会往下降，我们如果在服务器中不设置成一样大小的值，就会出现频繁的扩容和释放的情况，会造成不必要的系统的压力。</p>
+<p>出现的一个问题？这个数怎么算出来的？</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908205429.png"></p>
+<p>查看设置的参数，方式一、<code>JPS</code>        <code>jstat -gc 进程ID</code></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908205803.png"></p>
+<p>老年代：OC(其中C是总量)     OU(U是use)</p>
+<p>伊甸园区：EC    EU</p>
+<p>幸存者区：S0C    S1C    S0U    S1U</p>
+<p>将各个区域的总量加起来（S0C+S1C+EC+OC/1024），发现正好是600M，那为什么在上面的程序中是575呢？</p>
+<blockquote>
+<p>伊甸园区能放对象，S0C或者S1C他们只能二选一的去用，所以如果少加一个S区，会发现，正好是575，主要用到的是垃圾回收，新生代使用的复制算法，S0C、S1C他俩始终有一个区域是空的</p>
+</blockquote>
+<p>方式二、运行java程序的时候加上<code>-XX: +PrintGCDetails </code></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200908211214.png"></p>
+<p>其中PSYoungGen中的total是通过eden总量加上from/to其中一个得出。</p>
+<h2 id="4-oom的说明和举例"><a href="#4-oom的说明和举例" class="headerlink" title="4.oom的说明和举例"></a>4.oom的说明和举例</h2><p>关于异常相关的类叫做Throwable</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910192655.png"></p>
+<p>我们这里所说的oom指的是 error，在面试中我们讲到的异常，实际上就是Throwable（包括Error或者Exception）</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910193856.png"></p>
+<h2 id="5-年轻代与老年代中相关参数的设置"><a href="#5-年轻代与老年代中相关参数的设置" class="headerlink" title="5.年轻代与老年代中相关参数的设置"></a>5.年轻代与老年代中相关参数的设置</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910194125.png"></p>
+<p>注意：幸存者0区不一定是from 1区也不一定就是to</p>
+<p>前面我们讲到了设置堆空间的大小，那么如何控制新生代和老年代的大小呢？</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910194801.png"></p>
+<p>-XX：NewRatio   设置新生代和老年代的比例。默认值是2，一般情况下不会去修改这个空间的。</p>
+<p>如果你知道有很多对象声明周期比较长，这个时候你就可以把老年代的空间调大一点</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910195546.png"></p>
+<p>伊甸园区和幸存者0、1区的比例在官方给出的默认值是8：1：1，但是我们在jvisualvm中看到的却是下图所示的结果</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910195925.png"></p>
+<p>这是为什么？</p>
+<blockquote>
+<p>所以我们想到jvm底层有一个自适应的机制，可以使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:-UseAdaptiveSizePolicy <span class="comment">// 减号代表关闭自适应</span></span><br></pre></td></tr></table></figure>
+
+<p>但是我们操作了之后，发现还是不起效果。</p>
+<p>要想比例是原来默认的8：1：1，我们仍需要显示地指定一下才行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:SurvivorRatio=<span class="number">8</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910200827.png"></p>
+<p>注意：设置了NewRatio制定了新生代和老年代的比例，又设置了-Xmn参数，这时候就会有矛盾，以-Xmn为准（-Xmn一般不设置）</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910201007.png"></p>
+<h2 id="6-对象分配的过程"><a href="#6-对象分配的过程" class="headerlink" title="6.对象分配的过程"></a>6.对象分配的过程</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910201513.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910204209.png"></p>
+<p>对象刚开始放在伊甸园区，如果伊甸园区放满了，这时候会进行垃圾回收（YGC/Minor GC）,那谁是垃圾，谁不是垃圾，怎么进行判断，（涉及到引用计数算法、可达性分析算法，在java中我们使用后者）</p>
+<p>  垃圾回收完成之后，如果还有对象被引用，这时候就把存活的对象放进幸存者区（s0、s1都是空的，这时候先把他放在0区，为幸存的对象的年龄计数器赋值为1）</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910202357.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910202834.png"></p>
+<p>这个to表示，下一次YGC的时候，一点远去的对象要往哪里放</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910203220.png"></p>
+<p>这里有个问题，伊甸园区空间放满了的时候，触发YGC，我们知道伊甸园区和幸存者区的比利时8：1：1，那万一幸存者区满了怎么办？会触发YGC吗？</p>
+<blockquote>
+<p>不会触发，这不意味着幸存者区不会有垃圾回收（当伊甸园区发生YGC的时候，伊甸园区和幸存者区都会发生垃圾回收），幸存者区满了，这里会存在特殊的规则（会直接晋升到老年代）</p>
+</blockquote>
+<p>有没有可能对象一上来就被分配到老年代？</p>
+<blockquote>
+<p>有可能的，对象所占用的内存比较大的情况</p>
+</blockquote>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200910204331.png"></p>
+<h2 id="7-对象分配的特殊过程"><a href="#7-对象分配的特殊过程" class="headerlink" title="7.对象分配的特殊过程"></a>7.对象分配的特殊过程</h2><p>注意，YGC之后，Eden区一定是空的，如果这个时候Eden区还是放不下的话，那只有可能对象是超大对象，这时候会考虑直接一步到老年区是不是能够放下这个对象，如果这个时候放不下，会Full GC（Major GC），如果还是放不下那么就OOM。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915192906.png"></p>
+<h2 id="8-常用的调优工具"><a href="#8-常用的调优工具" class="headerlink" title="8.常用的调优工具"></a>8.常用的调优工具</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915193544.png"></p>
+<p>电脑上安装Jprofiler</p>
+<p>idea下载Jprofiler插件</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915194015.png"></p>
+<h2 id="9-Minor-GC-，Full-GC和Major-Gc的对比"><a href="#9-Minor-GC-，Full-GC和Major-Gc的对比" class="headerlink" title="9.Minor GC ，Full GC和Major Gc的对比"></a>9.Minor GC ，Full GC和Major Gc的对比</h2><p>YGC == Minor GC</p>
+<p>调优的目的就是希望垃圾回收的次数少一些，注意的是，Major GC和Full GC所占用时间比Minor GC占用的时间多十倍以上（出现“Stop The World”）。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915194554.png"></p>
+<p>上图中所说的三个内存区域分别指的是：新生代、老年代；方法区。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915195436.png"></p>
+<p>但是因为新生代比较小的原因，“STW”的时间也不会很长，虽然频率特别高，但是执行的速度特别快。</p>
+<p>为什么会有STW:</p>
+<p>如果出现，垃圾回收的线程和制造垃圾的线程同时运行，在垃圾回收线程判断完那个是垃圾，准备回收垃圾的时候，制造垃圾的线程这时候又制造了几个对象， 不知道是不是垃圾，这个时候就不合适了。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915200107.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915200311.png"></p>
+<p>Full GC覆盖了整个堆空间，包括我们所讲的方法区。</p>
+<h2 id="10-GC举例和日志分析"><a href="#10-GC举例和日志分析" class="headerlink" title="10.GC举例和日志分析"></a>10.GC举例和日志分析</h2><p>字符串常量池是存放在堆空间的，在jdk8之后修改成了存放在堆空间，以前是在方法区。</p>
+<p>堆空间报OOM之前通常会进行一次Full GC，垃圾回收之后仍然发现空间不足，才会报这个OOM</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915201539.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200915201834.png"></p>
+<p>后面的secs是此次GC花费的时间</p>
+<h2 id="11-小结内存分配的策略"><a href="#11-小结内存分配的策略" class="headerlink" title="11.小结内存分配的策略"></a>11.小结内存分配的策略</h2><p>​    为什么要将java堆分代，分代的好处是什么？</p>
+<p>为了优化GC的性能</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917191004.png"></p>
+<p>一些不容易销毁的对象放在老年代中，不让他进行频繁的垃圾回收，这样就可以优化性能</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917191547.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917192109.png"></p>
+<p>注意：如果年龄相同的所有对象的综合大于Survivor中空间的一般，这些对象就可以直接进入老年代，空间分配担保指的是进行了minor GC之后，对象在Survivor中放不下，这时候就会直接进入老年代，但是它的前提是老年代必须有这个空间来容纳这个对象（需要用到-XX:HandlePromotionFailure）</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193154.png"></p>
+<h2 id="12-堆空间为每个线程分配的TLAB"><a href="#12-堆空间为每个线程分配的TLAB" class="headerlink" title="12.堆空间为每个线程分配的TLAB"></a>12.堆空间为每个线程分配的TLAB</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193348.png"></p>
+<p>那么这个时候TLAB就应运而生</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193602.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193746.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917193935.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917194447.png"></p>
+<p>所以在面试中就会有个问题，堆空间的内存都是共享的吗？</p>
+<p>不一定，因为Eden区为每个线程分配了TLAB。</p>
+<h2 id="13-总结"><a href="#13-总结" class="headerlink" title="13.总结"></a>13.总结</h2><p>小结堆空间的参数设置</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917194925.png"></p>
+<p>如果Eden区设置的比较大，会出现什么问题？</p>
+<blockquote>
+<p>Eden区太大，Survivor就会比较小，那么当进行YGC的时候，Survivor只能存放一小部分的对象，这会导致某一部分的对象，直接就进入Old区，即时这个对象的生命周期非常短，这样不利于系统性能 （导致minor GC失去意义了）</p>
+</blockquote>
+<p>Eden区设置的不够大，Survivor设置的反而比较大，出现的问题？</p>
+<blockquote>
+<p>YGC触发地更加频繁，会影响用户线程</p>
+</blockquote>
+<p>关于参数<code>-XX:HandlePromotionFailure</code>的说明：</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917200829.png"></p>
+<h2 id="14-拓展"><a href="#14-拓展" class="headerlink" title="14.拓展"></a>14.拓展</h2><p>堆是分配对象存储的唯一选择吗？</p>
+<p>我们堆JVM性能地调优，主要是针对于老年代的GC，因为老年代的GC的‘STW’时间比较长</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200917201312.png"></p>
+<p>最终目的都是希望在堆上分配的对象少一些（因为不用进行垃圾回收）</p>
+<h1 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h1><h2 id="栈上分配"><a href="#栈上分配" class="headerlink" title="栈上分配"></a>栈上分配</h2><p>通过逃逸分析，发现对象没有逃逸的，才作为栈上分配</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922185900.png"></p>
+<p>逃逸：通常是返回一个对象，这个对象在另一个方法外可能会被使用得到，此时就分配在堆空间中</p>
+<p>开启逃逸分析：<code>-XX:+DoEscapeAnalysis</code>,（当开启逃逸分析的时候，如果对象没有发生逃逸，那么就会考虑栈上分配）关闭逃逸分析：<code>-XX:-DoEscapeAnalysis</code>。（JDK7之后默认是开启的）</p>
+<p>当开启逃逸分析的时候，因为是在站上分配的，所以根本不会发生GC,真正维护的对象的个数也不足我们创建的个数</p>
+<h2 id="同步省略"><a href="#同步省略" class="headerlink" title="同步省略"></a>同步省略</h2><p>如果一个对象被发现只能从一个线程被访问到，那么对于这个对象的操作可以考虑不同步</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191114.png"></p>
+<p>就是说，如果一个对象没有发生逃逸，就没有必要使用加锁，因为他根本就不会被其他线程访问到</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191319.png"></p>
+<p>上面的方法，每次线程调用方法是，对象总是自己new出来的，所以这时候加锁就没有必要。JVM虚拟机有了逃逸分析，会自动帮你确定</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922191857.png"></p>
+<p>只是在运行的时候，才考虑把它去掉，加载的时候还是会加载原来的文件</p>
+<h2 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192101.png"></p>
+<p>对象被称作聚合量，聚合量可以分解成最小的标量，标量是不可以再分的量</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192240.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922192511.png"></p>
+<p>相当于，将对象拆解开来，分散在栈上</p>
+<p>开启标量替换<code>-XX:+EliminateAllocations</code></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>堆空间是对象分配地唯一选择吗？</p>
+<p>逃逸分析在java地服务器端模式才会开启的。</p>
+<p>逃逸分析本身并不成熟，分析逃逸分析，无法保证其本身的性能一定高于它的消耗，如果经过逃逸分析，发现没有一个对象是不逃逸的，那么逃逸分析的性能就被白白浪费掉了。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922193736.png"></p>
+<p>注意：这里所说的所有对象都创建在堆上，这是正确的。这里我们先否定了所有的对象都是分配在堆上的，这里我们有否定了。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922193954.png"></p>
+<h1 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h1><h2 id="栈、堆、方法区的关系"><a href="#栈、堆、方法区的关系" class="headerlink" title="栈、堆、方法区的关系"></a>栈、堆、方法区的关系</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922194757.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922195203.png"></p>
+<h2 id="方法区的理解"><a href="#方法区的理解" class="headerlink" title="方法区的理解"></a>方法区的理解</h2><p>逻辑上我们把方法区当作堆的一部分，但是实际上，方法区的简单实现既没有GC，也没有压缩。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200314.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200419.png"></p>
+<p>在实际操作过程中，我们设置堆空间的大小的情况下，实际上也没有影响到方法区空间的大小</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200922200910.png"></p>
+<p>因为是共享的，在加载类得对象的时候，多个线程加载对象，只有一个对象可以被加载，其他的线程都必须等待。</p>
+<p>如果加载了过多的第三方jar包，这个时候就可能出现oom；Tomcat部署的应用程序太多；大量动态地生成反射类</p>
+<h2 id="Hotspot中方法区的演进"><a href="#Hotspot中方法区的演进" class="headerlink" title="Hotspot中方法区的演进"></a>Hotspot中方法区的演进</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924190716.png"></p>
+<p>注意，方法区说成永久代，主要是对于hotspot而言的。</p>
+<p>永久代仍然使用的是java虚拟机的内存，更容易oom。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924191817.png"></p>
+<p>生产JRockit的BEA公司被Oracle公司收购，JRockit是世界上公认的最快的虚拟机。</p>
+<p>注意：方法区无法满足新的内存分配需求时，将会抛出OOM异常，即使它使用的是本地内存。</p>
+<h2 id="设置方法区的大小"><a href="#设置方法区的大小" class="headerlink" title="设置方法区的大小"></a>设置方法区的大小</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924192503.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924192926.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193054.png"></p>
+<p>如果想要设置参数：</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193607.png"></p>
+<p>如果在jdk8当中设置jdk7中设置的<code>PermSize</code>会报错。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924193820.png"></p>
+<h2 id="如果解决oom的问题"><a href="#如果解决oom的问题" class="headerlink" title="如果解决oom的问题"></a>如果解决oom的问题</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924194747.png"></p>
+<p>内存泄露：堆中有对象，栈中存在着引用指向他，但是这个数据我们也没有使用，因为它始终和GC Roots有过关联，所以会导致这个对象始终不会被回收，这样的对象多了之后，就造成了OOM。</p>
+<h2 id="方法区的内部结构"><a href="#方法区的内部结构" class="headerlink" title="方法区的内部结构"></a>方法区的内部结构</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195511.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195645.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924195959.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924200031.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924200215.png"></p>
+<p>字节码文件是通过类的加载器加载进来的，所以方法区中还存放了这个字节码文件是由那个类加载器加载进来的，这个classLoader也会记载他加载过谁（彼此互相记录）。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924201850.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924201952.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200924202428.png"></p>
+<h2 id="class文件中常量池的理解"><a href="#class文件中常量池的理解" class="headerlink" title="class文件中常量池的理解"></a>class文件中常量池的理解</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929190639.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191119.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191234.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929191929.png"></p>
+<p>这还仅仅只是一个方法中的符号引用，如果不把他们管理起来的话，每个方法中都有这个结构的话，字节码文件就会非常的大了。我们使用的方法的相关细节都是从常量池中调用的</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929192449.png"></p>
+<h2 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929192654.png"></p>
+<p>字节码中的常量池通过类的加载器放在内存中以后，对应的这个结构称为运行时常量池，运行时常量池就是字节码文件当中每一个类或者接口对应的常量池表对应的一个运行时候的表示形式。并且，运行时常量池具有动态性。</p>
+<p>这里所说的动态性的一个具体例子就是String.intern()方法。</p>
+<h2 id="图示方法区的使用"><a href="#图示方法区的使用" class="headerlink" title="图示方法区的使用"></a>图示方法区的使用</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194158.png"></p>
+<p>针对上图执行过程图示如下</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194346.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194446.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194500.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194531.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194549.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194758.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929194826.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195121.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195145.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195221.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20200929195245.png"></p>
+<h2 id="方法区的演进细节"><a href="#方法区的演进细节" class="headerlink" title="方法区的演进细节"></a>方法区的演进细节</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004180851.png"></p>
+<p>方法区存储的经典结构如上所示，但是jdk在不同版本的演进当中，方法区的实现也发生了一些变化。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181010.png"></p>
+<p>注意的是：jdk8之后，网上很多帖子或者书中，说的是静态变量放到了元空间中，实际上仍然在堆中。</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181842.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181912.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004181925.png"></p>
+<p>永久代为什么要被元空间替换呢？</p>
+<blockquote>
+<p>相当于把jRockit和J9虚拟机结合hotspot虚拟机了，JRockit认为方法区中的类信息和方法信息等，生命周期比较长，所以把他放在虚拟机内存之外，而hotspot虚拟机则是所有的内存都有我自己来分配（完全受虚拟机控制）</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004182516.png"></p>
+</blockquote>
+<p>为什么JRockit没有永久代？</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004182834.png"></p>
+<p>判断常量或者类是否需要再被使用其实也挺花时间的。</p>
+<h2 id="StringTable为什么要调整位置"><a href="#StringTable为什么要调整位置" class="headerlink" title="StringTable为什么要调整位置"></a>StringTable为什么要调整位置</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004184629.png"></p>
+<h2 id="如何证明静态变量的位置？"><a href="#如何证明静态变量的位置？" class="headerlink" title="如何证明静态变量的位置？"></a>如何证明静态变量的位置？</h2><p>使用JHSDB（JDK9引入的工具）：监控进程的细节</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004185504.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004185739.png"></p>
+<p>上图证明的是，三个对象的实体都是放在堆空间当中的（只要是new的对象都放在堆空间当中）</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201004190030.png"></p>
+<h2 id="方法区的垃圾回收行为"><a href="#方法区的垃圾回收行为" class="headerlink" title="方法区的垃圾回收行为"></a>方法区的垃圾回收行为</h2><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013184715.png"></p>
+<p>如果不进行gc的话，就真的成了永久代了（永久也仅限于当前的进程存在的生命周期之内），方法区的垃圾回收也主要是针对于针对运行时常量池和类型信息</p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013185607.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013185656.png"></p>
+<p>类的卸载实际上是很苛刻的。</p>
+<h1 id="总结：运行时数据区"><a href="#总结：运行时数据区" class="headerlink" title="总结：运行时数据区"></a>总结：运行时数据区</h1><p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190547.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190742.png"></p>
+<p><img src="/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/QQ%E6%88%AA%E5%9B%BE20201013190804.png"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>Buy me a coffee</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.png" alt="Deng Feng 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.png" alt="Deng Feng 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+  <div class="followme">
+    <span>欢迎关注我的其它发布渠道</span>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/" rel="prev" title="ETH四---交易树和收据树">
+                  <i class="fa fa-chevron-left"></i> ETH四---交易树和收据树
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/10/13/Java/JVM/jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/" rel="next" title="JVM二---类加载器">
+                  JVM二---类加载器 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Deng Feng</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">71k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:04</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+
+  
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: "/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/",
+    }, {"enable":true,"appId":"yVOlBzIi3aYyQQz57UbRr2UY-gzGzoHsz","appKey":"JUN29c5FMssB0c1y8MYYyvvg","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

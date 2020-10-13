@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-10-13T11:38:08.276Z</updated>
+  <updated>2020-10-13T11:53:21.817Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,9 +17,32 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>JVM二---类加载器</title>
+    <link href="http://yoursite.com/2020/10/13/Java/JVM/jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/"/>
+    <id>http://yoursite.com/2020/10/13/Java/JVM/jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</id>
+    <published>2020-10-13T11:46:06.000Z</published>
+    <updated>2020-10-13T11:53:21.817Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;1-类加载子系统&quot;&gt;&lt;a href=&quot;#1-类加载子系统&quot; class=&quot;headerlink&quot; title=&quot;1.类加载子系统&quot;&gt;&lt;/a&gt;1.类加载子系统&lt;/h2&gt;&lt;p&gt;​    如果要手写一个java虚拟机，主要考虑两部分：类加载系统和执行引擎。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;​    类加载系统：加载.class文件&lt;/p&gt;
+&lt;p&gt;​    执行引擎：逐条解释执行指令&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="JVM" scheme="http://yoursite.com/categories/JVM/"/>
+    
+    
+    <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>JVM一---运行时数据区</title>
-    <link href="http://yoursite.com/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/"/>
-    <id>http://yoursite.com/2020/10/13/Java/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/</id>
+    <link href="http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/"/>
+    <id>http://yoursite.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/</id>
     <published>2020-10-13T11:27:14.000Z</published>
     <updated>2020-10-13T11:38:08.276Z</updated>
     
@@ -379,25 +402,6 @@
     
     
     <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CCF一---202006</title>
-    <link href="http://yoursite.com/2020/08/29/ccf/202006/"/>
-    <id>http://yoursite.com/2020/08/29/ccf/202006/</id>
-    <published>2020-08-29T02:42:45.000Z</published>
-    <updated>2020-10-04T08:21:46.608Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;线性分类器&quot;&gt;&lt;a href=&quot;#线性分类器&quot; class=&quot;headerlink&quot; title=&quot;线性分类器&quot;&gt;&lt;/a&gt;线性分类器&lt;/h1&gt;&lt;img src=&quot;/2020/08/29/ccf/202006/线性分类器(1).png&quot; style=&quot;zoom:75%;&quot;&gt;</summary>
-    
-    
-    
-    <category term="算法" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="CCF" scheme="http://yoursite.com/tags/CCF/"/>
     
   </entry>
   
