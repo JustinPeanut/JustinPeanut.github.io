@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-10-26T11:23:35.662Z</updated>
+  <updated>2020-10-29T12:44:53.593Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ETH六---以太坊挖矿算法</title>
+    <link href="http://yoursite.com/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/"/>
+    <id>http://yoursite.com/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/</id>
+    <published>2020-10-29T12:41:28.000Z</published>
+    <updated>2020-10-29T12:44:53.593Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;对于基于工作量证明的区块链系统来说，挖矿是保障区块链安全的一个重要手段。&lt;/p&gt;
+&lt;p&gt;​    Block chain is secured by mining.比特币中的挖矿算法，总的来说是比较成功的。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;bug bounty：有的公司悬赏来找软件中的漏洞，如果能找到软件中的漏洞，就可以得到一笔赏金。&lt;/p&gt;
+&lt;p&gt;比特币的挖矿算法，是一个天然的bug bounty，如果你能找到里面的漏洞，或者是某一个挖矿的捷径，就能有很大的利益。所以比特币的挖矿算法，是比较成功的，能够经受时间的检验的&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>ETH五---以太坊中的共识机制</title>
@@ -395,25 +419,6 @@
     
     <summary type="html">&lt;h1 id=&quot;实现&quot;&gt;&lt;a href=&quot;#实现&quot; class=&quot;headerlink&quot; title=&quot;实现&quot;&gt;&lt;/a&gt;实现&lt;/h1&gt;&lt;h2 id=&quot;transaction-based-ledger&quot;&gt;&lt;a href=&quot;#transaction-based-ledger&quot; class=&quot;headerlink&quot; title=&quot;transaction-based ledger&quot;&gt;&lt;/a&gt;transaction-based ledger&lt;/h2&gt;&lt;p&gt;BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算&lt;/p&gt;
 &lt;p&gt;比特币的全节点要维护一个UTXO的数据结构&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BTC三---协议</title>
-    <link href="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8D%8F%E8%AE%AE/"/>
-    <id>http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8D%8F%E8%AE%AE/</id>
-    <published>2020-08-30T02:27:44.000Z</published>
-    <updated>2020-08-30T02:50:36.986Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;协议&quot;&gt;&lt;a href=&quot;#协议&quot; class=&quot;headerlink&quot; title=&quot;协议&quot;&gt;&lt;/a&gt;协议&lt;/h1&gt;&lt;h2 id=&quot;1-需要解决的问题&quot;&gt;&lt;a href=&quot;#1-需要解决的问题&quot; class=&quot;headerlink&quot; title=&quot;1.需要解决的问题&quot;&gt;&lt;/a&gt;1.需要解决的问题&lt;/h2&gt;&lt;p&gt;举个例子，央行可以发行数字货币，每张数字货币上都有央行的私钥的签名&lt;/p&gt;</summary>
     
     
     
