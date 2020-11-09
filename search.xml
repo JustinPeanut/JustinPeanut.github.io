@@ -1,6 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>LOL-show项目工程日志</title>
+    <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
+<p>如果你想要学习该项目，那么你可以访问我的github！</p>
+<a id="more"></a>
+
+<h1 id="工程结构"><a href="#工程结构" class="headerlink" title="工程结构"></a>工程结构</h1><p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/LOL-show-%E5%B7%A5%E7%A8%8B%E5%9B%BE.png"></p>
+<p>端口号规定：</p>
+<p>eureka:1000</p>
+<p>zuul:80</p>
+<p>mysql:2000</p>
+<p>redis:3000</p>
+<p>hero:4000</p>
+<p>member:5000</p>
+<p>market:6000</p>
+<p>order:7000</p>
+<p>pay:8000</p>
+<h1 id="数据库建表语句"><a href="#数据库建表语句" class="headerlink" title="数据库建表语句"></a>数据库建表语句</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_area(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">area_name <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> lol_area(area_name)</span><br><span class="line"> <span class="keyword">values</span></span><br><span class="line"> (<span class="string">&quot;比尔吉沃特&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;德玛西亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;弗雷尔卓德&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;无畏先锋&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;恕瑞玛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;扭曲丛林&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨龙之巢&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;艾欧尼亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;祖安&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;诺克萨斯&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;班德尔城&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;战争学院&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨神峰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;雷瑟守备&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;钢铁烈阳&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;裁决之地&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;黑色玫瑰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;暗影岛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;均衡教派&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;水晶之痕&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;影流&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;守望之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;征服之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;卡拉曼达&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮城警备&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">table</span> lol_member(</span><br><span class="line"> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"> user_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> role_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> age <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line"> <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line"> phone_num <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> area_id <span class="built_in">int</span>(<span class="number">100</span>),</span><br><span class="line"> primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line"> );</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 用户计划表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_plan(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">plan_date <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">plan_event <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">last_time <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">member_id <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">full_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">nick_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">back_story <span class="built_in">text</span>,</span><br><span class="line">price <span class="keyword">double</span>(<span class="number">5</span>,<span class="number">3</span>),</span><br><span class="line"><span class="comment">-- 英雄类型</span></span><br><span class="line">hero_type_id <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"><span class="comment">-- 英雄页面小图</span></span><br><span class="line">img_small <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_big <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_scot <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_stick <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">text1 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">text2 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 英雄类型表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_type(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄位置表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_position(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">position</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 外键关联表（英雄和位置）</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> position_inner_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">hero_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">position_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h1 id="SpringBoot-pageHelper插件"><a href="#SpringBoot-pageHelper插件" class="headerlink" title="SpringBoot   pageHelper插件"></a>SpringBoot   pageHelper插件</h1><p>添加依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用法：在需要分页的方法中启动分页，需要注意的是，分页的是在开启分页之后的第一个查询语句</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageInfo <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum, Integer pageSize, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(pageNum,pageSize);</span><br><span class="line">        PlanPOExample example = <span class="keyword">new</span> PlanPOExample();</span><br><span class="line">        PlanPOExample.Criteria criteria = example.createCriteria();</span><br><span class="line">        criteria.andMemberIdEqualTo(id);</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        List&lt;PlanPO&gt; planPOList = planPOMapper.selectByExample(example);</span><br><span class="line">        <span class="comment">// 判断结果</span></span><br><span class="line">        <span class="keyword">if</span>(planPOList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnKnowNetWorkException(<span class="string">&quot;没有查询到任何数据，快去添加计划吧！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 结果正确就返回</span></span><br><span class="line">        List&lt;PlanVO&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(PlanPO planPO : planPOList)&#123;</span><br><span class="line">            PlanVO planVO = <span class="keyword">new</span> PlanVO();</span><br><span class="line">            BeanUtils.copyProperties(planPO,planVO);</span><br><span class="line">            list.add(planVO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装PageInfo对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>查询出来的list结果封装到PageInfo实例对象中</p>
+<p>注意的是，在后台远程方法调用的时候，PageInfo的泛型并不是PageInfo&lt;List<xxx>&gt;</xxx></p>
+<p>而是对应的JavaBean类型例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">PageInfo&lt;PlanVO&gt; <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum,Integer pageSize,Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>否则会报一个</p>
+<p>pagehelper 返回前台的json转换异常com.fasterxml.jackson.databind.exc.Mismatch的异常</p>
+<h1 id="使用了layui的日期插件"><a href="#使用了layui的日期插件" class="headerlink" title="使用了layui的日期插件"></a>使用了layui的日期插件</h1><p>点击输入框可以弹出日期选择框，如下图所示效果</p>
+<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804102439.png"></p>
+<p>加入layui的css样式和js</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;layui/css/layui.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;layui/layui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加日期插件</span></span><br><span class="line">layui.use(<span class="string">&#x27;laydate&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 生成一个日期实例，这个实例变量名自己指定</span></span><br><span class="line">    <span class="keyword">var</span> laydate = layui.laydate;</span><br><span class="line">    <span class="comment">//执行一个laydate实例</span></span><br><span class="line">    laydate.render(&#123;</span><br><span class="line">        <span class="comment">// 指定在哪里生成日期控件</span></span><br><span class="line">        elem: <span class="string">&#x27;#dateText&#x27;</span>, <span class="comment">//指定元素</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用了谷歌Kaptcha-生成验证码插件"><a href="#使用了谷歌Kaptcha-生成验证码插件" class="headerlink" title="使用了谷歌Kaptcha 生成验证码插件"></a>使用了谷歌Kaptcha 生成验证码插件</h1><p>加入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Google Kaptcha --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.penggle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kaptcha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>相关的配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KaptchaConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultKaptcha <span class="title">getDefaultKaptcha</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = <span class="keyword">new</span> com.google.code.kaptcha.impl.DefaultKaptcha();</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 图片边框</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border&quot;</span>, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="comment">// 边框颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border.color&quot;</span>, <span class="string">&quot;105,179,90&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片宽</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.width&quot;</span>, <span class="string">&quot;110&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片高</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.height&quot;</span>, <span class="string">&quot;40&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体大小</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.size&quot;</span>, <span class="string">&quot;30&quot;</span>);</span><br><span class="line">        <span class="comment">// session key</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.session.key&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">// 验证码长度</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.char.length&quot;</span>, <span class="string">&quot;4&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.names&quot;</span>, <span class="string">&quot;宋体,楷体,微软雅黑&quot;</span>);</span><br><span class="line"></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.noise.color&quot;</span>, <span class="string">&quot;35,37,38&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Config config = <span class="keyword">new</span> Config(properties);</span><br><span class="line">        defaultKaptcha.setConfig(config);</span><br><span class="line">        <span class="keyword">return</span> defaultKaptcha;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>controller代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/kaptcha&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCode</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DefaultKaptcha defaultKaptcha;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/defaultKaptcha&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultKaptcha</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] captchaChallengeAsJpeg = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream jpegOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 生产验证码字符串并保存到session中</span></span><br><span class="line">            String createText = defaultKaptcha.createText();</span><br><span class="line">            System.out.println(createText);</span><br><span class="line">            httpServletRequest.getSession().setAttribute(<span class="string">&quot;verificationCode&quot;</span>, createText);</span><br><span class="line">            <span class="comment">// 使用生成的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中</span></span><br><span class="line">            BufferedImage challenge = defaultKaptcha.createImage(createText);</span><br><span class="line">            ImageIO.write(challenge, <span class="string">&quot;jpg&quot;</span>, jpegOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组</span></span><br><span class="line">        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store&quot;</span>);</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);</span><br><span class="line">        httpServletResponse.setDateHeader(<span class="string">&quot;Expires&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        httpServletResponse.setContentType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();</span><br><span class="line">        responseOutputStream.write(captchaChallengeAsJpeg);</span><br><span class="line">        responseOutputStream.flush();</span><br><span class="line">        responseOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前台显示</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;verificationCodeImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/api/kaptcha/defaultKaptcha&quot;</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;看不清？换一张&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>添加点击“看不清？换一张”的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新验证码</span></span><br><span class="line">            $(<span class="string">&quot;#verificationCodeImg&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                $(<span class="built_in">this</span>).hide().attr(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;http://localhost/api/kaptcha/defaultKaptcha?&#x27;</span>).fadeIn();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804103206.png"></p>
+<h1 id="改变文本输入框获取值"><a href="#改变文本输入框获取值" class="headerlink" title="改变文本输入框获取值"></a>改变文本输入框获取值</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为输入英雄名称的文本框绑定文本改变的事件</span></span><br><span class="line">            $(<span class="string">&quot;.inputSearch&quot;</span>).on(<span class="string">&quot;input&quot;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">let</span> heroName = $(<span class="built_in">this</span>).val()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="mybatis模糊查询的三种方式"><a href="#mybatis模糊查询的三种方式" class="headerlink" title="mybatis模糊查询的三种方式"></a>mybatis模糊查询的三种方式</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,name,age,score from star where name like &quot;%&quot; #&#123;name&#125; &quot;%&quot;</span><br><span class="line"></span><br><span class="line">&lt;!--concat拼接字符串  mysql独有的函数--&gt;</span><br><span class="line">select id,name,age,score from star where name like concat(&quot;%&quot;,#&#123;name&#125;,&quot;%&quot;)</span><br><span class="line"></span><br><span class="line">&lt;!-- 如果传入的参数是简单数据类型，$&#123;&#125;里面必须写value --&gt;</span><br><span class="line">select id,name,age,score from star where name like &quot;%$&#123;value&#125;%&quot;</span><br><span class="line"></span><br><span class="line">作者：叫我不矜持</span><br><span class="line">链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;6d244e194859</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+<h1 id="thymeleaf循环的状态变量"><a href="#thymeleaf循环的状态变量" class="headerlink" title="thymeleaf循环的状态变量"></a>thymeleaf循环的状态变量</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">th:each属性用于迭代循环，语法：th:each&#x3D;&quot;obj,iterStat:$&#123;objList&#125;&quot;</span><br><span class="line">迭代对象可以是Java.util.List,java.util.Map,数组等;</span><br><span class="line">iterStat称作状态变量，属性有：</span><br><span class="line">    index:当前迭代对象的index（从0开始计算）</span><br><span class="line">    count: 当前迭代对象的index(从1开始计算)</span><br><span class="line">    size:被迭代对象的大小</span><br><span class="line">    current:当前迭代变量</span><br><span class="line">    even&#x2F;odd:布尔值，当前循环是否是偶数&#x2F;奇数（从0开始计算）</span><br><span class="line">    first:布尔值，当前循环是否是第一个</span><br><span class="line">    last:布尔值，当前循环是否是最后一个</span><br></pre></td></tr></table></figure>
+
+<h1 id="mysql-根据拼音首字母查询"><a href="#mysql-根据拼音首字母查询" class="headerlink" title="mysql 根据拼音首字母查询"></a>mysql 根据拼音首字母查询</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT id,full_name ,</span><br><span class="line"></span><br><span class="line">ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) AS PY</span><br><span class="line"></span><br><span class="line">FROM lol_hero WHERE ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) &#x3D; &#39;A&#39;</span><br></pre></td></tr></table></figure>
+
+<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>包含第三方jar包的工程的build</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                第三方jar包目录</span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources/lib<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/lib/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/classes/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;maven-compiler-plugin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其余的，如果依赖springboot父工程，加上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果不依赖任何工程，直接打包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn clean install -Dmaven.test.skip=true // 忽略test</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备服务器环境"><a href="#准备服务器环境" class="headerlink" title="准备服务器环境"></a>准备服务器环境</h2><p>安装jdk</p>
+<p>在/etc/profile文件的最后配置java环境</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/sorftware/jdk1.8.0_251</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export JAVA_HOME PATH</span><br></pre></td></tr></table></figure>
+
+<p>安装mysql</p>
+<p><a href="https://www.cnblogs.com/cannel/p/11104195.html">参考</a></p>
+<p>缺少 libaio</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
+
+<p>修改密码需要设置密码的级别：注意！</p>
+<p>授权远程连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;rootroot&#39; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>微服务远程调用报错找不到主机，因为我的redisServer以及mysqlServer在另一个服务器上，所以consumer想要调用这两个server的服务，必须找到我的另一个服务器，但是我发现服务器的名字没有使用ip地址，所以依照<code>参考</code>的调试最后成功了！</p>
+<p>运行jar包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup java -jar xxx.jar &gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>报错：UnknownHostException</p>
+<p><a href="https://blog.csdn.net/weixin_39032575/article/details/83011334?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考</a></p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java随笔</title>
     <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
     <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
@@ -36,6 +140,37 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CCF一---202006</title>
+    <url>/2020/08/29/ccf/202006/</url>
+    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
+
+<a id="more"></a>
+
+<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
+
+<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
+
+<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
+<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
+<p>以下就是我写的代码（测试为100分）:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>CCF</tag>
       </tags>
   </entry>
   <entry>
@@ -473,6 +608,159 @@
       </tags>
   </entry>
   <entry>
+    <title>ETH七---以太坊难度调整</title>
+    <url>/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/</url>
+    <content><![CDATA[<h1 id="难度调整"><a href="#难度调整" class="headerlink" title="难度调整"></a>难度调整</h1><p>​    比特币是每隔2016个区块会调整一下挖矿难度，目标是维持出块时间十分钟左右，以太坊是每个区块都有可能调整挖矿难度，调整的方法也比较复杂，而且改过好几个版本，我们遵循以代码的原则。</p>
+<a id="more"></a>
+
+<h2 id="难度调整算法"><a href="#难度调整算法" class="headerlink" title="难度调整算法"></a>难度调整算法</h2><p> <img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201103215359.png"></p>
+<p>​    上图中的H指的是当前区块，Hi是当前区块的序号D(H)是当前区块的难度，难度调整的公式由两部分，max中的是第一部分，ε指的是“难度炸弹”，主要是为了向权益证明过渡，将来的以太坊想把共识机制从工作量证明逐步转入权益证明，第一部分调整的方法，是在父区块难度基础上加上一些自调整的部分，P(H)就是父区块的难度（所谓的父区块就是当前区块链的最后一个区块，对于我们正在挖的这个区块来说，他是这个区块的父区块），第一部分的难度调整有一个下限，就是这里的D0，这一部分，不论你怎么样调整，最小不能低于这个难度（这是为了保证挖矿有个最低的难度）</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201103215518.png"></p>
+<p>​    x是调整的力度，是父区块的难度除以2048，所以调整难度的时候，不论是上调还是下调，都是按照这个力度的整数倍进行调整的，按照父区块的1/2048作为调整的一个单位，下面这个奇怪的符号叫做ε，ε的取值和两个因素有关，一个是出块时间，另外一个就是有没有叔父区块（就是父区块有没有叔父区块），那么为什么要和叔父区块相关呢？</p>
+<blockquote>
+<p>因为如果是当前区块的最后一个区块，它包含有叔父区块的话，那么这个时候系统的货币总供应量是增加的，因为叔父区块要得到叔父奖励，包含叔父区块的这个父区块也要得到一部分的奖励，所以这两个合在一起就会使总供应量增加，它为了维持系统的总供应量的稳定，所以当前正在挖的这个区块的难度就要提高一个单位</p>
+</blockquote>
+<p>​    后面这个-99，是说难度调整这个系数部分有一个下限，就是说，max前面这个部分，有可能是正的，也有可能是负的，如果是负的话，说明难度要往下调，那么最多一次性只能调整99个单位，每个单位是刚才说的父区块的1/2048，所以一次性下调难度最多是99/2048。</p>
+<p>​    <img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201103220442.png"></p>
+<p>​    y取决于又没哟叔父区块，如果有的话，y = 2，没有的话，y = 1，不论是那种情况，y都是一个常数减去后面这一项，如果后面这一项比前面这个大的话，减出来是个负数，说明难度是要下调的，相反，上调</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201103221000.png"></p>
+<p>​    如果出块时间更长，下调的幅度就要更大，但是不要忘了那个-99，如果单次出块时间非常非常长，也不能下调大于99个单位。</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201103221155.png"></p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201103221326.png"></p>
+<p>​    以太坊的工作机制要从工作量证明逐步转入权益证明，而权益证明是不挖矿的，这就带来一个问题：那些已经在挖矿设备上投入了大量资金的矿工，会不会联合起来抵制这个转换，本来工作量证明转向权益证明就是经过硬分叉来实现的（相当于你改了共识协议了），如果有人因为不愿意抛弃矿机，那么以太坊可能会分裂成两条链。</p>
+<blockquote>
+<p>为了避免这种情况，所以以太坊在设计难度调整公式的时候加了一个难度炸弹。</p>
+<p>当初设计难度炸弹的时候，是没有第二行的（Hi’ = max（Hi - 3000000，0）），当前的区块号除以十万向下取整，然后作为2的指数，也就是说难度炸弹这部分的取值是呈指数形式成长的，那么指数函数的特点是什么呢？</p>
+<p>早期的时候，以太坊刚刚上线不久的时候，区块号都比较小，那么难度炸弹这部分算出的值，是很小的，基本上可以忽略不计，难度调整主要是由刚才讲完的第一部分来决定的，或者说是由系统中的出块时间来决定的，然而随着时间的推移，区块号变得越来越大，这个时候难度炸弹的威力主键显现出来，指数函数增长到后期，速度是非常恐怖的，所以当初设计的思想是，等到这个难度炸弹的威力开始发挥出来的时候，也正好是以太坊需要从工作量证明，转入权益证明的时候，那个时候，因为挖矿变的越来越难了，所以大家也就愿意转入权益证明了，因为你不转的话，挖出矿来，就太费劲了。这是当初设计以太坊的一个“如意算盘”，但实际情况怎么样？</p>
+<p>基于权益证明的共识机制实际设计出来有很多问题要解决，远远没有当初想象的那么顺利，这样造成的结果就是，转入权益证明的时间点被一再推迟，然后出现的情况，是挖矿已经变的越来越难了，因为难度炸弹的威力已经显现出来了，但是大家还是得继续挖，因为没有别的方法可以达成共识。（现在是希望大家转，但是现在得情况是，你想转也转不了），这个情况在2017年的四五月份到中旬的时候，就已经很明显了，出块时间就逐渐地开始增长了，原来是说要稳定在15秒，那个时候就已经不断地增加了，最后增加到了30秒左右，如果不采取措施还会继续增长上去。</p>
+<p>那么怎么办呢？</p>
+<p>可以看到上面的公式是将区块号回退了，用真实地区块号减去三百万计算出来一个假的区块号，然后用这个假的区块号去计算难度炸弹，这给权益证明的上线争取了一些时间，那么这样做的结果怎么样？</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109195508.png"></p>
+<p>前半部分按照原来的算法计算的，呈指数形式上升，到达最高的位置就是以太坊决定回调这个难度炸弹的区块号的时候，所以一下就掉下来了。（前面那个部分其实也在增长，但是因为“尖峰太高了”，所以不太明显）</p>
+</blockquote>
+<h2 id="以太坊的发展"><a href="#以太坊的发展" class="headerlink" title="以太坊的发展"></a>以太坊的发展</h2><p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109200049.png"></p>
+<p>​    BIP:BitCoin Improvement Proposal。</p>
+<p>​    为什么在回调区块的同时，还要把block reward降低？</p>
+<blockquote>
+<p>因为如果不这么调的话，对之前的矿工是不公平的（这个回调是突然进行的，一夜之间突然降低，对之前挖矿的矿工就不太公平，而且也要维护系统中供应量的稳定）</p>
+</blockquote>
+<p>​    需要注意的是：比特币出块奖励每过一段时间减半的操作，在以太坊中是没有的，5个以太币降为3个是一次性的，并不是说定期都会这么做。</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109200939.png"></p>
+<blockquote>
+<p>上图是“拜占庭”阶段调整挖矿难度的代码，输入时父区块的时间戳和父区块的难度，计算出当前正在挖的这个区块的难度，难度计算公式和前文所讲的是一样的。（括号里面是第一部分，后面是难度炸弹）</p>
+<p>bigTime：当前区块的时间戳，bigParentTime：夫区块的时间戳</p>
+</blockquote>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109201522.png"></p>
+<p>最后那个“if”是指最低不能小于那个D0</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109201802.png"></p>
+<blockquote>
+<p>上图难度炸弹的计算之所以不减三百万，是因为判断的是父区块的序号，而我当前正在挖的区块，区号要大1</p>
+<p>x是算出来的基础部分的值。</p>
+</blockquote>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109202213.png"></p>
+<blockquote>
+<p>上图是以太坊挖矿难度的变化曲线，在以太坊的早期，挖矿难度的变化是不明显的，当时以太坊市值很小，谁也没有想到以太坊会成为一个主流的加密货币，从2017年开始，挖矿难度的增长就比较明显了，尤其是难度炸弹这一部分。</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109202454.png"></p>
+</blockquote>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109202746.png"></p>
+<blockquote>
+<p>上图是出块时间的变化，如果不考虑一些小的波动的话，总体来说，出块时间稳定在15秒上下，有了很长的时间，说明在早期的时候，挖矿难度的调整，主要是以稳定出块时间为主的。</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109202933.png"></p>
+<p>难度炸弹回调之后，总的挖矿难度主键又恢复到了原来的水平，这个是因为，挖矿变容易之后，有更多的矿工加入，竞争更激烈了，而这个图从出块时间的角度来看，并没有受到影响。</p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109203237.png"></p>
+<p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109203553.png"></p>
+<p>我们所说的最长合法链，对于以太坊来说其实是最“难”合法链，每个区块的难度反应挖出这个区块所需要的工作量，而总难度最大，就是挖出这条链所有区块需要的总工作量最大，一般来说，靠后的区块，挖出来的工作量是比较大的。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC十一---匿名性</title>
+    <url>/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/</url>
+    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><h2 id="匿名性介绍"><a href="#匿名性介绍" class="headerlink" title="匿名性介绍"></a>匿名性介绍</h2><p>BitCoin and anonymity</p>
+<p>一般来说，大家说的匿名是和隐私保护联系（privacy）在一起的，比特币不要求是真名，是需要公钥产生的地址即可，因此有一定的匿名性，但不是说完全没有名字，他用的是“化名”，因此有人称它为“preudonymity”，就好像很多作家有笔名一样，比特币系统中的“匿名”其实不是真的匿名。</p>
+<a id="more"></a>
+
+<p>这种匿名性能给我们带来什么样的保护呢？和现金相比，和美元，法币相比？它的匿名性没有现金好，现金是完全匿名的。比特币的匿名性和银行存款相比，因为银行账户是实名制。（其实以前国内的银行不要求实名制，可以使用化名，如果这样的话，和比特币相比，哪个匿名性更好？从某种程度上来说，这时候的匿名性就比比特币要好，比特币的账户是公开的，而银行里普通老百姓想要知道别人的账户，这个是没有办法的。）</p>
+<p>比特币系统中，什么情况下有可能破坏匿名性？有些人建议在你每次收款的时候，都创建一个新的账户，但是某些情况下，这些账户是可以被关联在一起的？（这个时候就破坏了比特币的匿名性）</p>
+<blockquote>
+<p>比如网上购物，一个交易可以有多个输入和输出。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916195151.png"></p>
+<p>这个Inputs有多个，这两个地址可能是同一个人（因为可能一个账户的钱，不够买这件商品，所以同时使用另一个账户来消费）；而Outputs其中一个一般是一个找零钱的输出。 像上图中的交易，一般都是由比特币钱包软件生成的，很多钱包软件交易的时候会生成一个新的找零钱的地址，有没有可能把输入地址和输出地址也关联起来呢？（有没有可能我们把这个找零钱的地址也找到？）</p>
+<p>比特币钱包并没有规定找零钱的地址在Outputs中出现的位置，但其实有些情况下，你可以把它分析出来，我们想要对敌人造成干扰，就可以生成一些不必要的转账地址，但是一般没有人会这么干。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916200401.png"></p>
+</blockquote>
+<p>这就说明，我们可以生成很多的地址账户，但是这些地址账户是可以被关联起来的。第二点是，这个地址账户跟你在社会现实世界中的真实身份也产生关联，那么什么时候会知道比特币的地址账户对应现实中的某个人呢？</p>
+<blockquote>
+<p>①任何比特币系统中的地址和现实世界发生联系的时候都有可能泄漏身份。在资金转入和转出区块链的时候都有可能泄漏，我们刚开始都没有比特币，这时候需要去交易所买，在交易所登记；也有场外交易的情况（就是两个人之间私下交易，以前国外有些做场外交易的公共场所）。</p>
+<p>②很多国家有反洗钱法，那么怎么防范使用比特币洗钱的违法行为呢？</p>
+<p>盯住这个资金的转入转出链其实是一个常用手段，如果你有很大的资金像转入到比特币，或者你有很大一部分比特币，你想转成法币，这个你想不引起司法部门的注意，实际上是很难的，这也是比特币隐私有可能被破坏的一个很重要的时机。</p>
+<p>③用比特币做支付的时候，比如国外有的商家，是接受比特币支付的，咖啡店，餐馆之类（当然，这是一个bad idea，1.延迟大，等六个确认需要等待1个小时；2.交易费也很贵）。这个其实不仅仅是接受你支付的商家会知道，</p>
+<p>其他人其实也会知道：以前曾经有一家信用卡公司，为了支持学术界的科研，把他收集到的一些信用卡的记录公开，公开的时候做一些隐私保护（信用卡号码取哈希，年龄，性别 等都抹掉了），有人就做了科研（其实不是为了研究信用卡的消费行为，而是怎么通过这些公开的数据推测出这个人实际上是谁）—&gt;通过过滤在某个时间某个人在哪里消费，就可以精准地定位到某个人</p>
+</blockquote>
+<p>这就说明，信用卡记录不能公开，去了哈希值之后依然是不应该公开的，但是比特币系统本来就是公开的，这时候你去咖啡店，你把你的账户的地址告诉了营业员，你周围有其他认识你的人都会意识到这时候你在比特币网络上做了一笔消费，然后就可以在区块链中查出来。所以比特币的匿名性并不像我们想象中的那么好</p>
+<p>实际上那些用比特币的人，匿名性保存的有多好？中本聪！（因为他根本没有花钱）</p>
+<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念。</p>
+<blockquote>
+<p>以前有个叫silk road的网站：通过比特币卖各种违禁品，最后运行了两三年就被政府查封了，这个人通过这个网站赚了很多钱，但是他只是在纸面上很多钱，十几万个比特币一个都没花，因为一花就暴露身份了。所以，比特币的匿名性没有我们想象的那么好。</p>
+</blockquote>
+<p>所以，过去的经验表明，凡是用比特币从事违法活动的，最后都能被抓起来，中本聪能这么好的保持匿名性，实际上是一个个例，而且他没有干坏事</p>
+<p>hide your indetiny from whom？</p>
+<blockquote>
+<p>如果你只是像让你的亲戚朋友不知道你的账户上有多少钱，这个是很容易办到的，如果是像silk road这样的想逃避fbi，是很难的。</p>
+</blockquote>
+<h2 id="如何提高匿名性"><a href="#如何提高匿名性" class="headerlink" title="如何提高匿名性"></a>如何提高匿名性</h2><p>假设你是一个比特币用户，你能用什么方法来提高你的匿名性？</p>
+<blockquote>
+<p>我们知道，比特币是运行在应用层的应用程序，它的底层是P2P的network，所以提高匿名性，是从两个方面入手。</p>
+<p>network layer：如果很多交易都是从一个ip地址发出来的，那么从物理世界中，通过ip地址就可以知道是谁。这个我们已经有解决方案了，比较普遍的一种方法就是使用多路径转发的方法（TOR的原理），sender不是直接发给reciever，而是中间经过很多跳，中间的结点只是知道它的上一跳是谁，而不知道最早发出这个消息的是谁，中间的结点可能是坏的，但是只要中间有一个结点是诚实的，就可以将发件人的身份隐藏起来。</p>
+<p>application layer：破坏匿名性的原因之一是，同一个人的不同的比特币账户之间会被关联起来。其中一个做法是</p>
+<p>coin mixing：把你的身份和周围的人的身份混在一起，让别人分不清谁是谁。如何做到coin mixing？有些网站专门提供coin mixing的服务，收取一定的服务费，所有想使用coin mixing的用户，把币发给这些网站，内部进行一些重组，再取回来，取回来的币就不是原来的币了，实际上是一个复杂的过程。还有一个问题是，现在这个区块里世界里，没有什么信誉度非常高的coin mixing的服务，很多提供这个服务的网站，他自己也是匿名的，卷款跑路我们一点办法也没有。</p>
+<p>我们不一定要刻意的coin mixing，我们使用的一些软件，有些自己就带有coin mixing的一些性质，比如在线钱包，存进去的币，他可能会把其他人的币混合起来，但是在线钱包并不一定要履行coin mixing的功能</p>
+<p>还有一些交易所，他天然的有coin mixing的性质，我把一些比特币存进交易所，一段时间，我觉得它的价格会下跌，于是我把他换成美元，我有可能买入以太币，又可能换成莱特币，折腾几次之后，我又可能把他买回来，这时候我账户上的比特币，就不一定是我存进去的比特币了。（coin mixing的性质）。当然这个的前提是，这个交易所不是泄漏相关的记录（相关的提币存币的记录）</p>
+</blockquote>
+<p>为什么比特币的匿名性很差，其中一个本质原因是他是公开的，而且他是不可篡改的，好像不可篡改性对比特币有好处，其实堆隐私保护是灾难性的，因为一旦你在一个交易里把你的身份暴露了，这个交易永久地写在区块链里，你想抹都抹不掉了。这也是为什么我们说账户之间的关联性也是我们需要小心的，如果账户是单独出去的，如果你暴露了一个账户，这个影响还是比较有限的，如果是关联的，一个账户暴露了，后面的就都完了。</p>
+<h2 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195428.png"></p>
+<p>比如，我要证明某个比特币账户是我的，我要证明这一点，我要怎么证明？</p>
+<blockquote>
+<p>实际上是要证明我有这个比特币账户的私钥，但是我不能把这个私钥告诉你，这时候就可以签名，你是知道这个账户的公钥的，你可以验证这个签名的合法性</p>
+</blockquote>
+<p>这个例子作为零知识证明，实际上是有争议的，我虽然没有泄露我的私钥，但是我泄露了我私钥的签名，这个和零知识证明中的无需透露该陈述是正确的外的任何信息是有冲突的。但是这里透露的额外信息要看你实际的应用场景。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195956.png"></p>
+<p>零知识证明的数学基础是同态隐藏。</p>
+<p>①不会出现哈希碰撞，如果x、y不相等，那么加密值也不相等，反过来说，如果两个加密函数值是相等的，那么原来的函数值也是相等的。</p>
+<p>②说明加密函数不可逆，密码学的哈希函数的性质和这个是类似的，hiding propetry，知道哈希值没有办法知道它的输入值。</p>
+<p>③对这些加密后的函数进行函数运算，等价于，对进行运算的函数，然后在进行加密。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200714.png"></p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200915.png"></p>
+<p>说明：</p>
+<p><code>E(X+Y) = E(7)</code>,说明没有碰撞</p>
+<p>这个版本实际上有些缺陷，Bob可以用蛮力的方式，猜出原始的x、y是多少，Bob虽然通过E(x)不能知道x是多少，但是他可以通过遍历x的取值，Alice需要在发送E(x)和E(y)之前，对x、y进行随机化处理（使得x、y加起来还是不变的）。</p>
+<p>在比特币的共识协议中，央行发行货币，有个属于他自己的签名，在前面所讲的，这样会产生double spending，所以可以在每张货币上加上一个id，记录现在这张货币在谁手里。这样的话，央行不是什么都知道了？</p>
+<p>那么，有没有什么办法，让央行做中心化的记账，但是又不让他知道呢？</p>
+<blockquote>
+<p>这个虚拟货币的编号不能是央行产生的，这个编号得是我自己产生的，我在本地产生一个编号，但是不告诉央行，这样的话，央行怎么知道这个编号是不是正确的呢？这就引入了盲签。</p>
+<p>用户A提供编号，银行是要签名的，但是他看不到内容,Token就是银行对序号的签名。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202409.png"></p>
+</blockquote>
+<h2 id="零币和零钞"><a href="#零币和零钞" class="headerlink" title="零币和零钞"></a>零币和零钞</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202540.png"></p>
+<p>基础币可以是比特币，你用的时候，你要证明，本来是有一个基础币的，你把这个基础币搞得是不能花了，然后换取一个零币，零币在花的时候，只需要用零知识证明你花掉的币是系统中存在的某一个合法的币就行了，但是不用透露你花的是系统中的哪一个币。</p>
+<p>这样就把关联性破坏掉了。</p>
+<p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
+<p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC九---分叉</title>
     <url>/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/</url>
     <content><![CDATA[<h1 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h1><p>fork:原来是一条链，现在是两条链形成了分叉。有两种情况：</p>
@@ -600,182 +888,48 @@
       </tags>
   </entry>
   <entry>
-    <title>LOL-show项目工程日志</title>
-    <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
-<p>如果你想要学习该项目，那么你可以访问我的github！</p>
+    <title>BTC十---回顾问答</title>
+    <url>/2020/09/14/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/</url>
+    <content><![CDATA[<h1 id="BTC问答回顾"><a href="#BTC问答回顾" class="headerlink" title="BTC问答回顾"></a>BTC问答回顾</h1><p>1.转账交易的时候，如果接收者不在线（你转账给A，但是A那时候没有连接到比特币网络上）怎么办？</p>
+<blockquote>
+<p> 这个时候不需要接收者在线，转账交易只不过要在区块链上记录一下。</p>
+</blockquote>
+<p>2.假设某个全节点收到了一个转账交易，有没有可能转账交易中接收者的收款地址是这个结点以前从来没有听说过的？</p>
+<blockquote>
+<p>可能，比特币系统在创建账户的时候是不需要通知其他人的，在本地产生一个公私钥对就可以了，只有在以后产生的收款地址收到钱的时候，其他结点才知道这个账户的存在。</p>
+</blockquote>
 <a id="more"></a>
 
-<h1 id="工程结构"><a href="#工程结构" class="headerlink" title="工程结构"></a>工程结构</h1><p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/LOL-show-%E5%B7%A5%E7%A8%8B%E5%9B%BE.png"></p>
-<p>端口号规定：</p>
-<p>eureka:1000</p>
-<p>zuul:80</p>
-<p>mysql:2000</p>
-<p>redis:3000</p>
-<p>hero:4000</p>
-<p>member:5000</p>
-<p>market:6000</p>
-<p>order:7000</p>
-<p>pay:8000</p>
-<h1 id="数据库建表语句"><a href="#数据库建表语句" class="headerlink" title="数据库建表语句"></a>数据库建表语句</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_area(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">area_name <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> lol_area(area_name)</span><br><span class="line"> <span class="keyword">values</span></span><br><span class="line"> (<span class="string">&quot;比尔吉沃特&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;德玛西亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;弗雷尔卓德&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;无畏先锋&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;恕瑞玛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;扭曲丛林&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨龙之巢&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;艾欧尼亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;祖安&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;诺克萨斯&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;班德尔城&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;战争学院&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨神峰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;雷瑟守备&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;钢铁烈阳&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;裁决之地&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;黑色玫瑰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;暗影岛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;均衡教派&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;水晶之痕&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;影流&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;守望之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;征服之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;卡拉曼达&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮城警备&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">table</span> lol_member(</span><br><span class="line"> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"> user_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> role_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> age <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line"> <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line"> phone_num <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> area_id <span class="built_in">int</span>(<span class="number">100</span>),</span><br><span class="line"> primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line"> );</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 用户计划表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_plan(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">plan_date <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">plan_event <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">last_time <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">member_id <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">full_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">nick_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">back_story <span class="built_in">text</span>,</span><br><span class="line">price <span class="keyword">double</span>(<span class="number">5</span>,<span class="number">3</span>),</span><br><span class="line"><span class="comment">-- 英雄类型</span></span><br><span class="line">hero_type_id <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"><span class="comment">-- 英雄页面小图</span></span><br><span class="line">img_small <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_big <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_scot <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_stick <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">text1 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">text2 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 英雄类型表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_type(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄位置表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_position(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">position</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 外键关联表（英雄和位置）</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> position_inner_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">hero_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">position_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h1 id="SpringBoot-pageHelper插件"><a href="#SpringBoot-pageHelper插件" class="headerlink" title="SpringBoot   pageHelper插件"></a>SpringBoot   pageHelper插件</h1><p>添加依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>用法：在需要分页的方法中启动分页，需要注意的是，分页的是在开启分页之后的第一个查询语句</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageInfo <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum, Integer pageSize, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(pageNum,pageSize);</span><br><span class="line">        PlanPOExample example = <span class="keyword">new</span> PlanPOExample();</span><br><span class="line">        PlanPOExample.Criteria criteria = example.createCriteria();</span><br><span class="line">        criteria.andMemberIdEqualTo(id);</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        List&lt;PlanPO&gt; planPOList = planPOMapper.selectByExample(example);</span><br><span class="line">        <span class="comment">// 判断结果</span></span><br><span class="line">        <span class="keyword">if</span>(planPOList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnKnowNetWorkException(<span class="string">&quot;没有查询到任何数据，快去添加计划吧！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 结果正确就返回</span></span><br><span class="line">        List&lt;PlanVO&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(PlanPO planPO : planPOList)&#123;</span><br><span class="line">            PlanVO planVO = <span class="keyword">new</span> PlanVO();</span><br><span class="line">            BeanUtils.copyProperties(planPO,planVO);</span><br><span class="line">            list.add(planVO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装PageInfo对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>查询出来的list结果封装到PageInfo实例对象中</p>
-<p>注意的是，在后台远程方法调用的时候，PageInfo的泛型并不是PageInfo&lt;List<xxx>&gt;</xxx></p>
-<p>而是对应的JavaBean类型例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">PageInfo&lt;PlanVO&gt; <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum,Integer pageSize,Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>否则会报一个</p>
-<p>pagehelper 返回前台的json转换异常com.fasterxml.jackson.databind.exc.Mismatch的异常</p>
-<h1 id="使用了layui的日期插件"><a href="#使用了layui的日期插件" class="headerlink" title="使用了layui的日期插件"></a>使用了layui的日期插件</h1><p>点击输入框可以弹出日期选择框，如下图所示效果</p>
-<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804102439.png"></p>
-<p>加入layui的css样式和js</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;layui/css/layui.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;layui/layui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加日期插件</span></span><br><span class="line">layui.use(<span class="string">&#x27;laydate&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 生成一个日期实例，这个实例变量名自己指定</span></span><br><span class="line">    <span class="keyword">var</span> laydate = layui.laydate;</span><br><span class="line">    <span class="comment">//执行一个laydate实例</span></span><br><span class="line">    laydate.render(&#123;</span><br><span class="line">        <span class="comment">// 指定在哪里生成日期控件</span></span><br><span class="line">        elem: <span class="string">&#x27;#dateText&#x27;</span>, <span class="comment">//指定元素</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h1 id="使用了谷歌Kaptcha-生成验证码插件"><a href="#使用了谷歌Kaptcha-生成验证码插件" class="headerlink" title="使用了谷歌Kaptcha 生成验证码插件"></a>使用了谷歌Kaptcha 生成验证码插件</h1><p>加入依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Google Kaptcha --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.penggle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kaptcha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>相关的配置</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KaptchaConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultKaptcha <span class="title">getDefaultKaptcha</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = <span class="keyword">new</span> com.google.code.kaptcha.impl.DefaultKaptcha();</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 图片边框</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border&quot;</span>, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="comment">// 边框颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border.color&quot;</span>, <span class="string">&quot;105,179,90&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片宽</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.width&quot;</span>, <span class="string">&quot;110&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片高</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.height&quot;</span>, <span class="string">&quot;40&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体大小</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.size&quot;</span>, <span class="string">&quot;30&quot;</span>);</span><br><span class="line">        <span class="comment">// session key</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.session.key&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">// 验证码长度</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.char.length&quot;</span>, <span class="string">&quot;4&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.names&quot;</span>, <span class="string">&quot;宋体,楷体,微软雅黑&quot;</span>);</span><br><span class="line"></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.noise.color&quot;</span>, <span class="string">&quot;35,37,38&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Config config = <span class="keyword">new</span> Config(properties);</span><br><span class="line">        defaultKaptcha.setConfig(config);</span><br><span class="line">        <span class="keyword">return</span> defaultKaptcha;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>controller代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/kaptcha&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCode</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DefaultKaptcha defaultKaptcha;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/defaultKaptcha&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultKaptcha</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] captchaChallengeAsJpeg = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream jpegOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 生产验证码字符串并保存到session中</span></span><br><span class="line">            String createText = defaultKaptcha.createText();</span><br><span class="line">            System.out.println(createText);</span><br><span class="line">            httpServletRequest.getSession().setAttribute(<span class="string">&quot;verificationCode&quot;</span>, createText);</span><br><span class="line">            <span class="comment">// 使用生成的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中</span></span><br><span class="line">            BufferedImage challenge = defaultKaptcha.createImage(createText);</span><br><span class="line">            ImageIO.write(challenge, <span class="string">&quot;jpg&quot;</span>, jpegOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组</span></span><br><span class="line">        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store&quot;</span>);</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);</span><br><span class="line">        httpServletResponse.setDateHeader(<span class="string">&quot;Expires&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        httpServletResponse.setContentType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();</span><br><span class="line">        responseOutputStream.write(captchaChallengeAsJpeg);</span><br><span class="line">        responseOutputStream.flush();</span><br><span class="line">        responseOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>前台显示</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;verificationCodeImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/api/kaptcha/defaultKaptcha&quot;</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;看不清？换一张&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>添加点击“看不清？换一张”的事件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新验证码</span></span><br><span class="line">            $(<span class="string">&quot;#verificationCodeImg&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                $(<span class="built_in">this</span>).hide().attr(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;http://localhost/api/kaptcha/defaultKaptcha?&#x27;</span>).fadeIn();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>效果图</p>
-<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804103206.png"></p>
-<h1 id="改变文本输入框获取值"><a href="#改变文本输入框获取值" class="headerlink" title="改变文本输入框获取值"></a>改变文本输入框获取值</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为输入英雄名称的文本框绑定文本改变的事件</span></span><br><span class="line">            $(<span class="string">&quot;.inputSearch&quot;</span>).on(<span class="string">&quot;input&quot;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">let</span> heroName = $(<span class="built_in">this</span>).val()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
-
-<h1 id="mybatis模糊查询的三种方式"><a href="#mybatis模糊查询的三种方式" class="headerlink" title="mybatis模糊查询的三种方式"></a>mybatis模糊查询的三种方式</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,name,age,score from star where name like &quot;%&quot; #&#123;name&#125; &quot;%&quot;</span><br><span class="line"></span><br><span class="line">&lt;!--concat拼接字符串  mysql独有的函数--&gt;</span><br><span class="line">select id,name,age,score from star where name like concat(&quot;%&quot;,#&#123;name&#125;,&quot;%&quot;)</span><br><span class="line"></span><br><span class="line">&lt;!-- 如果传入的参数是简单数据类型，$&#123;&#125;里面必须写value --&gt;</span><br><span class="line">select id,name,age,score from star where name like &quot;%$&#123;value&#125;%&quot;</span><br><span class="line"></span><br><span class="line">作者：叫我不矜持</span><br><span class="line">链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;6d244e194859</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
-
-<h1 id="thymeleaf循环的状态变量"><a href="#thymeleaf循环的状态变量" class="headerlink" title="thymeleaf循环的状态变量"></a>thymeleaf循环的状态变量</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">th:each属性用于迭代循环，语法：th:each&#x3D;&quot;obj,iterStat:$&#123;objList&#125;&quot;</span><br><span class="line">迭代对象可以是Java.util.List,java.util.Map,数组等;</span><br><span class="line">iterStat称作状态变量，属性有：</span><br><span class="line">    index:当前迭代对象的index（从0开始计算）</span><br><span class="line">    count: 当前迭代对象的index(从1开始计算)</span><br><span class="line">    size:被迭代对象的大小</span><br><span class="line">    current:当前迭代变量</span><br><span class="line">    even&#x2F;odd:布尔值，当前循环是否是偶数&#x2F;奇数（从0开始计算）</span><br><span class="line">    first:布尔值，当前循环是否是第一个</span><br><span class="line">    last:布尔值，当前循环是否是最后一个</span><br></pre></td></tr></table></figure>
-
-<h1 id="mysql-根据拼音首字母查询"><a href="#mysql-根据拼音首字母查询" class="headerlink" title="mysql 根据拼音首字母查询"></a>mysql 根据拼音首字母查询</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT id,full_name ,</span><br><span class="line"></span><br><span class="line">ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) AS PY</span><br><span class="line"></span><br><span class="line">FROM lol_hero WHERE ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) &#x3D; &#39;A&#39;</span><br></pre></td></tr></table></figure>
-
-<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>包含第三方jar包的工程的build</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                第三方jar包目录</span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources/lib<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/lib/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/classes/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;maven-compiler-plugin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其余的，如果依赖springboot父工程，加上</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果不依赖任何工程，直接打包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn clean install -Dmaven.test.skip=true // 忽略test</span><br></pre></td></tr></table></figure>
-
-<h2 id="准备服务器环境"><a href="#准备服务器环境" class="headerlink" title="准备服务器环境"></a>准备服务器环境</h2><p>安装jdk</p>
-<p>在/etc/profile文件的最后配置java环境</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/sorftware/jdk1.8.0_251</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export JAVA_HOME PATH</span><br></pre></td></tr></table></figure>
-
-<p>安装mysql</p>
-<p><a href="https://www.cnblogs.com/cannel/p/11104195.html">参考</a></p>
-<p>缺少 libaio</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
-
-<p>修改密码需要设置密码的级别：注意！</p>
-<p>授权远程连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;rootroot&#39; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
-
-<p>微服务远程调用报错找不到主机，因为我的redisServer以及mysqlServer在另一个服务器上，所以consumer想要调用这两个server的服务，必须找到我的另一个服务器，但是我发现服务器的名字没有使用ip地址，所以依照<code>参考</code>的调试最后成功了！</p>
-<p>运行jar包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup java -jar xxx.jar &gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>报错：UnknownHostException</p>
-<p><a href="https://blog.csdn.net/weixin_39032575/article/details/83011334?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考</a></p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC十一---匿名性</title>
-    <url>/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/</url>
-    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><h2 id="匿名性介绍"><a href="#匿名性介绍" class="headerlink" title="匿名性介绍"></a>匿名性介绍</h2><p>BitCoin and anonymity</p>
-<p>一般来说，大家说的匿名是和隐私保护联系（privacy）在一起的，比特币不要求是真名，是需要公钥产生的地址即可，因此有一定的匿名性，但不是说完全没有名字，他用的是“化名”，因此有人称它为“preudonymity”，就好像很多作家有笔名一样，比特币系统中的“匿名”其实不是真的匿名。</p>
-<a id="more"></a>
-
-<p>这种匿名性能给我们带来什么样的保护呢？和现金相比，和美元，法币相比？它的匿名性没有现金好，现金是完全匿名的。比特币的匿名性和银行存款相比，因为银行账户是实名制。（其实以前国内的银行不要求实名制，可以使用化名，如果这样的话，和比特币相比，哪个匿名性更好？从某种程度上来说，这时候的匿名性就比比特币要好，比特币的账户是公开的，而银行里普通老百姓想要知道别人的账户，这个是没有办法的。）</p>
-<p>比特币系统中，什么情况下有可能破坏匿名性？有些人建议在你每次收款的时候，都创建一个新的账户，但是某些情况下，这些账户是可以被关联在一起的？（这个时候就破坏了比特币的匿名性）</p>
+<p>3.如果你账户的私钥丢失了该怎么办？</p>
 <blockquote>
-<p>比如网上购物，一个交易可以有多个输入和输出。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916195151.png"></p>
-<p>这个Inputs有多个，这两个地址可能是同一个人（因为可能一个账户的钱，不够买这件商品，所以同时使用另一个账户来消费）；而Outputs其中一个一般是一个找零钱的输出。 像上图中的交易，一般都是由比特币钱包软件生成的，很多钱包软件交易的时候会生成一个新的找零钱的地址，有没有可能把输入地址和输出地址也关联起来呢？（有没有可能我们把这个找零钱的地址也找到？）</p>
-<p>比特币钱包并没有规定找零钱的地址在Outputs中出现的位置，但其实有些情况下，你可以把它分析出来，我们想要对敌人造成干扰，就可以生成一些不必要的转账地址，但是一般没有人会这么干。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916200401.png"></p>
+<p>其实是没有办法的，这个账户上的钱就变成了死钱，永远取不出来，去中心化的系统大家没有办法给你重置密码。</p>
 </blockquote>
-<p>这就说明，我们可以生成很多的地址账户，但是这些地址账户是可以被关联起来的。第二点是，这个地址账户跟你在社会现实世界中的真实身份也产生关联，那么什么时候会知道比特币的地址账户对应现实中的某个人呢？</p>
+<p>有些加密货币的交易所，一般来说，这些交易所都是中心化的机构，那么在交易所办一个账户的时候一般来说是要提供身份证明的，这种情况下，你把你的交易货币保存在交易所里，那么私钥实际上是由交易所来保管的 ，你登陆这个交易所是按照登陆银行差不多的程序（有一个账户名，一个密码），登陆的时候，一般来说还需要二次验证（google 身份验证器），如果私钥丢失是可以在交易所查到的；</p>
+<p>有些在线钱包也提供私钥保管的功能，但并不说这些机构为我们自己保管私钥更加安全，目前这些机构仍处于缺乏监管的状态，历史上出现过交易所被黑客攻击的情况，其中最著名的例子就是Mt.Gox的例子，Mt.Gox曾经是世界上最大的交易所，交易量占到了全球的交易量的70%。后来被攻击了，CEO被判刑。</p>
+<p>相比来说，冷钱包或者硬钱包更加安全。</p>
+<p>4.如果你的私钥泄漏了怎么办？（你发现你的账户上出现了一些可疑的交易）</p>
 <blockquote>
-<p>①任何比特币系统中的地址和现实世界发生联系的时候都有可能泄漏身份。在资金转入和转出区块链的时候都有可能泄漏，我们刚开始都没有比特币，这时候需要去交易所买，在交易所登记；也有场外交易的情况（就是两个人之间私下交易，以前国外有些做场外交易的公共场所）。</p>
-<p>②很多国家有反洗钱法，那么怎么防范使用比特币洗钱的违法行为呢？</p>
-<p>盯住这个资金的转入转出链其实是一个常用手段，如果你有很大的资金像转入到比特币，或者你有很大一部分比特币，你想转成法币，这个你想不引起司法部门的注意，实际上是很难的，这也是比特币隐私有可能被破坏的一个很重要的时机。</p>
-<p>③用比特币做支付的时候，比如国外有的商家，是接受比特币支付的，咖啡店，餐馆之类（当然，这是一个bad idea，1.延迟大，等六个确认需要等待1个小时；2.交易费也很贵）。这个其实不仅仅是接受你支付的商家会知道，</p>
-<p>其他人其实也会知道：以前曾经有一家信用卡公司，为了支持学术界的科研，把他收集到的一些信用卡的记录公开，公开的时候做一些隐私保护（信用卡号码取哈希，年龄，性别 等都抹掉了），有人就做了科研（其实不是为了研究信用卡的消费行为，而是怎么通过这些公开的数据推测出这个人实际上是谁）—&gt;通过过滤在某个时间某个人在哪里消费，就可以精准地定位到某个人</p>
+<p>这个时候你应该把你账户上的钱，转到另一个安全账户上。（这个也和现实中银行的体验不太一样）</p>
+<p>比特币账户创建之后，公私钥对都是没有办法修改的</p>
 </blockquote>
-<p>这就说明，信用卡记录不能公开，去了哈希值之后依然是不应该公开的，但是比特币系统本来就是公开的，这时候你去咖啡店，你把你的账户的地址告诉了营业员，你周围有其他认识你的人都会意识到这时候你在比特币网络上做了一笔消费，然后就可以在区块链中查出来。所以比特币的匿名性并不像我们想象中的那么好</p>
-<p>实际上那些用比特币的人，匿名性保存的有多好？中本聪！（因为他根本没有花钱）</p>
-<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念。</p>
+<p>5.如果转账的账户地址填错了怎么办？</p>
 <blockquote>
-<p>以前有个叫silk road的网站：通过比特币卖各种违禁品，最后运行了两三年就被政府查封了，这个人通过这个网站赚了很多钱，但是他只是在纸面上很多钱，十几万个比特币一个都没花，因为一花就暴露身份了。所以，比特币的匿名性没有我们想象的那么好。</p>
+<p>没有办法取消以前发布的交易，比特币中转账的交易一旦发布在区块链上就没有办法取消了，它没有提供这种机制取消一个已经发布的交易，如果你知道是谁的地址，可以跟他联系一下</p>
+<p>也可能转给不存在的地址（有些地址其实不是公钥的哈希得到的：digital commitment：你想证明某个时间你知道了某个知识，可能只是一个文件取了哈希）</p>
 </blockquote>
-<p>所以，过去的经验表明，凡是用比特币从事违法活动的，最后都能被抓起来，中本聪能这么好的保持匿名性，实际上是一个个例，而且他没有干坏事</p>
-<p>hide your indetiny from whom？</p>
+<p>在Proof of Burn中提到的OP_RETURN后面可以写所有的去哈希的内容，上面的内容没有人管，这是推荐采用的方法，但是有的人不这么干：有人用内容取哈希之后得到的哈希值生成一个看上去像比特币地址的东西，这时候转账给这个假的地址，这样转账的钱就变成了死钱，这种做法，就是牺牲很少一点的比特币，换取往这个区块链里写入这个哈希值的一个机会。后者的做法是不提倡的，因为这样转账交易的输出会永久的保留在UTXO里，对全节点不友好</p>
+<p>6.Proof of Burn的机制是怎么执行的，不是说OP_RETURN会无条件地返回错误吗？那这个交易是怎么通过验证的？</p>
 <blockquote>
-<p>如果你只是像让你的亲戚朋友不知道你的账户上有多少钱，这个是很容易办到的，如果是像silk road这样的想逃避fbi，是很难的。</p>
+<p>验证时候：是把当前这个交易的输入脚本和这个交易（币的来源）的输出脚本拼接，这个过程是不可以发生错误的，关键在于，OP_RETURN是写在当前交易的输出脚本里的，所以验证当前交易的合法性的时候不会执行当前语句（因为他是输出脚本），有人想花这个钱的时候，才会执行这个输出脚本，因为OP_RETURN永远都返回错误，所以永远都不可能花出去。</p>
 </blockquote>
-<h2 id="如何提高匿名性"><a href="#如何提高匿名性" class="headerlink" title="如何提高匿名性"></a>如何提高匿名性</h2><p>假设你是一个比特币用户，你能用什么方法来提高你的匿名性？</p>
+<p>7.会不会有的矿工偷答案？（其他矿工发布了一个nonce，这个矿工没有找到这个nonce，他收到这个区块之后，查一下这个nonce是符合要求的，然后就把他当成自己的nonce发布出去）你怎么知道哪个nonce是属于哪个矿工的？</p>
 <blockquote>
-<p>我们知道，比特币是运行在应用层的应用程序，它的底层是P2P的network，所以提高匿名性，是从两个方面入手。</p>
-<p>network layer：如果很多交易都是从一个ip地址发出来的，那么从物理世界中，通过ip地址就可以知道是谁。这个我们已经有解决方案了，比较普遍的一种方法就是使用多路径转发的方法（TOR的原理），sender不是直接发给reciever，而是中间经过很多跳，中间的结点只是知道它的上一跳是谁，而不知道最早发出这个消息的是谁，中间的结点可能是坏的，但是只要中间有一个结点是诚实的，就可以将发件人的身份隐藏起来。</p>
-<p>application layer：破坏匿名性的原因之一是，同一个人的不同的比特币账户之间会被关联起来。其中一个做法是</p>
-<p>coin mixing：把你的身份和周围的人的身份混在一起，让别人分不清谁是谁。如何做到coin mixing？有些网站专门提供coin mixing的服务，收取一定的服务费，所有想使用coin mixing的用户，把币发给这些网站，内部进行一些重组，再取回来，取回来的币就不是原来的币了，实际上是一个复杂的过程。还有一个问题是，现在这个区块里世界里，没有什么信誉度非常高的coin mixing的服务，很多提供这个服务的网站，他自己也是匿名的，卷款跑路我们一点办法也没有。</p>
-<p>我们不一定要刻意的coin mixing，我们使用的一些软件，有些自己就带有coin mixing的一些性质，比如在线钱包，存进去的币，他可能会把其他人的币混合起来，但是在线钱包并不一定要履行coin mixing的功能</p>
-<p>还有一些交易所，他天然的有coin mixing的性质，我把一些比特币存进交易所，一段时间，我觉得它的价格会下跌，于是我把他换成美元，我有可能买入以太币，又可能换成莱特币，折腾几次之后，我又可能把他买回来，这时候我账户上的比特币，就不一定是我存进去的比特币了。（coin mixing的性质）。当然这个的前提是，这个交易所不是泄漏相关的记录（相关的提币存币的记录）</p>
+<p>发布的区块里，会发布一个coinBase tx，里面会填一个收款地址，谁挖到了矿，就填谁，如果你要抄答案，那么你要把收款人的地址换成自己的地址，而这个地址发生变化的话，coinBase tx的内容就会发生变化，这样会导致这个Merkle tree的根哈希值发生变化，而这个nonce在块头里，根哈希值也在块头，block header的哈希值发生变化之后，原来找到的nonce就作废了。所以你不可能偷答案，因为每个矿工挖到的nonce是和自己的收款地址绑定在一起的。</p>
 </blockquote>
-<p>为什么比特币的匿名性很差，其中一个本质原因是他是公开的，而且他是不可篡改的，好像不可篡改性对比特币有好处，其实堆隐私保护是灾难性的，因为一旦你在一个交易里把你的身份暴露了，这个交易永久地写在区块链里，你想抹都抹不掉了。这也是为什么我们说账户之间的关联性也是我们需要小心的，如果账户是单独出去的，如果你暴露了一个账户，这个影响还是比较有限的，如果是关联的，一个账户暴露了，后面的就都完了。</p>
-<h2 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195428.png"></p>
-<p>比如，我要证明某个比特币账户是我的，我要证明这一点，我要怎么证明？</p>
+<p>8.交易费可以看作是发布区块的时候给矿工的一点小费，那么你怎么知道这个交易费该给那个矿工？事先你怎么知道哪个矿工会挖到矿？</p>
 <blockquote>
-<p>实际上是要证明我有这个比特币账户的私钥，但是我不能把这个私钥告诉你，这时候就可以签名，你是知道这个账户的公钥的，你可以验证这个签名的合法性</p>
+<p>事先不需要知道哪个矿工得到这个交易费，只要total inputs &gt; total ouputs，这个差值就是交易费，给谁不需要事先知道，哪个矿工挖到矿了，就可以把这些差额收集起来，作为自己的交易费。</p>
 </blockquote>
-<p>这个例子作为零知识证明，实际上是有争议的，我虽然没有泄露我的私钥，但是我泄露了我私钥的签名，这个和零知识证明中的无需透露该陈述是正确的外的任何信息是有冲突的。但是这里透露的额外信息要看你实际的应用场景。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195956.png"></p>
-<p>零知识证明的数学基础是同态隐藏。</p>
-<p>①不会出现哈希碰撞，如果x、y不相等，那么加密值也不相等，反过来说，如果两个加密函数值是相等的，那么原来的函数值也是相等的。</p>
-<p>②说明加密函数不可逆，密码学的哈希函数的性质和这个是类似的，hiding propetry，知道哈希值没有办法知道它的输入值。</p>
-<p>③对这些加密后的函数进行函数运算，等价于，对进行运算的函数，然后在进行加密。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200714.png"></p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200915.png"></p>
-<p>说明：</p>
-<p><code>E(X+Y) = E(7)</code>,说明没有碰撞</p>
-<p>这个版本实际上有些缺陷，Bob可以用蛮力的方式，猜出原始的x、y是多少，Bob虽然通过E(x)不能知道x是多少，但是他可以通过遍历x的取值，Alice需要在发送E(x)和E(y)之前，对x、y进行随机化处理（使得x、y加起来还是不变的）。</p>
-<p>在比特币的共识协议中，央行发行货币，有个属于他自己的签名，在前面所讲的，这样会产生double spending，所以可以在每张货币上加上一个id，记录现在这张货币在谁手里。这样的话，央行不是什么都知道了？</p>
-<p>那么，有没有什么办法，让央行做中心化的记账，但是又不让他知道呢？</p>
-<blockquote>
-<p>这个虚拟货币的编号不能是央行产生的，这个编号得是我自己产生的，我在本地产生一个编号，但是不告诉央行，这样的话，央行怎么知道这个编号是不是正确的呢？这就引入了盲签。</p>
-<p>用户A提供编号，银行是要签名的，但是他看不到内容,Token就是银行对序号的签名。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202409.png"></p>
-</blockquote>
-<h2 id="零币和零钞"><a href="#零币和零钞" class="headerlink" title="零币和零钞"></a>零币和零钞</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202540.png"></p>
-<p>基础币可以是比特币，你用的时候，你要证明，本来是有一个基础币的，你把这个基础币搞得是不能花了，然后换取一个零币，零币在花的时候，只需要用零知识证明你花掉的币是系统中存在的某一个合法的币就行了，但是不用透露你花的是系统中的哪一个币。</p>
-<p>这样就把关联性破坏掉了。</p>
-<p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
-<p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -868,57 +1022,6 @@
 <p><strong>注意：orphan block中的奖励的比特币就无效了</strong></p>
 <h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>最后，那么比特币要取得的共识是什么？去中心化账本中的内容要取得共识，只有获得记账权的结点才能往里面写东西，</p>
 <p>我们通过算例来获得记账权，每秒钟能够试多少个nonce的数目（hash rate），hash rate越高，得到出块奖励的概率越大</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC十---回顾问答</title>
-    <url>/2020/09/14/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/</url>
-    <content><![CDATA[<h1 id="BTC问答回顾"><a href="#BTC问答回顾" class="headerlink" title="BTC问答回顾"></a>BTC问答回顾</h1><p>1.转账交易的时候，如果接收者不在线（你转账给A，但是A那时候没有连接到比特币网络上）怎么办？</p>
-<blockquote>
-<p> 这个时候不需要接收者在线，转账交易只不过要在区块链上记录一下。</p>
-</blockquote>
-<p>2.假设某个全节点收到了一个转账交易，有没有可能转账交易中接收者的收款地址是这个结点以前从来没有听说过的？</p>
-<blockquote>
-<p>可能，比特币系统在创建账户的时候是不需要通知其他人的，在本地产生一个公私钥对就可以了，只有在以后产生的收款地址收到钱的时候，其他结点才知道这个账户的存在。</p>
-</blockquote>
-<a id="more"></a>
-
-<p>3.如果你账户的私钥丢失了该怎么办？</p>
-<blockquote>
-<p>其实是没有办法的，这个账户上的钱就变成了死钱，永远取不出来，去中心化的系统大家没有办法给你重置密码。</p>
-</blockquote>
-<p>有些加密货币的交易所，一般来说，这些交易所都是中心化的机构，那么在交易所办一个账户的时候一般来说是要提供身份证明的，这种情况下，你把你的交易货币保存在交易所里，那么私钥实际上是由交易所来保管的 ，你登陆这个交易所是按照登陆银行差不多的程序（有一个账户名，一个密码），登陆的时候，一般来说还需要二次验证（google 身份验证器），如果私钥丢失是可以在交易所查到的；</p>
-<p>有些在线钱包也提供私钥保管的功能，但并不说这些机构为我们自己保管私钥更加安全，目前这些机构仍处于缺乏监管的状态，历史上出现过交易所被黑客攻击的情况，其中最著名的例子就是Mt.Gox的例子，Mt.Gox曾经是世界上最大的交易所，交易量占到了全球的交易量的70%。后来被攻击了，CEO被判刑。</p>
-<p>相比来说，冷钱包或者硬钱包更加安全。</p>
-<p>4.如果你的私钥泄漏了怎么办？（你发现你的账户上出现了一些可疑的交易）</p>
-<blockquote>
-<p>这个时候你应该把你账户上的钱，转到另一个安全账户上。（这个也和现实中银行的体验不太一样）</p>
-<p>比特币账户创建之后，公私钥对都是没有办法修改的</p>
-</blockquote>
-<p>5.如果转账的账户地址填错了怎么办？</p>
-<blockquote>
-<p>没有办法取消以前发布的交易，比特币中转账的交易一旦发布在区块链上就没有办法取消了，它没有提供这种机制取消一个已经发布的交易，如果你知道是谁的地址，可以跟他联系一下</p>
-<p>也可能转给不存在的地址（有些地址其实不是公钥的哈希得到的：digital commitment：你想证明某个时间你知道了某个知识，可能只是一个文件取了哈希）</p>
-</blockquote>
-<p>在Proof of Burn中提到的OP_RETURN后面可以写所有的去哈希的内容，上面的内容没有人管，这是推荐采用的方法，但是有的人不这么干：有人用内容取哈希之后得到的哈希值生成一个看上去像比特币地址的东西，这时候转账给这个假的地址，这样转账的钱就变成了死钱，这种做法，就是牺牲很少一点的比特币，换取往这个区块链里写入这个哈希值的一个机会。后者的做法是不提倡的，因为这样转账交易的输出会永久的保留在UTXO里，对全节点不友好</p>
-<p>6.Proof of Burn的机制是怎么执行的，不是说OP_RETURN会无条件地返回错误吗？那这个交易是怎么通过验证的？</p>
-<blockquote>
-<p>验证时候：是把当前这个交易的输入脚本和这个交易（币的来源）的输出脚本拼接，这个过程是不可以发生错误的，关键在于，OP_RETURN是写在当前交易的输出脚本里的，所以验证当前交易的合法性的时候不会执行当前语句（因为他是输出脚本），有人想花这个钱的时候，才会执行这个输出脚本，因为OP_RETURN永远都返回错误，所以永远都不可能花出去。</p>
-</blockquote>
-<p>7.会不会有的矿工偷答案？（其他矿工发布了一个nonce，这个矿工没有找到这个nonce，他收到这个区块之后，查一下这个nonce是符合要求的，然后就把他当成自己的nonce发布出去）你怎么知道哪个nonce是属于哪个矿工的？</p>
-<blockquote>
-<p>发布的区块里，会发布一个coinBase tx，里面会填一个收款地址，谁挖到了矿，就填谁，如果你要抄答案，那么你要把收款人的地址换成自己的地址，而这个地址发生变化的话，coinBase tx的内容就会发生变化，这样会导致这个Merkle tree的根哈希值发生变化，而这个nonce在块头里，根哈希值也在块头，block header的哈希值发生变化之后，原来找到的nonce就作废了。所以你不可能偷答案，因为每个矿工挖到的nonce是和自己的收款地址绑定在一起的。</p>
-</blockquote>
-<p>8.交易费可以看作是发布区块的时候给矿工的一点小费，那么你怎么知道这个交易费该给那个矿工？事先你怎么知道哪个矿工会挖到矿？</p>
-<blockquote>
-<p>事先不需要知道哪个矿工得到这个交易费，只要total inputs &gt; total ouputs，这个差值就是交易费，给谁不需要事先知道，哪个矿工挖到矿了，就可以把这些差额收集起来，作为自己的交易费。</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1068,6 +1171,48 @@
       </tags>
   </entry>
   <entry>
+    <title>BTC六---挖矿难度</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
+    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
+<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
+<a id="more"></a>
+
+<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
+<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
+<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
+<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
+<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
+<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
+<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
+<p>调整的公式：</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
+<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
+<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
+<p><code>比特币系统中总算力的变化情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
+<p><code>算力难度的增长情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
+<p>符合难度调整的设计目标</p>
+<p><code>难度调整曲线</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
+<p>说明挖矿的人越来越多，设备越来越先进</p>
+<p><code>每天的出块时间</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
+<p><code>最近半年的出块事件</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC七---挖矿</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/</url>
     <content><![CDATA[<h1 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h1><h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png"></p>
@@ -1137,48 +1282,6 @@
 <p>另外，不要把51%的阈值，当成一个门槛，这个其实都是概率，而且，每个矿池所占的算力比重，本身也是一种估计而已，而且实时变化</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大型矿池的出现，有一定的好处：给矿工减轻了负担，收入分配也更加稳定。</p>
 <p>也有一定的危害：发动51攻击更容易了 <code>on demand mining</code></p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC六---挖矿难度</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
-    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
-<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
-<a id="more"></a>
-
-<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
-<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
-<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
-<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
-<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
-<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
-<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
-<p>调整的公式：</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
-<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
-<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
-<p><code>比特币系统中总算力的变化情况</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
-<p><code>算力难度的增长情况</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
-<p>符合难度调整的设计目标</p>
-<p><code>难度调整曲线</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
-<p>说明挖矿的人越来越多，设备越来越先进</p>
-<p><code>每天的出块时间</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
-<p><code>最近半年的出块事件</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1395,37 +1498,6 @@
       </categories>
       <tags>
         <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CCF一---202006</title>
-    <url>/2020/08/29/ccf/202006/</url>
-    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
-
-<a id="more"></a>
-
-<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
-
-<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
-
-<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
-<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
-<p>以下就是我写的代码（测试为100分）:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>CCF</tag>
       </tags>
   </entry>
   <entry>

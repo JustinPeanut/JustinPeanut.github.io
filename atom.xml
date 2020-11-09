@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-11-02T11:45:06.571Z</updated>
+  <updated>2020-11-09T12:50:30.946Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ETH七---以太坊难度调整</title>
+    <link href="http://yoursite.com/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/"/>
+    <id>http://yoursite.com/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/</id>
+    <published>2020-11-09T12:45:11.000Z</published>
+    <updated>2020-11-09T12:50:30.946Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;难度调整&quot;&gt;&lt;a href=&quot;#难度调整&quot; class=&quot;headerlink&quot; title=&quot;难度调整&quot;&gt;&lt;/a&gt;难度调整&lt;/h1&gt;&lt;p&gt;​    比特币是每隔2016个区块会调整一下挖矿难度，目标是维持出块时间十分钟左右，以太坊是每个区块都有可能调整挖矿难度，调整的方法也比较复杂，而且改过好几个版本，我们遵循以代码的原则。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>ETH六---以太坊挖矿算法</title>
@@ -399,26 +418,6 @@
     
     
     <summary type="html">&lt;h1 id=&quot;网络&quot;&gt;&lt;a href=&quot;#网络&quot; class=&quot;headerlink&quot; title=&quot;网络&quot;&gt;&lt;/a&gt;网络&lt;/h1&gt;&lt;p&gt;新发布的区块，新发布的交易，再区块链中是怎么传播的？&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BTC四---实现</title>
-    <link href="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/</id>
-    <published>2020-08-30T02:32:23.000Z</published>
-    <updated>2020-08-30T02:50:46.775Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;实现&quot;&gt;&lt;a href=&quot;#实现&quot; class=&quot;headerlink&quot; title=&quot;实现&quot;&gt;&lt;/a&gt;实现&lt;/h1&gt;&lt;h2 id=&quot;transaction-based-ledger&quot;&gt;&lt;a href=&quot;#transaction-based-ledger&quot; class=&quot;headerlink&quot; title=&quot;transaction-based ledger&quot;&gt;&lt;/a&gt;transaction-based ledger&lt;/h2&gt;&lt;p&gt;BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算&lt;/p&gt;
-&lt;p&gt;比特币的全节点要维护一个UTXO的数据结构&lt;/p&gt;</summary>
     
     
     
