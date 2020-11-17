@@ -21,29 +21,29 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="密码学基础1.哈希​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。 比特币用到了密码学的两个内容：哈希和签名 哈希在比特币中：cryptographic hash function 它在密码学中要求的两个性质： ​    ①collision（哈希碰撞） 和 resistance：没有什么高效的方法人为的制造哈希碰撞， ​        解释为对于一个x">
+  <meta name="description" content="智能合约​    智能合约是比特币和以太坊的一个重要的区别，智能合约的本质是运行在区块链上的一个代码，代码的逻辑定义智能合约的内容，智能合约的账户里保存了合约当前的运行状态。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BTC一---密码学基础">
-<meta property="og:url" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:title" content="ETH九---智能合约">
+<meta property="og:url" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/index.html">
 <meta property="og:site_name" content="Blog of DengFeng">
-<meta property="og:description" content="密码学基础1.哈希​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。 比特币用到了密码学的两个内容：哈希和签名 哈希在比特币中：cryptographic hash function 它在密码学中要求的两个性质： ​    ①collision（哈希碰撞） 和 resistance：没有什么高效的方法人为的制造哈希碰撞， ​        解释为对于一个x">
+<meta property="og:description" content="智能合约​    智能合约是比特币和以太坊的一个重要的区别，智能合约的本质是运行在区块链上的一个代码，代码的逻辑定义智能合约的内容，智能合约的账户里保存了合约当前的运行状态。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png">
-<meta property="og:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png">
-<meta property="article:published_time" content="2020-08-29T00:21:39.000Z">
-<meta property="article:modified_time" content="2020-08-30T02:50:12.391Z">
+<meta property="og:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117190920.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117192445.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117192944.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117193254.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117193836.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117193930.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117195655.png">
+<meta property="article:published_time" content="2020-11-17T12:06:05.000Z">
+<meta property="article:modified_time" content="2020-11-17T12:08:25.536Z">
 <meta property="article:author" content="Deng Feng">
 <meta property="article:tag" content="区块链">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117190920.png">
 
 
-<link rel="canonical" href="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/">
+<link rel="canonical" href="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/">
 
 
 <script class="page-configurations">
@@ -56,7 +56,7 @@
   };
 </script>
 
-  <title>BTC一---密码学基础 | Blog of DengFeng</title>
+  <title>ETH九---智能合约 | Blog of DengFeng</title>
   
 
 
@@ -219,7 +219,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%86%E7%A0%81%E5%AD%A6%E5%9F%BA%E7%A1%80"><span class="nav-number">1.</span> <span class="nav-text">密码学基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E5%93%88%E5%B8%8C"><span class="nav-number">2.</span> <span class="nav-text">1.哈希</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E7%AD%BE%E5%90%8D"><span class="nav-number">3.</span> <span class="nav-text">2.签名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">3.总结</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6"><span class="nav-number">1.</span> <span class="nav-text">智能合约</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -297,7 +297,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpg">
@@ -313,7 +313,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          BTC一---密码学基础
+          ETH九---智能合约
         </h1>
 
         <div class="post-meta-container">
@@ -323,16 +323,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2020-08-29 08:21:39" itemprop="dateCreated datePublished" datetime="2020-08-29T08:21:39+08:00">2020-08-29</time>
+      <time title="创建时间：2020-11-17 20:06:05 / 修改时间：20:08:25" itemprop="dateCreated datePublished" datetime="2020-11-17T20:06:05+08:00">2020-11-17</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-08-30 10:50:12" itemprop="dateModified" datetime="2020-08-30T10:50:12+08:00">2020-08-30</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -359,8 +353,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -372,7 +366,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.3k</span>
+      <span>2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -390,62 +384,50 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
-<p>比特币用到了密码学的两个内容：哈希和签名</p>
-<p>哈希在比特币中：<code>cryptographic hash function</code></p>
-<p>它在密码学中要求的两个性质：</p>
-<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
-<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
-<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
-<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
+        <h1 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h1><p>​    智能合约是比特币和以太坊的一个重要的区别，智能合约的本质是运行在区块链上的一个代码，代码的逻辑定义智能合约的内容，智能合约的账户里保存了合约当前的运行状态。</p>
 <a id="more"></a>
 
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
-<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
-<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
-<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
-<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
-<p>x—-&gt;H(x)</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
-<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
-<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
-<p>在比特币中还要求<code>puzzle friendly</code></p>
-<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
-<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117190920.png"></p>
 <blockquote>
-<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
-<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
-<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
-<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
+<p>​    上图是智能合约的代码结构，第一行首先声明所使用的solidity的版本号，不同版本的solidity语言在语法上有一些小的差别，contract类似于java中的类，address类型是solidity语言钟所特有的地址类型的变量。</p>
+<p>接下来来个事件，是用来记录日志的，代码的例子是网上拍卖的例子，如果出现某个出现了一个新的最高价，我们就记录一下这个参数。接下来的事件叫Pay2Beneficiary，参数是赢得拍卖的这个人的地址，以及他最后的出价，solidity语言和其他的语言有很多特别之处，比如这个’mapping（address =&gt; uint） bids’，这是一个哈希表，保存了从地址到uint的一个映射，solidity语言中的哈希表中的一个奇怪的地方是，它不支持遍历，这里使用bidders数组来记录哈希表中的数据，以便于遍历。</p>
+<p>然后就是三个成员函数，都是public的，说明其他账户都可以调用这些函数，bid函数上的标识payable后面会解释。</p>
 </blockquote>
-<p>比特币中用到的哈希函数叫做SHA-256。</p>
-<p>SHA:<code>secure Hash Algorithm</code> </p>
-<p>我们上面所说的三个性质，他都是满足的</p>
-<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
-<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
-<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
-<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
-<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
-<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
+<p>​    外部账户如何调用智能合约？</p>
 <blockquote>
-<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
-<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
+<p>如果A-&gt;B，B如果是普通账户，那就和比特币中的转账没有什么区别，如果B是一个合约账户，那么这个转账实际上就发起了对B合约的调用，具体调用的是合约中的哪个函数，是在data域中决定的。</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117192445.png"></p>
+<p>sender address是发起调用的账户的地址，to contract address是被调用的合约的地址，调用的函数就是tx data（左下角），如果这个函数是由参数的话，参数的取值，也是在这个data域中说明的。</p>
+<p>中间一行是调用合约的参数：</p>
+<p>value：发起调用时，转过去多少钱，这里是0（这个调用的目的仅仅是为了调用这个函数，不是真的要转账），gas used是这个交易花了多少汽油费，gas price是单位汽油的价格，gas limit是这个交易我最多愿意支付的汽油。</p>
 </blockquote>
-<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
+<p>​    一个合约如果调用另外一个合约函数？</p>
+<p>①</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117192944.png"></p>
+<p>LogCallFoo方法只是写log；</p>
+<p>callAFooDirectly这个函数，是传给他一个A的地址，在其中创建A的实例，并调用foo方法。</p>
+<p>以太坊中规定，一个交易只有外部交易才能够发起，合约账户不能自己主动发起一个交易，所以这个例子当中需要有一个外部账户，调用合约B中的函数，这个函数在调用A当中的foo函数。</p>
+<p>②</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117193254.png"></p>
+<p>这个调用和上一个调用相比的区别是：错误处理的不同，上种方法，如果你调用的哪个合约在执行过程中出现错误，会导致发起调用的这个合约，也跟着一起回滚（A抛出异常，B也会跟着出错），而这种方法，在调用过程中，被调用的合约抛出异常，call函数会返回false，表明调用失败，但是发起调用的函数，并不会抛出异常，可以继续执行。</p>
+<p>③</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117193836.png"></p>
+<p>delegatecall不需要切换到被调用的合约的环境中执行，而是在当前调用的合约的环境中执行，比如就用当前账户的账户余额，存储之类的。</p>
+<hr>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117193930.png"></p>
+<p>这里的payable，只有第一个函数中有，其他两个没有，解释：</p>
 <blockquote>
-<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
-<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
-<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
-<p>这个概率比地球爆炸的概率还要小！</p>
+<p>以太坊中规定，如果这个合约账户要能接收外部转账的话，那么必须标注成payable，bid函数的功能：使用来进行竞拍，出价的，比如你要参与拍卖，你说你出100个以太币，那么你就调用这个合约中的这个bid函数，所以拍卖的规则是，你调用这个bid函数时，要把你拍卖的出价（100个以太币）也发送过去，存储在这个合约里，锁定在那一直到拍卖结束，避免有的人凭空出价，所以bid函数要有能力接受外部转账的能力。</p>
+<p>withdraw函数是拍卖结束了，出价最高的那个人赢得了拍卖，其他人没有得到想要的东西，可以调用withdraw函数，把自己当初出的价钱（锁定在以太坊中的以太币取回来），因为不涉及对智能合约的转账，而仅仅是通过withdraw，取回锁定的钱。</p>
 </blockquote>
-<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
-<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
-<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
+<p>**注意:**以太坊中凡是要接受外部转账的函数,都要标注为payable,否则的话,如果你给这个函数转出去钱的话,回引出错误处理(抛出异常).如果你不需要接受外部转账，这个函数就不用写上payable。</p>
+<hr>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201117195655.png"></p>
+<blockquote>
+<p>上图中的函数既没有参数也没有返回值，而且也没有函数名（匿名函数）。</p>
+<p>A调用B合约的时候，然后要在交易中的data域说明你调用的是B合约中的哪个函数，如果A给合约B转了一笔钱，没有说明调用的是哪个函数，怎么办？（data域是空的）这时候缺省的就是调用fallback函数（没有什么函数好调了，所以就调它），还有一种情况就是你调用的函数不存在，也是调用的这个fallback函数，这就是为什么这个函数没有参数和返回值。（这个fallback函数一般情况下都是写成payable）。</p>
+</blockquote>
+<p>​    我们说转账金额可以是0，但是汽油费是必须给的，这是两码事，转账金额是给收款人的，汽油费是给发布这个区块的矿工的。（汽油费不给的话，矿工不会把你这个交易打包发布到区块链上）。</p>
 
     </div>
 
@@ -499,11 +481,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/" rel="prev" title="ETH八---以太坊权益证明">
+                  <i class="fa fa-chevron-left"></i> ETH八---以太坊权益证明
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/08/29/ccf/202006/" rel="next" title="CCF一---202006">
-                  CCF一---202006 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -638,7 +620,7 @@ NexT.utils.loadComments('#valine-comments', () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: "/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/",
+      path: "/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/",
     }, {"enable":true,"appId":"yVOlBzIi3aYyQQz57UbRr2UY-gzGzoHsz","appKey":"JUN29c5FMssB0c1y8MYYyvvg","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
     ));
   }, window.Valine);

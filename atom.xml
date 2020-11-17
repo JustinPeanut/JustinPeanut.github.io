@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-11-12T12:04:29.479Z</updated>
+  <updated>2020-11-17T12:08:25.536Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ETH九---智能合约</title>
+    <link href="http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/"/>
+    <id>http://yoursite.com/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/</id>
+    <published>2020-11-17T12:06:05.000Z</published>
+    <updated>2020-11-17T12:08:25.536Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;智能合约&quot;&gt;&lt;a href=&quot;#智能合约&quot; class=&quot;headerlink&quot; title=&quot;智能合约&quot;&gt;&lt;/a&gt;智能合约&lt;/h1&gt;&lt;p&gt;​    智能合约是比特币和以太坊的一个重要的区别，智能合约的本质是运行在区块链上的一个代码，代码的逻辑定义智能合约的内容，智能合约的账户里保存了合约当前的运行状态。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>ETH八---以太坊权益证明</title>
@@ -398,26 +417,6 @@
     
     
     <summary type="html">&lt;h1 id=&quot;挖矿&quot;&gt;&lt;a href=&quot;#挖矿&quot; class=&quot;headerlink&quot; title=&quot;挖矿&quot;&gt;&lt;/a&gt;挖矿&lt;/h1&gt;&lt;h2 id=&quot;回顾&quot;&gt;&lt;a href=&quot;#回顾&quot; class=&quot;headerlink&quot; title=&quot;回顾&quot;&gt;&lt;/a&gt;回顾&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BTC六---挖矿难度</title>
-    <link href="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/"/>
-    <id>http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</id>
-    <published>2020-08-30T02:40:19.000Z</published>
-    <updated>2020-08-30T02:53:27.254Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;挖矿难度&quot;&gt;&lt;a href=&quot;#挖矿难度&quot; class=&quot;headerlink&quot; title=&quot;挖矿难度&quot;&gt;&lt;/a&gt;挖矿难度&lt;/h1&gt;&lt;h2 id=&quot;为什么要调整挖矿难度&quot;&gt;&lt;a href=&quot;#为什么要调整挖矿难度&quot; class=&quot;headerlink&quot; title=&quot;为什么要调整挖矿难度&quot;&gt;&lt;/a&gt;为什么要调整挖矿难度&lt;/h2&gt;&lt;p&gt;调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例&lt;/p&gt;
-&lt;p&gt;比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。&lt;/p&gt;</summary>
     
     
     
