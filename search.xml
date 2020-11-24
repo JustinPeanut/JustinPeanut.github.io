@@ -1,110 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>LOL-show项目工程日志</title>
-    <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
-<p>如果你想要学习该项目，那么你可以访问我的github！</p>
-<a id="more"></a>
-
-<h1 id="工程结构"><a href="#工程结构" class="headerlink" title="工程结构"></a>工程结构</h1><p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/LOL-show-%E5%B7%A5%E7%A8%8B%E5%9B%BE.png"></p>
-<p>端口号规定：</p>
-<p>eureka:1000</p>
-<p>zuul:80</p>
-<p>mysql:2000</p>
-<p>redis:3000</p>
-<p>hero:4000</p>
-<p>member:5000</p>
-<p>market:6000</p>
-<p>order:7000</p>
-<p>pay:8000</p>
-<h1 id="数据库建表语句"><a href="#数据库建表语句" class="headerlink" title="数据库建表语句"></a>数据库建表语句</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_area(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">area_name <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> lol_area(area_name)</span><br><span class="line"> <span class="keyword">values</span></span><br><span class="line"> (<span class="string">&quot;比尔吉沃特&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;德玛西亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;弗雷尔卓德&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;无畏先锋&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;恕瑞玛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;扭曲丛林&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨龙之巢&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;艾欧尼亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;祖安&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;诺克萨斯&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;班德尔城&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;战争学院&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨神峰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;雷瑟守备&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;钢铁烈阳&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;裁决之地&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;黑色玫瑰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;暗影岛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;均衡教派&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;水晶之痕&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;影流&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;守望之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;征服之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;卡拉曼达&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮城警备&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">table</span> lol_member(</span><br><span class="line"> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"> user_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> role_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> age <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line"> <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line"> phone_num <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> area_id <span class="built_in">int</span>(<span class="number">100</span>),</span><br><span class="line"> primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line"> );</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 用户计划表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_plan(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">plan_date <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">plan_event <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">last_time <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">member_id <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">full_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">nick_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">back_story <span class="built_in">text</span>,</span><br><span class="line">price <span class="keyword">double</span>(<span class="number">5</span>,<span class="number">3</span>),</span><br><span class="line"><span class="comment">-- 英雄类型</span></span><br><span class="line">hero_type_id <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"><span class="comment">-- 英雄页面小图</span></span><br><span class="line">img_small <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_big <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_scot <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_stick <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">text1 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">text2 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 英雄类型表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_type(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄位置表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_position(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">position</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 外键关联表（英雄和位置）</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> position_inner_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">hero_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">position_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-
-<h1 id="SpringBoot-pageHelper插件"><a href="#SpringBoot-pageHelper插件" class="headerlink" title="SpringBoot   pageHelper插件"></a>SpringBoot   pageHelper插件</h1><p>添加依赖</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
-
-<p>用法：在需要分页的方法中启动分页，需要注意的是，分页的是在开启分页之后的第一个查询语句</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageInfo <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum, Integer pageSize, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(pageNum,pageSize);</span><br><span class="line">        PlanPOExample example = <span class="keyword">new</span> PlanPOExample();</span><br><span class="line">        PlanPOExample.Criteria criteria = example.createCriteria();</span><br><span class="line">        criteria.andMemberIdEqualTo(id);</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        List&lt;PlanPO&gt; planPOList = planPOMapper.selectByExample(example);</span><br><span class="line">        <span class="comment">// 判断结果</span></span><br><span class="line">        <span class="keyword">if</span>(planPOList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnKnowNetWorkException(<span class="string">&quot;没有查询到任何数据，快去添加计划吧！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 结果正确就返回</span></span><br><span class="line">        List&lt;PlanVO&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(PlanPO planPO : planPOList)&#123;</span><br><span class="line">            PlanVO planVO = <span class="keyword">new</span> PlanVO();</span><br><span class="line">            BeanUtils.copyProperties(planPO,planVO);</span><br><span class="line">            list.add(planVO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装PageInfo对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>查询出来的list结果封装到PageInfo实例对象中</p>
-<p>注意的是，在后台远程方法调用的时候，PageInfo的泛型并不是PageInfo&lt;List<xxx>&gt;</xxx></p>
-<p>而是对应的JavaBean类型例如：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">PageInfo&lt;PlanVO&gt; <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum,Integer pageSize,Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>否则会报一个</p>
-<p>pagehelper 返回前台的json转换异常com.fasterxml.jackson.databind.exc.Mismatch的异常</p>
-<h1 id="使用了layui的日期插件"><a href="#使用了layui的日期插件" class="headerlink" title="使用了layui的日期插件"></a>使用了layui的日期插件</h1><p>点击输入框可以弹出日期选择框，如下图所示效果</p>
-<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804102439.png"></p>
-<p>加入layui的css样式和js</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;layui/css/layui.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;layui/layui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加日期插件</span></span><br><span class="line">layui.use(<span class="string">&#x27;laydate&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 生成一个日期实例，这个实例变量名自己指定</span></span><br><span class="line">    <span class="keyword">var</span> laydate = layui.laydate;</span><br><span class="line">    <span class="comment">//执行一个laydate实例</span></span><br><span class="line">    laydate.render(&#123;</span><br><span class="line">        <span class="comment">// 指定在哪里生成日期控件</span></span><br><span class="line">        elem: <span class="string">&#x27;#dateText&#x27;</span>, <span class="comment">//指定元素</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-
-<h1 id="使用了谷歌Kaptcha-生成验证码插件"><a href="#使用了谷歌Kaptcha-生成验证码插件" class="headerlink" title="使用了谷歌Kaptcha 生成验证码插件"></a>使用了谷歌Kaptcha 生成验证码插件</h1><p>加入依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Google Kaptcha --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.penggle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kaptcha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>相关的配置</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KaptchaConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultKaptcha <span class="title">getDefaultKaptcha</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = <span class="keyword">new</span> com.google.code.kaptcha.impl.DefaultKaptcha();</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 图片边框</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border&quot;</span>, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="comment">// 边框颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border.color&quot;</span>, <span class="string">&quot;105,179,90&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片宽</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.width&quot;</span>, <span class="string">&quot;110&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片高</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.height&quot;</span>, <span class="string">&quot;40&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体大小</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.size&quot;</span>, <span class="string">&quot;30&quot;</span>);</span><br><span class="line">        <span class="comment">// session key</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.session.key&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">// 验证码长度</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.char.length&quot;</span>, <span class="string">&quot;4&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.names&quot;</span>, <span class="string">&quot;宋体,楷体,微软雅黑&quot;</span>);</span><br><span class="line"></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.noise.color&quot;</span>, <span class="string">&quot;35,37,38&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Config config = <span class="keyword">new</span> Config(properties);</span><br><span class="line">        defaultKaptcha.setConfig(config);</span><br><span class="line">        <span class="keyword">return</span> defaultKaptcha;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>controller代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/kaptcha&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCode</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DefaultKaptcha defaultKaptcha;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/defaultKaptcha&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultKaptcha</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] captchaChallengeAsJpeg = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream jpegOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 生产验证码字符串并保存到session中</span></span><br><span class="line">            String createText = defaultKaptcha.createText();</span><br><span class="line">            System.out.println(createText);</span><br><span class="line">            httpServletRequest.getSession().setAttribute(<span class="string">&quot;verificationCode&quot;</span>, createText);</span><br><span class="line">            <span class="comment">// 使用生成的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中</span></span><br><span class="line">            BufferedImage challenge = defaultKaptcha.createImage(createText);</span><br><span class="line">            ImageIO.write(challenge, <span class="string">&quot;jpg&quot;</span>, jpegOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组</span></span><br><span class="line">        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store&quot;</span>);</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);</span><br><span class="line">        httpServletResponse.setDateHeader(<span class="string">&quot;Expires&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        httpServletResponse.setContentType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();</span><br><span class="line">        responseOutputStream.write(captchaChallengeAsJpeg);</span><br><span class="line">        responseOutputStream.flush();</span><br><span class="line">        responseOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>前台显示</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;verificationCodeImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/api/kaptcha/defaultKaptcha&quot;</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;看不清？换一张&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>添加点击“看不清？换一张”的事件</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新验证码</span></span><br><span class="line">            $(<span class="string">&quot;#verificationCodeImg&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                $(<span class="built_in">this</span>).hide().attr(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;http://localhost/api/kaptcha/defaultKaptcha?&#x27;</span>).fadeIn();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
-
-<p>效果图</p>
-<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804103206.png"></p>
-<h1 id="改变文本输入框获取值"><a href="#改变文本输入框获取值" class="headerlink" title="改变文本输入框获取值"></a>改变文本输入框获取值</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为输入英雄名称的文本框绑定文本改变的事件</span></span><br><span class="line">            $(<span class="string">&quot;.inputSearch&quot;</span>).on(<span class="string">&quot;input&quot;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">let</span> heroName = $(<span class="built_in">this</span>).val()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
-
-<h1 id="mybatis模糊查询的三种方式"><a href="#mybatis模糊查询的三种方式" class="headerlink" title="mybatis模糊查询的三种方式"></a>mybatis模糊查询的三种方式</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,name,age,score from star where name like &quot;%&quot; #&#123;name&#125; &quot;%&quot;</span><br><span class="line"></span><br><span class="line">&lt;!--concat拼接字符串  mysql独有的函数--&gt;</span><br><span class="line">select id,name,age,score from star where name like concat(&quot;%&quot;,#&#123;name&#125;,&quot;%&quot;)</span><br><span class="line"></span><br><span class="line">&lt;!-- 如果传入的参数是简单数据类型，$&#123;&#125;里面必须写value --&gt;</span><br><span class="line">select id,name,age,score from star where name like &quot;%$&#123;value&#125;%&quot;</span><br><span class="line"></span><br><span class="line">作者：叫我不矜持</span><br><span class="line">链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;6d244e194859</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
-
-<h1 id="thymeleaf循环的状态变量"><a href="#thymeleaf循环的状态变量" class="headerlink" title="thymeleaf循环的状态变量"></a>thymeleaf循环的状态变量</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">th:each属性用于迭代循环，语法：th:each&#x3D;&quot;obj,iterStat:$&#123;objList&#125;&quot;</span><br><span class="line">迭代对象可以是Java.util.List,java.util.Map,数组等;</span><br><span class="line">iterStat称作状态变量，属性有：</span><br><span class="line">    index:当前迭代对象的index（从0开始计算）</span><br><span class="line">    count: 当前迭代对象的index(从1开始计算)</span><br><span class="line">    size:被迭代对象的大小</span><br><span class="line">    current:当前迭代变量</span><br><span class="line">    even&#x2F;odd:布尔值，当前循环是否是偶数&#x2F;奇数（从0开始计算）</span><br><span class="line">    first:布尔值，当前循环是否是第一个</span><br><span class="line">    last:布尔值，当前循环是否是最后一个</span><br></pre></td></tr></table></figure>
-
-<h1 id="mysql-根据拼音首字母查询"><a href="#mysql-根据拼音首字母查询" class="headerlink" title="mysql 根据拼音首字母查询"></a>mysql 根据拼音首字母查询</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT id,full_name ,</span><br><span class="line"></span><br><span class="line">ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) AS PY</span><br><span class="line"></span><br><span class="line">FROM lol_hero WHERE ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) &#x3D; &#39;A&#39;</span><br></pre></td></tr></table></figure>
-
-<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>包含第三方jar包的工程的build</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                第三方jar包目录</span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources/lib<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/lib/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/classes/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;maven-compiler-plugin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>其余的，如果依赖springboot父工程，加上</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>如果不依赖任何工程，直接打包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn clean install -Dmaven.test.skip=true // 忽略test</span><br></pre></td></tr></table></figure>
-
-<h2 id="准备服务器环境"><a href="#准备服务器环境" class="headerlink" title="准备服务器环境"></a>准备服务器环境</h2><p>安装jdk</p>
-<p>在/etc/profile文件的最后配置java环境</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/sorftware/jdk1.8.0_251</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export JAVA_HOME PATH</span><br></pre></td></tr></table></figure>
-
-<p>安装mysql</p>
-<p><a href="https://www.cnblogs.com/cannel/p/11104195.html">参考</a></p>
-<p>缺少 libaio</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
-
-<p>修改密码需要设置密码的级别：注意！</p>
-<p>授权远程连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;rootroot&#39; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
-
-<p>微服务远程调用报错找不到主机，因为我的redisServer以及mysqlServer在另一个服务器上，所以consumer想要调用这两个server的服务，必须找到我的另一个服务器，但是我发现服务器的名字没有使用ip地址，所以依照<code>参考</code>的调试最后成功了！</p>
-<p>运行jar包</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup java -jar xxx.jar &gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>报错：UnknownHostException</p>
-<p><a href="https://blog.csdn.net/weixin_39032575/article/details/83011334?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考</a></p>
-]]></content>
-      <categories>
-        <category>项目</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-        <tag>SpringBoot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>java随笔</title>
     <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
     <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
@@ -243,6 +139,81 @@
       </tags>
   </entry>
   <entry>
+    <title>ETH五---以太坊中的共识机制</title>
+    <url>/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h1 id="以太坊中的共识机制"><a href="#以太坊中的共识机制" class="headerlink" title="以太坊中的共识机制"></a>以太坊中的共识机制</h1><p>​    以太坊把出块时间降低到了十几秒，和比特币相比，以太坊的出块速度相当于提高了40倍，但是降低出块时间之后也带了一些新的问题：比特币和以太坊都是运行在应用层的共识协议，它的底层都是使用p2p overlay network，这个network本身传输的时间是比较长的，因为它的拓扑协议做flooding的时候是没有考虑实际的拓扑结果，这就带来一个问题，你发布一个区块之后，区块在网络上传到其他节点可能需要十几秒的时间，对于比特币来说，十分钟的出块时间相当于600秒，这个是足够让新发布的区块传播到网上的其他节点的，当然，即使这样，因为挖矿是个概率的过程，所以仍然有可能是有两个矿工同时获得记账权，同时发布区块，这种情况会带来临时性的分叉，那么对于以太坊来说，这种临时性的分叉就会变成常态，而且分叉的数目也会更多，这对于共识协议来说，有什么挑战呢？</p>
+<a id="more"></a>
+
+<blockquote>
+<p>比特币的情况：只有在最长合法链上的那些区块的出块奖励才是真正有用的。因为对于出现临时性分叉的情况不是很多，所以这么规定还是可以接受的。</p>
+<p>如果以太坊也这么处理，意味着这个矿工所挖到的区块有很大的概率可能是白挖了，可能你挖出的区块最终没有成为最长合法链，这样对矿工来说，不是很公平（尤其是对于个体矿工；挖矿的两大趋势：设备的专业化，矿池的出现），正常情况下，我们希望的情况是，矿池能够得到的收益应该和你的算力比例是相关的（公平），但是如果共识协议设计不好的话，有可能大型矿池的收益比例大于它所占的算力比例（会出现恶行循环），中心化mining centralization 带来的不成比例的优势centralization bias，所以如果以太坊沿用比特币的共识协议，是会有很大的问题的</p>
+</blockquote>
+<h2 id="uncle-block"><a href="#uncle-block" class="headerlink" title="uncle block"></a>uncle block</h2><p>​    以太坊中采用了GHOST协议的共识机制，GHOST的出现比以太坊早，以太坊对这个协议做了修改，这个协议的核心思想是：你挖到了矿，发布了一个区块，这个区块最后作废了，你挺伤心的，我们给你一些安慰，给你一些奖励，这种时候你也能得到一些出块奖励</p>
+<p>​    为什么叫uncle block？</p>
+<blockquote>
+<p>因为它跟当前最长合法链上的区块来说，这个区块是它的叔父区块（和它的父亲是一个辈分的），最长合法链上的区块在发布的时候，可以把它的叔父区块包含进来，在这个区块发布的时候，它的叔父区块可以获得7/8的出块奖励，这个区块能得到额外的1/32（每包含一个，就得到额外的1/32）的出块奖励，一个区块最多可以包含两个叔父区块</p>
+<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015184922.png"></p>
+</blockquote>
+<p>​    以太坊的出块奖励刚开始的时候，是5个以太币，17年下半年的时候改了，改成3个以太币。这样设计，有利于鼓励系统中出现分叉之后及时进行合并，相当于新发布的区块把它的叔父区块招安过来了，这是Ghost协议最初的版本。</p>
+<p>​    最初版本的协议有没有什么缺陷？</p>
+<blockquote>
+<p>①只能包含两个叔父区块，如果出现第三个怎么办？</p>
+<p>②如果这个矿工比较自私的话，他有可能故意不把叔父区块包含进去：这样对于叔父区块来说7/8的出块奖励就得不到了，因为矿池之间有竞争关系，所以有的矿池就故意这么做</p>
+<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015190413.png"></p>
+<p>有竞争关系的区块不包含叔父区块没有关系，但是你不包含，别人会包含，下一个区块就不一定是你挖出来的，也可能是自己来挖，把自己当作叔父区块包含进来</p>
+</blockquote>
+<p>​    本质：我们为了改进最初版本的ghost协议存在一些问题，所以我们把叔父的定义扩展了，不一定是当代叔父，可能是隔了几代的叔父，但是问题是隔了多少代？是不是可以隔一百代？那我就在很久很久以前，挖矿难度比较低的时候不断地产生叔父区块，期待着被包含。</p>
+<p>​    以太坊中的规定：</p>
+<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015193058.png"></p>
+<p>​    这样设置有什么好处？如果不这样设计会有什么坏处</p>
+<blockquote>
+<p>首先，如果你不限制叔父的辈分，那么这个实现起来对于一个全节点来说，他要维护的状态就太多了，可能要记录隔着一百代以前有哪些区块，你发布的这些区块包含的叔父区块，其他节点同样也是要验证的。</p>
+<p>设计是最多隔着七代，并且七代以内出块奖励是递减的，这样有利于鼓励，出现分叉之后，尽早进行合并。</p>
+</blockquote>
+<p>​    叔父区块的奖励把它叫做uncle reward，他会递减，但是对于包含叔父区块的区块来说，包含一个叔父区块，可以得到1/32的奖励，这个是固定的。</p>
+<p>​    我们设计这个协议，主要是解决系统中临时性的分叉，最长合法链也是为了解决临时性的分叉，合并的机制就是最长合法链会胜出，如果这个分叉是别的原因造成的，比如说，是对运行的区块链协议有不同的意见，那么这种方法是解决不了的，我们讲的这些例子都是state fork：对于区块链当前的状态产生了意见分歧（临时的）；如果是别的原因，像我们以前讲的比特币脚本的时候，CHECKMULTISIG的时候，要想堆栈中添加一个多余的元素，应对这个操作会弹出一个无用的元素，为什么不把这个bug改掉？</p>
+<blockquote>
+<p>改完之后，版本不一样了，这样会出现硬分叉，如果分叉的区块认为对方的区块是非法的，那么合并是不可行的。</p>
+<p>仍然沿着矿工自己的分叉链去挖。</p>
+</blockquote>
+<p>​    我们说，比特币发布一个区块，实际上得到的是两种奖励，一部分叫做block reward（静态奖励），一部分叫做tx fee（动态奖励），以太坊中也是类似的，三个以太币是block reward，动态奖励叫做gas fee，在区块里包含了智能合约，执行智能合约的时候可以得到gas fee，我们说的uncle block得到的7/8的奖励，只限于3个以太币（也就是block reward），汽油费是得不到的，但是汽油费是很少一部分的，大部分是block reward。（和比特币类似）</p>
+<p>​    如果以太坊中也变成了block reward趋于0，那么uncle reward不也是趋于0吗？</p>
+<blockquote>
+<p>以太坊中没有规定时间减少block reward的说法。比特币这么规定是因为比特币的稀缺性，以太坊中的5个以太币17年降为3个以太币不是为了人为制造稀缺性，实际上和挖矿难度调整有关的。（17年的事件是一次性的，没有说会一直下调）比特币被别人当成数字黄金，是用来储值的，以太币被别人比喻成石油，是用来花的，并且可以执行智能合约。（但是这里的比喻其实是不恰当的，因为石油用完就没了，但是以太币就是相当于电子现金），发布智能合约要花费gas fee，执行智能合约的那个矿工可以得到gas fee。（以太币和比特币的设计理念是不一样的）</p>
+</blockquote>
+<p>​    把叔父区块包含进来的时候，叔父区块里的交易要不要执行？</p>
+<blockquote>
+<p>以太坊是一个交易驱动的状态机，比特币也一样，所以每次发布一个新的区块都会使当前状态转化成下一个状态。</p>
+<p>不应该执行，最长合法链上的父区块，和uncle block里面的交易可能是重复的，一种想法是相同的交易不执行，不同的交易就执行，但是这种情况下，不同的交易可能不可以一起执行。（可能是有冲突的交易）你要执行叔父区块的交易，可能某些交易就变成了非法交易，叔父区块的交易不一定是非法的，你执行完父区块的交易，再去执行叔父区块的交易，可能就变成非法的了。</p>
+</blockquote>
+<p>​    以太坊是不执行叔父区块里的交易的，而且是不检查叔父区块的合法性的，主链上的区块知道这个叔父区块的时候，只检查叔父区块是不是一个合法发布的区块，换句话说，这个区块是不是符合挖矿难度，至于这个区块里的交易合不合法不检查，不执行，执行起来的话，可能和主链上的交易是冲突的，叔父区块里的交易不执行，但是主链上的区块收到叔父区块里的交易，这个交易会被放在主链上执行。</p>
+<p>​    怎么检测链上有多少个叔父区块？</p>
+<blockquote>
+<p>听到一个就查一下，每个发布的区块说明它的父区块是哪一个，所以可以检测到你的父区块和当前区块是不是有共同祖先。</p>
+</blockquote>
+<p>​    上述的例子的叔父区块都是分叉的第一个区块，如果分叉之后，分叉的那个区块后面跟着的那些区块怎么办？</p>
+<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019195216.png"></p>
+<p>这样的话，可不可以给他们每个分叉都一部分奖励，“招安”的时候相当于是“招安一伙”？免得出现两个分叉的情况</p>
+<blockquote>
+<p>这样改的话，forking attack就变得太便宜了，攻击成了，我把你的交易回滚了，攻击不成，你反正把我“招安”过去，我也能得到一些出块奖励，所以以太坊规定，只有分叉后的第一个区块可以得到uncle reward</p>
+</blockquote>
+<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200320.png"></p>
+<p>叔父区块的不同情况：</p>
+<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200352.png"></p>
+<p>Block Height：区块的序号，也就是block number </p>
+<p>UncleNumber：叔父区块在区块链中的序号</p>
+<p>看uncle number 和block height的差值，判断，相差多少代，上图说明，系统中的大多数区块都及时地得到了合并</p>
+<p>叔父区块奖励的具体内容：</p>
+<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200937.png"></p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ETH六---以太坊挖矿算法</title>
     <url>/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<p>对于基于工作量证明的区块链系统来说，挖矿是保障区块链安全的一个重要手段。</p>
@@ -315,6 +286,112 @@
 <p>不同的加密货币，如果采用的mining puzzle不同的话，那么他们的HashRate是不可比的。</p>
 </blockquote>
 <p>如果让通用计算机参与挖矿，发动攻击的成本也会大幅度得降低，如果一个大公司有几百万台甚至几千万台服务器，如果这个公司有恶意，就可以临时征用服务器，来挖矿，没有必要专门买特有的设备。所以有些人认为，让通用计算机参与挖矿是不好的。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH八---以太坊权益证明</title>
+    <url>/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/</url>
+    <content><![CDATA[<h1 id="权益证明proof-of-stake"><a href="#权益证明proof-of-stake" class="headerlink" title="权益证明proof of stake"></a>权益证明proof of stake</h1><h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><p>​    比特币和以太坊目前用的都是基于工作量证明，这种机制收到了一个普遍的批评，就是“浪费电”。</p>
+<a id="more"></a>
+
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182306.png"></p>
+<blockquote>
+<p>上图是比特币的能耗图，TWh指的是Terawatt hours (10^12)，常见的KWh：kilowatt hours（10^3），就是千瓦时，这个图上可以看出比特币的能耗随时间推移是不断增长的。</p>
+</blockquote>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182732.png"></p>
+<p>​    一个交易要花费1000度电，信用卡公司处理一个交易远远到不了这个数字。</p>
+<p>以太坊的统计数据：</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182928.png"></p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182951.png"></p>
+<p>​    根据每个区块所消耗的能源来看，以太坊比比特币要小得多，这是为什么？</p>
+<blockquote>
+<p>从交易上来看，比特币的交易都是非常简单的，而以太坊的交易有可能包含对智能合约调用，所以以太坊的能耗应该更高才对，但是实际上不是这样。</p>
+<p>出块时间：比特币要十分钟才能挖出一个区块，以太坊15秒就能挖出一个区块。</p>
+</blockquote>
+<p>​    当然，以太坊一个交易的能耗还是要比信用卡公司高上很多。</p>
+<hr>
+<p>​    把比特币和以太坊当成一个国家来看，它的能耗排名：</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110183442.png"></p>
+<h2 id="这些能耗是不是必须的？"><a href="#这些能耗是不是必须的？" class="headerlink" title="这些能耗是不是必须的？"></a>这些能耗是不是必须的？</h2><p>​    矿工为什么要挖矿？</p>
+<blockquote>
+<p>为了取得出矿奖励，获得收益。</p>
+</blockquote>
+<p>​    为什么要给矿工这些收益？</p>
+<blockquote>
+<p>激励矿工参与区块链的维护。</p>
+</blockquote>
+<p>​    矿工是怎么参与挖矿的？如果你是一个矿工，你会怎么做？</p>
+<blockquote>
+<p>需要找一大笔资金，购买一些设备（现成的，如矿机，GPU）</p>
+</blockquote>
+<p>​    挖矿的收益，有什么决定？</p>
+<blockquote>
+<p>挖了多少区块。</p>
+</blockquote>
+<p>​    挖了多少区块由什么决定？</p>
+<blockquote>
+<p>由你的算力所占比例所决定的</p>
+</blockquote>
+<p>​    你的算力由什么决定？</p>
+<blockquote>
+<p>你有多少矿机，有多少设备</p>
+</blockquote>
+<p>​    说白了，挖矿的收益是由什么决定的？靠拼钱决定的</p>
+<p>​    既然是为了拼钱，那我们直接拿钱出来比一比不就知道了吗？</p>
+<blockquote>
+<p>现在是由矿工竞争算力来决定挖矿的收益如何分配，能不能靠比钱的多少来分配收益？</p>
+<p>比如，我出一百万，你出五十万，现在的做法是，用这钱都去买矿机，大家的矿机开始挖矿，比拼一下算力，看谁挖的区块多，与其这样，还不如我们都把这钱投入到区块链的开发，将来按照资金的多少，来决定收益的分配，这就是权益证明的基本思想。有的时候把这种做法叫做：virtual mining。</p>
+</blockquote>
+<p>​    采用权益证明的加密货币，一般在正式发行之前，会先预留一部分货币，留给开发者，也会出售一部分货币，来换取开发这个加密货币所需要的资金，将来，按照权益证明的共识机制，每个人按照持有货币的数量来进行投票的，这种方法和工作量证明相比，有什么优点？</p>
+<blockquote>
+<p>省去了挖矿的过程，也避免了由此带来的能耗和对环境的影响，减少了温室气体的排放。</p>
+<p>基于工作量证明的系统，从某种意义上来说，维护这个区块链安全的资源，不是一个“闭环”（我们的矿机，是从生态系统外面得到的，这就带来一个问题：跟世界经济总量相比，是微乎其微的，所以，如果有某一个组织想要发动恶意攻击，只需要用足够的资金来购买挖矿设备，然后聚集到这个加密货币总算力一半以上的算力就行了，也就是说，发动这种攻击的资源是可以从外面的世界得到的），像比特币这种主流的货币，它的抗攻击能力相比，还是比较强的，如果是一些刚刚发行不久的小的币种，那么遇到这种攻击可能就是致命性的，如AltCoin。对矿工和早期的开发者，造成的损失可能是灾难性的。（Infanticide，“扼杀在摇篮里”），如果采用权益证明，情况会有什么不同？</p>
+<p>如果有某人像发动恶意攻击（51攻击），首先要设法获得这个币种一半以上的份额才行，发动攻击的资源，只能从这个加密货币系统内部得到，这就是为什么是一个“闭环”。无论攻击者在外部有多少钱，都不会对加密货币系统造成直接的影响，发动攻击只能大量的买币，而一旦有人大量的买币，会有什么情况？</p>
+<p>价格会大涨，本来一个刚刚发行的小币种，没有人买的，价值也不高，突然有人为了搞垮他，结果价格大涨，如果你是这个币的开发者或者投资者，出现这种情况，你就会怎么想？</p>
+<p>这不一定是坏事，我正好可以从中大赚一笔，有点类似股份制公司遭受恶意收购。</p>
+</blockquote>
+<p>​    权益证明和工作量证明并不是互斥的，有的加密货币采用的是一种混合模型，有些加密货币仍然是要挖矿的，但是挖矿的难度和你占有的权益（你持有多少币）是相关的，比如说每个矿工持有一定数量的这种币，挖矿的时候，持有的币越多，挖矿的难度就越小。当然，这么设计是有一定问题的。</p>
+<blockquote>
+<p>这样的话，系统中持有币数量最多的那个人，每次挖矿都是最容易的，所以有的加密货币要求你投入的币要被锁一段时间，不能够重复使用，比如挖这个区块的时候，你投入一定数量的币，用于降低挖矿难度，等这个区块发不出来之后，你投入的这些币就会被锁定一段时间，你下次在挖下一个区块的时候，这些币就不能用了，这个有时候管它叫做（Proof of deposit）。</p>
+</blockquote>
+<p>​    基于权益证明的共识机制该怎么设计，有很多挑战，其中早期的权益证明遇到的一个挑战就是“两边下注”的问题（nothing at stake）。如下图的区块链所示。</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112191201.png"></p>
+<blockquote>
+<p>挖矿的话，不能两边都挖，如果两边都挖，那么你的算力就分散了，挖到区块的概率就小了，但是你用权益证明的话，可以两边都下注，如果上面那条链成为最长合法链，你在下面锁定的那些币是没有影响的，你投的这些币，只是记在下面这个分叉上，并不影响你在上面分叉的使用，这就是为什么叫做nothing at stake。这也是早期基于权益证明共识机制遇到的一个问题。</p>
+</blockquote>
+<p>​    以太坊中准备采用的权益证明协议叫做Casper the Friendly Finality Gadget（FFG），在过渡阶段也是要和工作证明混合使用的，为工作量证明提供Finality，Finality是一种最终的状态，包含在Finality中的交易不会被取消，单纯基于工作量的证明，是有可能被回滚的。</p>
+<p>​    Casper协议是怎么做的？</p>
+<blockquote>
+<p>引入了一个Validator(验证者)，要想成为一个Validator，必须要投入一定数量的以太币作为保证金，这个保证金会被系统锁定，Validator的职责是推动系统达成共识，投票决定那条链是最后合法链，投票的权重取决于保证金的数目大小，有点类似数据库中的two-phase commit。</p>
+<p>还是有人挖矿的，每挖出100个区块，就作为一个epoch，然后要决定他能不能称为Finality，要通过投票，第一轮投票是一个Prepare Message，第二轮是Commit Message，Casper中规定了每一轮投票都要得到2/3以上Validator，才能通过，实际系统中，不区分两个Message，而且把这个epoch从原来的100个区块减少到50个区块，每个epoch只需要一轮投票就行了，这一轮投票对于上一个epoch来说，是Commit Message，对于下一个epoch来说，是一个Prepare Message，那么要连续两轮投票，两个epoch都得到2/3以上才算有效。</p>
+</blockquote>
+<p>​    原始的版本：</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112192940.png"></p>
+<p>​    优化之后：（要有两个连续的epoch）</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112193242.png"></p>
+<p>​    验证者参与这个过程有什么好处？</p>
+<blockquote>
+<p>如果验证者参与这个过程的话，可以得到相应的奖励，就像挖矿能得到出块奖励一样，相反，如果验证者有不良行为，被发现的话，要受到相应的处罚，比如某个验证者，行政不作为，该投票的时候没有投，结果导致系统迟迟达不成共识，那么这种情况下要扣除它的一部分保证金，如果某个验证者乱作为（乱投票，给两个有冲突的分叉都投票），要没收全部的保证金，没收的保证金被销毁，相当于减少了系统中以太币的总供应量，每个验证者有一定的任期，即使你交了保证金，也不是说你可以永远地当验证者，任期满了之后，要经过一定时间的等待期（为了让其他的结点可以检举揭发这个验证者有没有什么不良行为，进行惩处），如果等待期过了，验证者可以取回保证金和应该得到的奖励，这就是Casper协议的过程。</p>
+</blockquote>
+<p>​    我们原来说Casper协议可以给挖矿挖出来的区块链的某种状态做一个检查点（check point），这个检查点是不是一定安全的？</p>
+<blockquote>
+<p>通过这个验证者投票达成的Finality，有没有可能被推翻？以前说的，包含在Finality中的交易不会被推翻，这个是不是绝对的？</p>
+<p>假设有某个有恶意的组织向要发动攻击，这个组织仅仅是矿工的话，那么他是没有办法推翻已经完成的Finality的，因为Finality是验证者投票投出来的，单纯是矿工的话，无论他算力有多强，如果没有验证者作为同伙，是没有办法推翻Finality，那么什么情况下会出现攻击成功的情况？</p>
+<p>一定是由大量的验证者两边下注，给前后 两个有冲突的Finality下注。我们要求Casper协议每轮投票要有2/3以上支持才算通过，所以如果出现这种情况，那么至少是有1/3的验证者两边都投票的，一旦发现，1/3验证者的保证金将会被没收。</p>
+</blockquote>
+<p>​    所以我们可以看到，基于权益证明的共识机制和基于工作量证明的共识机制是很不一样的，以太坊的设想是，要逐步成工作量证明过渡到权益证明。随着时间的推移，挖矿得到的奖励是越来越少的，权益证明获得的奖励是越来越多的，最后达到完全不用挖矿的境界。</p>
+<p>​    权益证明这么好，为什么以太坊不从一开始就用权益证明呢？</p>
+<blockquote>
+<p>因为权益证明不是很成熟，工作量证明是比较成熟的，经过了时间的检验，比特币和以太坊的挖矿算法都经过了bug bounty的检验，没有人发现什么漏洞，很多人认为权益证明是未来的方向，但是目前主流的加密货币，用的还是工作量证明。</p>
+</blockquote>
+<p>​    EOS加密货币就是完全基于权益证明的，用的协议是DPOS:Delegated Proof of stake，先用投票方法选出21个超级节点，然后再由这些超级结点产生区块。</p>
+<p>​    到目前为止，都是假设，工作量证明消耗太多的电是不好的，但是也有人持有不一样的观点，首先挖矿消耗的电并不是很多，比特币的能耗只占全世界的总能耗的0.31%，以太坊只占0.09%，很多人对工作量证明很反感，是因为做的是无用功，其实挖矿对环境的影响是有限的，挖矿为解决边远地区用不到的电提供了一个很好的手段，把多余的电能转化为了加密货币，很多比特币的矿场都是建在电力资源丰富的地方，所以，可以认为挖矿消耗电能并不一定是坏事，可以有效地带动过量电能，带动经济的发展。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -464,112 +541,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ETH八---以太坊权益证明</title>
-    <url>/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/</url>
-    <content><![CDATA[<h1 id="权益证明proof-of-stake"><a href="#权益证明proof-of-stake" class="headerlink" title="权益证明proof of stake"></a>权益证明proof of stake</h1><h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><p>​    比特币和以太坊目前用的都是基于工作量证明，这种机制收到了一个普遍的批评，就是“浪费电”。</p>
-<a id="more"></a>
-
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182306.png"></p>
-<blockquote>
-<p>上图是比特币的能耗图，TWh指的是Terawatt hours (10^12)，常见的KWh：kilowatt hours（10^3），就是千瓦时，这个图上可以看出比特币的能耗随时间推移是不断增长的。</p>
-</blockquote>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182732.png"></p>
-<p>​    一个交易要花费1000度电，信用卡公司处理一个交易远远到不了这个数字。</p>
-<p>以太坊的统计数据：</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182928.png"></p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182951.png"></p>
-<p>​    根据每个区块所消耗的能源来看，以太坊比比特币要小得多，这是为什么？</p>
-<blockquote>
-<p>从交易上来看，比特币的交易都是非常简单的，而以太坊的交易有可能包含对智能合约调用，所以以太坊的能耗应该更高才对，但是实际上不是这样。</p>
-<p>出块时间：比特币要十分钟才能挖出一个区块，以太坊15秒就能挖出一个区块。</p>
-</blockquote>
-<p>​    当然，以太坊一个交易的能耗还是要比信用卡公司高上很多。</p>
-<hr>
-<p>​    把比特币和以太坊当成一个国家来看，它的能耗排名：</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110183442.png"></p>
-<h2 id="这些能耗是不是必须的？"><a href="#这些能耗是不是必须的？" class="headerlink" title="这些能耗是不是必须的？"></a>这些能耗是不是必须的？</h2><p>​    矿工为什么要挖矿？</p>
-<blockquote>
-<p>为了取得出矿奖励，获得收益。</p>
-</blockquote>
-<p>​    为什么要给矿工这些收益？</p>
-<blockquote>
-<p>激励矿工参与区块链的维护。</p>
-</blockquote>
-<p>​    矿工是怎么参与挖矿的？如果你是一个矿工，你会怎么做？</p>
-<blockquote>
-<p>需要找一大笔资金，购买一些设备（现成的，如矿机，GPU）</p>
-</blockquote>
-<p>​    挖矿的收益，有什么决定？</p>
-<blockquote>
-<p>挖了多少区块。</p>
-</blockquote>
-<p>​    挖了多少区块由什么决定？</p>
-<blockquote>
-<p>由你的算力所占比例所决定的</p>
-</blockquote>
-<p>​    你的算力由什么决定？</p>
-<blockquote>
-<p>你有多少矿机，有多少设备</p>
-</blockquote>
-<p>​    说白了，挖矿的收益是由什么决定的？靠拼钱决定的</p>
-<p>​    既然是为了拼钱，那我们直接拿钱出来比一比不就知道了吗？</p>
-<blockquote>
-<p>现在是由矿工竞争算力来决定挖矿的收益如何分配，能不能靠比钱的多少来分配收益？</p>
-<p>比如，我出一百万，你出五十万，现在的做法是，用这钱都去买矿机，大家的矿机开始挖矿，比拼一下算力，看谁挖的区块多，与其这样，还不如我们都把这钱投入到区块链的开发，将来按照资金的多少，来决定收益的分配，这就是权益证明的基本思想。有的时候把这种做法叫做：virtual mining。</p>
-</blockquote>
-<p>​    采用权益证明的加密货币，一般在正式发行之前，会先预留一部分货币，留给开发者，也会出售一部分货币，来换取开发这个加密货币所需要的资金，将来，按照权益证明的共识机制，每个人按照持有货币的数量来进行投票的，这种方法和工作量证明相比，有什么优点？</p>
-<blockquote>
-<p>省去了挖矿的过程，也避免了由此带来的能耗和对环境的影响，减少了温室气体的排放。</p>
-<p>基于工作量证明的系统，从某种意义上来说，维护这个区块链安全的资源，不是一个“闭环”（我们的矿机，是从生态系统外面得到的，这就带来一个问题：跟世界经济总量相比，是微乎其微的，所以，如果有某一个组织想要发动恶意攻击，只需要用足够的资金来购买挖矿设备，然后聚集到这个加密货币总算力一半以上的算力就行了，也就是说，发动这种攻击的资源是可以从外面的世界得到的），像比特币这种主流的货币，它的抗攻击能力相比，还是比较强的，如果是一些刚刚发行不久的小的币种，那么遇到这种攻击可能就是致命性的，如AltCoin。对矿工和早期的开发者，造成的损失可能是灾难性的。（Infanticide，“扼杀在摇篮里”），如果采用权益证明，情况会有什么不同？</p>
-<p>如果有某人像发动恶意攻击（51攻击），首先要设法获得这个币种一半以上的份额才行，发动攻击的资源，只能从这个加密货币系统内部得到，这就是为什么是一个“闭环”。无论攻击者在外部有多少钱，都不会对加密货币系统造成直接的影响，发动攻击只能大量的买币，而一旦有人大量的买币，会有什么情况？</p>
-<p>价格会大涨，本来一个刚刚发行的小币种，没有人买的，价值也不高，突然有人为了搞垮他，结果价格大涨，如果你是这个币的开发者或者投资者，出现这种情况，你就会怎么想？</p>
-<p>这不一定是坏事，我正好可以从中大赚一笔，有点类似股份制公司遭受恶意收购。</p>
-</blockquote>
-<p>​    权益证明和工作量证明并不是互斥的，有的加密货币采用的是一种混合模型，有些加密货币仍然是要挖矿的，但是挖矿的难度和你占有的权益（你持有多少币）是相关的，比如说每个矿工持有一定数量的这种币，挖矿的时候，持有的币越多，挖矿的难度就越小。当然，这么设计是有一定问题的。</p>
-<blockquote>
-<p>这样的话，系统中持有币数量最多的那个人，每次挖矿都是最容易的，所以有的加密货币要求你投入的币要被锁一段时间，不能够重复使用，比如挖这个区块的时候，你投入一定数量的币，用于降低挖矿难度，等这个区块发不出来之后，你投入的这些币就会被锁定一段时间，你下次在挖下一个区块的时候，这些币就不能用了，这个有时候管它叫做（Proof of deposit）。</p>
-</blockquote>
-<p>​    基于权益证明的共识机制该怎么设计，有很多挑战，其中早期的权益证明遇到的一个挑战就是“两边下注”的问题（nothing at stake）。如下图的区块链所示。</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112191201.png"></p>
-<blockquote>
-<p>挖矿的话，不能两边都挖，如果两边都挖，那么你的算力就分散了，挖到区块的概率就小了，但是你用权益证明的话，可以两边都下注，如果上面那条链成为最长合法链，你在下面锁定的那些币是没有影响的，你投的这些币，只是记在下面这个分叉上，并不影响你在上面分叉的使用，这就是为什么叫做nothing at stake。这也是早期基于权益证明共识机制遇到的一个问题。</p>
-</blockquote>
-<p>​    以太坊中准备采用的权益证明协议叫做Casper the Friendly Finality Gadget（FFG），在过渡阶段也是要和工作证明混合使用的，为工作量证明提供Finality，Finality是一种最终的状态，包含在Finality中的交易不会被取消，单纯基于工作量的证明，是有可能被回滚的。</p>
-<p>​    Casper协议是怎么做的？</p>
-<blockquote>
-<p>引入了一个Validator(验证者)，要想成为一个Validator，必须要投入一定数量的以太币作为保证金，这个保证金会被系统锁定，Validator的职责是推动系统达成共识，投票决定那条链是最后合法链，投票的权重取决于保证金的数目大小，有点类似数据库中的two-phase commit。</p>
-<p>还是有人挖矿的，每挖出100个区块，就作为一个epoch，然后要决定他能不能称为Finality，要通过投票，第一轮投票是一个Prepare Message，第二轮是Commit Message，Casper中规定了每一轮投票都要得到2/3以上Validator，才能通过，实际系统中，不区分两个Message，而且把这个epoch从原来的100个区块减少到50个区块，每个epoch只需要一轮投票就行了，这一轮投票对于上一个epoch来说，是Commit Message，对于下一个epoch来说，是一个Prepare Message，那么要连续两轮投票，两个epoch都得到2/3以上才算有效。</p>
-</blockquote>
-<p>​    原始的版本：</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112192940.png"></p>
-<p>​    优化之后：（要有两个连续的epoch）</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112193242.png"></p>
-<p>​    验证者参与这个过程有什么好处？</p>
-<blockquote>
-<p>如果验证者参与这个过程的话，可以得到相应的奖励，就像挖矿能得到出块奖励一样，相反，如果验证者有不良行为，被发现的话，要受到相应的处罚，比如某个验证者，行政不作为，该投票的时候没有投，结果导致系统迟迟达不成共识，那么这种情况下要扣除它的一部分保证金，如果某个验证者乱作为（乱投票，给两个有冲突的分叉都投票），要没收全部的保证金，没收的保证金被销毁，相当于减少了系统中以太币的总供应量，每个验证者有一定的任期，即使你交了保证金，也不是说你可以永远地当验证者，任期满了之后，要经过一定时间的等待期（为了让其他的结点可以检举揭发这个验证者有没有什么不良行为，进行惩处），如果等待期过了，验证者可以取回保证金和应该得到的奖励，这就是Casper协议的过程。</p>
-</blockquote>
-<p>​    我们原来说Casper协议可以给挖矿挖出来的区块链的某种状态做一个检查点（check point），这个检查点是不是一定安全的？</p>
-<blockquote>
-<p>通过这个验证者投票达成的Finality，有没有可能被推翻？以前说的，包含在Finality中的交易不会被推翻，这个是不是绝对的？</p>
-<p>假设有某个有恶意的组织向要发动攻击，这个组织仅仅是矿工的话，那么他是没有办法推翻已经完成的Finality的，因为Finality是验证者投票投出来的，单纯是矿工的话，无论他算力有多强，如果没有验证者作为同伙，是没有办法推翻Finality，那么什么情况下会出现攻击成功的情况？</p>
-<p>一定是由大量的验证者两边下注，给前后 两个有冲突的Finality下注。我们要求Casper协议每轮投票要有2/3以上支持才算通过，所以如果出现这种情况，那么至少是有1/3的验证者两边都投票的，一旦发现，1/3验证者的保证金将会被没收。</p>
-</blockquote>
-<p>​    所以我们可以看到，基于权益证明的共识机制和基于工作量证明的共识机制是很不一样的，以太坊的设想是，要逐步成工作量证明过渡到权益证明。随着时间的推移，挖矿得到的奖励是越来越少的，权益证明获得的奖励是越来越多的，最后达到完全不用挖矿的境界。</p>
-<p>​    权益证明这么好，为什么以太坊不从一开始就用权益证明呢？</p>
-<blockquote>
-<p>因为权益证明不是很成熟，工作量证明是比较成熟的，经过了时间的检验，比特币和以太坊的挖矿算法都经过了bug bounty的检验，没有人发现什么漏洞，很多人认为权益证明是未来的方向，但是目前主流的加密货币，用的还是工作量证明。</p>
-</blockquote>
-<p>​    EOS加密货币就是完全基于权益证明的，用的协议是DPOS:Delegated Proof of stake，先用投票方法选出21个超级节点，然后再由这些超级结点产生区块。</p>
-<p>​    到目前为止，都是假设，工作量证明消耗太多的电是不好的，但是也有人持有不一样的观点，首先挖矿消耗的电并不是很多，比特币的能耗只占全世界的总能耗的0.31%，以太坊只占0.09%，很多人对工作量证明很反感，是因为做的是无用功，其实挖矿对环境的影响是有限的，挖矿为解决边远地区用不到的电提供了一个很好的手段，把多余的电能转化为了加密货币，很多比特币的矿场都是建在电力资源丰富的地方，所以，可以认为挖矿消耗电能并不一定是坏事，可以有效地带动过量电能，带动经济的发展。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ETH二---账户</title>
     <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/</url>
     <content><![CDATA[<h1 id="以太坊的账户"><a href="#以太坊的账户" class="headerlink" title="以太坊的账户"></a>以太坊的账户</h1><p>比特币是基于交易的账本模式，这种模式下，并没有显式地记录每个账户有多少钱，这种模式的好处是，隐私保护得比较好，你有多少钱，可能连你自己都说不清楚，别人就更搞不明白了。</p>
@@ -605,6 +576,110 @@
       </categories>
       <tags>
         <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LOL-show项目工程日志</title>
+    <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
+<p>如果你想要学习该项目，那么你可以访问我的github！</p>
+<a id="more"></a>
+
+<h1 id="工程结构"><a href="#工程结构" class="headerlink" title="工程结构"></a>工程结构</h1><p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/LOL-show-%E5%B7%A5%E7%A8%8B%E5%9B%BE.png"></p>
+<p>端口号规定：</p>
+<p>eureka:1000</p>
+<p>zuul:80</p>
+<p>mysql:2000</p>
+<p>redis:3000</p>
+<p>hero:4000</p>
+<p>member:5000</p>
+<p>market:6000</p>
+<p>order:7000</p>
+<p>pay:8000</p>
+<h1 id="数据库建表语句"><a href="#数据库建表语句" class="headerlink" title="数据库建表语句"></a>数据库建表语句</h1><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_area(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">area_name <span class="built_in">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="literal">null</span>,</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> lol_area(area_name)</span><br><span class="line"> <span class="keyword">values</span></span><br><span class="line"> (<span class="string">&quot;比尔吉沃特&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;德玛西亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;弗雷尔卓德&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;无畏先锋&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;恕瑞玛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;扭曲丛林&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨龙之巢&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;艾欧尼亚&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;祖安&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;诺克萨斯&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;班德尔城&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮尔特沃夫&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;战争学院&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;巨神峰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;雷瑟守备&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;钢铁烈阳&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;裁决之地&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;黑色玫瑰&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;暗影岛&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;均衡教派&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;水晶之痕&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;影流&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;守望之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;征服之海&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;卡拉曼达&quot;</span>),</span><br><span class="line"> (<span class="string">&quot;皮城警备&quot;</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">create</span> <span class="keyword">table</span> lol_member(</span><br><span class="line"> <span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"> user_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> role_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> age <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line"> <span class="keyword">password</span> <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line"> phone_num <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"> area_id <span class="built_in">int</span>(<span class="number">100</span>),</span><br><span class="line"> primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line"> );</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 用户计划表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_plan(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">plan_date <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">plan_event <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">last_time <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">member_id <span class="built_in">Integer</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">full_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">nick_name <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">back_story <span class="built_in">text</span>,</span><br><span class="line">price <span class="keyword">double</span>(<span class="number">5</span>,<span class="number">3</span>),</span><br><span class="line"><span class="comment">-- 英雄类型</span></span><br><span class="line">hero_type_id <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line"><span class="comment">-- 英雄页面小图</span></span><br><span class="line">img_small <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_big <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_scot <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">img_stick <span class="built_in">varchar</span>(<span class="number">300</span>),</span><br><span class="line">text1 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">text2 <span class="built_in">varchar</span>(<span class="number">255</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">)</span><br><span class="line"><span class="comment">-- 英雄类型表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_type(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">type</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 英雄位置表</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> lol_hero_position(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line"><span class="keyword">position</span> <span class="built_in">varchar</span>(<span class="number">100</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 外键关联表（英雄和位置）</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> position_inner_hero(</span><br><span class="line"><span class="keyword">id</span> <span class="built_in">int</span>(<span class="number">11</span>) auto_increment,</span><br><span class="line">hero_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">position_id <span class="built_in">int</span>(<span class="number">11</span>),</span><br><span class="line">primary <span class="keyword">key</span>(<span class="keyword">id</span>)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h1 id="SpringBoot-pageHelper插件"><a href="#SpringBoot-pageHelper插件" class="headerlink" title="SpringBoot   pageHelper插件"></a>SpringBoot   pageHelper插件</h1><p>添加依赖</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用法：在需要分页的方法中启动分页，需要注意的是，分页的是在开启分页之后的第一个查询语句</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW,rollbackFor = Exception.class)</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PageInfo <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum, Integer pageSize, Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 开启分页</span></span><br><span class="line">        PageHelper.startPage(pageNum,pageSize);</span><br><span class="line">        PlanPOExample example = <span class="keyword">new</span> PlanPOExample();</span><br><span class="line">        PlanPOExample.Criteria criteria = example.createCriteria();</span><br><span class="line">        criteria.andMemberIdEqualTo(id);</span><br><span class="line">        <span class="comment">// 执行查询</span></span><br><span class="line">        List&lt;PlanPO&gt; planPOList = planPOMapper.selectByExample(example);</span><br><span class="line">        <span class="comment">// 判断结果</span></span><br><span class="line">        <span class="keyword">if</span>(planPOList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnKnowNetWorkException(<span class="string">&quot;没有查询到任何数据，快去添加计划吧！&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 结果正确就返回</span></span><br><span class="line">        List&lt;PlanVO&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(PlanPO planPO : planPOList)&#123;</span><br><span class="line">            PlanVO planVO = <span class="keyword">new</span> PlanVO();</span><br><span class="line">            BeanUtils.copyProperties(planPO,planVO);</span><br><span class="line">            list.add(planVO);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装PageInfo对象</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PageInfo(list);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>查询出来的list结果封装到PageInfo实例对象中</p>
+<p>注意的是，在后台远程方法调用的时候，PageInfo的泛型并不是PageInfo&lt;List<xxx>&gt;</xxx></p>
+<p>而是对应的JavaBean类型例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">PageInfo&lt;PlanVO&gt; <span class="title">getPagePlanVOList</span><span class="params">(Integer pageNum,Integer pageSize,Integer id)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>否则会报一个</p>
+<p>pagehelper 返回前台的json转换异常com.fasterxml.jackson.databind.exc.Mismatch的异常</p>
+<h1 id="使用了layui的日期插件"><a href="#使用了layui的日期插件" class="headerlink" title="使用了layui的日期插件"></a>使用了layui的日期插件</h1><p>点击输入框可以弹出日期选择框，如下图所示效果</p>
+<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804102439.png"></p>
+<p>加入layui的css样式和js</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;layui/css/layui.css&quot;</span> <span class="attr">media</span>=<span class="string">&quot;all&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;layui/layui.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 添加日期插件</span></span><br><span class="line">layui.use(<span class="string">&#x27;laydate&#x27;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 生成一个日期实例，这个实例变量名自己指定</span></span><br><span class="line">    <span class="keyword">var</span> laydate = layui.laydate;</span><br><span class="line">    <span class="comment">//执行一个laydate实例</span></span><br><span class="line">    laydate.render(&#123;</span><br><span class="line">        <span class="comment">// 指定在哪里生成日期控件</span></span><br><span class="line">        elem: <span class="string">&#x27;#dateText&#x27;</span>, <span class="comment">//指定元素</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用了谷歌Kaptcha-生成验证码插件"><a href="#使用了谷歌Kaptcha-生成验证码插件" class="headerlink" title="使用了谷歌Kaptcha 生成验证码插件"></a>使用了谷歌Kaptcha 生成验证码插件</h1><p>加入依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Google Kaptcha --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.penggle<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>kaptcha<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>相关的配置</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">KaptchaConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DefaultKaptcha <span class="title">getDefaultKaptcha</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = <span class="keyword">new</span> com.google.code.kaptcha.impl.DefaultKaptcha();</span><br><span class="line">        Properties properties = <span class="keyword">new</span> Properties();</span><br><span class="line">        <span class="comment">// 图片边框</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border&quot;</span>, <span class="string">&quot;yes&quot;</span>);</span><br><span class="line">        <span class="comment">// 边框颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.border.color&quot;</span>, <span class="string">&quot;105,179,90&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体颜色</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.color&quot;</span>, <span class="string">&quot;red&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片宽</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.width&quot;</span>, <span class="string">&quot;110&quot;</span>);</span><br><span class="line">        <span class="comment">// 图片高</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.image.height&quot;</span>, <span class="string">&quot;40&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体大小</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.size&quot;</span>, <span class="string">&quot;30&quot;</span>);</span><br><span class="line">        <span class="comment">// session key</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.session.key&quot;</span>, <span class="string">&quot;code&quot;</span>);</span><br><span class="line">        <span class="comment">// 验证码长度</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.char.length&quot;</span>, <span class="string">&quot;4&quot;</span>);</span><br><span class="line">        <span class="comment">// 字体</span></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.textproducer.font.names&quot;</span>, <span class="string">&quot;宋体,楷体,微软雅黑&quot;</span>);</span><br><span class="line"></span><br><span class="line">        properties.setProperty(<span class="string">&quot;kaptcha.noise.color&quot;</span>, <span class="string">&quot;35,37,38&quot;</span>);</span><br><span class="line"></span><br><span class="line">        Config config = <span class="keyword">new</span> Config(properties);</span><br><span class="line">        defaultKaptcha.setConfig(config);</span><br><span class="line">        <span class="keyword">return</span> defaultKaptcha;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>controller代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/kaptcha&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCode</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    DefaultKaptcha defaultKaptcha;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/defaultKaptcha&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">defaultKaptcha</span><span class="params">(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] captchaChallengeAsJpeg = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream jpegOutputStream = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 生产验证码字符串并保存到session中</span></span><br><span class="line">            String createText = defaultKaptcha.createText();</span><br><span class="line">            System.out.println(createText);</span><br><span class="line">            httpServletRequest.getSession().setAttribute(<span class="string">&quot;verificationCode&quot;</span>, createText);</span><br><span class="line">            <span class="comment">// 使用生成的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中</span></span><br><span class="line">            BufferedImage challenge = defaultKaptcha.createImage(createText);</span><br><span class="line">            ImageIO.write(challenge, <span class="string">&quot;jpg&quot;</span>, jpegOutputStream);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</span><br><span class="line">            httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组</span></span><br><span class="line">        captchaChallengeAsJpeg = jpegOutputStream.toByteArray();</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Cache-Control&quot;</span>, <span class="string">&quot;no-store&quot;</span>);</span><br><span class="line">        httpServletResponse.setHeader(<span class="string">&quot;Pragma&quot;</span>, <span class="string">&quot;no-cache&quot;</span>);</span><br><span class="line">        httpServletResponse.setDateHeader(<span class="string">&quot;Expires&quot;</span>, <span class="number">0</span>);</span><br><span class="line">        httpServletResponse.setContentType(<span class="string">&quot;image/jpeg&quot;</span>);</span><br><span class="line">        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();</span><br><span class="line">        responseOutputStream.write(captchaChallengeAsJpeg);</span><br><span class="line">        responseOutputStream.flush();</span><br><span class="line">        responseOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前台显示</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;verificationCodeImg&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/api/kaptcha/defaultKaptcha&quot;</span> <span class="attr">style</span>=<span class="string">&quot;cursor: pointer;&quot;</span> <span class="attr">title</span>=<span class="string">&quot;看不清？换一张&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>添加点击“看不清？换一张”的事件</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 刷新验证码</span></span><br><span class="line">            $(<span class="string">&quot;#verificationCodeImg&quot;</span>).bind(<span class="string">&quot;click&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                $(<span class="built_in">this</span>).hide().attr(<span class="string">&#x27;src&#x27;</span>, <span class="string">&#x27;http://localhost/api/kaptcha/defaultKaptcha?&#x27;</span>).fadeIn();</span><br><span class="line">            &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>效果图</p>
+<p><img src="/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/QQ%E6%88%AA%E5%9B%BE20200804103206.png"></p>
+<h1 id="改变文本输入框获取值"><a href="#改变文本输入框获取值" class="headerlink" title="改变文本输入框获取值"></a>改变文本输入框获取值</h1><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 为输入英雄名称的文本框绑定文本改变的事件</span></span><br><span class="line">            $(<span class="string">&quot;.inputSearch&quot;</span>).on(<span class="string">&quot;input&quot;</span>,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">let</span> heroName = $(<span class="built_in">this</span>).val()</span><br><span class="line">            &#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="mybatis模糊查询的三种方式"><a href="#mybatis模糊查询的三种方式" class="headerlink" title="mybatis模糊查询的三种方式"></a>mybatis模糊查询的三种方式</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">select id,name,age,score from star where name like &quot;%&quot; #&#123;name&#125; &quot;%&quot;</span><br><span class="line"></span><br><span class="line">&lt;!--concat拼接字符串  mysql独有的函数--&gt;</span><br><span class="line">select id,name,age,score from star where name like concat(&quot;%&quot;,#&#123;name&#125;,&quot;%&quot;)</span><br><span class="line"></span><br><span class="line">&lt;!-- 如果传入的参数是简单数据类型，$&#123;&#125;里面必须写value --&gt;</span><br><span class="line">select id,name,age,score from star where name like &quot;%$&#123;value&#125;%&quot;</span><br><span class="line"></span><br><span class="line">作者：叫我不矜持</span><br><span class="line">链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;6d244e194859</span><br><span class="line">来源：简书</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+
+<h1 id="thymeleaf循环的状态变量"><a href="#thymeleaf循环的状态变量" class="headerlink" title="thymeleaf循环的状态变量"></a>thymeleaf循环的状态变量</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">th:each属性用于迭代循环，语法：th:each&#x3D;&quot;obj,iterStat:$&#123;objList&#125;&quot;</span><br><span class="line">迭代对象可以是Java.util.List,java.util.Map,数组等;</span><br><span class="line">iterStat称作状态变量，属性有：</span><br><span class="line">    index:当前迭代对象的index（从0开始计算）</span><br><span class="line">    count: 当前迭代对象的index(从1开始计算)</span><br><span class="line">    size:被迭代对象的大小</span><br><span class="line">    current:当前迭代变量</span><br><span class="line">    even&#x2F;odd:布尔值，当前循环是否是偶数&#x2F;奇数（从0开始计算）</span><br><span class="line">    first:布尔值，当前循环是否是第一个</span><br><span class="line">    last:布尔值，当前循环是否是最后一个</span><br></pre></td></tr></table></figure>
+
+<h1 id="mysql-根据拼音首字母查询"><a href="#mysql-根据拼音首字母查询" class="headerlink" title="mysql 根据拼音首字母查询"></a>mysql 根据拼音首字母查询</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT id,full_name ,</span><br><span class="line"></span><br><span class="line">ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) AS PY</span><br><span class="line"></span><br><span class="line">FROM lol_hero WHERE ELT(INTERVAL(CONV(HEX(LEFT(CONVERT(full_name USING gbk),1)),16,10),</span><br><span class="line"></span><br><span class="line">0xB0A1,0xB0C5,0xB2C1,0xB4EE,0xB6EA,0xB7A2,0xB8C1,0xB9FE,0xBBF7,</span><br><span class="line"></span><br><span class="line">0xBFA6,0xC0AC,0xC2E8,0xC4C3,0xC5B6,0xC5BE,0xC6DA,0xC8BB,0xC8F6,</span><br><span class="line"></span><br><span class="line">0xCBFA,0xCDDA,0xCEF4,0xD1B9,0xD4D1),</span><br><span class="line"></span><br><span class="line">&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;,&#39;G&#39;,&#39;H&#39;,&#39;J&#39;,&#39;K&#39;,&#39;L&#39;,&#39;M&#39;,&#39;N&#39;,&#39;O&#39;,&#39;P&#39;,</span><br><span class="line"></span><br><span class="line">&#39;Q&#39;,&#39;R&#39;,&#39;S&#39;,&#39;T&#39;,&#39;W&#39;,&#39;X&#39;,&#39;Y&#39;,&#39;Z&#39;) &#x3D; &#39;A&#39;</span><br></pre></td></tr></table></figure>
+
+<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>包含第三方jar包的工程的build</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                第三方jar包目录</span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources/lib<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/lib/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.jar<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">targetPath</span>&gt;</span>BOOT-INF/classes/<span class="tag">&lt;/<span class="name">targetPath</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;maven-compiler-plugin.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">skip</span>&gt;</span>true<span class="tag">&lt;/<span class="name">skip</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">encoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">encoding</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">extdirs</span>&gt;</span>$&#123;project.basedir&#125;/src/main/resources/lib<span class="tag">&lt;/<span class="name">extdirs</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">compilerArguments</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其余的，如果依赖springboot父工程，加上</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">               <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>如果不依赖任何工程，直接打包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mvn clean install -Dmaven.test.skip=true // 忽略test</span><br></pre></td></tr></table></figure>
+
+<h2 id="准备服务器环境"><a href="#准备服务器环境" class="headerlink" title="准备服务器环境"></a>准备服务器环境</h2><p>安装jdk</p>
+<p>在/etc/profile文件的最后配置java环境</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">JAVA_HOME=/opt/sorftware/jdk1.8.0_251</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line">export JAVA_HOME PATH</span><br></pre></td></tr></table></figure>
+
+<p>安装mysql</p>
+<p><a href="https://www.cnblogs.com/cannel/p/11104195.html">参考</a></p>
+<p>缺少 libaio</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install libaio</span><br></pre></td></tr></table></figure>
+
+<p>修改密码需要设置密码的级别：注意！</p>
+<p>授权远程连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO &#39;root&#39;@&#39;%&#39; IDENTIFIED BY &#39;rootroot&#39; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+
+<p>微服务远程调用报错找不到主机，因为我的redisServer以及mysqlServer在另一个服务器上，所以consumer想要调用这两个server的服务，必须找到我的另一个服务器，但是我发现服务器的名字没有使用ip地址，所以依照<code>参考</code>的调试最后成功了！</p>
+<p>运行jar包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nohup java -jar xxx.jar &gt;/dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>报错：UnknownHostException</p>
+<p><a href="https://blog.csdn.net/weixin_39032575/article/details/83011334?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param">参考</a></p>
+]]></content>
+      <categories>
+        <category>项目</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>SpringBoot</tag>
       </tags>
   </entry>
   <entry>
@@ -671,81 +746,6 @@
 <p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109203553.png"></p>
 <p>我们所说的最长合法链，对于以太坊来说其实是最“难”合法链，每个区块的难度反应挖出这个区块所需要的工作量，而总难度最大，就是挖出这条链所有区块需要的总工作量最大，一般来说，靠后的区块，挖出来的工作量是比较大的。</p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ETH五---以太坊中的共识机制</title>
-    <url>/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h1 id="以太坊中的共识机制"><a href="#以太坊中的共识机制" class="headerlink" title="以太坊中的共识机制"></a>以太坊中的共识机制</h1><p>​    以太坊把出块时间降低到了十几秒，和比特币相比，以太坊的出块速度相当于提高了40倍，但是降低出块时间之后也带了一些新的问题：比特币和以太坊都是运行在应用层的共识协议，它的底层都是使用p2p overlay network，这个network本身传输的时间是比较长的，因为它的拓扑协议做flooding的时候是没有考虑实际的拓扑结果，这就带来一个问题，你发布一个区块之后，区块在网络上传到其他节点可能需要十几秒的时间，对于比特币来说，十分钟的出块时间相当于600秒，这个是足够让新发布的区块传播到网上的其他节点的，当然，即使这样，因为挖矿是个概率的过程，所以仍然有可能是有两个矿工同时获得记账权，同时发布区块，这种情况会带来临时性的分叉，那么对于以太坊来说，这种临时性的分叉就会变成常态，而且分叉的数目也会更多，这对于共识协议来说，有什么挑战呢？</p>
-<a id="more"></a>
-
-<blockquote>
-<p>比特币的情况：只有在最长合法链上的那些区块的出块奖励才是真正有用的。因为对于出现临时性分叉的情况不是很多，所以这么规定还是可以接受的。</p>
-<p>如果以太坊也这么处理，意味着这个矿工所挖到的区块有很大的概率可能是白挖了，可能你挖出的区块最终没有成为最长合法链，这样对矿工来说，不是很公平（尤其是对于个体矿工；挖矿的两大趋势：设备的专业化，矿池的出现），正常情况下，我们希望的情况是，矿池能够得到的收益应该和你的算力比例是相关的（公平），但是如果共识协议设计不好的话，有可能大型矿池的收益比例大于它所占的算力比例（会出现恶行循环），中心化mining centralization 带来的不成比例的优势centralization bias，所以如果以太坊沿用比特币的共识协议，是会有很大的问题的</p>
-</blockquote>
-<h2 id="uncle-block"><a href="#uncle-block" class="headerlink" title="uncle block"></a>uncle block</h2><p>​    以太坊中采用了GHOST协议的共识机制，GHOST的出现比以太坊早，以太坊对这个协议做了修改，这个协议的核心思想是：你挖到了矿，发布了一个区块，这个区块最后作废了，你挺伤心的，我们给你一些安慰，给你一些奖励，这种时候你也能得到一些出块奖励</p>
-<p>​    为什么叫uncle block？</p>
-<blockquote>
-<p>因为它跟当前最长合法链上的区块来说，这个区块是它的叔父区块（和它的父亲是一个辈分的），最长合法链上的区块在发布的时候，可以把它的叔父区块包含进来，在这个区块发布的时候，它的叔父区块可以获得7/8的出块奖励，这个区块能得到额外的1/32（每包含一个，就得到额外的1/32）的出块奖励，一个区块最多可以包含两个叔父区块</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015184922.png"></p>
-</blockquote>
-<p>​    以太坊的出块奖励刚开始的时候，是5个以太币，17年下半年的时候改了，改成3个以太币。这样设计，有利于鼓励系统中出现分叉之后及时进行合并，相当于新发布的区块把它的叔父区块招安过来了，这是Ghost协议最初的版本。</p>
-<p>​    最初版本的协议有没有什么缺陷？</p>
-<blockquote>
-<p>①只能包含两个叔父区块，如果出现第三个怎么办？</p>
-<p>②如果这个矿工比较自私的话，他有可能故意不把叔父区块包含进去：这样对于叔父区块来说7/8的出块奖励就得不到了，因为矿池之间有竞争关系，所以有的矿池就故意这么做</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015190413.png"></p>
-<p>有竞争关系的区块不包含叔父区块没有关系，但是你不包含，别人会包含，下一个区块就不一定是你挖出来的，也可能是自己来挖，把自己当作叔父区块包含进来</p>
-</blockquote>
-<p>​    本质：我们为了改进最初版本的ghost协议存在一些问题，所以我们把叔父的定义扩展了，不一定是当代叔父，可能是隔了几代的叔父，但是问题是隔了多少代？是不是可以隔一百代？那我就在很久很久以前，挖矿难度比较低的时候不断地产生叔父区块，期待着被包含。</p>
-<p>​    以太坊中的规定：</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015193058.png"></p>
-<p>​    这样设置有什么好处？如果不这样设计会有什么坏处</p>
-<blockquote>
-<p>首先，如果你不限制叔父的辈分，那么这个实现起来对于一个全节点来说，他要维护的状态就太多了，可能要记录隔着一百代以前有哪些区块，你发布的这些区块包含的叔父区块，其他节点同样也是要验证的。</p>
-<p>设计是最多隔着七代，并且七代以内出块奖励是递减的，这样有利于鼓励，出现分叉之后，尽早进行合并。</p>
-</blockquote>
-<p>​    叔父区块的奖励把它叫做uncle reward，他会递减，但是对于包含叔父区块的区块来说，包含一个叔父区块，可以得到1/32的奖励，这个是固定的。</p>
-<p>​    我们设计这个协议，主要是解决系统中临时性的分叉，最长合法链也是为了解决临时性的分叉，合并的机制就是最长合法链会胜出，如果这个分叉是别的原因造成的，比如说，是对运行的区块链协议有不同的意见，那么这种方法是解决不了的，我们讲的这些例子都是state fork：对于区块链当前的状态产生了意见分歧（临时的）；如果是别的原因，像我们以前讲的比特币脚本的时候，CHECKMULTISIG的时候，要想堆栈中添加一个多余的元素，应对这个操作会弹出一个无用的元素，为什么不把这个bug改掉？</p>
-<blockquote>
-<p>改完之后，版本不一样了，这样会出现硬分叉，如果分叉的区块认为对方的区块是非法的，那么合并是不可行的。</p>
-<p>仍然沿着矿工自己的分叉链去挖。</p>
-</blockquote>
-<p>​    我们说，比特币发布一个区块，实际上得到的是两种奖励，一部分叫做block reward（静态奖励），一部分叫做tx fee（动态奖励），以太坊中也是类似的，三个以太币是block reward，动态奖励叫做gas fee，在区块里包含了智能合约，执行智能合约的时候可以得到gas fee，我们说的uncle block得到的7/8的奖励，只限于3个以太币（也就是block reward），汽油费是得不到的，但是汽油费是很少一部分的，大部分是block reward。（和比特币类似）</p>
-<p>​    如果以太坊中也变成了block reward趋于0，那么uncle reward不也是趋于0吗？</p>
-<blockquote>
-<p>以太坊中没有规定时间减少block reward的说法。比特币这么规定是因为比特币的稀缺性，以太坊中的5个以太币17年降为3个以太币不是为了人为制造稀缺性，实际上和挖矿难度调整有关的。（17年的事件是一次性的，没有说会一直下调）比特币被别人当成数字黄金，是用来储值的，以太币被别人比喻成石油，是用来花的，并且可以执行智能合约。（但是这里的比喻其实是不恰当的，因为石油用完就没了，但是以太币就是相当于电子现金），发布智能合约要花费gas fee，执行智能合约的那个矿工可以得到gas fee。（以太币和比特币的设计理念是不一样的）</p>
-</blockquote>
-<p>​    把叔父区块包含进来的时候，叔父区块里的交易要不要执行？</p>
-<blockquote>
-<p>以太坊是一个交易驱动的状态机，比特币也一样，所以每次发布一个新的区块都会使当前状态转化成下一个状态。</p>
-<p>不应该执行，最长合法链上的父区块，和uncle block里面的交易可能是重复的，一种想法是相同的交易不执行，不同的交易就执行，但是这种情况下，不同的交易可能不可以一起执行。（可能是有冲突的交易）你要执行叔父区块的交易，可能某些交易就变成了非法交易，叔父区块的交易不一定是非法的，你执行完父区块的交易，再去执行叔父区块的交易，可能就变成非法的了。</p>
-</blockquote>
-<p>​    以太坊是不执行叔父区块里的交易的，而且是不检查叔父区块的合法性的，主链上的区块知道这个叔父区块的时候，只检查叔父区块是不是一个合法发布的区块，换句话说，这个区块是不是符合挖矿难度，至于这个区块里的交易合不合法不检查，不执行，执行起来的话，可能和主链上的交易是冲突的，叔父区块里的交易不执行，但是主链上的区块收到叔父区块里的交易，这个交易会被放在主链上执行。</p>
-<p>​    怎么检测链上有多少个叔父区块？</p>
-<blockquote>
-<p>听到一个就查一下，每个发布的区块说明它的父区块是哪一个，所以可以检测到你的父区块和当前区块是不是有共同祖先。</p>
-</blockquote>
-<p>​    上述的例子的叔父区块都是分叉的第一个区块，如果分叉之后，分叉的那个区块后面跟着的那些区块怎么办？</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019195216.png"></p>
-<p>这样的话，可不可以给他们每个分叉都一部分奖励，“招安”的时候相当于是“招安一伙”？免得出现两个分叉的情况</p>
-<blockquote>
-<p>这样改的话，forking attack就变得太便宜了，攻击成了，我把你的交易回滚了，攻击不成，你反正把我“招安”过去，我也能得到一些出块奖励，所以以太坊规定，只有分叉后的第一个区块可以得到uncle reward</p>
-</blockquote>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200320.png"></p>
-<p>叔父区块的不同情况：</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200352.png"></p>
-<p>Block Height：区块的序号，也就是block number </p>
-<p>UncleNumber：叔父区块在区块链中的序号</p>
-<p>看uncle number 和block height的差值，判断，相差多少代，上图说明，系统中的大多数区块都及时地得到了合并</p>
-<p>叔父区块奖励的具体内容：</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200937.png"></p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -882,87 +882,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC十一---匿名性</title>
-    <url>/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/</url>
-    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><h2 id="匿名性介绍"><a href="#匿名性介绍" class="headerlink" title="匿名性介绍"></a>匿名性介绍</h2><p>BitCoin and anonymity</p>
-<p>一般来说，大家说的匿名是和隐私保护联系（privacy）在一起的，比特币不要求是真名，是需要公钥产生的地址即可，因此有一定的匿名性，但不是说完全没有名字，他用的是“化名”，因此有人称它为“preudonymity”，就好像很多作家有笔名一样，比特币系统中的“匿名”其实不是真的匿名。</p>
-<a id="more"></a>
-
-<p>这种匿名性能给我们带来什么样的保护呢？和现金相比，和美元，法币相比？它的匿名性没有现金好，现金是完全匿名的。比特币的匿名性和银行存款相比，因为银行账户是实名制。（其实以前国内的银行不要求实名制，可以使用化名，如果这样的话，和比特币相比，哪个匿名性更好？从某种程度上来说，这时候的匿名性就比比特币要好，比特币的账户是公开的，而银行里普通老百姓想要知道别人的账户，这个是没有办法的。）</p>
-<p>比特币系统中，什么情况下有可能破坏匿名性？有些人建议在你每次收款的时候，都创建一个新的账户，但是某些情况下，这些账户是可以被关联在一起的？（这个时候就破坏了比特币的匿名性）</p>
-<blockquote>
-<p>比如网上购物，一个交易可以有多个输入和输出。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916195151.png"></p>
-<p>这个Inputs有多个，这两个地址可能是同一个人（因为可能一个账户的钱，不够买这件商品，所以同时使用另一个账户来消费）；而Outputs其中一个一般是一个找零钱的输出。 像上图中的交易，一般都是由比特币钱包软件生成的，很多钱包软件交易的时候会生成一个新的找零钱的地址，有没有可能把输入地址和输出地址也关联起来呢？（有没有可能我们把这个找零钱的地址也找到？）</p>
-<p>比特币钱包并没有规定找零钱的地址在Outputs中出现的位置，但其实有些情况下，你可以把它分析出来，我们想要对敌人造成干扰，就可以生成一些不必要的转账地址，但是一般没有人会这么干。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916200401.png"></p>
-</blockquote>
-<p>这就说明，我们可以生成很多的地址账户，但是这些地址账户是可以被关联起来的。第二点是，这个地址账户跟你在社会现实世界中的真实身份也产生关联，那么什么时候会知道比特币的地址账户对应现实中的某个人呢？</p>
-<blockquote>
-<p>①任何比特币系统中的地址和现实世界发生联系的时候都有可能泄漏身份。在资金转入和转出区块链的时候都有可能泄漏，我们刚开始都没有比特币，这时候需要去交易所买，在交易所登记；也有场外交易的情况（就是两个人之间私下交易，以前国外有些做场外交易的公共场所）。</p>
-<p>②很多国家有反洗钱法，那么怎么防范使用比特币洗钱的违法行为呢？</p>
-<p>盯住这个资金的转入转出链其实是一个常用手段，如果你有很大的资金像转入到比特币，或者你有很大一部分比特币，你想转成法币，这个你想不引起司法部门的注意，实际上是很难的，这也是比特币隐私有可能被破坏的一个很重要的时机。</p>
-<p>③用比特币做支付的时候，比如国外有的商家，是接受比特币支付的，咖啡店，餐馆之类（当然，这是一个bad idea，1.延迟大，等六个确认需要等待1个小时；2.交易费也很贵）。这个其实不仅仅是接受你支付的商家会知道，</p>
-<p>其他人其实也会知道：以前曾经有一家信用卡公司，为了支持学术界的科研，把他收集到的一些信用卡的记录公开，公开的时候做一些隐私保护（信用卡号码取哈希，年龄，性别 等都抹掉了），有人就做了科研（其实不是为了研究信用卡的消费行为，而是怎么通过这些公开的数据推测出这个人实际上是谁）—&gt;通过过滤在某个时间某个人在哪里消费，就可以精准地定位到某个人</p>
-</blockquote>
-<p>这就说明，信用卡记录不能公开，去了哈希值之后依然是不应该公开的，但是比特币系统本来就是公开的，这时候你去咖啡店，你把你的账户的地址告诉了营业员，你周围有其他认识你的人都会意识到这时候你在比特币网络上做了一笔消费，然后就可以在区块链中查出来。所以比特币的匿名性并不像我们想象中的那么好</p>
-<p>实际上那些用比特币的人，匿名性保存的有多好？中本聪！（因为他根本没有花钱）</p>
-<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念。</p>
-<blockquote>
-<p>以前有个叫silk road的网站：通过比特币卖各种违禁品，最后运行了两三年就被政府查封了，这个人通过这个网站赚了很多钱，但是他只是在纸面上很多钱，十几万个比特币一个都没花，因为一花就暴露身份了。所以，比特币的匿名性没有我们想象的那么好。</p>
-</blockquote>
-<p>所以，过去的经验表明，凡是用比特币从事违法活动的，最后都能被抓起来，中本聪能这么好的保持匿名性，实际上是一个个例，而且他没有干坏事</p>
-<p>hide your indetiny from whom？</p>
-<blockquote>
-<p>如果你只是像让你的亲戚朋友不知道你的账户上有多少钱，这个是很容易办到的，如果是像silk road这样的想逃避fbi，是很难的。</p>
-</blockquote>
-<h2 id="如何提高匿名性"><a href="#如何提高匿名性" class="headerlink" title="如何提高匿名性"></a>如何提高匿名性</h2><p>假设你是一个比特币用户，你能用什么方法来提高你的匿名性？</p>
-<blockquote>
-<p>我们知道，比特币是运行在应用层的应用程序，它的底层是P2P的network，所以提高匿名性，是从两个方面入手。</p>
-<p>network layer：如果很多交易都是从一个ip地址发出来的，那么从物理世界中，通过ip地址就可以知道是谁。这个我们已经有解决方案了，比较普遍的一种方法就是使用多路径转发的方法（TOR的原理），sender不是直接发给reciever，而是中间经过很多跳，中间的结点只是知道它的上一跳是谁，而不知道最早发出这个消息的是谁，中间的结点可能是坏的，但是只要中间有一个结点是诚实的，就可以将发件人的身份隐藏起来。</p>
-<p>application layer：破坏匿名性的原因之一是，同一个人的不同的比特币账户之间会被关联起来。其中一个做法是</p>
-<p>coin mixing：把你的身份和周围的人的身份混在一起，让别人分不清谁是谁。如何做到coin mixing？有些网站专门提供coin mixing的服务，收取一定的服务费，所有想使用coin mixing的用户，把币发给这些网站，内部进行一些重组，再取回来，取回来的币就不是原来的币了，实际上是一个复杂的过程。还有一个问题是，现在这个区块里世界里，没有什么信誉度非常高的coin mixing的服务，很多提供这个服务的网站，他自己也是匿名的，卷款跑路我们一点办法也没有。</p>
-<p>我们不一定要刻意的coin mixing，我们使用的一些软件，有些自己就带有coin mixing的一些性质，比如在线钱包，存进去的币，他可能会把其他人的币混合起来，但是在线钱包并不一定要履行coin mixing的功能</p>
-<p>还有一些交易所，他天然的有coin mixing的性质，我把一些比特币存进交易所，一段时间，我觉得它的价格会下跌，于是我把他换成美元，我有可能买入以太币，又可能换成莱特币，折腾几次之后，我又可能把他买回来，这时候我账户上的比特币，就不一定是我存进去的比特币了。（coin mixing的性质）。当然这个的前提是，这个交易所不是泄漏相关的记录（相关的提币存币的记录）</p>
-</blockquote>
-<p>为什么比特币的匿名性很差，其中一个本质原因是他是公开的，而且他是不可篡改的，好像不可篡改性对比特币有好处，其实堆隐私保护是灾难性的，因为一旦你在一个交易里把你的身份暴露了，这个交易永久地写在区块链里，你想抹都抹不掉了。这也是为什么我们说账户之间的关联性也是我们需要小心的，如果账户是单独出去的，如果你暴露了一个账户，这个影响还是比较有限的，如果是关联的，一个账户暴露了，后面的就都完了。</p>
-<h2 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195428.png"></p>
-<p>比如，我要证明某个比特币账户是我的，我要证明这一点，我要怎么证明？</p>
-<blockquote>
-<p>实际上是要证明我有这个比特币账户的私钥，但是我不能把这个私钥告诉你，这时候就可以签名，你是知道这个账户的公钥的，你可以验证这个签名的合法性</p>
-</blockquote>
-<p>这个例子作为零知识证明，实际上是有争议的，我虽然没有泄露我的私钥，但是我泄露了我私钥的签名，这个和零知识证明中的无需透露该陈述是正确的外的任何信息是有冲突的。但是这里透露的额外信息要看你实际的应用场景。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195956.png"></p>
-<p>零知识证明的数学基础是同态隐藏。</p>
-<p>①不会出现哈希碰撞，如果x、y不相等，那么加密值也不相等，反过来说，如果两个加密函数值是相等的，那么原来的函数值也是相等的。</p>
-<p>②说明加密函数不可逆，密码学的哈希函数的性质和这个是类似的，hiding propetry，知道哈希值没有办法知道它的输入值。</p>
-<p>③对这些加密后的函数进行函数运算，等价于，对进行运算的函数，然后在进行加密。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200714.png"></p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200915.png"></p>
-<p>说明：</p>
-<p><code>E(X+Y) = E(7)</code>,说明没有碰撞</p>
-<p>这个版本实际上有些缺陷，Bob可以用蛮力的方式，猜出原始的x、y是多少，Bob虽然通过E(x)不能知道x是多少，但是他可以通过遍历x的取值，Alice需要在发送E(x)和E(y)之前，对x、y进行随机化处理（使得x、y加起来还是不变的）。</p>
-<p>在比特币的共识协议中，央行发行货币，有个属于他自己的签名，在前面所讲的，这样会产生double spending，所以可以在每张货币上加上一个id，记录现在这张货币在谁手里。这样的话，央行不是什么都知道了？</p>
-<p>那么，有没有什么办法，让央行做中心化的记账，但是又不让他知道呢？</p>
-<blockquote>
-<p>这个虚拟货币的编号不能是央行产生的，这个编号得是我自己产生的，我在本地产生一个编号，但是不告诉央行，这样的话，央行怎么知道这个编号是不是正确的呢？这就引入了盲签。</p>
-<p>用户A提供编号，银行是要签名的，但是他看不到内容,Token就是银行对序号的签名。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202409.png"></p>
-</blockquote>
-<h2 id="零币和零钞"><a href="#零币和零钞" class="headerlink" title="零币和零钞"></a>零币和零钞</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202540.png"></p>
-<p>基础币可以是比特币，你用的时候，你要证明，本来是有一个基础币的，你把这个基础币搞得是不能花了，然后换取一个零币，零币在花的时候，只需要用零知识证明你花掉的币是系统中存在的某一个合法的币就行了，但是不用透露你花的是系统中的哪一个币。</p>
-<p>这样就把关联性破坏掉了。</p>
-<p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
-<p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BTC三---协议</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<h1 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h1><h2 id="1-需要解决的问题"><a href="#1-需要解决的问题" class="headerlink" title="1.需要解决的问题"></a>1.需要解决的问题</h2><p>举个例子，央行可以发行数字货币，每张数字货币上都有央行的私钥的签名</p>
@@ -1046,6 +965,87 @@
 <p><strong>注意：orphan block中的奖励的比特币就无效了</strong></p>
 <h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>最后，那么比特币要取得的共识是什么？去中心化账本中的内容要取得共识，只有获得记账权的结点才能往里面写东西，</p>
 <p>我们通过算例来获得记账权，每秒钟能够试多少个nonce的数目（hash rate），hash rate越高，得到出块奖励的概率越大</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC十一---匿名性</title>
+    <url>/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/</url>
+    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><h2 id="匿名性介绍"><a href="#匿名性介绍" class="headerlink" title="匿名性介绍"></a>匿名性介绍</h2><p>BitCoin and anonymity</p>
+<p>一般来说，大家说的匿名是和隐私保护联系（privacy）在一起的，比特币不要求是真名，是需要公钥产生的地址即可，因此有一定的匿名性，但不是说完全没有名字，他用的是“化名”，因此有人称它为“preudonymity”，就好像很多作家有笔名一样，比特币系统中的“匿名”其实不是真的匿名。</p>
+<a id="more"></a>
+
+<p>这种匿名性能给我们带来什么样的保护呢？和现金相比，和美元，法币相比？它的匿名性没有现金好，现金是完全匿名的。比特币的匿名性和银行存款相比，因为银行账户是实名制。（其实以前国内的银行不要求实名制，可以使用化名，如果这样的话，和比特币相比，哪个匿名性更好？从某种程度上来说，这时候的匿名性就比比特币要好，比特币的账户是公开的，而银行里普通老百姓想要知道别人的账户，这个是没有办法的。）</p>
+<p>比特币系统中，什么情况下有可能破坏匿名性？有些人建议在你每次收款的时候，都创建一个新的账户，但是某些情况下，这些账户是可以被关联在一起的？（这个时候就破坏了比特币的匿名性）</p>
+<blockquote>
+<p>比如网上购物，一个交易可以有多个输入和输出。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916195151.png"></p>
+<p>这个Inputs有多个，这两个地址可能是同一个人（因为可能一个账户的钱，不够买这件商品，所以同时使用另一个账户来消费）；而Outputs其中一个一般是一个找零钱的输出。 像上图中的交易，一般都是由比特币钱包软件生成的，很多钱包软件交易的时候会生成一个新的找零钱的地址，有没有可能把输入地址和输出地址也关联起来呢？（有没有可能我们把这个找零钱的地址也找到？）</p>
+<p>比特币钱包并没有规定找零钱的地址在Outputs中出现的位置，但其实有些情况下，你可以把它分析出来，我们想要对敌人造成干扰，就可以生成一些不必要的转账地址，但是一般没有人会这么干。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916200401.png"></p>
+</blockquote>
+<p>这就说明，我们可以生成很多的地址账户，但是这些地址账户是可以被关联起来的。第二点是，这个地址账户跟你在社会现实世界中的真实身份也产生关联，那么什么时候会知道比特币的地址账户对应现实中的某个人呢？</p>
+<blockquote>
+<p>①任何比特币系统中的地址和现实世界发生联系的时候都有可能泄漏身份。在资金转入和转出区块链的时候都有可能泄漏，我们刚开始都没有比特币，这时候需要去交易所买，在交易所登记；也有场外交易的情况（就是两个人之间私下交易，以前国外有些做场外交易的公共场所）。</p>
+<p>②很多国家有反洗钱法，那么怎么防范使用比特币洗钱的违法行为呢？</p>
+<p>盯住这个资金的转入转出链其实是一个常用手段，如果你有很大的资金像转入到比特币，或者你有很大一部分比特币，你想转成法币，这个你想不引起司法部门的注意，实际上是很难的，这也是比特币隐私有可能被破坏的一个很重要的时机。</p>
+<p>③用比特币做支付的时候，比如国外有的商家，是接受比特币支付的，咖啡店，餐馆之类（当然，这是一个bad idea，1.延迟大，等六个确认需要等待1个小时；2.交易费也很贵）。这个其实不仅仅是接受你支付的商家会知道，</p>
+<p>其他人其实也会知道：以前曾经有一家信用卡公司，为了支持学术界的科研，把他收集到的一些信用卡的记录公开，公开的时候做一些隐私保护（信用卡号码取哈希，年龄，性别 等都抹掉了），有人就做了科研（其实不是为了研究信用卡的消费行为，而是怎么通过这些公开的数据推测出这个人实际上是谁）—&gt;通过过滤在某个时间某个人在哪里消费，就可以精准地定位到某个人</p>
+</blockquote>
+<p>这就说明，信用卡记录不能公开，去了哈希值之后依然是不应该公开的，但是比特币系统本来就是公开的，这时候你去咖啡店，你把你的账户的地址告诉了营业员，你周围有其他认识你的人都会意识到这时候你在比特币网络上做了一笔消费，然后就可以在区块链中查出来。所以比特币的匿名性并不像我们想象中的那么好</p>
+<p>实际上那些用比特币的人，匿名性保存的有多好？中本聪！（因为他根本没有花钱）</p>
+<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念。</p>
+<blockquote>
+<p>以前有个叫silk road的网站：通过比特币卖各种违禁品，最后运行了两三年就被政府查封了，这个人通过这个网站赚了很多钱，但是他只是在纸面上很多钱，十几万个比特币一个都没花，因为一花就暴露身份了。所以，比特币的匿名性没有我们想象的那么好。</p>
+</blockquote>
+<p>所以，过去的经验表明，凡是用比特币从事违法活动的，最后都能被抓起来，中本聪能这么好的保持匿名性，实际上是一个个例，而且他没有干坏事</p>
+<p>hide your indetiny from whom？</p>
+<blockquote>
+<p>如果你只是像让你的亲戚朋友不知道你的账户上有多少钱，这个是很容易办到的，如果是像silk road这样的想逃避fbi，是很难的。</p>
+</blockquote>
+<h2 id="如何提高匿名性"><a href="#如何提高匿名性" class="headerlink" title="如何提高匿名性"></a>如何提高匿名性</h2><p>假设你是一个比特币用户，你能用什么方法来提高你的匿名性？</p>
+<blockquote>
+<p>我们知道，比特币是运行在应用层的应用程序，它的底层是P2P的network，所以提高匿名性，是从两个方面入手。</p>
+<p>network layer：如果很多交易都是从一个ip地址发出来的，那么从物理世界中，通过ip地址就可以知道是谁。这个我们已经有解决方案了，比较普遍的一种方法就是使用多路径转发的方法（TOR的原理），sender不是直接发给reciever，而是中间经过很多跳，中间的结点只是知道它的上一跳是谁，而不知道最早发出这个消息的是谁，中间的结点可能是坏的，但是只要中间有一个结点是诚实的，就可以将发件人的身份隐藏起来。</p>
+<p>application layer：破坏匿名性的原因之一是，同一个人的不同的比特币账户之间会被关联起来。其中一个做法是</p>
+<p>coin mixing：把你的身份和周围的人的身份混在一起，让别人分不清谁是谁。如何做到coin mixing？有些网站专门提供coin mixing的服务，收取一定的服务费，所有想使用coin mixing的用户，把币发给这些网站，内部进行一些重组，再取回来，取回来的币就不是原来的币了，实际上是一个复杂的过程。还有一个问题是，现在这个区块里世界里，没有什么信誉度非常高的coin mixing的服务，很多提供这个服务的网站，他自己也是匿名的，卷款跑路我们一点办法也没有。</p>
+<p>我们不一定要刻意的coin mixing，我们使用的一些软件，有些自己就带有coin mixing的一些性质，比如在线钱包，存进去的币，他可能会把其他人的币混合起来，但是在线钱包并不一定要履行coin mixing的功能</p>
+<p>还有一些交易所，他天然的有coin mixing的性质，我把一些比特币存进交易所，一段时间，我觉得它的价格会下跌，于是我把他换成美元，我有可能买入以太币，又可能换成莱特币，折腾几次之后，我又可能把他买回来，这时候我账户上的比特币，就不一定是我存进去的比特币了。（coin mixing的性质）。当然这个的前提是，这个交易所不是泄漏相关的记录（相关的提币存币的记录）</p>
+</blockquote>
+<p>为什么比特币的匿名性很差，其中一个本质原因是他是公开的，而且他是不可篡改的，好像不可篡改性对比特币有好处，其实堆隐私保护是灾难性的，因为一旦你在一个交易里把你的身份暴露了，这个交易永久地写在区块链里，你想抹都抹不掉了。这也是为什么我们说账户之间的关联性也是我们需要小心的，如果账户是单独出去的，如果你暴露了一个账户，这个影响还是比较有限的，如果是关联的，一个账户暴露了，后面的就都完了。</p>
+<h2 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195428.png"></p>
+<p>比如，我要证明某个比特币账户是我的，我要证明这一点，我要怎么证明？</p>
+<blockquote>
+<p>实际上是要证明我有这个比特币账户的私钥，但是我不能把这个私钥告诉你，这时候就可以签名，你是知道这个账户的公钥的，你可以验证这个签名的合法性</p>
+</blockquote>
+<p>这个例子作为零知识证明，实际上是有争议的，我虽然没有泄露我的私钥，但是我泄露了我私钥的签名，这个和零知识证明中的无需透露该陈述是正确的外的任何信息是有冲突的。但是这里透露的额外信息要看你实际的应用场景。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195956.png"></p>
+<p>零知识证明的数学基础是同态隐藏。</p>
+<p>①不会出现哈希碰撞，如果x、y不相等，那么加密值也不相等，反过来说，如果两个加密函数值是相等的，那么原来的函数值也是相等的。</p>
+<p>②说明加密函数不可逆，密码学的哈希函数的性质和这个是类似的，hiding propetry，知道哈希值没有办法知道它的输入值。</p>
+<p>③对这些加密后的函数进行函数运算，等价于，对进行运算的函数，然后在进行加密。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200714.png"></p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200915.png"></p>
+<p>说明：</p>
+<p><code>E(X+Y) = E(7)</code>,说明没有碰撞</p>
+<p>这个版本实际上有些缺陷，Bob可以用蛮力的方式，猜出原始的x、y是多少，Bob虽然通过E(x)不能知道x是多少，但是他可以通过遍历x的取值，Alice需要在发送E(x)和E(y)之前，对x、y进行随机化处理（使得x、y加起来还是不变的）。</p>
+<p>在比特币的共识协议中，央行发行货币，有个属于他自己的签名，在前面所讲的，这样会产生double spending，所以可以在每张货币上加上一个id，记录现在这张货币在谁手里。这样的话，央行不是什么都知道了？</p>
+<p>那么，有没有什么办法，让央行做中心化的记账，但是又不让他知道呢？</p>
+<blockquote>
+<p>这个虚拟货币的编号不能是央行产生的，这个编号得是我自己产生的，我在本地产生一个编号，但是不告诉央行，这样的话，央行怎么知道这个编号是不是正确的呢？这就引入了盲签。</p>
+<p>用户A提供编号，银行是要签名的，但是他看不到内容,Token就是银行对序号的签名。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202409.png"></p>
+</blockquote>
+<h2 id="零币和零钞"><a href="#零币和零钞" class="headerlink" title="零币和零钞"></a>零币和零钞</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202540.png"></p>
+<p>基础币可以是比特币，你用的时候，你要证明，本来是有一个基础币的，你把这个基础币搞得是不能花了，然后换取一个零币，零币在花的时候，只需要用零知识证明你花掉的币是系统中存在的某一个合法的币就行了，但是不用透露你花的是系统中的哪一个币。</p>
+<p>这样就把关联性破坏掉了。</p>
+<p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
+<p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1179,73 +1179,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC一---密码学基础</title>
-    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
-<p>比特币用到了密码学的两个内容：哈希和签名</p>
-<p>哈希在比特币中：<code>cryptographic hash function</code></p>
-<p>它在密码学中要求的两个性质：</p>
-<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
-<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
-<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
-<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
-<a id="more"></a>
-
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
-<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
-<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
-<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
-<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
-<p>x—-&gt;H(x)</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
-<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
-<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
-<p>在比特币中还要求<code>puzzle friendly</code></p>
-<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
-<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
-<blockquote>
-<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
-<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
-<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
-<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
-</blockquote>
-<p>比特币中用到的哈希函数叫做SHA-256。</p>
-<p>SHA:<code>secure Hash Algorithm</code> </p>
-<p>我们上面所说的三个性质，他都是满足的</p>
-<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
-<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
-<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
-<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
-<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
-<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
-<blockquote>
-<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
-<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
-</blockquote>
-<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
-<blockquote>
-<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
-<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
-<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
-<p>这个概率比地球爆炸的概率还要小！</p>
-</blockquote>
-<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
-<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
-<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>BTC七---挖矿</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/</url>
     <content><![CDATA[<h1 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h1><h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png"></p>
@@ -1315,6 +1248,73 @@
 <p>另外，不要把51%的阈值，当成一个门槛，这个其实都是概率，而且，每个矿池所占的算力比重，本身也是一种估计而已，而且实时变化</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大型矿池的出现，有一定的好处：给矿工减轻了负担，收入分配也更加稳定。</p>
 <p>也有一定的危害：发动51攻击更容易了 <code>on demand mining</code></p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC一---密码学基础</title>
+    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
+<p>比特币用到了密码学的两个内容：哈希和签名</p>
+<p>哈希在比特币中：<code>cryptographic hash function</code></p>
+<p>它在密码学中要求的两个性质：</p>
+<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
+<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
+<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
+<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
+<a id="more"></a>
+
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
+<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
+<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
+<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
+<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
+<p>x—-&gt;H(x)</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
+<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
+<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
+<p>在比特币中还要求<code>puzzle friendly</code></p>
+<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
+<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
+<blockquote>
+<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
+<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
+<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
+<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
+</blockquote>
+<p>比特币中用到的哈希函数叫做SHA-256。</p>
+<p>SHA:<code>secure Hash Algorithm</code> </p>
+<p>我们上面所说的三个性质，他都是满足的</p>
+<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
+<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
+<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
+<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
+<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
+<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
+<blockquote>
+<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
+<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
+</blockquote>
+<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
+<blockquote>
+<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
+<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
+<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
+<p>这个概率比地球爆炸的概率还要小！</p>
+</blockquote>
+<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
+<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1418,6 +1418,28 @@
 <p>只要这个数据结构是无环的，都可以用哈希指针来代替普通指针，有环会带来一定的问题</p>
 <p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204834.png"></p>
 <p>会出现循环依赖的问题，定不下来任何一个区块，找不到创世纪块</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC五---网络</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
+<a id="more"></a>
+
+<p>比特币网络的工作原理</p>
+<p>The BitCoin Network，比特币工作在应用层，它的底层是一个P2P Overlay Network，所有结点都是对等的，他不想有些所谓的P2P网络有所谓的超结点(Super node | master node),你要加入比特币网络，你要至少知道一个种子结点（seed node），你和这个种子节点联系，他会告诉你他所知道的网络中的其他节点，节点之间是通过tcp通信的，这样有利于穿破防火墙，你离开的时候也不需要执行其他操作（比如通知其他结点，退出应用程序即可），别的节点没有听到你的消息，过了一段时间就会把你删掉。</p>
+<p>比特币网络的设计原则是简单（simple，robust，but not efficient），每个结点维护一个邻居节点的集合，消息传播在网络中采取flooding（泛洪）的方式，结点第一次听到某个消息的时候，把他传播给所有的邻居结点，同时记录一下，这个消息我已经记录过了，下次再收到这个消息的时候，就不用转发给邻居节点了</p>
+<p>邻居结点的选取是随机的，没有考虑底层的拓扑结构，和地区没有关系，这样的好处是增强鲁棒性，没有考虑实际的拓扑结构，但是牺牲的是效率，向身边的人转账和向美国的人转账速度其实是差不多的。</p>
+<p>比特币系统中每个节点要维护一个等待上链的交易的集合。第二次听到同样的交易就不会传播给邻居结点，避免交易在网络中无限制的传播下去，转发的前提是这个交易得是合法的，这里有一个risk condition：有可能你有两个有冲突的交易，差不多同时被广播到网络上</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/QQ%E6%88%AA%E5%9B%BE20200826201624.png"></p>
+<p>新发布的区块在网络中的传播方式和新发布的交易在网络中传播是相似的，每个结点除了要检查区块的内容之外，还要检查一下是否在最长合法链上，越是大的区块，在网络中传播的速度就越慢，比特币协议对区块大小有一个限制，1M字节的限制，1M大小的区块在区块链中的传播时间就已经达到了50秒（传播完）</p>
+<p>我们讲的比特币网络，它的传播是属于best effort，一个交易发布到网络上，不一定所有的节点都能收到，而且不同的节点收到这个交易的顺序也不一定是一样的，网络传播存在延迟，有的节点也不一定按照比特币协议的要求转发，比如有的该转发的它不转发，导致某些合法的交易收不到，有些节点也有可能转发一些不该转发的消息，比如有些不合法的交易，他也会转发，这是去中心化系统中所面临的问题</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1582,28 +1604,6 @@
       </categories>
       <tags>
         <tag>CCF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC五---网络</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
-    <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
-<a id="more"></a>
-
-<p>比特币网络的工作原理</p>
-<p>The BitCoin Network，比特币工作在应用层，它的底层是一个P2P Overlay Network，所有结点都是对等的，他不想有些所谓的P2P网络有所谓的超结点(Super node | master node),你要加入比特币网络，你要至少知道一个种子结点（seed node），你和这个种子节点联系，他会告诉你他所知道的网络中的其他节点，节点之间是通过tcp通信的，这样有利于穿破防火墙，你离开的时候也不需要执行其他操作（比如通知其他结点，退出应用程序即可），别的节点没有听到你的消息，过了一段时间就会把你删掉。</p>
-<p>比特币网络的设计原则是简单（simple，robust，but not efficient），每个结点维护一个邻居节点的集合，消息传播在网络中采取flooding（泛洪）的方式，结点第一次听到某个消息的时候，把他传播给所有的邻居结点，同时记录一下，这个消息我已经记录过了，下次再收到这个消息的时候，就不用转发给邻居节点了</p>
-<p>邻居结点的选取是随机的，没有考虑底层的拓扑结构，和地区没有关系，这样的好处是增强鲁棒性，没有考虑实际的拓扑结构，但是牺牲的是效率，向身边的人转账和向美国的人转账速度其实是差不多的。</p>
-<p>比特币系统中每个节点要维护一个等待上链的交易的集合。第二次听到同样的交易就不会传播给邻居结点，避免交易在网络中无限制的传播下去，转发的前提是这个交易得是合法的，这里有一个risk condition：有可能你有两个有冲突的交易，差不多同时被广播到网络上</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/QQ%E6%88%AA%E5%9B%BE20200826201624.png"></p>
-<p>新发布的区块在网络中的传播方式和新发布的交易在网络中传播是相似的，每个结点除了要检查区块的内容之外，还要检查一下是否在最长合法链上，越是大的区块，在网络中传播的速度就越慢，比特币协议对区块大小有一个限制，1M字节的限制，1M大小的区块在区块链中的传播时间就已经达到了50秒（传播完）</p>
-<p>我们讲的比特币网络，它的传播是属于best effort，一个交易发布到网络上，不一定所有的节点都能收到，而且不同的节点收到这个交易的顺序也不一定是一样的，网络传播存在延迟，有的节点也不一定按照比特币协议的要求转发，比如有的该转发的它不转发，导致某些合法的交易收不到，有些节点也有可能转发一些不该转发的消息，比如有些不合法的交易，他也会转发，这是去中心化系统中所面临的问题</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
       </tags>
   </entry>
   <entry>
@@ -2031,7 +2031,83 @@
 </blockquote>
 <p>​    除了多线程之外，造成执行结果不确定的操作，也都不支持。</p>
 <blockquote>
-<p>产生随机数，这个操作必须是不确定性的，如果不同的机器产生的随机数都一样，那不叫随机数了，所以以太坊中的智能合约没有办法产生真正意义上的随机数，可以用一些伪随机数，不能是真的随机数，否则的话，会出现前面的问题。</p>
+<p>产生随机数，这个操作必须是不确定性的，如果不同的机器产生的随机数都一样，那不叫随机数了，所以以太坊中的智能合约没有办法产生真正意义上的随机数，可以用一些伪随机数，不能是真的随机数，否则的话，会出现前面的问题。每个全节点执行的结果都不一致。</p>
+</blockquote>
+<p>​    智能合约的执行必须是确定性的，这就导致了智能合约不能像通用的编程语言那样通过系统调用得到system call的一些信息（环境信息），每个全节点执行的环境不是完全一样的，所以只有通过一些固定的一些变量的值，能够得到一些状态信息。</p>
+<p>​    <img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124184056.png"></p>
+<p>​    <img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124184206.png"></p>
+<blockquote>
+<p>上图中的msg.sender消息发送者和下面tx.origin交易发起者不是一个东西，有个外部账户A调用了一个合约C1，C1中有个函数f1，函数f1调用了另外一个合约账户C2里面的函数f2，对于函数f2来说msg.sender是C1合约，因为当前这个msg call是C1这个合约发起的；tx.origin是A账户，整个交易最初的发起者是A账户。</p>
+<p>msg.gas指的是当前交易还剩下多少汽油费，决定了我还能够做什么操作，包括像调用别的合约，前提是还有别的汽油费剩下来。</p>
+<p>msg.data就是所谓的数据域，在里面写了调用了哪个函数，和这个函数所使用到的参数取值。</p>
+<p>now和上一个图中的timestamp是一个意思，智能合约里没有精确的时间，只能获得和当前区块相关的时间</p>
+</blockquote>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124185036.png"></p>
+<blockquote>
+<p>balance是一个成员变量，其他的都是成员函数，uint256是成员变量的类型，不是函数调用（不是参数）。addr.balance是这个地址上这个账户的余额，addr.transfer(12345)感觉是addr这个账户向外转了12345个wei，但是问题来了，这个函数只有一个参数，没有说转给谁，所以addr.transfer指的是当前这个合约往addr这个地址里转入多少钱，addr是转入的地址，不是转出的地址，那么哪个是转入的地址？C这个智能合约里面有个函数f，f包含addr.transfer，意思是从C这个账上，往这个addr账户中转入xx钱，其他的函数也类似（比如addr.call，是当前合约，调用addr这个合约，而不是addr这个账户调用别的账户）。</p>
+<p>transfer和send都是用来转账的函数，区别是transfer会导致连锁性回滚，而send不会导致连锁回滚，call其实也可以转账，addr.call.value(amount)。call也不会引起连锁式回滚，另外一个区别是transfer和send只给了2300的汽油费（这是非常少的），转账的合约基本上干不了其他的事，只是写个log的费用，而call是把当前这个调用剩下的所有汽油都发过去，比如说call所在的这个合约本身被调用的时候还剩8000个汽油，然后去调别的合约的时候用call转账，就把8000个汽油都转过去了。call之后，如果当前合约还有别的操作，call调用的别的合约，如果有剩余的汽油，会返回，然后可以再执行相应的其他操作。</p>
+</blockquote>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124191414.png"></p>
+<blockquote>
+<p>比如说你有一个古董要拍卖，拍卖的受益人就是你 。</p>
+<p>在拍卖结束之前，每个人都可以去出价竞拍，竞拍的时候为了保证诚信，要把你竞拍的价格的相应的以太币发过去，比如说你出价100个以太币，竞拍的时候把这100个以太币发到智能合约里，而且会锁在这里面，知道竞拍结束，这个拍卖的规则不允许中途退出。拍卖结束出价最高的人他投出去的钱会给受益人，当然，你应该把古董给最高出价人，那么其他没有竞拍成功的人，可以把当初投进去的钱取回来，（也就是withdraw函数）。竞拍可以多次出价。出价有效的话，要比当前最高出价还要高。</p>
+</blockquote>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124192045.png"></p>
+<blockquote>
+<p>bid函数没有参数，感觉好像你出价的时候不需要告诉对方你出价多少？他在里面有个msg.value：这是发起这个调用的时候转账转过去的以太币的数目，以wei为单位的转账金额，这个逻辑是，查一下当前拍卖还没结束，如果结束了，还出价会抛出异常，然后查一下你上次出价，加上当前这个调用发出去的以太币，大于最高出价，如果你以前没有出价过？solidity中的哈希表，如果键值不存在，那么返回的默认值就是0，之后将拍卖者的信息放到bid数组里，之后记录一下最高价</p>
+</blockquote>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124192101.png"></p>
+<blockquote>
+<p>拍卖结束的函数，查一下拍卖是否已经结束了，如果有人调用，是非法的，会抛出异常，require(!ended)判断一下当前函数是否已经被调用过了，如果已经被调用过了，就不用再调用。beneficiary.transfer指的是当前这个合约，把bids[highestBidder]金额给beneficiary转过去，对于没有竞拍成功的人，进行循环，把这个金额退回给这个bidder。然后标注一下ended=true，表示这个函数已经被执行了。</p>
+</blockquote>
+<p>​    有什么问题么？</p>
+<blockquote>
+<p>如果你写完一个拍卖程序，然后你要先把他发布到区块链上：往0地址发一笔转账交易，转账的金额是0，但是汽油费是要交的，把这个智能合约的代码放在data域里面，矿工将这个智能合约发布到区块链上之后，会返回给你一个合约的地址，然后这个合约就在区块链上了，所有人都可以调用它。</p>
+<p>智能合约本身有一个合约账户，里面有它的状态信息。拍卖的时候要调用bid函数，当前账户调用的bid函数正是矿工写在区块链里的。</p>
+<p>写智能合约一定要小心，因为智能合约是不可篡改的，说得不好听点就是有bug没有办法改。</p>
+</blockquote>
+<p>​    auctionEnd函数必须要某个人调用才能执行，这个也是solidity语言和其他语言不同的地方，就是没有办法把它设置成拍卖结束了自动执行auctionEnd，可能是拍卖的受益人调用，也可能是某个参与竞拍没有成功的人，总之得有一个人去调用，如果两个人都去调用auctionEnd，矿工在执行的时候，把第一个调用执行完了，然后第二个调用就执行不了了（没有并发执行！）</p>
+<p>​    <img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124194924.png"></p>
+<blockquote>
+<p>这个合约实际上就一个函数，参数就是拍卖合约的地址，把它转成拍卖合约的一个实例，然后调用拍卖合约中的bid函数，把这个钱发送过去，这是一个合约账户，合约账户不能自己发起交易，所以实际上是有一个黑客，从他自己的外部账户，发起一个交易，调用这个合约账户的hack_bid函数，然后hack_bid函数再去调用拍卖合约中的bid函数，把他收到的自己外部账户转过来的钱，再转给拍卖合约中的bid函数，参与拍卖，看似没有什么问题；但是在退款的时候，在一个合约账户收到转账，没有调用任何函数的时候的时候，应该调用fallback函数，而hackV1没有定义fallback函数，所以会调用失败，抛出异常，transfer函数会引起连锁式地回滚，所以导致转账操作是失败的，收不到钱，对黑客有什么好处？</p>
+<p>有可能是故意捣乱，也有可能是这个人不懂，忘了写fallback函数。</p>
+<p>退款只是改本地的数据结构，没有形成交易，如果都执行完了，发布出去之后，别的矿工也把这个auctionEnd从头到尾执行一遍，也改他本地地数据结构，这就叫形成共识，不管排在黑客前面的拍卖者还是后面的拍卖者，只不过后面的bidder根本不能执行，然后整个都回滚了，就好像这个智能合约没有被执行过一样，排在前面的对bidder转账并没有执行，所以都收不到钱。</p>
+</blockquote>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124200856.png"></p>
+<p>​    出现上面的情况怎么办？你已经把钱投在里面了，怎么把钱拿出来的问题</p>
+<blockquote>
+<p>没有办法。Code is law，智能合约的规则是由代码逻辑决定的，而代码一旦发布到区块链上，就改不了了，就是所谓的区块链的不可篡改性，这样的好处是，没有人可以篡改规则，坏处是，规则中有漏洞，你也改不了了，智能合约如果设计的不好的话，有可能把收到的以太币永久的锁起来，谁也取不出来。以前还有人用智能合约锁仓的，就比如要开发一个新的加密货币，像前面的pre mining，预留一些币给开发者，然后这些币都打在一个智能合约账户上，锁仓三年，三年之后，这些币才能卖，这样做才能为了让大家在一开始的时候都集中精力开发这个加密货币，智能合约锁仓是个常用操作，万一要是写错了，多写一个0，这些币就会锁上三十年，这个有点像irrevocable trust（不可撤销的信托），美国有一些有钱人用这种信托以达到财产保护，或者是减税的目的，就是一个法律上的合同，如果制定这种不可撤销的信托的时候，法律条款有问题，也可能会导致存进去的钱取不出来。所以在你发布一个智能合约之前，一定要测试！</p>
+</blockquote>
+<p>​    我能不能在智能合约里留个后门？给合约的创建者一个超级用户的权力？</p>
+<blockquote>
+<p>在智能合约的构造函数中加一个owner，这个owner可以做一些系统管理员的操作，可以任意转账，把钱转给哪个账户都行，出现上面的bug，owner就可以起到作用。</p>
+<p>这样做的前提是，所有人都要新人owner，这个和去中心化的理念是背道而驰的，也是绝大多数区块链的用户不能接受的</p>
+</blockquote>
+<hr>
+<p>​    第二版：由投标者自己取回出价</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124221310.png"></p>
+<blockquote>
+<p>这里就不用循环了，每个竞拍没有成功的人，自己调用withdraw函数，把钱取回来，先判断是不是最高出价者，如果是的话，不能把钱给他，因为要留着给受益人，再判断这个人的账户余额是不是正的，amount是账户余额，将账户余额转给sender，然后将bids清零，免得下次再来取钱</p>
+</blockquote>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124221321.png"></p>
+<p>​    这样可以了么？</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124221948.png"></p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124222014.png"></p>
+<blockquote>
+<p>hack_bid和前面的hack_bid相同</p>
+<p>hack_withdraw在拍卖结束的时候把钱取回来，这样看上去好像没问题，问题在于fallback函数又把钱取了一遍，fallback中的msg.sender是拍卖合约，拍卖合约又会给他转一次钱，账户清零的操作只有在转账成功之后才会执行，但是现在已经陷入到了和黑客合约中的递归调用当中，根本执行不到，所以最后的结果是，黑客不停地从拍卖合约中取钱，第一次取得是自己的出价，后面取得就是别人的钱了。</p>
+<p>这个递归取钱持续到什么时候结束？</p>
+<p>①拍卖合约上的余额不够了，不足以在支持转账的语句</p>
+<p>②汽油费不够了</p>
+<p>③调用栈溢出了</p>
+<p>所以黑客合约会先判断，之后在进行攻击。</p>
+</blockquote>
+<p>​    解决办法：可以先清零，再转账。</p>
+<p>在区块链上，任何未知的合约，都可能是有恶意的，所以每次你向对方转账，或者是调用对方的某个函数，都要提醒一下自己，这个合约这个函数，有可能反过来调用你当前这个合约，并且修改状态，除了上述方法，还有下面的一种解决方法：</p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124223111.png"></p>
+<p><img src="/2020/11/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6/QQ%E6%88%AA%E5%9B%BE20201124223124.png"></p>
+<blockquote>
+<p>首先将清零的位置提前了，而且转账的时候用的是send，send和transfer的一个共同特点是转账的时候发送的汽油费只有2300个单位，这个不足以让接收的合约再发起一个新的调用，只够写一个log而已。</p>
 </blockquote>
 ]]></content>
       <categories>
