@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-11-24T14:39:08.669Z</updated>
+  <updated>2020-11-30T11:42:34.106Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ETH十---The DAO</title>
+    <link href="http://yoursite.com/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/"/>
+    <id>http://yoursite.com/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/</id>
+    <published>2020-11-30T11:40:14.000Z</published>
+    <updated>2020-11-30T11:42:34.106Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;TheDAO&quot;&gt;&lt;a href=&quot;#TheDAO&quot; class=&quot;headerlink&quot; title=&quot;TheDAO&quot;&gt;&lt;/a&gt;TheDAO&lt;/h1&gt;&lt;p&gt;​    冲入攻击在现实中真的会发生吗？本文章讲解一下2015年发生过的一次真实的案例。这个案例在以太坊的历史上赫赫有名，造成了以太坊的分裂，可以说以太坊的历史都被他改写了。&lt;/p&gt;
+&lt;p&gt;​    我们说比特币实现了去中心化的货币，以太坊实现了去中心化的合约，那么去中心化这么好，那为什么不把所有的都改成去中心化的？所以有的人就提议：DAO(Decentralized Autonomous Organization)，去中心化的自治组织。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>ETH九---智能合约</title>
@@ -40,7 +60,7 @@
     <link href="http://yoursite.com/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/"/>
     <id>http://yoursite.com/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/</id>
     <published>2020-11-10T11:08:04.000Z</published>
-    <updated>2020-11-12T12:04:29.479Z</updated>
+    <updated>2020-11-30T11:41:28.724Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;权益证明proof-of-stake&quot;&gt;&lt;a href=&quot;#权益证明proof-of-stake&quot; class=&quot;headerlink&quot; title=&quot;权益证明proof of stake&quot;&gt;&lt;/a&gt;权益证明proof of stake&lt;/h1&gt;&lt;h2 id=&quot;图解&quot;&gt;&lt;a href=&quot;#图解&quot; class=&quot;headerlink&quot; title=&quot;图解&quot;&gt;&lt;/a&gt;图解&lt;/h2&gt;&lt;p&gt;​    比特币和以太坊目前用的都是基于工作量证明，这种机制收到了一个普遍的批评，就是“浪费电”。&lt;/p&gt;</summary>
@@ -405,25 +425,6 @@
     <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
     
     <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BTC七---挖矿</title>
-    <link href="http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/"/>
-    <id>http://yoursite.com/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/</id>
-    <published>2020-08-30T02:42:41.000Z</published>
-    <updated>2020-08-31T14:29:08.204Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;挖矿&quot;&gt;&lt;a href=&quot;#挖矿&quot; class=&quot;headerlink&quot; title=&quot;挖矿&quot;&gt;&lt;/a&gt;挖矿&lt;/h1&gt;&lt;h2 id=&quot;回顾&quot;&gt;&lt;a href=&quot;#回顾&quot; class=&quot;headerlink&quot; title=&quot;回顾&quot;&gt;&lt;/a&gt;回顾&lt;/h2&gt;&lt;p&gt;&lt;img src=&quot;/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
   </entry>
   
