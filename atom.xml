@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-12-02T11:35:18.669Z</updated>
+  <updated>2020-12-04T13:12:38.341Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ETH反思</title>
+    <title>ETH十二---美链</title>
+    <link href="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/"/>
+    <id>http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/</id>
+    <published>2020-12-04T13:11:54.000Z</published>
+    <updated>2020-12-04T13:12:38.341Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;美链&quot;&gt;&lt;a href=&quot;#美链&quot; class=&quot;headerlink&quot; title=&quot;美链&quot;&gt;&lt;/a&gt;美链&lt;/h1&gt;&lt;p&gt;​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ETH十一---反思</title>
     <link href="http://yoursite.com/2020/12/02/%E5%8C%BA%E5%9D%97%E9%93%BE/ETH%E5%8F%8D%E6%80%9D/"/>
     <id>http://yoursite.com/2020/12/02/%E5%8C%BA%E5%9D%97%E9%93%BE/ETH%E5%8F%8D%E6%80%9D/</id>
     <published>2020-12-02T11:34:45.000Z</published>
-    <updated>2020-12-02T11:35:18.669Z</updated>
+    <updated>2020-12-04T12:30:39.577Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;反思&quot;&gt;&lt;a href=&quot;#反思&quot; class=&quot;headerlink&quot; title=&quot;反思&quot;&gt;&lt;/a&gt;反思&lt;/h1&gt;&lt;p&gt;​    回顾The DAO事件，应该引起什么样的反思？&lt;/p&gt;</summary>
@@ -395,26 +414,6 @@
     <summary type="html">&lt;h1 id=&quot;分叉&quot;&gt;&lt;a href=&quot;#分叉&quot; class=&quot;headerlink&quot; title=&quot;分叉&quot;&gt;&lt;/a&gt;分叉&lt;/h1&gt;&lt;p&gt;fork:原来是一条链，现在是两条链形成了分叉。有两种情况：&lt;/p&gt;
 &lt;p&gt;①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。&lt;/p&gt;
 &lt;p&gt;②比特币的协议发生了改变，要修改比特币的协议，需要软件升级，在一个去中心化的系统里，在升级软件的时候，没有办法保证所有的结点同时都升级软件，我们假设大部分结点升级了软件，少数结点因为种种原因没有升级，有可能还没有来的及升级，也可能是不同意这个协议的修改，这种分叉叫做protocol fork，因为对比特币的协议产生了分歧，因为使用不同的协议造成了分叉。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BTC八---比特币脚本</title>
-    <link href="http://yoursite.com/2020/09/02/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E8%84%9A%E6%9C%AC/"/>
-    <id>http://yoursite.com/2020/09/02/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E8%84%9A%E6%9C%AC/</id>
-    <published>2020-09-02T14:13:29.000Z</published>
-    <updated>2020-09-06T23:47:36.400Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;比特币脚本&quot;&gt;&lt;a href=&quot;#比特币脚本&quot; class=&quot;headerlink&quot; title=&quot;比特币脚本&quot;&gt;&lt;/a&gt;比特币脚本&lt;/h1&gt;&lt;p&gt;比特币脚本，十分简单，不像c++，java，有堆栈的概念，比特币脚本是基于栈的脚本语言&lt;/p&gt;
-&lt;p&gt;下面来看一个具体的交易：&lt;/p&gt;</summary>
     
     
     

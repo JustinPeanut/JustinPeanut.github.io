@@ -21,29 +21,30 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="以太坊中的共识机制​    以太坊把出块时间降低到了十几秒，和比特币相比，以太坊的出块速度相当于提高了40倍，但是降低出块时间之后也带了一些新的问题：比特币和以太坊都是运行在应用层的共识协议，它的底层都是使用p2p overlay network，这个network本身传输的时间是比较长的，因为它的拓扑协议做flooding的时候是没有考虑实际的拓扑结果，这就带来一个问题，你发布一个区块之后，区块">
+  <meta name="description" content="美链​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ETH五---以太坊中的共识机制">
-<meta property="og:url" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:title" content="ETH十二---美链">
+<meta property="og:url" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/index.html">
 <meta property="og:site_name" content="Blog of DengFeng">
-<meta property="og:description" content="以太坊中的共识机制​    以太坊把出块时间降低到了十几秒，和比特币相比，以太坊的出块速度相当于提高了40倍，但是降低出块时间之后也带了一些新的问题：比特币和以太坊都是运行在应用层的共识协议，它的底层都是使用p2p overlay network，这个network本身传输的时间是比较长的，因为它的拓扑协议做flooding的时候是没有考虑实际的拓扑结果，这就带来一个问题，你发布一个区块之后，区块">
+<meta property="og:description" content="美链​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015184922.png">
-<meta property="og:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015190413.png">
-<meta property="og:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015193058.png">
-<meta property="og:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019195216.png">
-<meta property="og:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200320.png">
-<meta property="og:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200352.png">
-<meta property="og:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200937.png">
-<meta property="article:published_time" content="2020-10-19T12:12:49.000Z">
-<meta property="article:modified_time" content="2020-10-26T11:23:35.662Z">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204203251.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204204908.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210103.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210229.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210316.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210357.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210524.png">
+<meta property="og:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210954.png">
+<meta property="article:published_time" content="2020-12-04T13:11:54.000Z">
+<meta property="article:modified_time" content="2020-12-04T13:12:38.341Z">
 <meta property="article:author" content="Deng Feng">
 <meta property="article:tag" content="区块链">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015184922.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204203251.png">
 
 
-<link rel="canonical" href="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+<link rel="canonical" href="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/">
 
 
 <script class="page-configurations">
@@ -56,7 +57,7 @@
   };
 </script>
 
-  <title>ETH五---以太坊中的共识机制 | Blog of DengFeng</title>
+  <title>ETH十二---美链 | Blog of DengFeng</title>
   
 
 
@@ -219,7 +220,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">以太坊中的共识机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#uncle-block"><span class="nav-number">1.1.</span> <span class="nav-text">uncle block</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BE%8E%E9%93%BE"><span class="nav-number">1.</span> <span class="nav-text">美链</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -297,7 +298,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/header.jpg">
@@ -313,7 +314,7 @@
     
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ETH五---以太坊中的共识机制
+          ETH十二---美链
         </h1>
 
         <div class="post-meta-container">
@@ -323,16 +324,10 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2020-10-19 20:12:49" itemprop="dateCreated datePublished" datetime="2020-10-19T20:12:49+08:00">2020-10-19</time>
+      <time title="创建时间：2020-12-04 21:11:54 / 修改时间：21:12:38" itemprop="dateCreated datePublished" datetime="2020-12-04T21:11:54+08:00">2020-12-04</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-10-26 19:23:35" itemprop="dateModified" datetime="2020-10-26T19:23:35+08:00">2020-10-26</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -359,8 +354,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/" itemprop="commentCount"></span>
+    <a title="valine" href="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -372,14 +367,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
+      <span>1.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -390,70 +385,35 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="以太坊中的共识机制"><a href="#以太坊中的共识机制" class="headerlink" title="以太坊中的共识机制"></a>以太坊中的共识机制</h1><p>​    以太坊把出块时间降低到了十几秒，和比特币相比，以太坊的出块速度相当于提高了40倍，但是降低出块时间之后也带了一些新的问题：比特币和以太坊都是运行在应用层的共识协议，它的底层都是使用p2p overlay network，这个network本身传输的时间是比较长的，因为它的拓扑协议做flooding的时候是没有考虑实际的拓扑结果，这就带来一个问题，你发布一个区块之后，区块在网络上传到其他节点可能需要十几秒的时间，对于比特币来说，十分钟的出块时间相当于600秒，这个是足够让新发布的区块传播到网上的其他节点的，当然，即使这样，因为挖矿是个概率的过程，所以仍然有可能是有两个矿工同时获得记账权，同时发布区块，这种情况会带来临时性的分叉，那么对于以太坊来说，这种临时性的分叉就会变成常态，而且分叉的数目也会更多，这对于共识协议来说，有什么挑战呢？</p>
+        <h1 id="美链"><a href="#美链" class="headerlink" title="美链"></a>美链</h1><p>​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。</p>
 <a id="more"></a>
 
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204203251.png"></p>
 <blockquote>
-<p>比特币的情况：只有在最长合法链上的那些区块的出块奖励才是真正有用的。因为对于出现临时性分叉的情况不是很多，所以这么规定还是可以接受的。</p>
-<p>如果以太坊也这么处理，意味着这个矿工所挖到的区块有很大的概率可能是白挖了，可能你挖出的区块最终没有成为最长合法链，这样对矿工来说，不是很公平（尤其是对于个体矿工；挖矿的两大趋势：设备的专业化，矿池的出现），正常情况下，我们希望的情况是，矿池能够得到的收益应该和你的算力比例是相关的（公平），但是如果共识协议设计不好的话，有可能大型矿池的收益比例大于它所占的算力比例（会出现恶行循环），中心化mining centralization 带来的不成比例的优势centralization bias，所以如果以太坊沿用比特币的共识协议，是会有很大的问题的</p>
+<p>上图中的ERC是以太坊发行代币的一个标准，ERC：Ethereum Request for comments。</p>
 </blockquote>
-<h2 id="uncle-block"><a href="#uncle-block" class="headerlink" title="uncle block"></a>uncle block</h2><p>​    以太坊中采用了GHOST协议的共识机制，GHOST的出现比以太坊早，以太坊对这个协议做了修改，这个协议的核心思想是：你挖到了矿，发布了一个区块，这个区块最后作废了，你挺伤心的，我们给你一些安慰，给你一些奖励，这种时候你也能得到一些出块奖励</p>
-<p>​    为什么叫uncle block？</p>
+<p>​    以太坊上面发行着各种各样的代币，以太币的价格上涨的一个原因是因为ICO（Initial Coin offering），这些发行的代币没有自己的区块链，而是以智能合约的形式运行在以太坊的EVM平台上，发行这个代币的智能合约对应的是以太坊状态中的一个结点，这个结点有它自己的状态余额，相当于这个智能合约一共有多少个以太币，相当于这个发行代币的智能合约总的资产有多少个以太币，然后在这个合约里，每个账户上有多少个代币，这个是作为存储树中的变量存储在智能合约的账户里的，代币的发行、转账、销毁，都是通过调用智能合约中的函数来实现的，这个也是和以太坊中的以太币不太一样的地方，他不想以太坊那样，通过挖矿来维护一个底层的基础链。以太坊上每个账户有多少个以太币，这个是直接保存在状态数上的变量，然后转账的时候以太坊上两个账户之间转账，只通过发布一个交易到区块链上，这个交易会打包到发布的区块里，而代币要转账的话，是智能合约的两个账户之间通过调用智能合约的函数就可以完成。</p>
+<p>​    每个代币可以指定自己的发行规则，比如说某一个代币是可以1个以太币兑换100个代币，比如说从你的外部账户给智能合约发进去一个以太币，那么这个智能合约就可以给你在这个合约里的代币账户上发送100个代币。每个账户上有多少个代币的这些信息都是维护在存储树中（发行这个代币的智能合约的存储树里面）。</p>
+<p>​    以太坊平台的出现为各种代币的发行提供了很大的方便，包括EOS（使用DOPS协议形成的共识），这个在上线前，也是作为以太坊上的一个代币的形式发行的，这个EOS本身的目标是做成一个基础链，和以太坊要竞争的。</p>
+<p>​    batchTransfer的实现：</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204204908.png"></p>
 <blockquote>
-<p>因为它跟当前最长合法链上的区块来说，这个区块是它的叔父区块（和它的父亲是一个辈分的），最长合法链上的区块在发布的时候，可以把它的叔父区块包含进来，在这个区块发布的时候，它的叔父区块可以获得7/8的出块奖励，这个区块能得到额外的1/32（每包含一个，就得到额外的1/32）的出块奖励，一个区块最多可以包含两个叔父区块</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015184922.png"></p>
+<p>上图的函数有两个参数，第一个参数是接受代币的接收者的数组的地址，在函数体里，要检查一下接受者的个数要小于等于20个，第二个参数中的value是转账的金额（给每个人转多少），函数体里先算一下总的金额，每人发送value个代币，一共要amount个代币，然后检查一下发起调用的这个账户确实是有这么多代币，然后把发起调用的账户上的代币数目减去amount，之后用一个循环给每一个接收者接受value的代币。会有什么问题？这和上一个例子不是同一个问题，否则就没必要再举例了……</p>
+<p>问题出在计算总数amount上，如果value的值非常大，就是给每个receiver发送的value都很大的话，这个乘法可能溢出，发生溢出之后，amount可能是一个很小的值，所以从调用的账户上去减的时候，减的是很小的一部分代币，但是底下给每个receiver增加的代币数目仍然是value，这样做的结果相当于系统当中凭空多发行了很多的代币。</p>
 </blockquote>
-<p>​    以太坊的出块奖励刚开始的时候，是5个以太币，17年下半年的时候改了，改成3个以太币。这样设计，有利于鼓励系统中出现分叉之后及时进行合并，相当于新发布的区块把它的叔父区块招安过来了，这是Ghost协议最初的版本。</p>
-<p>​    最初版本的协议有没有什么缺陷？</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210103.png"></p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210229.png"></p>
 <blockquote>
-<p>①只能包含两个叔父区块，如果出现第三个怎么办？</p>
-<p>②如果这个矿工比较自私的话，他有可能故意不把叔父区块包含进去：这样对于叔父区块来说7/8的出块奖励就得不到了，因为矿池之间有竞争关系，所以有的矿池就故意这么做</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015190413.png"></p>
-<p>有竞争关系的区块不包含叔父区块没有关系，但是你不包含，别人会包含，下一个区块就不一定是你挖出来的，也可能是自己来挖，把自己当作叔父区块包含进来</p>
+<p>上图中红框中都是接受了很大数量的代币。</p>
 </blockquote>
-<p>​    本质：我们为了改进最初版本的ghost协议存在一些问题，所以我们把叔父的定义扩展了，不一定是当代叔父，可能是隔了几代的叔父，但是问题是隔了多少代？是不是可以隔一百代？那我就在很久很久以前，挖矿难度比较低的时候不断地产生叔父区块，期待着被包含。</p>
-<p>​    以太坊中的规定：</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201015193058.png"></p>
-<p>​    这样设置有什么好处？如果不这样设计会有什么坏处</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210316.png"></p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210357.png"></p>
+<p>这个事情应该给我们一个什么样的反思？在写代码的时候一定要检查数值溢出的问题。</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210524.png"></p>
 <blockquote>
-<p>首先，如果你不限制叔父的辈分，那么这个实现起来对于一个全节点来说，他要维护的状态就太多了，可能要记录隔着一百代以前有哪些区块，你发布的这些区块包含的叔父区块，其他节点同样也是要验证的。</p>
-<p>设计是最多隔着七代，并且七代以内出块奖励是递减的，这样有利于鼓励，出现分叉之后，尽早进行合并。</p>
+<p>首先用a<em>b得到c，然后用c/a看能不能得到b，如果发生溢出的话，assert会抛出异常。a</em>b会不会精度丢失，c再除a得到的c是否还是ab的结果？但是这个问题在solidity里面是不存在的，因为ab都是整数。</p>
 </blockquote>
-<p>​    叔父区块的奖励把它叫做uncle reward，他会递减，但是对于包含叔父区块的区块来说，包含一个叔父区块，可以得到1/32的奖励，这个是固定的。</p>
-<p>​    我们设计这个协议，主要是解决系统中临时性的分叉，最长合法链也是为了解决临时性的分叉，合并的机制就是最长合法链会胜出，如果这个分叉是别的原因造成的，比如说，是对运行的区块链协议有不同的意见，那么这种方法是解决不了的，我们讲的这些例子都是state fork：对于区块链当前的状态产生了意见分歧（临时的）；如果是别的原因，像我们以前讲的比特币脚本的时候，CHECKMULTISIG的时候，要想堆栈中添加一个多余的元素，应对这个操作会弹出一个无用的元素，为什么不把这个bug改掉？</p>
-<blockquote>
-<p>改完之后，版本不一样了，这样会出现硬分叉，如果分叉的区块认为对方的区块是非法的，那么合并是不可行的。</p>
-<p>仍然沿着矿工自己的分叉链去挖。</p>
-</blockquote>
-<p>​    我们说，比特币发布一个区块，实际上得到的是两种奖励，一部分叫做block reward（静态奖励），一部分叫做tx fee（动态奖励），以太坊中也是类似的，三个以太币是block reward，动态奖励叫做gas fee，在区块里包含了智能合约，执行智能合约的时候可以得到gas fee，我们说的uncle block得到的7/8的奖励，只限于3个以太币（也就是block reward），汽油费是得不到的，但是汽油费是很少一部分的，大部分是block reward。（和比特币类似）</p>
-<p>​    如果以太坊中也变成了block reward趋于0，那么uncle reward不也是趋于0吗？</p>
-<blockquote>
-<p>以太坊中没有规定时间减少block reward的说法。比特币这么规定是因为比特币的稀缺性，以太坊中的5个以太币17年降为3个以太币不是为了人为制造稀缺性，实际上和挖矿难度调整有关的。（17年的事件是一次性的，没有说会一直下调）比特币被别人当成数字黄金，是用来储值的，以太币被别人比喻成石油，是用来花的，并且可以执行智能合约。（但是这里的比喻其实是不恰当的，因为石油用完就没了，但是以太币就是相当于电子现金），发布智能合约要花费gas fee，执行智能合约的那个矿工可以得到gas fee。（以太币和比特币的设计理念是不一样的）</p>
-</blockquote>
-<p>​    把叔父区块包含进来的时候，叔父区块里的交易要不要执行？</p>
-<blockquote>
-<p>以太坊是一个交易驱动的状态机，比特币也一样，所以每次发布一个新的区块都会使当前状态转化成下一个状态。</p>
-<p>不应该执行，最长合法链上的父区块，和uncle block里面的交易可能是重复的，一种想法是相同的交易不执行，不同的交易就执行，但是这种情况下，不同的交易可能不可以一起执行。（可能是有冲突的交易）你要执行叔父区块的交易，可能某些交易就变成了非法交易，叔父区块的交易不一定是非法的，你执行完父区块的交易，再去执行叔父区块的交易，可能就变成非法的了。</p>
-</blockquote>
-<p>​    以太坊是不执行叔父区块里的交易的，而且是不检查叔父区块的合法性的，主链上的区块知道这个叔父区块的时候，只检查叔父区块是不是一个合法发布的区块，换句话说，这个区块是不是符合挖矿难度，至于这个区块里的交易合不合法不检查，不执行，执行起来的话，可能和主链上的交易是冲突的，叔父区块里的交易不执行，但是主链上的区块收到叔父区块里的交易，这个交易会被放在主链上执行。</p>
-<p>​    怎么检测链上有多少个叔父区块？</p>
-<blockquote>
-<p>听到一个就查一下，每个发布的区块说明它的父区块是哪一个，所以可以检测到你的父区块和当前区块是不是有共同祖先。</p>
-</blockquote>
-<p>​    上述的例子的叔父区块都是分叉的第一个区块，如果分叉之后，分叉的那个区块后面跟着的那些区块怎么办？</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019195216.png"></p>
-<p>这样的话，可不可以给他们每个分叉都一部分奖励，“招安”的时候相当于是“招安一伙”？免得出现两个分叉的情况</p>
-<blockquote>
-<p>这样改的话，forking attack就变得太便宜了，攻击成了，我把你的交易回滚了，攻击不成，你反正把我“招安”过去，我也能得到一些出块奖励，所以以太坊规定，只有分叉后的第一个区块可以得到uncle reward</p>
-</blockquote>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200320.png"></p>
-<p>叔父区块的不同情况：</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200352.png"></p>
-<p>Block Height：区块的序号，也就是block number </p>
-<p>UncleNumber：叔父区块在区块链中的序号</p>
-<p>看uncle number 和block height的差值，判断，相差多少代，上图说明，系统中的大多数区块都及时地得到了合并</p>
-<p>叔父区块奖励的具体内容：</p>
-<p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200937.png"></p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/区块链技术与应用学习笔记/img/QQ截图20201204210954.png"></p>
 
     </div>
 
@@ -507,14 +467,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/10/13/Java/JVM/jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/" rel="prev" title="JVM二---类加载器">
-                  <i class="fa fa-chevron-left"></i> JVM二---类加载器
+                <a href="/2020/12/02/%E5%8C%BA%E5%9D%97%E9%93%BE/ETH%E5%8F%8D%E6%80%9D/" rel="prev" title="ETH十一---反思">
+                  <i class="fa fa-chevron-left"></i> ETH十一---反思
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/" rel="next" title="ETH六---以太坊挖矿算法">
-                  ETH六---以太坊挖矿算法 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -649,7 +606,7 @@ NexT.utils.loadComments('#valine-comments', () => {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
     new Valine(Object.assign({
       el  : '#valine-comments',
-      path: "/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/",
+      path: "/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/",
     }, {"enable":true,"appId":"yVOlBzIi3aYyQQz57UbRr2UY-gzGzoHsz","appKey":"JUN29c5FMssB0c1y8MYYyvvg","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":false,"requiredFields":[]}
     ));
   }, window.Valine);
