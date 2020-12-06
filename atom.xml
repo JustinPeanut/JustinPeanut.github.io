@@ -6,7 +6,7 @@
   <link href="http://yoursite.com/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-12-04T13:12:38.341Z</updated>
+  <updated>2020-12-06T11:21:56.243Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>区块链---总结</title>
+    <link href="http://yoursite.com/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/</id>
+    <published>2020-12-06T11:21:24.000Z</published>
+    <updated>2020-12-06T11:21:56.243Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;​    社会上对区块链的争议是非常大的，有很多对区块链的质疑也是有道理的，其中一个原因是区块链的概念被滥用了，有些人把什么问题都往区块链上放，无论是效率上的问题，还是监管上的问题，好像区块链是解决问题的法宝，有什么问题放在区块链里好像都能解决一样，这个是不对的。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+    
+    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
   
   <entry>
     <title>ETH十二---美链</title>
@@ -400,27 +419,6 @@
     
     
     <category term="Java" scheme="http://yoursite.com/tags/Java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>BTC九---分叉</title>
-    <link href="http://yoursite.com/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/"/>
-    <id>http://yoursite.com/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/</id>
-    <published>2020-09-09T12:21:04.000Z</published>
-    <updated>2020-09-09T12:31:15.424Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;分叉&quot;&gt;&lt;a href=&quot;#分叉&quot; class=&quot;headerlink&quot; title=&quot;分叉&quot;&gt;&lt;/a&gt;分叉&lt;/h1&gt;&lt;p&gt;fork:原来是一条链，现在是两条链形成了分叉。有两种情况：&lt;/p&gt;
-&lt;p&gt;①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。&lt;/p&gt;
-&lt;p&gt;②比特币的协议发生了改变，要修改比特币的协议，需要软件升级，在一个去中心化的系统里，在升级软件的时候，没有办法保证所有的结点同时都升级软件，我们假设大部分结点升级了软件，少数结点因为种种原因没有升级，有可能还没有来的及升级，也可能是不同意这个协议的修改，这种分叉叫做protocol fork，因为对比特币的协议产生了分歧，因为使用不同的协议造成了分叉。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
-    
-    
-    <category term="区块链" scheme="http://yoursite.com/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
     
   </entry>
   
