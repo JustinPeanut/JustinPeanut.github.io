@@ -1,110 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>CCF一---202006</title>
-    <url>/2020/08/29/ccf/202006/</url>
-    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
-
-<a id="more"></a>
-
-<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
-
-<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
-
-<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
-<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
-<p>以下就是我写的代码（测试为100分）:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>CCF</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ETH十一---反思</title>
-    <url>/2020/12/02/%E5%8C%BA%E5%9D%97%E9%93%BE/ETH%E5%8F%8D%E6%80%9D/</url>
-    <content><![CDATA[<h1 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h1><p>​    回顾The DAO事件，应该引起什么样的反思？</p>
-<a id="more"></a>
-
-<h2 id="关于智能合约的反思"><a href="#关于智能合约的反思" class="headerlink" title="关于智能合约的反思"></a>关于智能合约的反思</h2><p>​    Is smart contract really smart？</p>
-<blockquote>
-<p>智能合约里并没有用到人工智能的技术，有人认为其实应该把它叫做自动合约，按照实现编写的代码，自动执行某些操作，我们现实世界当中，例如ATM取款机可以看作物理世界的一个自动合约，你把银行卡插进去，输入密码，他就把钱吐给你。所以智能合约其实并不只能，其实挺笨的，一旦写好之后就改不了了，实际上一种代码合同，这个可以作为第一个反思。</p>
-</blockquote>
-<p>​    smart contract is anything but smart.</p>
-<p>​    智能合约写好之后就不能篡改了，这就涉及到了区块链的不可篡改性，一般来说，提到不可篡改性，是区块链的一个优点，有很多区块链的应用都是应用了区块链的不可篡改性，比如说用它来做，防伪、溯源，但是通过The DAO事件，我们应该意识到，不可篡改性，其实是一个双刃剑。</p>
-<p>​    Irrevocability is a double edged sword.</p>
-<blockquote>
-<p>一方面来说，不可篡改性增加了合约的公信力，我们大家都只能按照合约中的规则中来，没有人可以篡改这个规则，这是好的一方面，但是另一方面，不可篡改性也意味着规则中有漏洞，我们想要修补这个漏洞都是很困难的。</p>
-</blockquote>
-<p>​    软件升级必须硬分叉，不想现实世界中，发布一个一个的patch，对于比特币也好，以太坊也好，硬分叉都不是随便搞的，像这次以太坊的硬分叉，最后就造成了两条平行的链，而且你要硬分叉的话，你要说明理由，一旦说明理由，就有可能把系统漏洞的信息泄漏出去，有恶意的攻击者可能会在还没有来得及升级软件之前抢先发动攻击，这些都是区块链上不可篡改性带来的一些问题，另外，即使已经发现恶意漏洞，有人已经进行攻击了，想要冻结账户，终止交易都是很困难的，这个也是和我们日常生活的体现不太一样的。如果你发现你的私钥泄漏了，这时候不是想着怎么冻结账户，而是把剩下的以太币转移到另外一个安全的账户上去。</p>
-<p>​    与之相关的问题，智能合约发布到区块链上去之后，没有办法阻止对他的调用，比如说这次的盗币事件，黑客偷走了1/3的以太币，还有2/3的以太币是在The DAO这个智能合约以及它的子基金里面，同样存在着安全的风险，这样的想法是，既然这个智能合约存在问题，就不能让别人去调用它了，但是区块链上没有办法阻止，要阻止的话，就必须软分叉（增加一个规则，调用这个智能合约的交易都不予执行）。如果你是一个The DAO的用户，你应该怎么办？马上通知以太坊团队这是对的，还能做什么？其实和私钥泄漏的情况是一样的，你应该在第一时间把剩下的2/3的钱转到一个安全的账户：用黑客的漏洞把钱转走。 </p>
-<p>​    Nothing is irrevocable.</p>
-<p>​    有什么是真的不可篡改的，其实都可以改，我们前面说的比较多的是分叉攻击的例子，比如说有一笔交易本来是写在区块链里面，然后有一个黑客，从这个区块前面进行分叉，后面的交易被回滚，以太坊的The DAO事件，实际上是用软件升级的方法强行改变某些账户的状态，不要迷信区块链的不可篡改性。</p>
-<h2 id="语言设计上的反思"><a href="#语言设计上的反思" class="headerlink" title="语言设计上的反思"></a>语言设计上的反思</h2><p>​    为什么会出现重入攻击这样的事情？从某种意义上说，solidity这种语言是“反自然”的，我们一般的理解是我给你转账，你是一个被动的接受者，你不可能再回来调用我，但是solidity语言的特点是，我给你转账，等于是隐性地调用了你的fallback函数，虽然表面上我没有调用任何函数，但是转账本身就是调用了你的fallback函数，接着你可以调用我，这个和我们平时的生活体验不太一样，所以就可能忽视这样一个安全漏洞。有的人提出，干脆使用函数式编程语言，函数式编程语言不容易出现这样的漏洞，而且从长远来看，要实现的是证明智能合约功能的正确性。</p>
-<p>​    Is solidity the right programming language?</p>
-<blockquote>
-<p>编写智能合约的语言应该具有什么样的表达能力，比特币的脚本语言是很简单的，表达能力很差，而以太坊的编程语言，叫图灵完备的，凡是计算机程序能够完成的任务，solidity能够实现。但是这种图灵完备的表达能力是不是一个好事情。</p>
-</blockquote>
-<p>​    出现智能合约的漏洞之后，有些人认为，应该去选取一种表达能力适中的语言，不能像比特币脚本语言的表达能力太弱，也不要像以太坊的solidity一样，表达能力是图灵完备的：可以实现智能合约要实现的功能，但是又不容易出现安全漏洞。</p>
-<p>​    设计的语言很难预料到将来可能出现的应用场景，也很难预料到将来可能出现的所有安全攻击，所以这么设计是很难设计出来的，包括比特币脚本，虽然简单，但是实际应用当中，大多数矿工也只是接受几个常用的脚本，有一个安全脚本的白名单（white list），如果脚本不在白名单里面，很多矿工缺省情况下是不接受的。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>java随笔</title>
-    <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
-    <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
-<p>  我自认为，在学习的时候，应该自己主动思考，如果这样的话，结果是怎么样，那样的话，结果是怎么样，我们在整个小学、初中、高中，甚至是大学，都被灌输了一种思想，就是，这样就是对的，那么当我们碰到问题的时候，往往就会一头雾水，不知如何下手，如果有主动思考的能力的话，这种问题是不是就会没有那么棘手呢？</p>
-<a id="more"></a>
-
-<p>2020.9.10</p>
-<p>在阅读《疯狂java讲义》一书中HashMap的介绍，书中实例HashMap类实例的put方法，发现他有一个返回值，并且是Object类型的，这我就纳闷了，添加元素，一般不是返回true就是false啊？我在一篇博客的评论下发现了答案，原来是</p>
-<blockquote>
-<p>如果此前存在一个相同的key，那么put方法返回的是前面key的value值，这时候后来put的value就会覆盖前面put进去的值；如果当前put方法，put的是一个新的key，那么返回值就是null。</p>
-</blockquote>
-<p>2020.9.14</p>
-<p>关于将线程不安全的HashSet、HashMap、ArrayList类转化成线程安全的类的介绍中</p>
-<p>使用Collections.synchronizeXXX</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"> Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	 <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		 Integer integer = (Integer) iterator.next();</span><br><span class="line">		 System.out.println(integer);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>如上所示：因为迭代器不是线程安全的，所以还需要同步allList，使获得迭代器的过程也是同步的，这样在操作同步后的集合在遍历的时候就被锁住，不能在进行别的操作。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"><span class="keyword">synchronized</span>（allList ）&#123;</span><br><span class="line">	Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	<span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		Integer integer = (Integer) iterator.next();</span><br><span class="line">		System.out.println(integer);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>随笔</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LOL-show项目工程日志</title>
     <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
     <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
@@ -209,55 +105,70 @@
       </tags>
   </entry>
   <entry>
-    <title>ETH十---The DAO</title>
-    <url>/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/</url>
-    <content><![CDATA[<h1 id="TheDAO"><a href="#TheDAO" class="headerlink" title="TheDAO"></a>TheDAO</h1><p>​    冲入攻击在现实中真的会发生吗？本文章讲解一下2015年发生过的一次真实的案例。这个案例在以太坊的历史上赫赫有名，造成了以太坊的分裂，可以说以太坊的历史都被他改写了。</p>
-<p>​    我们说比特币实现了去中心化的货币，以太坊实现了去中心化的合约，那么去中心化这么好，那为什么不把所有的都改成去中心化的？所以有的人就提议：DAO(Decentralized Autonomous Organization)，去中心化的自治组织。</p>
+    <title>java随笔</title>
+    <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
+    <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
+<p>  我自认为，在学习的时候，应该自己主动思考，如果这样的话，结果是怎么样，那样的话，结果是怎么样，我们在整个小学、初中、高中，甚至是大学，都被灌输了一种思想，就是，这样就是对的，那么当我们碰到问题的时候，往往就会一头雾水，不知如何下手，如果有主动思考的能力的话，这种问题是不是就会没有那么棘手呢？</p>
 <a id="more"></a>
 
+<p>2020.9.10</p>
+<p>在阅读《疯狂java讲义》一书中HashMap的介绍，书中实例HashMap类实例的put方法，发现他有一个返回值，并且是Object类型的，这我就纳闷了，添加元素，一般不是返回true就是false啊？我在一篇博客的评论下发现了答案，原来是</p>
 <blockquote>
-<p>​    传统社会上，组织是建立在某种法律文件上的，规范组织的行为，有时候还可能需要到政府登陆注册，在区块链上，DAO这个组织就是建立在代码之上的，组织上的规章制度，是写在代码里的，通过区块链的共识协议来维护规章制度的正确执行，这就是DAO。</p>
+<p>如果此前存在一个相同的key，那么put方法返回的是前面key的value值，这时候后来put的value就会覆盖前面put进去的值；如果当前put方法，put的是一个新的key，那么返回值就是null。</p>
 </blockquote>
-<p>​    在2016年5月的时候，出现了一个致力于众筹投资的DAO，他的名字叫做The DAO（是指这个DAO叫做The DAO），它的工作原理，有点像众筹的一个投资基金，只不过投资的钱的来源，是通过在区块链上众筹的方法得到的，本质上是运行在以太坊上的一个智能合约，如果你想参与这个The DAO，那么你可以把以太币发给这个智能合约，然后可以换回The DAO的代币，需要决定投资哪个项目是大家投票决定的，你手里的代币越多，投票的权重越大，那么最后如果有了收益，也是按照智能合约中规定的制度来进行收益分配的，就是The DAO的工作原理。工作方法实际上有点像DAC（Decentralized Autonomous Corporation，去中心化的自治公司）的模式，一般来说DAC是出于盈利目的的，是为了经营赚钱，DAO可以是出于非营利性目的，DAC虽然叫做公司，但是不具有社会上公司的法人地位，一般来说，也没有董事长、CEO之类的职务。</p>
-<p>​    The DAO在当时收到了很高的关注度，因为以前从来没有这样民主的投资基金，在当时被称为一种“伟大的尝试”，引起了互联网社区里很大的兴奋，从2016年5月份开始众筹，一个月的时间就筹集了价值1.5亿美元的以太币，当时的以太币价格还是比较便宜的，这些以太币放在现在的话，大概是价值几十亿美元，众筹的速度和规模在历史上是非常罕见的，比很多众筹网站要快得多，这也反映出了区块链技术的强大生命力，遗憾的是，The DAO只存活了三个月，问题出在哪里？比如你是一个投资者，你怎么取回The DAO的收益？这个在The DAO的基金里是通过“拆分”的方法实现的，叫做<code>Split DAO</code>，拆分的方法不是单纯的用来取回你的收益，也是一种建立子基金的方法，叫<code>child DAO</code>（拆分完之后叫做child DAO），设计理念是：</p>
+<p>2020.9.14</p>
+<p>关于将线程不安全的HashSet、HashMap、ArrayList类转化成线程安全的类的介绍中</p>
+<p>使用Collections.synchronizeXXX</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"> Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	 <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		 Integer integer = (Integer) iterator.next();</span><br><span class="line">		 System.out.println(integer);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上所示：因为迭代器不是线程安全的，所以还需要同步allList，使获得迭代器的过程也是同步的，这样在操作同步后的集合在遍历的时候就被锁住，不能在进行别的操作。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">List&lt;Person&gt; allList = Collections.synchronizedList(<span class="keyword">new</span> ArrayList());</span><br><span class="line"><span class="keyword">synchronized</span>（allList ）&#123;</span><br><span class="line">	Iterator&lt;Integer&gt; iterator = allList .iterator();</span><br><span class="line">	<span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		Integer integer = (Integer) iterator.next();</span><br><span class="line">		System.out.println(integer);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>随笔</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH十一---反思</title>
+    <url>/2020/12/02/%E5%8C%BA%E5%9D%97%E9%93%BE/ETH%E5%8F%8D%E6%80%9D/</url>
+    <content><![CDATA[<h1 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h1><p>​    回顾The DAO事件，应该引起什么样的反思？</p>
+<a id="more"></a>
+
+<h2 id="关于智能合约的反思"><a href="#关于智能合约的反思" class="headerlink" title="关于智能合约的反思"></a>关于智能合约的反思</h2><p>​    Is smart contract really smart？</p>
 <blockquote>
-<p>​    我们说这个The DAO投资项目是靠大家一起用手中的代币去投票，那么如果有一小部分人投资理念和其他人不太一样，怎么办？比如说有一个小众的项目，少数人觉得很好，值得投，得不到大多数人的认可，这种情况下，这一小部分人可以用拆分的方法，从The DAO里面独立出来，成立自己的一个子基金，就是<code>child DAO</code>，然后拆分的时候，手中的代币，是要被收回去的，然后换成相应数量的以太币，就是把相应数量的以太币打到他们这个子基金里，然后他们就可以投他们想投的项目了。</p>
+<p>智能合约里并没有用到人工智能的技术，有人认为其实应该把它叫做自动合约，按照实现编写的代码，自动执行某些操作，我们现实世界当中，例如ATM取款机可以看作物理世界的一个自动合约，你把银行卡插进去，输入密码，他就把钱吐给你。所以智能合约其实并不只能，其实挺笨的，一旦写好之后就改不了了，实际上一种代码合同，这个可以作为第一个反思。</p>
 </blockquote>
-<p>​    拆分的一个极端的例子，就是单独的一个投资者成立一个子基金，这个child DAO里就是他一个人，这样就可以把所有的钱投给自己，这是投资者取回投资和收益的唯一途径，它没有像上一篇文章所说的那种withdraw函数，拆分之前有7天的辩论期（决定要不要加入这个拆分，或者评价），拆分之后有28天的锁定期（成立一个子基金之后，需要28天之后才能把以太币取出来），我们后面会看到这28天的锁定期给了以太坊社区采用补救措施的时间，拆分的理念并没有错，而且可以说是民主制度的体现，民主制度并不是绝对的，少数的服从多数，而是说，也要尊重少数人选择的权力，既然这个拆分的理念没有错，那么问题出在哪里了？问题就出现在了<code>split DAO</code>的实现上。</p>
-<p>相关代码：</p>
-<p><img src="/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/QQ%E6%88%AA%E5%9B%BE20201130191502.png"></p>
+<p>​    smart contract is anything but smart.</p>
+<p>​    智能合约写好之后就不能篡改了，这就涉及到了区块链的不可篡改性，一般来说，提到不可篡改性，是区块链的一个优点，有很多区块链的应用都是应用了区块链的不可篡改性，比如说用它来做，防伪、溯源，但是通过The DAO事件，我们应该意识到，不可篡改性，其实是一个双刃剑。</p>
+<p>​    Irrevocability is a double edged sword.</p>
 <blockquote>
-<p>withdrawRewardFor把钱还给调用这个函数的人，之后把The DAO中的金额减少相应的数量，再把调用者的账户清零，这里就有问题了，按照上一篇文章所说的，应该先把账户清零，然后再转账，黑客就是利用这个漏洞进行的重入攻击。</p>
+<p>一方面来说，不可篡改性增加了合约的公信力，我们大家都只能按照合约中的规则中来，没有人可以篡改这个规则，这是好的一方面，但是另一方面，不可篡改性也意味着规则中有漏洞，我们想要修补这个漏洞都是很困难的。</p>
 </blockquote>
-<p>​    The DAO是从2016年五月开始众筹的，差不多一个月的时间，筹集了价值1.5亿美元的以太币，然后黑客就利用这个重入攻击，从里面转走了5000万美元的以太币，差不多1/3，这件事情当前在以太坊社区引起了很大的恐慌。这个时间也引起了以太币价格的大跳水，那么以太坊社区对此进行了激烈的讨论，社区的意见分裂为两派，一派认为要回滚交易（成立的子基金有28天的锁定期，所以黑客暂时还没有办法把钱取走，还有时间可以采取补救措施），通过回滚交易就不能让黑客得逞，这样能保障广大投资者的正当利益，另一派认为，不需要采取补救措施，因为黑客的行为并没有违法，既然我们说code is law，规则是由代码决定的，那么代码中的漏洞，也是规则的一部分，发生这个事情之后，网上流传了一封据说是黑客也给以太坊社区的公开信，公开信里黑客说，我没有做错任何事情，我只是利用了你代码中的一个feature。所以以太坊有一部分人认为是不应该采取补救措施，尤其是回滚交易，因为区块链最重要的特性是不可篡改性，如果出了问题就回滚，那么怎么能叫做不可篡改呢？而且这次出问题的只是以太坊运行的一个应用而已，The DAO是以太坊上的一个智能合约，以太坊本身的代码没有问题，如果每个智能合约出了问题都回滚的话，那不乱套了？</p>
-<p>​    以太坊的开发团队是支持补救措施的，主要是这个事情的影响太大了，The DAO筹集的以太币的数目已经占到了当时流通量的很大一部分，大概是百分之十几。如果放纵不管，这些以太币的1/3要落入黑客的手里，我们真的希望这么多的以太币都集中在黑客的手里吗？而且投资者的利益怎么办？（too big to fail 出自2008年美国金融危机），以太坊社区有人认为The DAO的危机也是属于too big to fail，如果只是个小的智能合约出了问题，以太坊社区是不管的，开发团队也是不管的。</p>
-<p>​    假设要采取补救措施，怎么补救？</p>
+<p>​    软件升级必须硬分叉，不想现实世界中，发布一个一个的patch，对于比特币也好，以太坊也好，硬分叉都不是随便搞的，像这次以太坊的硬分叉，最后就造成了两条平行的链，而且你要硬分叉的话，你要说明理由，一旦说明理由，就有可能把系统漏洞的信息泄漏出去，有恶意的攻击者可能会在还没有来得及升级软件之前抢先发动攻击，这些都是区块链上不可篡改性带来的一些问题，另外，即使已经发现恶意漏洞，有人已经进行攻击了，想要冻结账户，终止交易都是很困难的，这个也是和我们日常生活的体现不太一样的。如果你发现你的私钥泄漏了，这时候不是想着怎么冻结账户，而是把剩下的以太币转移到另外一个安全的账户上去。</p>
+<p>​    与之相关的问题，智能合约发布到区块链上去之后，没有办法阻止对他的调用，比如说这次的盗币事件，黑客偷走了1/3的以太币，还有2/3的以太币是在The DAO这个智能合约以及它的子基金里面，同样存在着安全的风险，这样的想法是，既然这个智能合约存在问题，就不能让别人去调用它了，但是区块链上没有办法阻止，要阻止的话，就必须软分叉（增加一个规则，调用这个智能合约的交易都不予执行）。如果你是一个The DAO的用户，你应该怎么办？马上通知以太坊团队这是对的，还能做什么？其实和私钥泄漏的情况是一样的，你应该在第一时间把剩下的2/3的钱转到一个安全的账户：用黑客的漏洞把钱转走。 </p>
+<p>​    Nothing is irrevocable.</p>
+<p>​    有什么是真的不可篡改的，其实都可以改，我们前面说的比较多的是分叉攻击的例子，比如说有一笔交易本来是写在区块链里面，然后有一个黑客，从这个区块前面进行分叉，后面的交易被回滚，以太坊的The DAO事件，实际上是用软件升级的方法强行改变某些账户的状态，不要迷信区块链的不可篡改性。</p>
+<h2 id="语言设计上的反思"><a href="#语言设计上的反思" class="headerlink" title="语言设计上的反思"></a>语言设计上的反思</h2><p>​    为什么会出现重入攻击这样的事情？从某种意义上说，solidity这种语言是“反自然”的，我们一般的理解是我给你转账，你是一个被动的接受者，你不可能再回来调用我，但是solidity语言的特点是，我给你转账，等于是隐性地调用了你的fallback函数，虽然表面上我没有调用任何函数，但是转账本身就是调用了你的fallback函数，接着你可以调用我，这个和我们平时的生活体验不太一样，所以就可能忽视这样一个安全漏洞。有的人提出，干脆使用函数式编程语言，函数式编程语言不容易出现这样的漏洞，而且从长远来看，要实现的是证明智能合约功能的正确性。</p>
+<p>​    Is solidity the right programming language?</p>
 <blockquote>
-<p>比如我们就从开始攻击的那个区块开始分叉，这样行不行？从攻击的链的上一个区块分叉，让下面的一条链，比上一条链要长（常见的分叉攻击的方法）</p>
-<p><img src="/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/QQ%E6%88%AA%E5%9B%BE20201130193824.png"></p>
+<p>编写智能合约的语言应该具有什么样的表达能力，比特币的脚本语言是很简单的，表达能力很差，而以太坊的编程语言，叫图灵完备的，凡是计算机程序能够完成的任务，solidity能够实现。但是这种图灵完备的表达能力是不是一个好事情。</p>
 </blockquote>
-<p>​    上图所说的方法行不行？</p>
-<blockquote>
-<p>这个问题不是所有人都要统一，假设所有人都往下挖，这样会有什么后果？</p>
-<p>不光是黑客攻击的交易回滚，上面这条链上攻击之后的所有交易都回滚了。上面有很多合法的交易，The DAO只是以太坊中运行的一个智能合约，另外还有很多智能合约在运行，还有一些正常的网上支付的交易，那就乱套了。要回滚的话，只能是精确定位，只能是针对黑客盗取以太币的那些交易，其他发生的正常交易不能发生影响，这是采取补救措施的一个原则。</p>
-</blockquote>
-<p>​    以太坊团队制定了两步走的方案，第一步，首先要锁定黑客的账户，第二步再设法把盗取的以太币退回去，清退The DAO基金上的这些钱。</p>
-<blockquote>
-<p>第一步：以太坊团队发布了一个软件升级，在升级的软件里增加了一条规则，凡是跟The DAO这个基金上的账户相关的，不允许做任何交易，发布之后，大多数以太坊的矿工都升级了这个软件。这个是属于软分叉，软件升级只是增加了一个判断规则，当一个节点收到一个交易的时候，判断这个交易是否合法，增加一个判断规则，The DAO相关的账户不允许任何交易，如果这个交易和The DAO账户相关的，就认为这个交易非法，增加这个规则之后，新矿工挖出的这个区块，旧矿工是认可的，因为旧矿工不知道这个新规则，他也不会去查这个，但是旧矿工挖出的区块，新矿工有可能不认可，如果这个区块里包含了The DAO这个账户的交易，就不认可，所以是软分叉。软件升级的想法是挺好的，也得到了大多数矿工的支持，遗憾的是，升级之后的软件，有一个bug，这个bug不是功能上的bug，也不是安全漏洞，而是和汽油费相关的，我们说你增加一个规则，收到一个交易，判断一下这个交易是不是和The DAO账户相关的，如果是的话，认定是非法交易，不予执行，这个时候还要不要收取汽油费？汽油费的机制很大的一方面是为了防范恶意的攻击者不断地去发放非法交易，浪费矿工的资源，反正对他来说成本很低，以太坊发布的软件升级，在这种情况下，恰恰是没有收汽油费，结果网上有大量的非法的交易，本来是大多数矿工都升级了软件的，但是升级之后不停地收到这种攻击，过不了多久，矿工就受不了了，于是回滚了软件升级，又改回了原来的版本，于是软分叉的方案就失败了，这个时候，形势就比较严峻了。</p>
-</blockquote>
-<p>​    子基金成立之后，有28天的锁定期，然后黑客就可以把钱取走了，软分叉的方案失败之后剩下的时间就不多了，既然软的不行，就来硬的。</p>
-<p>​    以太坊团队设计了一个硬分叉的方案，通过软件升级的方法，把The DAO账户上的所有资金强行转到另外一个新的合约上去，这个新的智能合约只有一个功能，就是退钱，当初用以太币买的The DAO的代币，现在可以把这个代币退回成以太币，就这一个功能，为什么是硬分叉？</p>
-<blockquote>
-<p>用软件升级的办法强行重新记账，本来要转账得有合法的签名，比如说我要把你账上的钱转走，那得经过你的同意，有你的签名才行，这个时候就不管这些了，这是非常时期，凡是The DAO上面的资金，不管本人同意不同意，都要强行转到一个新的智能合约上去，就有点像法院的强制执行，那么升级的软件里规定了强制执行的具体日期：挖到第192万个区块的时候。所有升级软件的矿工，挖到第192万个区块的时候，自动执行这个转账交易，不用合法的签名，这是在升级的软件里写死的一条规则，旧矿工是不会认可这个区块的，因为没有合法的签名，认为是非法交易，所以是硬分叉。</p>
-</blockquote>
-<p>​    硬分叉的方案一提出来，在以太坊社区引起了非常激烈的辩论，我们前面说过，社区本来就分成了两派，有一派是认为不应该采取补救措施，这些人认为这种强行重新记账的办法是没办法接受的，这不是“耍流氓”吗？其实比中心化的组织还要差，法院强制执行都要走法律程序，被告还能聘请律师辩护呢。支持硬分叉和反对硬分叉的两派，争论地非常激烈，之后就投票，以太坊团队实现了一个用智能合约投票的功能，你可以把手里的以太币发到合约里进行投票，最后投票的结果是大部分人支持硬分叉，于是绝大多数矿工也升级了硬分叉的版本，大家就等着挖出第192万个区块的历史性时刻，这一次没有出现意外，硬分叉成功了，黑客盗取以太币的行为最终还是没有能够获利。故事到这也就结束了。</p>
-<p>​    当初那些反对硬分叉的人，并没有因为投票结果而改变立场，他们认为，首先这次投票参与的人不是很多，投票是由两个智能合约，如果支持硬分叉，就把以太币投到一个合约里，如果反对硬分叉，发到另外一个合约里，然后锁到这个合约里，等投票之后再退回来，有很多以太币根本没有参加投票，这是第一点。第二点，也是最重要的一点，投票能说明问题吗？大多数人的意见一定是对的吗？你这样做是不是真的公平？硬分叉之后，旧的那条链并没有消亡，还有一些矿工留在上面继续挖，只不过算力大幅度下降，不到原来的1/10，但是这样做也有一定的好处，挖矿的难度大幅度的下调了，因为竞争没有这么激烈了，所以还是有些矿工愿意留在旧链上继续挖，过一段时间，有一些交易所开始上市交易旧链上的以太币（ETC：Ethereum Classic）。在旧链上挖的那些矿工有一些是出于投机目的，因为旧链上挖矿难度小，容易挖到币，而且上到交易所之后，盈利就有了途径，也有一些人在旧链上挖是出于信仰，出于坚持，纯而又纯的去中心化的理念，认为旧链中的以太坊根正苗红，这个ETC刚开始上交易所的时候，有很多人认为它的前途有非常大的不确定性，因为以太坊的核心开发团队都是支持硬分叉的，都是转到新链上开发的，那么旧链还能存活多久，这是大家的一个疑问，结果一直存活到了现在。</p>
-<p>​    在刚开始的时候，两条链并存实际上带来了很多问题，因为这两条链的代码基本上是一样的，除了硬分叉相关的规则不一样之外，其他大部分代码都是一样的，而且硬分叉之前，用的也是同一套历史账本，用的同一套账户，私钥都一样，这样会带来一个什么问题？重放攻击，在新链上一个合法的交易，放在旧链上去，同样是合法的，重放之后仍然是可以执行的，同样，反过来也是一样，带来了很多管理上的混乱，后来给两条链增加了一个chain ID。旧链上的算力，已经比刚硬分叉的时候提高了很多倍了，到这里，这个故事才真正讲完了。</p>
-<p>​    不论是软分叉的解决方案，还是硬分叉的解决方案，目标都是为了锁定黑客盗币的那些账户，但是我们讲解决方案的时候，都是把The DAO的所有账户都作为目标，比如软分叉的时候，The DAO的所有账户都不准交易，硬分叉的时候，The DAO的所有交易都必须转账，为什么不能只针对黑客的那些账户？</p>
-<blockquote>
-<p>我把黑客的钱没收了，然后按照发生攻击之前，每个人的账户余额去退，实际上最后也是这么操作的，智能合约的内容是公开的，包括智能合约所有的变量，存储什么的，函数定义成public，是大家都可以调用，但是不定义成public，函数的内容还是可以看得见的，就区块链上的代码都是开源的。</p>
-<p>如果我们只冻结黑客的账户，The DAO的其他账户该怎么处理？其他账户是好人的所以不用管？如果你的智能合约写的有bug，你发布到区块链上之后，就改不了了，The DAO这个智能合约是有bug的，这个bug黑客这次用了，下次别人也可以用，光是把黑客的账户冻结了 ，剩下的账户继续运行，那任何人都可以成为黑客，在用同样的方法盗取以太币，这个bug你修不了，所以智能合约出现这种致命的bug，就作废了，事实上最后他也作废了，为什么他只存活了三个月，硬分叉之后，这个风靡一时的投资基金，The DAO就随之解体了，所有的账户都不安全了。</p>
-</blockquote>
+<p>​    出现智能合约的漏洞之后，有些人认为，应该去选取一种表达能力适中的语言，不能像比特币脚本语言的表达能力太弱，也不要像以太坊的solidity一样，表达能力是图灵完备的：可以实现智能合约要实现的功能，但是又不容易出现安全漏洞。</p>
+<p>​    设计的语言很难预料到将来可能出现的应用场景，也很难预料到将来可能出现的所有安全攻击，所以这么设计是很难设计出来的，包括比特币脚本，虽然简单，但是实际应用当中，大多数矿工也只是接受几个常用的脚本，有一个安全脚本的白名单（white list），如果脚本不在白名单里面，很多矿工缺省情况下是不接受的。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -367,6 +278,64 @@
       </tags>
   </entry>
   <entry>
+    <title>ETH十---The DAO</title>
+    <url>/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/</url>
+    <content><![CDATA[<h1 id="TheDAO"><a href="#TheDAO" class="headerlink" title="TheDAO"></a>TheDAO</h1><p>​    冲入攻击在现实中真的会发生吗？本文章讲解一下2015年发生过的一次真实的案例。这个案例在以太坊的历史上赫赫有名，造成了以太坊的分裂，可以说以太坊的历史都被他改写了。</p>
+<p>​    我们说比特币实现了去中心化的货币，以太坊实现了去中心化的合约，那么去中心化这么好，那为什么不把所有的都改成去中心化的？所以有的人就提议：DAO(Decentralized Autonomous Organization)，去中心化的自治组织。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>​    传统社会上，组织是建立在某种法律文件上的，规范组织的行为，有时候还可能需要到政府登陆注册，在区块链上，DAO这个组织就是建立在代码之上的，组织上的规章制度，是写在代码里的，通过区块链的共识协议来维护规章制度的正确执行，这就是DAO。</p>
+</blockquote>
+<p>​    在2016年5月的时候，出现了一个致力于众筹投资的DAO，他的名字叫做The DAO（是指这个DAO叫做The DAO），它的工作原理，有点像众筹的一个投资基金，只不过投资的钱的来源，是通过在区块链上众筹的方法得到的，本质上是运行在以太坊上的一个智能合约，如果你想参与这个The DAO，那么你可以把以太币发给这个智能合约，然后可以换回The DAO的代币，需要决定投资哪个项目是大家投票决定的，你手里的代币越多，投票的权重越大，那么最后如果有了收益，也是按照智能合约中规定的制度来进行收益分配的，就是The DAO的工作原理。工作方法实际上有点像DAC（Decentralized Autonomous Corporation，去中心化的自治公司）的模式，一般来说DAC是出于盈利目的的，是为了经营赚钱，DAO可以是出于非营利性目的，DAC虽然叫做公司，但是不具有社会上公司的法人地位，一般来说，也没有董事长、CEO之类的职务。</p>
+<p>​    The DAO在当时收到了很高的关注度，因为以前从来没有这样民主的投资基金，在当时被称为一种“伟大的尝试”，引起了互联网社区里很大的兴奋，从2016年5月份开始众筹，一个月的时间就筹集了价值1.5亿美元的以太币，当时的以太币价格还是比较便宜的，这些以太币放在现在的话，大概是价值几十亿美元，众筹的速度和规模在历史上是非常罕见的，比很多众筹网站要快得多，这也反映出了区块链技术的强大生命力，遗憾的是，The DAO只存活了三个月，问题出在哪里？比如你是一个投资者，你怎么取回The DAO的收益？这个在The DAO的基金里是通过“拆分”的方法实现的，叫做<code>Split DAO</code>，拆分的方法不是单纯的用来取回你的收益，也是一种建立子基金的方法，叫<code>child DAO</code>（拆分完之后叫做child DAO），设计理念是：</p>
+<blockquote>
+<p>​    我们说这个The DAO投资项目是靠大家一起用手中的代币去投票，那么如果有一小部分人投资理念和其他人不太一样，怎么办？比如说有一个小众的项目，少数人觉得很好，值得投，得不到大多数人的认可，这种情况下，这一小部分人可以用拆分的方法，从The DAO里面独立出来，成立自己的一个子基金，就是<code>child DAO</code>，然后拆分的时候，手中的代币，是要被收回去的，然后换成相应数量的以太币，就是把相应数量的以太币打到他们这个子基金里，然后他们就可以投他们想投的项目了。</p>
+</blockquote>
+<p>​    拆分的一个极端的例子，就是单独的一个投资者成立一个子基金，这个child DAO里就是他一个人，这样就可以把所有的钱投给自己，这是投资者取回投资和收益的唯一途径，它没有像上一篇文章所说的那种withdraw函数，拆分之前有7天的辩论期（决定要不要加入这个拆分，或者评价），拆分之后有28天的锁定期（成立一个子基金之后，需要28天之后才能把以太币取出来），我们后面会看到这28天的锁定期给了以太坊社区采用补救措施的时间，拆分的理念并没有错，而且可以说是民主制度的体现，民主制度并不是绝对的，少数的服从多数，而是说，也要尊重少数人选择的权力，既然这个拆分的理念没有错，那么问题出在哪里了？问题就出现在了<code>split DAO</code>的实现上。</p>
+<p>相关代码：</p>
+<p><img src="/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/QQ%E6%88%AA%E5%9B%BE20201130191502.png"></p>
+<blockquote>
+<p>withdrawRewardFor把钱还给调用这个函数的人，之后把The DAO中的金额减少相应的数量，再把调用者的账户清零，这里就有问题了，按照上一篇文章所说的，应该先把账户清零，然后再转账，黑客就是利用这个漏洞进行的重入攻击。</p>
+</blockquote>
+<p>​    The DAO是从2016年五月开始众筹的，差不多一个月的时间，筹集了价值1.5亿美元的以太币，然后黑客就利用这个重入攻击，从里面转走了5000万美元的以太币，差不多1/3，这件事情当前在以太坊社区引起了很大的恐慌。这个时间也引起了以太币价格的大跳水，那么以太坊社区对此进行了激烈的讨论，社区的意见分裂为两派，一派认为要回滚交易（成立的子基金有28天的锁定期，所以黑客暂时还没有办法把钱取走，还有时间可以采取补救措施），通过回滚交易就不能让黑客得逞，这样能保障广大投资者的正当利益，另一派认为，不需要采取补救措施，因为黑客的行为并没有违法，既然我们说code is law，规则是由代码决定的，那么代码中的漏洞，也是规则的一部分，发生这个事情之后，网上流传了一封据说是黑客也给以太坊社区的公开信，公开信里黑客说，我没有做错任何事情，我只是利用了你代码中的一个feature。所以以太坊有一部分人认为是不应该采取补救措施，尤其是回滚交易，因为区块链最重要的特性是不可篡改性，如果出了问题就回滚，那么怎么能叫做不可篡改呢？而且这次出问题的只是以太坊运行的一个应用而已，The DAO是以太坊上的一个智能合约，以太坊本身的代码没有问题，如果每个智能合约出了问题都回滚的话，那不乱套了？</p>
+<p>​    以太坊的开发团队是支持补救措施的，主要是这个事情的影响太大了，The DAO筹集的以太币的数目已经占到了当时流通量的很大一部分，大概是百分之十几。如果放纵不管，这些以太币的1/3要落入黑客的手里，我们真的希望这么多的以太币都集中在黑客的手里吗？而且投资者的利益怎么办？（too big to fail 出自2008年美国金融危机），以太坊社区有人认为The DAO的危机也是属于too big to fail，如果只是个小的智能合约出了问题，以太坊社区是不管的，开发团队也是不管的。</p>
+<p>​    假设要采取补救措施，怎么补救？</p>
+<blockquote>
+<p>比如我们就从开始攻击的那个区块开始分叉，这样行不行？从攻击的链的上一个区块分叉，让下面的一条链，比上一条链要长（常见的分叉攻击的方法）</p>
+<p><img src="/2020/11/30/%E5%8C%BA%E5%9D%97%E9%93%BE/The-DAO/QQ%E6%88%AA%E5%9B%BE20201130193824.png"></p>
+</blockquote>
+<p>​    上图所说的方法行不行？</p>
+<blockquote>
+<p>这个问题不是所有人都要统一，假设所有人都往下挖，这样会有什么后果？</p>
+<p>不光是黑客攻击的交易回滚，上面这条链上攻击之后的所有交易都回滚了。上面有很多合法的交易，The DAO只是以太坊中运行的一个智能合约，另外还有很多智能合约在运行，还有一些正常的网上支付的交易，那就乱套了。要回滚的话，只能是精确定位，只能是针对黑客盗取以太币的那些交易，其他发生的正常交易不能发生影响，这是采取补救措施的一个原则。</p>
+</blockquote>
+<p>​    以太坊团队制定了两步走的方案，第一步，首先要锁定黑客的账户，第二步再设法把盗取的以太币退回去，清退The DAO基金上的这些钱。</p>
+<blockquote>
+<p>第一步：以太坊团队发布了一个软件升级，在升级的软件里增加了一条规则，凡是跟The DAO这个基金上的账户相关的，不允许做任何交易，发布之后，大多数以太坊的矿工都升级了这个软件。这个是属于软分叉，软件升级只是增加了一个判断规则，当一个节点收到一个交易的时候，判断这个交易是否合法，增加一个判断规则，The DAO相关的账户不允许任何交易，如果这个交易和The DAO账户相关的，就认为这个交易非法，增加这个规则之后，新矿工挖出的这个区块，旧矿工是认可的，因为旧矿工不知道这个新规则，他也不会去查这个，但是旧矿工挖出的区块，新矿工有可能不认可，如果这个区块里包含了The DAO这个账户的交易，就不认可，所以是软分叉。软件升级的想法是挺好的，也得到了大多数矿工的支持，遗憾的是，升级之后的软件，有一个bug，这个bug不是功能上的bug，也不是安全漏洞，而是和汽油费相关的，我们说你增加一个规则，收到一个交易，判断一下这个交易是不是和The DAO账户相关的，如果是的话，认定是非法交易，不予执行，这个时候还要不要收取汽油费？汽油费的机制很大的一方面是为了防范恶意的攻击者不断地去发放非法交易，浪费矿工的资源，反正对他来说成本很低，以太坊发布的软件升级，在这种情况下，恰恰是没有收汽油费，结果网上有大量的非法的交易，本来是大多数矿工都升级了软件的，但是升级之后不停地收到这种攻击，过不了多久，矿工就受不了了，于是回滚了软件升级，又改回了原来的版本，于是软分叉的方案就失败了，这个时候，形势就比较严峻了。</p>
+</blockquote>
+<p>​    子基金成立之后，有28天的锁定期，然后黑客就可以把钱取走了，软分叉的方案失败之后剩下的时间就不多了，既然软的不行，就来硬的。</p>
+<p>​    以太坊团队设计了一个硬分叉的方案，通过软件升级的方法，把The DAO账户上的所有资金强行转到另外一个新的合约上去，这个新的智能合约只有一个功能，就是退钱，当初用以太币买的The DAO的代币，现在可以把这个代币退回成以太币，就这一个功能，为什么是硬分叉？</p>
+<blockquote>
+<p>用软件升级的办法强行重新记账，本来要转账得有合法的签名，比如说我要把你账上的钱转走，那得经过你的同意，有你的签名才行，这个时候就不管这些了，这是非常时期，凡是The DAO上面的资金，不管本人同意不同意，都要强行转到一个新的智能合约上去，就有点像法院的强制执行，那么升级的软件里规定了强制执行的具体日期：挖到第192万个区块的时候。所有升级软件的矿工，挖到第192万个区块的时候，自动执行这个转账交易，不用合法的签名，这是在升级的软件里写死的一条规则，旧矿工是不会认可这个区块的，因为没有合法的签名，认为是非法交易，所以是硬分叉。</p>
+</blockquote>
+<p>​    硬分叉的方案一提出来，在以太坊社区引起了非常激烈的辩论，我们前面说过，社区本来就分成了两派，有一派是认为不应该采取补救措施，这些人认为这种强行重新记账的办法是没办法接受的，这不是“耍流氓”吗？其实比中心化的组织还要差，法院强制执行都要走法律程序，被告还能聘请律师辩护呢。支持硬分叉和反对硬分叉的两派，争论地非常激烈，之后就投票，以太坊团队实现了一个用智能合约投票的功能，你可以把手里的以太币发到合约里进行投票，最后投票的结果是大部分人支持硬分叉，于是绝大多数矿工也升级了硬分叉的版本，大家就等着挖出第192万个区块的历史性时刻，这一次没有出现意外，硬分叉成功了，黑客盗取以太币的行为最终还是没有能够获利。故事到这也就结束了。</p>
+<p>​    当初那些反对硬分叉的人，并没有因为投票结果而改变立场，他们认为，首先这次投票参与的人不是很多，投票是由两个智能合约，如果支持硬分叉，就把以太币投到一个合约里，如果反对硬分叉，发到另外一个合约里，然后锁到这个合约里，等投票之后再退回来，有很多以太币根本没有参加投票，这是第一点。第二点，也是最重要的一点，投票能说明问题吗？大多数人的意见一定是对的吗？你这样做是不是真的公平？硬分叉之后，旧的那条链并没有消亡，还有一些矿工留在上面继续挖，只不过算力大幅度下降，不到原来的1/10，但是这样做也有一定的好处，挖矿的难度大幅度的下调了，因为竞争没有这么激烈了，所以还是有些矿工愿意留在旧链上继续挖，过一段时间，有一些交易所开始上市交易旧链上的以太币（ETC：Ethereum Classic）。在旧链上挖的那些矿工有一些是出于投机目的，因为旧链上挖矿难度小，容易挖到币，而且上到交易所之后，盈利就有了途径，也有一些人在旧链上挖是出于信仰，出于坚持，纯而又纯的去中心化的理念，认为旧链中的以太坊根正苗红，这个ETC刚开始上交易所的时候，有很多人认为它的前途有非常大的不确定性，因为以太坊的核心开发团队都是支持硬分叉的，都是转到新链上开发的，那么旧链还能存活多久，这是大家的一个疑问，结果一直存活到了现在。</p>
+<p>​    在刚开始的时候，两条链并存实际上带来了很多问题，因为这两条链的代码基本上是一样的，除了硬分叉相关的规则不一样之外，其他大部分代码都是一样的，而且硬分叉之前，用的也是同一套历史账本，用的同一套账户，私钥都一样，这样会带来一个什么问题？重放攻击，在新链上一个合法的交易，放在旧链上去，同样是合法的，重放之后仍然是可以执行的，同样，反过来也是一样，带来了很多管理上的混乱，后来给两条链增加了一个chain ID。旧链上的算力，已经比刚硬分叉的时候提高了很多倍了，到这里，这个故事才真正讲完了。</p>
+<p>​    不论是软分叉的解决方案，还是硬分叉的解决方案，目标都是为了锁定黑客盗币的那些账户，但是我们讲解决方案的时候，都是把The DAO的所有账户都作为目标，比如软分叉的时候，The DAO的所有账户都不准交易，硬分叉的时候，The DAO的所有交易都必须转账，为什么不能只针对黑客的那些账户？</p>
+<blockquote>
+<p>我把黑客的钱没收了，然后按照发生攻击之前，每个人的账户余额去退，实际上最后也是这么操作的，智能合约的内容是公开的，包括智能合约所有的变量，存储什么的，函数定义成public，是大家都可以调用，但是不定义成public，函数的内容还是可以看得见的，就区块链上的代码都是开源的。</p>
+<p>如果我们只冻结黑客的账户，The DAO的其他账户该怎么处理？其他账户是好人的所以不用管？如果你的智能合约写的有bug，你发布到区块链上之后，就改不了了，The DAO这个智能合约是有bug的，这个bug黑客这次用了，下次别人也可以用，光是把黑客的账户冻结了 ，剩下的账户继续运行，那任何人都可以成为黑客，在用同样的方法盗取以太币，这个bug你修不了，所以智能合约出现这种致命的bug，就作废了，事实上最后他也作废了，为什么他只存活了三个月，硬分叉之后，这个风靡一时的投资基金，The DAO就随之解体了，所有的账户都不安全了。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ETH五---以太坊中的共识机制</title>
     <url>/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h1 id="以太坊中的共识机制"><a href="#以太坊中的共识机制" class="headerlink" title="以太坊中的共识机制"></a>以太坊中的共识机制</h1><p>​    以太坊把出块时间降低到了十几秒，和比特币相比，以太坊的出块速度相当于提高了40倍，但是降低出块时间之后也带了一些新的问题：比特币和以太坊都是运行在应用层的共识协议，它的底层都是使用p2p overlay network，这个network本身传输的时间是比较长的，因为它的拓扑协议做flooding的时候是没有考虑实际的拓扑结果，这就带来一个问题，你发布一个区块之后，区块在网络上传到其他节点可能需要十几秒的时间，对于比特币来说，十分钟的出块时间相当于600秒，这个是足够让新发布的区块传播到网上的其他节点的，当然，即使这样，因为挖矿是个概率的过程，所以仍然有可能是有两个矿工同时获得记账权，同时发布区块，这种情况会带来临时性的分叉，那么对于以太坊来说，这种临时性的分叉就会变成常态，而且分叉的数目也会更多，这对于共识协议来说，有什么挑战呢？</p>
@@ -433,33 +402,6 @@
 <p>看uncle number 和block height的差值，判断，相差多少代，上图说明，系统中的大多数区块都及时地得到了合并</p>
 <p>叔父区块奖励的具体内容：</p>
 <p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200937.png"></p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ETH一---概述</title>
-    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<h1 id="以太坊概述"><a href="#以太坊概述" class="headerlink" title="以太坊概述"></a>以太坊概述</h1><p>比特币和以太坊是区块链中的最主要的两种加密货币，比特币被称为区块链1.0，以太坊被称为2.0</p>
-<p>以太坊对比特币运行过程中出现的问题做出了改进，比如说出块时间，比特币是十分钟，有人认为太长了，以太坊当中出块时间大幅度地降低到了十几秒，而且，为了这种出块时间，以太坊还设计了一套ghost的共识机制；另一个重大的改进是mining puzzle：比特币的mining puzzle是计算密集型的，比拼的是挖矿的计算能力，这种结果就造就了现在的挖矿设备专业化。以太坊对内存的要求是很高的，memory hard mining puzzle，这样就在一定程度上限制了ASIC芯片的使用，我们管它叫做ASIC resistance，将来以太坊还会有一些更高的改进，用proof of stake（权益证明，不挖矿，而是按照股份和权益，用类似于投票的方式来决定下一个区块该怎么产生）替换proof of work。</p>
-<a id="more"></a>
-
-<p>以太坊还增加了一个重要的功能，就是对智能合约（smart contract）的支持。智能合约？</p>
-<p>我们知道Bitcoin：decentralized currency，根据比特币成功的案例，我们知道他是去中心化的，如果货币去中心化怎么办？还有什么可以去中心化？</p>
-<blockquote>
-<p>以太坊就提出了decentralized contract（去中心化的合约）什么是decentralized contract？</p>
-<p>货币本来是由政府发行的，货币的价值建立在政府公信力的基础上，然后政府通过司法手段维护货币体系的正常运行，比特币的出现，将政府的这些职能取代了，通过密码学、共识机制来维护加密货币体系的正常运行。</p>
-<p>去中心化的合约也是类似。现实中的合约应该也是通过司法手段、通过政府来维护，那么我们能不能通过技术手段，将司法手段取代了，这就是以太坊智能合约设计的一个目的，如果合同中的内容可以通过程序代码来实现出来的，那么我们把这个代码就可以放在区块链上，通过区块链的不可篡改性，来保证这个代码的正确运行，当然，不是所有的合约的内容都可以用编程语言来实现，也不是所有的合同条款能够量化的。</p>
-</blockquote>
-<p>这种去中心化的合同有什么好处呢？</p>
-<blockquote>
-<p>首先思考去中心化的货币有什么好处？有什么应用场景？</p>
-<p>可以实现跨国转账，手续没有跨国转账那么麻烦；智能合约也有一些类似的应用场景，比如如果合同的签署方是来自世界各地的，没有一个统一的司法管辖权，这个时候如果用司法来管辖，就比较困难：比如说众筹，你都不知道每个人都来自哪，所以可以使用程序写好的规则来管辖，这时候就会比较方便。（其实，就算是所有的人都在同一个司法管辖之下的，你想真正用司法手段来维护，也是一个比较费时费力的过程）。</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -656,109 +598,23 @@
       </tags>
   </entry>
   <entry>
-    <title>ETH三---状态树</title>
-    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/</url>
-    <content><![CDATA[<h1 id="ETH-状态树"><a href="#ETH-状态树" class="headerlink" title="ETH-状态树"></a>ETH-状态树</h1><p>以太坊的账户是基于账户的模式，系统中显示的维护每个账户有多少余额。</p>
-<p>我们需要完成的是账户地址，到账户状态的映射（addr(160 bits == 表示成40个16进制的数)-&gt;state）,这里的状态指的是外部账户和合约账户的状态。</p>
+    <title>ETH一---概述</title>
+    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h1 id="以太坊概述"><a href="#以太坊概述" class="headerlink" title="以太坊概述"></a>以太坊概述</h1><p>比特币和以太坊是区块链中的最主要的两种加密货币，比特币被称为区块链1.0，以太坊被称为2.0</p>
+<p>以太坊对比特币运行过程中出现的问题做出了改进，比如说出块时间，比特币是十分钟，有人认为太长了，以太坊当中出块时间大幅度地降低到了十几秒，而且，为了这种出块时间，以太坊还设计了一套ghost的共识机制；另一个重大的改进是mining puzzle：比特币的mining puzzle是计算密集型的，比拼的是挖矿的计算能力，这种结果就造就了现在的挖矿设备专业化。以太坊对内存的要求是很高的，memory hard mining puzzle，这样就在一定程度上限制了ASIC芯片的使用，我们管它叫做ASIC resistance，将来以太坊还会有一些更高的改进，用proof of stake（权益证明，不挖矿，而是按照股份和权益，用类似于投票的方式来决定下一个区块该怎么产生）替换proof of work。</p>
 <a id="more"></a>
 
-<p>①这有点像key-value对，给出一个账户地址，要找出一个相应的状态。如果就用一个哈希表怎么样？每创建一个账户就存入哈希表（不考虑哈希碰撞，它的效率是常量级的）</p>
+<p>以太坊还增加了一个重要的功能，就是对智能合约（smart contract）的支持。智能合约？</p>
+<p>我们知道Bitcoin：decentralized currency，根据比特币成功的案例，我们知道他是去中心化的，如果货币去中心化怎么办？还有什么可以去中心化？</p>
 <blockquote>
-<p>用这个表的话，如果要提供Merkle proof，怎么提供？</p>
-<p>比如说，你要和一个人签合同，希望他能证明一下他有多少钱，一种方法是，把这个哈希表中的元素（内容）组织成一个Merkle tree，然后算出一个根哈希值，这个根哈希值得保存在block header里，公布出去，那么这个根哈希值只要是正确的，就能保证底下的树不会被篡改。那如果有新的交易怎么办，新的交易必然会导致哈希表的内容变化，然后我们发布下一个区块的时候，要把这些哈希表中的内容在组织成一棵Merkle tree吗？这个代价会不会太大了点，实际上发生变化的状态只是一小部分。难道，比特币在构建新区块的时候就不用构建一颗新的Merkle tree吗？那个为什么没有这个问题？因为比特币发布的区块中的Merkle tree是通过区块中的交易来构建的，每个区块中的交易都不一样。如果像以太坊中的所有账户都构成一个Merkle tree来比较，代价就太大了（这比交易构成Merkle tree要高出好几个数量级）。</p>
-<p>除了提供Merkle proof 证明账户上有多少钱之外，这个Merkle tree还有另外的作用：维护各个全节点之间状态的一致性（这也就是为什么比特币把根哈希值写在块头里的一个原因，对于这个区块中包含那些交易，全节点要有一个共识）。</p>
+<p>以太坊就提出了decentralized contract（去中心化的合约）什么是decentralized contract？</p>
+<p>货币本来是由政府发行的，货币的价值建立在政府公信力的基础上，然后政府通过司法手段维护货币体系的正常运行，比特币的出现，将政府的这些职能取代了，通过密码学、共识机制来维护加密货币体系的正常运行。</p>
+<p>去中心化的合约也是类似。现实中的合约应该也是通过司法手段、通过政府来维护，那么我们能不能通过技术手段，将司法手段取代了，这就是以太坊智能合约设计的一个目的，如果合同中的内容可以通过程序代码来实现出来的，那么我们把这个代码就可以放在区块链上，通过区块链的不可篡改性，来保证这个代码的正确运行，当然，不是所有的合约的内容都可以用编程语言来实现，也不是所有的合同条款能够量化的。</p>
 </blockquote>
-<p>所以如果就简单的全节点在本地维护一个哈希表，然后需要Merkle tree的时候构建Merkle tree，根哈希值放在块头，这个方法是不行的。</p>
-<p>②我们不需要哈希表了，直接就把所有的账户放进去，你要改的时候直接在Merkle tree里改，因为你每次更新的都是一小部分账户，所以你每次修改的都是Merkle tree中的一小部分？</p>
+<p>这种去中心化的合同有什么好处呢？</p>
 <blockquote>
-<p>这个方法的问题在于，没有提供一个高效的查找和更新的方法，还有一个问题在于，我们这个Merkle tree要排序吗？如果不排序会怎么样？</p>
-<p>​    如果不规定这些账户在叶子节点的顺序，那么构建出来的Merkle tree不是唯一的。系统中有很多的全节点，每个    全节点按照自己的某个顺序，构建一颗Merkle tree，最后构建出来的Merkle tree是不一样的。比特币中不也是不    排序吗？为什么比特币中就没有这个问题？</p>
-<p>​    比特币中每个结点收到的交易顺序也是不一样的，所以理论上说，这样构建的Merkle tree也是不一样的，但是比    特币中的Merkle tree最终是获得记账权的结点说了算。</p>
-<p>​    如果以太坊也这么做的话，需要把账户的状态发布到区块里（也就是每个全节点决定怎么把账户组织成一个Merkle tree），但是你是发布的账户的状态，不是交易的状态，差了好几个数量级。</p>
-<p>如果使用排序的Merkle tree呢？</p>
-<p>如果你新增一个账户怎么办，这个账户地址生成的时候是随机的，可能是在中间，那么后面的这些账户的结构都得变。其实可以这样：你产生一个新账户，其他人其实是没有必要知道的，当你产生交互的时候或者别人往里面转账别人才需要知道，当产生交易需要把这个账户加入到数据结构中，问题在于，这个代价有多大？如果你用哈希表的话，代价是常量级的，如果直接使用账户的哈希，这个代价可能得重构这个数据结构。</p>
-</blockquote>
-<p>以太坊采用的做法：</p>
-<p>首先介绍trie（中文叫做字典树）的数据结构。</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928200145.png"></p>
-<p>这个结构的特点：</p>
-<blockquote>
-<p>①在trie中，每个节点的分支数目，取决于这个key值里每个元素得取值范围，这个例子中，每个结点得分支个数最多是26个加上一个结束标志位，表示这个单词到这是不是就结束了。</p>
-<p>②trie的查找效率，取决于这个key的长度。</p>
-<p>③如果使用哈希表来存储这个key-value对，从理论上说，是有可能出现哈希碰撞（两个地址不一样，但是它的内容碰巧一样）的，但是trie是如果两个的地址不一样，最后肯定映射到树中的不同分支，所以trie不会出现碰撞</p>
-<p>④我们前面讲的Merkle tree，如果你不排序，一个问题是，你的账户插入到Merkle tree中的顺序不一样 ，Merkle tree的结构也不一样，trie中只要给定一组输入，这个输入不变，最后插入这个trie当中是一样的。</p>
-<p>⑤每次发布一个区块，系统中的绝大多数状态是不变的，只有个别受到影响的状态才会变，所以更新操作的局部性很重要，要想访问genesis，只要访问对应的分支即可，更新的局部性也是很好的</p>
-</blockquote>
-<p>但是trie也有缺点：只有一个分支的情况很浪费内存，如果能把一个分支的分支合并起来，就能够提高存储的开销，同时提高查找和更新的开销，这就引入了我们的Patricia tree（trie）[经过路径压缩的前缀树]，如果经过路径压缩，上例就变成了下图：</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928202332.png"></p>
-<p>对于Patricia tree来说，如果你需要添加结点，原来压缩的结点可能会需要扩展开来，路径压缩在什么情况下比较好？</p>
-<blockquote>
-<p>树中插入的这些键值的分布如果是比较稀疏的情况下。比如上图中的，每个单词都很长，但是总共没有多少个单词的时候。</p>
-<p>例如：下图的三个单词插入一个普通的tria中，效率就变得特别低</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181750.png"></p>
-<p>如果用Patricia tree，如下图</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181926.png"></p>
-</blockquote>
-<p>在以太坊中是怎么样的？</p>
-<p>我们在前面讲过，地址表示成40个16进制的数，所以这个分叉数目，有时候管他叫做branching factor（17 == 16个[0 - f] 加上一个结束标志位），比特币和以太坊的地址是不通用的，两个地址的格式、长度都是不一样的，有一点是一样的，以太坊中的地址，也是公钥经过转化得来的（公钥取哈希，截一段，前面不要，只要后面的一部分）</p>
-<p>那么我们这个应用场景（以太坊）中键值是否是稀疏的呢？</p>
-<blockquote>
-<p>键值是地址，160位，总共的地址空间有2^160，以太坊中全世界的账户数目加在一起也远远没有这么大，所以以太坊的账户是非常非常稀疏的。</p>
-</blockquote>
-<p>为什么不把账户地址缩短一点？这样访问效率还快，也没必要那么稀疏了</p>
-<blockquote>
-<p>更大地避免哈希碰撞，这是一个去中心化的系统防止账户冲突的唯一办法。</p>
-</blockquote>
-<h2 id="MPT"><a href="#MPT" class="headerlink" title="MPT"></a>MPT</h2><p>Merkle Patricia tree</p>
-<p>和Patricia tree有什么区别？</p>
-<blockquote>
-<p>把普通指针换成了哈希指针，所有的账户组织成一个Patricia tree，用路劲压缩提高效率，然后把普通指针换成哈希指针，所以就能计算出一个根哈希值，存放在block header里。比特币有一个根哈希值（这个区块里所有交易组成的根哈希值），以太坊中有三个，这里讲的是状态树。</p>
-</blockquote>
-<p>这个根哈希值有什么用？</p>
-<blockquote>
-<p>①防止篡改，只要根哈希值不变，整棵树的任何部分都没有办法被篡改。</p>
-<p>②Merkle Proof，这棵树能证明什么？能证明每个账户的余额：这个账户所在的分支，作为Merkle Proof，发给轻结点，轻结点就可以验证账户上有多少钱。</p>
-<p>③能不能证明一个账户是不存在的？你想给一个账户转账之前，你想验证一下节点里，有没有这个账户信息，证明方法和sorted Merkle tree类似，如果存在是存在什么样的分支里，把这个分支作为Merkle tree发出去，可以证明它是不存在的。</p>
-</blockquote>
-<p>以太坊中用到的还不是原生的MPT，以太坊中使用的是Modified MPT：</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003184519.png"></p>
-<p>根节点取得的根哈希值KECCAK256是要写在块头里的，这里的指针都是哈希指针。</p>
-<p>每次发布一个新的区块的时候，这个状态树中有一些结点的值会发生变化，这些改变不是在原地改的，而是新建一些分支，原来的状态其实是保留下来的：</p>
-<p>我们可以看到，虽然每个区块都有一个状态树，但是这两棵树的大部分节点，是共享的，只有那些发生改变的节点，是需要新建一个分支的，这个例子中合约账户发生了变化（因为他有code，还有存储），合约账户的存储也是用MPT的形式保存下来的，这个存储其实也是一个key-value，维护的是从变量到这个变量取值的映射，所以以太坊中的结构是一个大的MPT，包含很多小的MPT（每个合约账户的存储都是一棵小的MPT） </p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003185717.png"></p>
-<p>这个例子中，nonce、balance发生了变化，code不变，所以Codehash指向原来树中的节点，存储中大部分结点也是没有变化，只有一个节点发生了变化，整数变量从29变为了45，所以新建了一个分支。</p>
-<p>所以，系统中的全节点维护的不是一棵MPT，而是每次出现一个区块，都要新建一个MPT，只不过这些状态树中大部分节点是共享的，只有少数发生变化的节点是需要新建分支的，那么，为什么要保留历史状态？（为什么不在原地直接改了）</p>
-<blockquote>
-<p>系统中可能会出现分叉，临时性的分叉实际上是很普遍的，以太坊把出块时间降到十几秒之后，临时性的分叉是常态。</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003190631.png"></p>
-<p>回滚的话，就需要维护这些历史记录，不是为了证明我以前有多少钱，而是因为当前这个交易有可能要undo，</p>
-<p>比特币中简单的转账交易是很容易的，以太坊中为什么不行？</p>
-<p>以太坊中有智能合约，以太坊如果不保存原来的状态，智能合约执行完成之后，你想要roll back，这是不可能的。</p>
-</blockquote>
-<p>以太坊中代码的数据结构：</p>
-<p>block header：</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191125.png"></p>
-<p>ParentHash：前一个区块块头的哈希值</p>
-<p>uncleHash：叔父区块的哈希值（ghost协议中会提到）[uncle可能回避parent大很多辈分]</p>
-<p>CoinBase：挖出这个区块的矿工的地址</p>
-<p>Root：状态数的根哈希</p>
-<p>TxHash：交易树的根哈希值</p>
-<p>ReceiptHash：收据树的根哈希值</p>
-<p>Bloom：和收据树相关，提供一种高效的查询，符合某种条件的交易的执行结果</p>
-<p>Difficulty：挖矿的难度，会根据需要调整</p>
-<p>GasLimit、GasUsed：和汽油费相关，有点类似比特币中的交易费</p>
-<p>Time：这个区块大致的产生时间</p>
-<p>MixDigest、Nonce：和挖矿过程相关，Nonce：类似于比特币中的随机数；MixDigest是从Nonce通过一些计算出来的哈希值。</p>
-<p>区块的结构：</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191918.png"> </p>
-<p>header：指向block header的指针</p>
-<p>uncles：指向叔父区块block header的指针（数组类型）</p>
-<p>transactions：交易列表</p>
-<p>区块真正在网上发布的信息：</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003192042.png"></p>
-<p>状态树中保存的是key-value pair，key就是地址， 我们前面所讲的都是key（地址的管理方式），那么这个value（账户的状态）呢？</p>
-<blockquote>
-<p>实际上是要经过一个序列化的过程：RLP（Recursive Length Prefix），极简主义，和protocal buffer相比；它只支持一种类型：nested array of bytes，说白了就是字节数组，以太坊的其他所有类型（整数、哈希表），最后都得变成nested array of bytes，所以你要实现一个RLP，比较容易。</p>
+<p>首先思考去中心化的货币有什么好处？有什么应用场景？</p>
+<p>可以实现跨国转账，手续没有跨国转账那么麻烦；智能合约也有一些类似的应用场景，比如如果合同的签署方是来自世界各地的，没有一个统一的司法管辖权，这个时候如果用司法来管辖，就比较困难：比如说众筹，你都不知道每个人都来自哪，所以可以使用程序写好的规则来管辖，这时候就会比较方便。（其实，就算是所有的人都在同一个司法管辖之下的，你想真正用司法手段来维护，也是一个比较费时费力的过程）。</p>
 </blockquote>
 ]]></content>
       <categories>
@@ -879,54 +735,110 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC九---分叉</title>
-    <url>/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/</url>
-    <content><![CDATA[<h1 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h1><p>fork:原来是一条链，现在是两条链形成了分叉。有两种情况：</p>
-<p>①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。</p>
-<p>②比特币的协议发生了改变，要修改比特币的协议，需要软件升级，在一个去中心化的系统里，在升级软件的时候，没有办法保证所有的结点同时都升级软件，我们假设大部分结点升级了软件，少数结点因为种种原因没有升级，有可能还没有来的及升级，也可能是不同意这个协议的修改，这种分叉叫做protocol fork，因为对比特币的协议产生了分歧，因为使用不同的协议造成了分叉。</p>
+    <title>ETH三---状态树</title>
+    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/</url>
+    <content><![CDATA[<h1 id="ETH-状态树"><a href="#ETH-状态树" class="headerlink" title="ETH-状态树"></a>ETH-状态树</h1><p>以太坊的账户是基于账户的模式，系统中显示的维护每个账户有多少余额。</p>
+<p>我们需要完成的是账户地址，到账户状态的映射（addr(160 bits == 表示成40个16进制的数)-&gt;state）,这里的状态指的是外部账户和合约账户的状态。</p>
 <a id="more"></a>
 
+<p>①这有点像key-value对，给出一个账户地址，要找出一个相应的状态。如果就用一个哈希表怎么样？每创建一个账户就存入哈希表（不考虑哈希碰撞，它的效率是常量级的）</p>
 <blockquote>
-<p>可以根据对协议修改的内容的不同，分为硬分叉（hard fork）和软分叉（soft fork）</p>
+<p>用这个表的话，如果要提供Merkle proof，怎么提供？</p>
+<p>比如说，你要和一个人签合同，希望他能证明一下他有多少钱，一种方法是，把这个哈希表中的元素（内容）组织成一个Merkle tree，然后算出一个根哈希值，这个根哈希值得保存在block header里，公布出去，那么这个根哈希值只要是正确的，就能保证底下的树不会被篡改。那如果有新的交易怎么办，新的交易必然会导致哈希表的内容变化，然后我们发布下一个区块的时候，要把这些哈希表中的内容在组织成一棵Merkle tree吗？这个代价会不会太大了点，实际上发生变化的状态只是一小部分。难道，比特币在构建新区块的时候就不用构建一颗新的Merkle tree吗？那个为什么没有这个问题？因为比特币发布的区块中的Merkle tree是通过区块中的交易来构建的，每个区块中的交易都不一样。如果像以太坊中的所有账户都构成一个Merkle tree来比较，代价就太大了（这比交易构成Merkle tree要高出好几个数量级）。</p>
+<p>除了提供Merkle proof 证明账户上有多少钱之外，这个Merkle tree还有另外的作用：维护各个全节点之间状态的一致性（这也就是为什么比特币把根哈希值写在块头里的一个原因，对于这个区块中包含那些交易，全节点要有一个共识）。</p>
 </blockquote>
-<p>什么是硬分叉？什么是软分叉？</p>
-<h2 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h2><p>出现硬分叉的情况，如果对比特币协议增加新的特性，有一些new feature，这些没有升级软件的那些旧的节点，他是不认可这些新特性的，他认为这些new feature是不合法的。这个时候就属于我们对比特币协议的内容产生了意见分歧，就会导致分叉。一个例子就是：比特币中的区块大小限制（block size limit）。</p>
+<p>所以如果就简单的全节点在本地维护一个哈希表，然后需要Merkle tree的时候构建Merkle tree，根哈希值放在块头，这个方法是不行的。</p>
+<p>②我们不需要哈希表了，直接就把所有的账户放进去，你要改的时候直接在Merkle tree里改，因为你每次更新的都是一小部分账户，所以你每次修改的都是Merkle tree中的一小部分？</p>
 <blockquote>
-<p>比特币规定每个区块是1M字节，有些人认为1M这个限制太小了，增加了比特币的延迟。</p>
-<p>一个交易差不多可以认为是250个字节，所以1000000字节大概是4000个交易左右，平均十分钟一个区块，算下来大概是每秒钟七笔交易</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907211038.png"></p>
-<p>我们用信用卡处理交易和这个完全不是一个数量级的，很多电商网站很多都不止这些，所以有的人认为这个区块太小了，限制了比特币的throw put（不知道老师是不是说的这个），同时也增加了延迟，因为你区块就只能装这么多区块，如果交易太多了的话，那可能有些交易，就得等到下一个区块才能被发布，平均要等十分钟</p>
+<p>这个方法的问题在于，没有提供一个高效的查找和更新的方法，还有一个问题在于，我们这个Merkle tree要排序吗？如果不排序会怎么样？</p>
+<p>​    如果不规定这些账户在叶子节点的顺序，那么构建出来的Merkle tree不是唯一的。系统中有很多的全节点，每个    全节点按照自己的某个顺序，构建一颗Merkle tree，最后构建出来的Merkle tree是不一样的。比特币中不也是不    排序吗？为什么比特币中就没有这个问题？</p>
+<p>​    比特币中每个结点收到的交易顺序也是不一样的，所以理论上说，这样构建的Merkle tree也是不一样的，但是比    特币中的Merkle tree最终是获得记账权的结点说了算。</p>
+<p>​    如果以太坊也这么做的话，需要把账户的状态发布到区块里（也就是每个全节点决定怎么把账户组织成一个Merkle tree），但是你是发布的账户的状态，不是交易的状态，差了好几个数量级。</p>
+<p>如果使用排序的Merkle tree呢？</p>
+<p>如果你新增一个账户怎么办，这个账户地址生成的时候是随机的，可能是在中间，那么后面的这些账户的结构都得变。其实可以这样：你产生一个新账户，其他人其实是没有必要知道的，当你产生交互的时候或者别人往里面转账别人才需要知道，当产生交易需要把这个账户加入到数据结构中，问题在于，这个代价有多大？如果你用哈希表的话，代价是常量级的，如果直接使用账户的哈希，这个代价可能得重构这个数据结构。</p>
 </blockquote>
-<p>我们假设有人发布了软件更新，把这个block size limit从1M增加到了4M（大多数结点更新了这个软件，少数节点没有更新【这里所说的节点数目不是按照账户的数目来算的，是按照算力的多少来算的】），这个时候系统运行起来会有什么结果？</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212426.png"></p>
-<p>备注：图中的解释有错误，应该是新产生的区块，旧结点不认可</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212813.png"></p>
-<p>备注：图中的“就”为“旧”</p>
-<p>只要这些旧结点不更新软件，分叉就不会消失，这就是为什么管他叫硬分叉（hard fork）。</p>
-<p>比特币社区中，有些人是比较保守的，像这种block size limit这种new feature，有些人真的是不会同意，而且，区块的大小不是越大越好（详情看比特币网络）。</p>
-<p>如果存在了硬分叉，那么下面的那一条链的出块奖励还有吗？</p>
+<p>以太坊采用的做法：</p>
+<p>首先介绍trie（中文叫做字典树）的数据结构。</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928200145.png"></p>
+<p>这个结构的特点：</p>
 <blockquote>
-<p>是有的（在各自的链上是承认的），会造成社区的分裂，如果一直存在下去，就会分家了，相当于变成了两种币，原来没有分裂的币，应该变成上下两条链都认可。</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907214138.png"></p>
-<p>后来有了一个措施：在各自的链上加上一个chain ID</p>
+<p>①在trie中，每个节点的分支数目，取决于这个key值里每个元素得取值范围，这个例子中，每个结点得分支个数最多是26个加上一个结束标志位，表示这个单词到这是不是就结束了。</p>
+<p>②trie的查找效率，取决于这个key的长度。</p>
+<p>③如果使用哈希表来存储这个key-value对，从理论上说，是有可能出现哈希碰撞（两个地址不一样，但是它的内容碰巧一样）的，但是trie是如果两个的地址不一样，最后肯定映射到树中的不同分支，所以trie不会出现碰撞</p>
+<p>④我们前面讲的Merkle tree，如果你不排序，一个问题是，你的账户插入到Merkle tree中的顺序不一样 ，Merkle tree的结构也不一样，trie中只要给定一组输入，这个输入不变，最后插入这个trie当中是一样的。</p>
+<p>⑤每次发布一个区块，系统中的绝大多数状态是不变的，只有个别受到影响的状态才会变，所以更新操作的局部性很重要，要想访问genesis，只要访问对应的分支即可，更新的局部性也是很好的</p>
 </blockquote>
-<h2 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h2><p>软分叉出现的情况？如果我们对比特币协议加一些限制。加这个限制之后，原来合法的交易或者是合法的区块，在新的协议中，有可能变得不是合法了，这就引起软分叉。</p>
-<p>举例：</p>
-<p>如果有人发布了软件更新，block size limit缩小了，由1M变成0.5M（实际上不会这样做，因为1M已经是比较小的了）</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200909193415.png"></p>
-<p>实际当中可能出现软分叉的情况</p>
-<p>①给某些目前协议中没有规定的域增加一些新的含义，赋予他们一些新的规则：coinBase域，每个发布的区块里可以有一个铸币交易，coinBase可以有个特别的用途（作为extra nonce 拿出8bytes），其实coinBase不止8个字节，那其他字节干嘛用呢？有人就建议，把他作为UTXO集合的根哈希值，目前这个集合只是全节点自己在内存中维护这样一个集合，主要是为了快速查找能够交易是不是double spending，但是这个集合的内容并没有写到区块链，这个和我们说的Merkle proof不太一样。</p>
-<p>如果你要证明某个账户上有多少钱，如果你是全节点的话，可以算一下，就是看一下A这个账户在这个UTXO里对应的输出上面一共收到多少个币，就是A账户上有多少钱。</p>
-<p>有很多区块链钱包（手机上的app），他不可能在手机上维护一个全结点，他需要知道账户的余额，需要询问其他的全节点，那么全节点返回一个结果，你怎么知道他是不是对的？</p>
+<p>但是trie也有缺点：只有一个分支的情况很浪费内存，如果能把一个分支的分支合并起来，就能够提高存储的开销，同时提高查找和更新的开销，这就引入了我们的Patricia tree（trie）[经过路径压缩的前缀树]，如果经过路径压缩，上例就变成了下图：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20200928202332.png"></p>
+<p>对于Patricia tree来说，如果你需要添加结点，原来压缩的结点可能会需要扩展开来，路径压缩在什么情况下比较好？</p>
 <blockquote>
-<p>你现在是证不出来的，你自己如果没有维护一个UTXO集合，是没有办法用Merkle proof证出来的，所以有人就提议：</p>
-<p>把UTXO集合当中的内容也组织成一条Merkle tree，这个Merkle tree有一个根哈希值，这个哈希值写在coinBase中，因为你block header没有办法再改了（block header动静太大了），coinBase中的内容在网上传递的时候，最终会传递到block header中，这样的话，你就可以用Merkle proof证出来</p>
+<p>树中插入的这些键值的分布如果是比较稀疏的情况下。比如上图中的，每个单词都很长，但是总共没有多少个单词的时候。</p>
+<p>例如：下图的三个单词插入一个普通的tria中，效率就变得特别低</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181750.png"></p>
+<p>如果用Patricia tree，如下图</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003181926.png"></p>
 </blockquote>
-<p>有人发布软件更新，规定coinBase域要这样写，这样是硬分叉还是软分叉？软分叉，因为新节点发布的区块，旧结点认为是合法的，因为旧结点不管你coinBase什么内容，都认为是合法的，但是旧结点发布的区块，新节点可能是不认的。</p>
-<p>比特币历史上，一个比较著名的软分叉的例子，是P2SH（Pay to Script Hash），这个在最初的比特币版本里是没有的，是后来通过软分叉加进去的：</p>
-<p>你支付的时候，不是付给一个Public Key的哈希，而是付给一个赎回脚本的哈希，这是新节点要做的；而对于旧结点，他不理解P2SH的特性，他只会做第一阶段的验证，所以，旧结点认为合法的交易，新节点可能认为是非法的</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>soft fork：只要系统中有半数以上的结点更新了软件，就不会出现永久的分叉，可能会出现临时的分叉。</p>
-<p>hard fork：必须是所有的节点都要更新软件，系统才不会出现永久性的分叉，如果有小部分节点不愿意更新，那么这个系统就会分成两条链。</p>
+<p>在以太坊中是怎么样的？</p>
+<p>我们在前面讲过，地址表示成40个16进制的数，所以这个分叉数目，有时候管他叫做branching factor（17 == 16个[0 - f] 加上一个结束标志位），比特币和以太坊的地址是不通用的，两个地址的格式、长度都是不一样的，有一点是一样的，以太坊中的地址，也是公钥经过转化得来的（公钥取哈希，截一段，前面不要，只要后面的一部分）</p>
+<p>那么我们这个应用场景（以太坊）中键值是否是稀疏的呢？</p>
+<blockquote>
+<p>键值是地址，160位，总共的地址空间有2^160，以太坊中全世界的账户数目加在一起也远远没有这么大，所以以太坊的账户是非常非常稀疏的。</p>
+</blockquote>
+<p>为什么不把账户地址缩短一点？这样访问效率还快，也没必要那么稀疏了</p>
+<blockquote>
+<p>更大地避免哈希碰撞，这是一个去中心化的系统防止账户冲突的唯一办法。</p>
+</blockquote>
+<h2 id="MPT"><a href="#MPT" class="headerlink" title="MPT"></a>MPT</h2><p>Merkle Patricia tree</p>
+<p>和Patricia tree有什么区别？</p>
+<blockquote>
+<p>把普通指针换成了哈希指针，所有的账户组织成一个Patricia tree，用路劲压缩提高效率，然后把普通指针换成哈希指针，所以就能计算出一个根哈希值，存放在block header里。比特币有一个根哈希值（这个区块里所有交易组成的根哈希值），以太坊中有三个，这里讲的是状态树。</p>
+</blockquote>
+<p>这个根哈希值有什么用？</p>
+<blockquote>
+<p>①防止篡改，只要根哈希值不变，整棵树的任何部分都没有办法被篡改。</p>
+<p>②Merkle Proof，这棵树能证明什么？能证明每个账户的余额：这个账户所在的分支，作为Merkle Proof，发给轻结点，轻结点就可以验证账户上有多少钱。</p>
+<p>③能不能证明一个账户是不存在的？你想给一个账户转账之前，你想验证一下节点里，有没有这个账户信息，证明方法和sorted Merkle tree类似，如果存在是存在什么样的分支里，把这个分支作为Merkle tree发出去，可以证明它是不存在的。</p>
+</blockquote>
+<p>以太坊中用到的还不是原生的MPT，以太坊中使用的是Modified MPT：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003184519.png"></p>
+<p>根节点取得的根哈希值KECCAK256是要写在块头里的，这里的指针都是哈希指针。</p>
+<p>每次发布一个新的区块的时候，这个状态树中有一些结点的值会发生变化，这些改变不是在原地改的，而是新建一些分支，原来的状态其实是保留下来的：</p>
+<p>我们可以看到，虽然每个区块都有一个状态树，但是这两棵树的大部分节点，是共享的，只有那些发生改变的节点，是需要新建一个分支的，这个例子中合约账户发生了变化（因为他有code，还有存储），合约账户的存储也是用MPT的形式保存下来的，这个存储其实也是一个key-value，维护的是从变量到这个变量取值的映射，所以以太坊中的结构是一个大的MPT，包含很多小的MPT（每个合约账户的存储都是一棵小的MPT） </p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003185717.png"></p>
+<p>这个例子中，nonce、balance发生了变化，code不变，所以Codehash指向原来树中的节点，存储中大部分结点也是没有变化，只有一个节点发生了变化，整数变量从29变为了45，所以新建了一个分支。</p>
+<p>所以，系统中的全节点维护的不是一棵MPT，而是每次出现一个区块，都要新建一个MPT，只不过这些状态树中大部分节点是共享的，只有少数发生变化的节点是需要新建分支的，那么，为什么要保留历史状态？（为什么不在原地直接改了）</p>
+<blockquote>
+<p>系统中可能会出现分叉，临时性的分叉实际上是很普遍的，以太坊把出块时间降到十几秒之后，临时性的分叉是常态。</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003190631.png"></p>
+<p>回滚的话，就需要维护这些历史记录，不是为了证明我以前有多少钱，而是因为当前这个交易有可能要undo，</p>
+<p>比特币中简单的转账交易是很容易的，以太坊中为什么不行？</p>
+<p>以太坊中有智能合约，以太坊如果不保存原来的状态，智能合约执行完成之后，你想要roll back，这是不可能的。</p>
+</blockquote>
+<p>以太坊中代码的数据结构：</p>
+<p>block header：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191125.png"></p>
+<p>ParentHash：前一个区块块头的哈希值</p>
+<p>uncleHash：叔父区块的哈希值（ghost协议中会提到）[uncle可能回避parent大很多辈分]</p>
+<p>CoinBase：挖出这个区块的矿工的地址</p>
+<p>Root：状态数的根哈希</p>
+<p>TxHash：交易树的根哈希值</p>
+<p>ReceiptHash：收据树的根哈希值</p>
+<p>Bloom：和收据树相关，提供一种高效的查询，符合某种条件的交易的执行结果</p>
+<p>Difficulty：挖矿的难度，会根据需要调整</p>
+<p>GasLimit、GasUsed：和汽油费相关，有点类似比特币中的交易费</p>
+<p>Time：这个区块大致的产生时间</p>
+<p>MixDigest、Nonce：和挖矿过程相关，Nonce：类似于比特币中的随机数；MixDigest是从Nonce通过一些计算出来的哈希值。</p>
+<p>区块的结构：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003191918.png"> </p>
+<p>header：指向block header的指针</p>
+<p>uncles：指向叔父区块block header的指针（数组类型）</p>
+<p>transactions：交易列表</p>
+<p>区块真正在网上发布的信息：</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E7%8A%B6%E6%80%81%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201003192042.png"></p>
+<p>状态树中保存的是key-value pair，key就是地址， 我们前面所讲的都是key（地址的管理方式），那么这个value（账户的状态）呢？</p>
+<blockquote>
+<p>实际上是要经过一个序列化的过程：RLP（Recursive Length Prefix），极简主义，和protocal buffer相比；它只支持一种类型：nested array of bytes，说白了就是字节数组，以太坊的其他所有类型（整数、哈希表），最后都得变成nested array of bytes，所以你要实现一个RLP，比较容易。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -997,6 +909,63 @@
 <p>他要通过你的公钥，实时的破解你的私钥，然后在产生一个把钱转到他的账户上去的交易，即时这个坏人拥有量子计算技术，也很难在几分钟内就把你的私钥破解了，而且他发布的这个交易还要抢在你这个交易的前面，一旦你把账上的钱都转走了，他这个交易就没用了。</p>
 </blockquote>
 <p>所以从安全性的角度来看，比特币的一个地址，一旦用过之后，就不要再用了。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC九---分叉</title>
+    <url>/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/</url>
+    <content><![CDATA[<h1 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h1><p>fork:原来是一条链，现在是两条链形成了分叉。有两种情况：</p>
+<p>①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。</p>
+<p>②比特币的协议发生了改变，要修改比特币的协议，需要软件升级，在一个去中心化的系统里，在升级软件的时候，没有办法保证所有的结点同时都升级软件，我们假设大部分结点升级了软件，少数结点因为种种原因没有升级，有可能还没有来的及升级，也可能是不同意这个协议的修改，这种分叉叫做protocol fork，因为对比特币的协议产生了分歧，因为使用不同的协议造成了分叉。</p>
+<a id="more"></a>
+
+<blockquote>
+<p>可以根据对协议修改的内容的不同，分为硬分叉（hard fork）和软分叉（soft fork）</p>
+</blockquote>
+<p>什么是硬分叉？什么是软分叉？</p>
+<h2 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h2><p>出现硬分叉的情况，如果对比特币协议增加新的特性，有一些new feature，这些没有升级软件的那些旧的节点，他是不认可这些新特性的，他认为这些new feature是不合法的。这个时候就属于我们对比特币协议的内容产生了意见分歧，就会导致分叉。一个例子就是：比特币中的区块大小限制（block size limit）。</p>
+<blockquote>
+<p>比特币规定每个区块是1M字节，有些人认为1M这个限制太小了，增加了比特币的延迟。</p>
+<p>一个交易差不多可以认为是250个字节，所以1000000字节大概是4000个交易左右，平均十分钟一个区块，算下来大概是每秒钟七笔交易</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907211038.png"></p>
+<p>我们用信用卡处理交易和这个完全不是一个数量级的，很多电商网站很多都不止这些，所以有的人认为这个区块太小了，限制了比特币的throw put（不知道老师是不是说的这个），同时也增加了延迟，因为你区块就只能装这么多区块，如果交易太多了的话，那可能有些交易，就得等到下一个区块才能被发布，平均要等十分钟</p>
+</blockquote>
+<p>我们假设有人发布了软件更新，把这个block size limit从1M增加到了4M（大多数结点更新了这个软件，少数节点没有更新【这里所说的节点数目不是按照账户的数目来算的，是按照算力的多少来算的】），这个时候系统运行起来会有什么结果？</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212426.png"></p>
+<p>备注：图中的解释有错误，应该是新产生的区块，旧结点不认可</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212813.png"></p>
+<p>备注：图中的“就”为“旧”</p>
+<p>只要这些旧结点不更新软件，分叉就不会消失，这就是为什么管他叫硬分叉（hard fork）。</p>
+<p>比特币社区中，有些人是比较保守的，像这种block size limit这种new feature，有些人真的是不会同意，而且，区块的大小不是越大越好（详情看比特币网络）。</p>
+<p>如果存在了硬分叉，那么下面的那一条链的出块奖励还有吗？</p>
+<blockquote>
+<p>是有的（在各自的链上是承认的），会造成社区的分裂，如果一直存在下去，就会分家了，相当于变成了两种币，原来没有分裂的币，应该变成上下两条链都认可。</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907214138.png"></p>
+<p>后来有了一个措施：在各自的链上加上一个chain ID</p>
+</blockquote>
+<h2 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h2><p>软分叉出现的情况？如果我们对比特币协议加一些限制。加这个限制之后，原来合法的交易或者是合法的区块，在新的协议中，有可能变得不是合法了，这就引起软分叉。</p>
+<p>举例：</p>
+<p>如果有人发布了软件更新，block size limit缩小了，由1M变成0.5M（实际上不会这样做，因为1M已经是比较小的了）</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200909193415.png"></p>
+<p>实际当中可能出现软分叉的情况</p>
+<p>①给某些目前协议中没有规定的域增加一些新的含义，赋予他们一些新的规则：coinBase域，每个发布的区块里可以有一个铸币交易，coinBase可以有个特别的用途（作为extra nonce 拿出8bytes），其实coinBase不止8个字节，那其他字节干嘛用呢？有人就建议，把他作为UTXO集合的根哈希值，目前这个集合只是全节点自己在内存中维护这样一个集合，主要是为了快速查找能够交易是不是double spending，但是这个集合的内容并没有写到区块链，这个和我们说的Merkle proof不太一样。</p>
+<p>如果你要证明某个账户上有多少钱，如果你是全节点的话，可以算一下，就是看一下A这个账户在这个UTXO里对应的输出上面一共收到多少个币，就是A账户上有多少钱。</p>
+<p>有很多区块链钱包（手机上的app），他不可能在手机上维护一个全结点，他需要知道账户的余额，需要询问其他的全节点，那么全节点返回一个结果，你怎么知道他是不是对的？</p>
+<blockquote>
+<p>你现在是证不出来的，你自己如果没有维护一个UTXO集合，是没有办法用Merkle proof证出来的，所以有人就提议：</p>
+<p>把UTXO集合当中的内容也组织成一条Merkle tree，这个Merkle tree有一个根哈希值，这个哈希值写在coinBase中，因为你block header没有办法再改了（block header动静太大了），coinBase中的内容在网上传递的时候，最终会传递到block header中，这样的话，你就可以用Merkle proof证出来</p>
+</blockquote>
+<p>有人发布软件更新，规定coinBase域要这样写，这样是硬分叉还是软分叉？软分叉，因为新节点发布的区块，旧结点认为是合法的，因为旧结点不管你coinBase什么内容，都认为是合法的，但是旧结点发布的区块，新节点可能是不认的。</p>
+<p>比特币历史上，一个比较著名的软分叉的例子，是P2SH（Pay to Script Hash），这个在最初的比特币版本里是没有的，是后来通过软分叉加进去的：</p>
+<p>你支付的时候，不是付给一个Public Key的哈希，而是付给一个赎回脚本的哈希，这是新节点要做的；而对于旧结点，他不理解P2SH的特性，他只会做第一阶段的验证，所以，旧结点认为合法的交易，新节点可能认为是非法的</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>soft fork：只要系统中有半数以上的结点更新了软件，就不会出现永久的分叉，可能会出现临时的分叉。</p>
+<p>hard fork：必须是所有的节点都要更新软件，系统才不会出现永久性的分叉，如果有小部分节点不愿意更新，那么这个系统就会分成两条链。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1346,6 +1315,73 @@
       </tags>
   </entry>
   <entry>
+    <title>BTC一---密码学基础</title>
+    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
+<p>比特币用到了密码学的两个内容：哈希和签名</p>
+<p>哈希在比特币中：<code>cryptographic hash function</code></p>
+<p>它在密码学中要求的两个性质：</p>
+<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
+<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
+<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
+<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
+<a id="more"></a>
+
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
+<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
+<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
+<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
+<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
+<p>x—-&gt;H(x)</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
+<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
+<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
+<p>在比特币中还要求<code>puzzle friendly</code></p>
+<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
+<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
+<blockquote>
+<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
+<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
+<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
+<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
+</blockquote>
+<p>比特币中用到的哈希函数叫做SHA-256。</p>
+<p>SHA:<code>secure Hash Algorithm</code> </p>
+<p>我们上面所说的三个性质，他都是满足的</p>
+<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
+<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
+<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
+<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
+<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
+<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
+<blockquote>
+<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
+<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
+</blockquote>
+<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
+<blockquote>
+<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
+<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
+<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
+<p>这个概率比地球爆炸的概率还要小！</p>
+</blockquote>
+<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
+<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
+<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC七---挖矿</title>
     <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/</url>
     <content><![CDATA[<h1 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h1><h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png"></p>
@@ -1415,73 +1451,6 @@
 <p>另外，不要把51%的阈值，当成一个门槛，这个其实都是概率，而且，每个矿池所占的算力比重，本身也是一种估计而已，而且实时变化</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大型矿池的出现，有一定的好处：给矿工减轻了负担，收入分配也更加稳定。</p>
 <p>也有一定的危害：发动51攻击更容易了 <code>on demand mining</code></p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC一---密码学基础</title>
-    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/</url>
-    <content><![CDATA[<h1 id="密码学基础"><a href="#密码学基础" class="headerlink" title="密码学基础"></a>密码学基础</h1><h1 id="1-哈希"><a href="#1-哈希" class="headerlink" title="1.哈希"></a>1.哈希</h1><p>​    比特币属于加密货币，但是区块链上所有的交易都是公开的，包括账户的地址，转账的金额。</p>
-<p>比特币用到了密码学的两个内容：哈希和签名</p>
-<p>哈希在比特币中：<code>cryptographic hash function</code></p>
-<p>它在密码学中要求的两个性质：</p>
-<p>​    ①<code>collision</code>（哈希碰撞） 和<code> resistance</code>：没有什么高效的方法人为的制造哈希碰撞，</p>
-<p>​        解释为对于一个x，没有什么高效的办法，找到另一个y，使<code>H(x) = H(y)</code>。</p>
-<p>​        用法：对于一个m，哈希值为H(m),没有办法篡改内容，而又不被检测出来，因为找不到另外一个m’，使得<code>H(m) = H(m&#39;)</code>。</p>
-<p>​        在理论上，这个性质是证明不出来的，只能依靠实际的经验 例如：md5，我们以前没有办法找到制造哈希碰撞的办法，然而现在却可以。</p>
-<a id="more"></a>
-
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730213309.png"></p>
-<p>  如果我们有一个256位的哈希值，他的输出空间就为2^256，但是输入空间是无限的，根据鸽笼原理（抽屉原理），必然会导致哈希碰撞。</p>
-<p>②<code>hiding</code>:哈希函数的计算过程是单向的，不可逆的,x可以计算得到H(x),但是H(x)计算不出x，也就是说，H(x)哈希值没有泄漏x的信息。</p>
-<p>这个性质的前提是，x的输入范围要足够的大，使得蛮力，遍历破解的方法是不可行的，输入的分布还要比较均匀，各种取值的概率差不多。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215143.png"></p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730215658.png"></p>
-<p>将预测结果作为x,算出一个哈希值,将这个哈希值可以公布出去，因为有<code>hiding</code>的性质，只知道这个哈希值，是不能知道预测结果是什么的，在第二天收盘之后，再将预测值公布出去，因为存在<code>collision  resistance</code>的性质，这个预测结果是不可能的被篡改的，这就是一个<code>sealed envelope</code>的功能。</p>
-<p>x—-&gt;H(x)</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730220318.png"></p>
-<p>在实际操作中，不是直接对x取哈希值，而是再x后面加上一个<code>nonce</code>（随机数），保证x的随机性，和分布均匀</p>
-<p>哈希函数除了在密码学中要求的这两个性质之外。</p>
-<p>在比特币中还要求<code>puzzle friendly</code></p>
-<p>哈希值的计算结果是不能被预测的，如果想要得到某个范围之间的哈希值，只能一个一个输入结果去试</p>
-<p>那这个性质为什么叫<code>puzzle friendly</code>呢</p>
-<blockquote>
-<p>在比特币中的挖矿：实际上就是找一个nonce（随机数），这个nonce和区块的块头里的其他信息，合在一起，作为输入，取出一个哈希，这个哈希值要小于等于某个指定的目标阈值</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730221330.png"></p>
-<p>比特币即区块链，区块链是一个一个区块组成的链表，每个区块有一个块头，块头中有很多的域，其中有一个域是我们可以设置的nonce，挖矿的过程就是不停地去试不同的随机数，使得整个块头取哈希值之后落在指定的范围之内（&lt;=target space）。</p>
-<p>puzzle friendly 就是说挖矿的过程，没有捷径，只能靠不停地去试大量的nonce，才能找到符合要求的解，所以这个过程才可以被称为“<strong>工作量证明</strong>（proof of work）”，你找到了nonce，一定是你做了大量的工作，因为没有别的捷径。</p>
-<p>虽然挖矿的过程需要大量的工作量，但是只要找到了符合要求的nonce，将这个nonce发布出去，其他人要验证这个nonce是很容易的，只要算一次哈希值就行了。这个就叫做“difficult to solve ，but easy to verify”。</p>
-</blockquote>
-<p>比特币中用到的哈希函数叫做SHA-256。</p>
-<p>SHA:<code>secure Hash Algorithm</code> </p>
-<p>我们上面所说的三个性质，他都是满足的</p>
-<h1 id="2-签名"><a href="#2-签名" class="headerlink" title="2.签名"></a>2.签名</h1><p>  比特币账户中的账户管理，在日常生活中，可以去中心化的管理机构，比如银行办理手续，</p>
-<p>但是在比特币中是去中心化的，那么怎么办理账户呢：每个用户自己决定开户 ，不需要任何人批准，</p>
-<p>开户的过程很简单，就是创建一个公钥和私钥的对。</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730222824.png"></p>
-<p>公私钥是来源于非对称加密体系：<code>asymmetric encryption algorithm</code>。</p>
-<p>  最早的加密体系是对称的:<code>symmetric encryption algorithm</code>   —-&gt;两个人之间要进行通讯，但这个过程可能是被窃听的，所以我们两个人之间商量一个密钥，用来加密，发送信息，再用这个密钥来解密，因为这个加密和解密的密钥用的是同一个，所以被称为对称加密体系，这个前提是，有某种安全的渠道，可以把这个密钥分发给通讯的双方（这也是对称加密的一个弱点，密钥的分发不是很方便）</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AF%86%E7%A0%81%E5%AD%A6%E5%8E%9F%E7%90%86/QQ%E6%88%AA%E5%9B%BE20200730223101.png"></p>
-<p>非对称加密：加密用公钥：<code>public key</code> ，解密用私钥:<code> private key</code>,我要把信息传给你，用你的公钥对信息加密，你收到信息，再用你的私钥解密，得到信息，需要注意的是，加密解密用的公钥私钥，都是接收方的，好处是什么？</p>
-<blockquote>
-<p>大家都可以知道我的公钥，都可以给我发消息，但是私钥是保存在本地的，不用传给对方，这就解决了对称加密过程，密钥分发带来的不方便的问题</p>
-<p>所以比特币创建账户，就是在本地创建一个公钥私钥对，这个公钥就相当于银行账户，私钥相当于银行账户密码，知道私钥就可以把账户上的钱转走。</p>
-</blockquote>
-<p>  比特币虽然叫加密货币，但是其实他是不加密的，信息都是公开的，那我们要这个公钥私钥干嘛？</p>
-<blockquote>
-<p>实际上就是用来作签名，在我转比特币给另一个账户的时候，别人怎么知道是不是我转的，还是别人冒名顶替转的？</p>
-<p>这个时候就需要我用私钥再这个信息上做一个签名，别人再用我的公钥验证我的私钥生成的签名</p>
-<p>万一两个人创建的比特币账户的公私钥对相同怎么办？如果是256位的哈希，产生相同的公私钥对的概率是微乎其微的，</p>
-<p>这个概率比地球爆炸的概率还要小！</p>
-</blockquote>
-<p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
-<h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
-<p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1780,6 +1749,37 @@
       </categories>
       <tags>
         <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CCF一---202006</title>
+    <url>/2020/08/29/ccf/202006/</url>
+    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
+
+<a id="more"></a>
+
+<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
+
+<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
+
+<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
+<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
+<p>以下就是我写的代码（测试为100分）:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>CCF</tag>
       </tags>
   </entry>
   <entry>
