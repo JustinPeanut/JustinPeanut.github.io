@@ -198,7 +198,7 @@
     <link href="http://justinpeanut.github.io.com/2020/10/13/Java/JVM/jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/"/>
     <id>http://justinpeanut.github.io.com/2020/10/13/Java/JVM/jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8/</id>
     <published>2020-10-13T11:46:06.000Z</published>
-    <updated>2020-10-13T11:53:21.817Z</updated>
+    <updated>2021-01-07T08:51:58.476Z</updated>
     
     
     <summary type="html">&lt;h2 id=&quot;1-类加载子系统&quot;&gt;&lt;a href=&quot;#1-类加载子系统&quot; class=&quot;headerlink&quot; title=&quot;1.类加载子系统&quot;&gt;&lt;/a&gt;1.类加载子系统&lt;/h2&gt;&lt;p&gt;​    如果要手写一个java虚拟机，主要考虑两部分：类加载系统和执行引擎。&lt;/p&gt;
@@ -221,7 +221,7 @@
     <link href="http://justinpeanut.github.io.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/"/>
     <id>http://justinpeanut.github.io.com/2020/10/13/Java/JVM/jvm%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/</id>
     <published>2020-10-13T11:27:14.000Z</published>
-    <updated>2020-10-13T11:38:08.276Z</updated>
+    <updated>2021-01-07T08:52:06.208Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;运行时数据区&quot;&gt;&lt;a href=&quot;#运行时数据区&quot; class=&quot;headerlink&quot; title=&quot;运行时数据区&quot;&gt;&lt;/a&gt;运行时数据区&lt;/h1&gt;&lt;p&gt;写在前面，感谢尚硅谷宋红康老师的讲解，本文根据宋红康老师的ppt完成，仅供个人学习参考，更多的JVM相关的知识请访问Oracle官网&lt;/p&gt;</summary>
@@ -240,7 +240,7 @@
     <link href="http://justinpeanut.github.io.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/"/>
     <id>http://justinpeanut.github.io.com/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/</id>
     <published>2020-10-12T12:18:14.000Z</published>
-    <updated>2020-10-12T12:20:31.233Z</updated>
+    <updated>2021-01-07T09:00:34.571Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;ETH-交易树和收据树&quot;&gt;&lt;a href=&quot;#ETH-交易树和收据树&quot; class=&quot;headerlink&quot; title=&quot;ETH-交易树和收据树&quot;&gt;&lt;/a&gt;ETH-交易树和收据树&lt;/h1&gt;&lt;p&gt;​    每次发布一个区块的时候，这个区块所包含的交易，会组织成一棵交易树，也是一棵Merkle tree，和比特币的情况是类似的，同时，以太坊还增加了一个收据树，每个交易执行完之后，会形成一个交易，记录这个交易的相关信息，也就是说，收据树和交易树上面的结点是一一对应的。&lt;/p&gt;</summary>
@@ -407,7 +407,7 @@
     <link href="http://justinpeanut.github.io.com/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/"/>
     <id>http://justinpeanut.github.io.com/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</id>
     <published>2020-09-10T15:38:57.000Z</published>
-    <updated>2020-09-14T15:16:21.187Z</updated>
+    <updated>2021-01-07T08:59:16.145Z</updated>
     
     
     <summary type="html">&lt;p&gt;  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。&lt;/p&gt;
