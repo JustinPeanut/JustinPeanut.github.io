@@ -105,6 +105,37 @@
       </tags>
   </entry>
   <entry>
+    <title>CCF一---202006</title>
+    <url>/2020/08/29/ccf/202006/</url>
+    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
+
+<a id="more"></a>
+
+<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
+
+<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
+
+<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
+<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
+<p>以下就是我写的代码（测试为100分）:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>CCF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java随笔</title>
     <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
     <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
@@ -738,44 +769,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ETH二---账户</title>
-    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/</url>
-    <content><![CDATA[<h1 id="以太坊的账户"><a href="#以太坊的账户" class="headerlink" title="以太坊的账户"></a>以太坊的账户</h1><p>比特币是基于交易的账本模式，这种模式下，并没有显式地记录每个账户有多少钱，这种模式的好处是，隐私保护得比较好，你有多少钱，可能连你自己都说不清楚，别人就更搞不明白了。</p>
-<blockquote>
-<p>别人转到你账上的钱，你一定要花出去，比如别人转给你10个，你花了3个比特币，你必须把剩余的7个比特币再转回给自己的另外一个账户，要不然这7个比特币全都会被当成tx fee给矿工了</p>
-</blockquote>
-<a id="more"></a>
-
-<p>以太坊设计了一个基于账户的交易模型account-based ledger：系统上显式地记录账户上有多少个以太币</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/QQ%E6%88%AA%E5%9B%BE20200925195000.png"></p>
-<p>上述，也不需要把币转给自己，剩下的ETH放在自己的账户上就可以了，上面的指针也不需要了</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/QQ%E6%88%AA%E5%9B%BE20200925195122.png"></p>
-<p>这样做的一个好处是什么？</p>
-<blockquote>
-<p>以太坊的这种模式，对double spending attack有天然的防御作用：花钱就扣余额，你要花两次，我就扣两次。</p>
-<p>但是，如果有人篡改余额怎么办？</p>
-<p>你消费的时候不需要指出你的余额，而是从全节点中维护的一个状态树中的一个状态<code>balance</code>查找（后面会说明）,这个<code>balance</code>无法篡改</p>
-<p>但是还有一种重放攻击（replay attack），A给B转账，B有恶意，将A给B转账的交易重放了一次，这样不就可以扣除A的两次余额吗？</p>
-<p>防止这种攻击的做法其实有多个：可以增加一个nonce（记录A转账（消费）的次数），如果有人想重放这个交易，就会发现，这个交易已经被执行过了，就不会再执行一遍了。</p>
-</blockquote>
-<p>以太坊中有两类账户，一类叫做外部账户</p>
-<p>①externally owned account，其中有两个属性balance 和nonce </p>
-<p>②smart contract account，有balance nonce、code（代码）以及storage（相关的状态），合约账户不是通过公私钥对来管理的，不是你有这个合约账户的公私钥就有这个账户的控制权，一个合约可以调用另外一个合约（所以它同样需要一个nonce来记录一下合约调用的次数），但是智能合约账户不能主动发起一个交易（所有的交易只能由外部账户发起，外部账户发起了一个交易，如果调用了一个合约账户，这个合约账户可以发送一个message调用一个合约账户）</p>
-<p>合约账户怎么被调用？你创建合约的时候，会返回一个地址，知道这个合约的地址就可以调用这个合约，状态（storage）会发生变化，代码不变。</p>
-<p>为什么要创建这样一种新的模型？</p>
-<blockquote>
-<p>比特币基于交易的账户的好处：隐私的保护比较好一点，以太坊注重的是智能合约，要求合约参与者要有比较稳定的身份。</p>
-</blockquote>
-<p>现在有人提出的一些智能合约的衍生品：financial derivative，比如说你投钱投给一个合约账户，合约账户的地址变了，你找不到了就比较麻烦，以太坊在创建的时候，考虑到了已有的一些模型的利弊得失，最终没有采用比特币中基于交易的账户模型。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ETH七---以太坊难度调整</title>
     <url>/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/</url>
     <content><![CDATA[<h1 id="难度调整"><a href="#难度调整" class="headerlink" title="难度调整"></a>难度调整</h1><p>​    比特币是每隔2016个区块会调整一下挖矿难度，目标是维持出块时间十分钟左右，以太坊是每个区块都有可能调整挖矿难度，调整的方法也比较复杂，而且改过好几个版本，我们遵循以代码的原则。</p>
@@ -839,6 +832,44 @@
 <p><img src="/2020/11/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E9%9A%BE%E5%BA%A6%E8%B0%83%E6%95%B4/QQ%E6%88%AA%E5%9B%BE20201109203553.png"></p>
 <p>我们所说的最长合法链，对于以太坊来说其实是最“难”合法链，每个区块的难度反应挖出这个区块所需要的工作量，而总难度最大，就是挖出这条链所有区块需要的总工作量最大，一般来说，靠后的区块，挖出来的工作量是比较大的。</p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH二---账户</title>
+    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/</url>
+    <content><![CDATA[<h1 id="以太坊的账户"><a href="#以太坊的账户" class="headerlink" title="以太坊的账户"></a>以太坊的账户</h1><p>比特币是基于交易的账本模式，这种模式下，并没有显式地记录每个账户有多少钱，这种模式的好处是，隐私保护得比较好，你有多少钱，可能连你自己都说不清楚，别人就更搞不明白了。</p>
+<blockquote>
+<p>别人转到你账上的钱，你一定要花出去，比如别人转给你10个，你花了3个比特币，你必须把剩余的7个比特币再转回给自己的另外一个账户，要不然这7个比特币全都会被当成tx fee给矿工了</p>
+</blockquote>
+<a id="more"></a>
+
+<p>以太坊设计了一个基于账户的交易模型account-based ledger：系统上显式地记录账户上有多少个以太币</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/QQ%E6%88%AA%E5%9B%BE20200925195000.png"></p>
+<p>上述，也不需要把币转给自己，剩下的ETH放在自己的账户上就可以了，上面的指针也不需要了</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/QQ%E6%88%AA%E5%9B%BE20200925195122.png"></p>
+<p>这样做的一个好处是什么？</p>
+<blockquote>
+<p>以太坊的这种模式，对double spending attack有天然的防御作用：花钱就扣余额，你要花两次，我就扣两次。</p>
+<p>但是，如果有人篡改余额怎么办？</p>
+<p>你消费的时候不需要指出你的余额，而是从全节点中维护的一个状态树中的一个状态<code>balance</code>查找（后面会说明）,这个<code>balance</code>无法篡改</p>
+<p>但是还有一种重放攻击（replay attack），A给B转账，B有恶意，将A给B转账的交易重放了一次，这样不就可以扣除A的两次余额吗？</p>
+<p>防止这种攻击的做法其实有多个：可以增加一个nonce（记录A转账（消费）的次数），如果有人想重放这个交易，就会发现，这个交易已经被执行过了，就不会再执行一遍了。</p>
+</blockquote>
+<p>以太坊中有两类账户，一类叫做外部账户</p>
+<p>①externally owned account，其中有两个属性balance 和nonce </p>
+<p>②smart contract account，有balance nonce、code（代码）以及storage（相关的状态），合约账户不是通过公私钥对来管理的，不是你有这个合约账户的公私钥就有这个账户的控制权，一个合约可以调用另外一个合约（所以它同样需要一个nonce来记录一下合约调用的次数），但是智能合约账户不能主动发起一个交易（所有的交易只能由外部账户发起，外部账户发起了一个交易，如果调用了一个合约账户，这个合约账户可以发送一个message调用一个合约账户）</p>
+<p>合约账户怎么被调用？你创建合约的时候，会返回一个地址，知道这个合约的地址就可以调用这个合约，状态（storage）会发生变化，代码不变。</p>
+<p>为什么要创建这样一种新的模型？</p>
+<blockquote>
+<p>比特币基于交易的账户的好处：隐私的保护比较好一点，以太坊注重的是智能合约，要求合约参与者要有比较稳定的身份。</p>
+</blockquote>
+<p>现在有人提出的一些智能合约的衍生品：financial derivative，比如说你投钱投给一个合约账户，合约账户的地址变了，你找不到了就比较麻烦，以太坊在创建的时候，考虑到了已有的一些模型的利弊得失，最终没有采用比特币中基于交易的账户模型。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -975,6 +1006,87 @@
       </tags>
   </entry>
   <entry>
+    <title>BTC十一---匿名性</title>
+    <url>/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/</url>
+    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><h2 id="匿名性介绍"><a href="#匿名性介绍" class="headerlink" title="匿名性介绍"></a>匿名性介绍</h2><p>BitCoin and anonymity</p>
+<p>一般来说，大家说的匿名是和隐私保护联系（privacy）在一起的，比特币不要求是真名，是需要公钥产生的地址即可，因此有一定的匿名性，但不是说完全没有名字，他用的是“化名”，因此有人称它为“preudonymity”，就好像很多作家有笔名一样，比特币系统中的“匿名”其实不是真的匿名。</p>
+<a id="more"></a>
+
+<p>这种匿名性能给我们带来什么样的保护呢？和现金相比，和美元，法币相比？它的匿名性没有现金好，现金是完全匿名的。比特币的匿名性和银行存款相比，因为银行账户是实名制。（其实以前国内的银行不要求实名制，可以使用化名，如果这样的话，和比特币相比，哪个匿名性更好？从某种程度上来说，这时候的匿名性就比比特币要好，比特币的账户是公开的，而银行里普通老百姓想要知道别人的账户，这个是没有办法的。）</p>
+<p>比特币系统中，什么情况下有可能破坏匿名性？有些人建议在你每次收款的时候，都创建一个新的账户，但是某些情况下，这些账户是可以被关联在一起的？（这个时候就破坏了比特币的匿名性）</p>
+<blockquote>
+<p>比如网上购物，一个交易可以有多个输入和输出。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916195151.png"></p>
+<p>这个Inputs有多个，这两个地址可能是同一个人（因为可能一个账户的钱，不够买这件商品，所以同时使用另一个账户来消费）；而Outputs其中一个一般是一个找零钱的输出。 像上图中的交易，一般都是由比特币钱包软件生成的，很多钱包软件交易的时候会生成一个新的找零钱的地址，有没有可能把输入地址和输出地址也关联起来呢？（有没有可能我们把这个找零钱的地址也找到？）</p>
+<p>比特币钱包并没有规定找零钱的地址在Outputs中出现的位置，但其实有些情况下，你可以把它分析出来，我们想要对敌人造成干扰，就可以生成一些不必要的转账地址，但是一般没有人会这么干。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916200401.png"></p>
+</blockquote>
+<p>这就说明，我们可以生成很多的地址账户，但是这些地址账户是可以被关联起来的。第二点是，这个地址账户跟你在社会现实世界中的真实身份也产生关联，那么什么时候会知道比特币的地址账户对应现实中的某个人呢？</p>
+<blockquote>
+<p>①任何比特币系统中的地址和现实世界发生联系的时候都有可能泄漏身份。在资金转入和转出区块链的时候都有可能泄漏，我们刚开始都没有比特币，这时候需要去交易所买，在交易所登记；也有场外交易的情况（就是两个人之间私下交易，以前国外有些做场外交易的公共场所）。</p>
+<p>②很多国家有反洗钱法，那么怎么防范使用比特币洗钱的违法行为呢？</p>
+<p>盯住这个资金的转入转出链其实是一个常用手段，如果你有很大的资金像转入到比特币，或者你有很大一部分比特币，你想转成法币，这个你想不引起司法部门的注意，实际上是很难的，这也是比特币隐私有可能被破坏的一个很重要的时机。</p>
+<p>③用比特币做支付的时候，比如国外有的商家，是接受比特币支付的，咖啡店，餐馆之类（当然，这是一个bad idea，1.延迟大，等六个确认需要等待1个小时；2.交易费也很贵）。这个其实不仅仅是接受你支付的商家会知道，</p>
+<p>其他人其实也会知道：以前曾经有一家信用卡公司，为了支持学术界的科研，把他收集到的一些信用卡的记录公开，公开的时候做一些隐私保护（信用卡号码取哈希，年龄，性别 等都抹掉了），有人就做了科研（其实不是为了研究信用卡的消费行为，而是怎么通过这些公开的数据推测出这个人实际上是谁）—&gt;通过过滤在某个时间某个人在哪里消费，就可以精准地定位到某个人</p>
+</blockquote>
+<p>这就说明，信用卡记录不能公开，去了哈希值之后依然是不应该公开的，但是比特币系统本来就是公开的，这时候你去咖啡店，你把你的账户的地址告诉了营业员，你周围有其他认识你的人都会意识到这时候你在比特币网络上做了一笔消费，然后就可以在区块链中查出来。所以比特币的匿名性并不像我们想象中的那么好</p>
+<p>实际上那些用比特币的人，匿名性保存的有多好？中本聪！（因为他根本没有花钱）</p>
+<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念。</p>
+<blockquote>
+<p>以前有个叫silk road的网站：通过比特币卖各种违禁品，最后运行了两三年就被政府查封了，这个人通过这个网站赚了很多钱，但是他只是在纸面上很多钱，十几万个比特币一个都没花，因为一花就暴露身份了。所以，比特币的匿名性没有我们想象的那么好。</p>
+</blockquote>
+<p>所以，过去的经验表明，凡是用比特币从事违法活动的，最后都能被抓起来，中本聪能这么好的保持匿名性，实际上是一个个例，而且他没有干坏事</p>
+<p>hide your indetiny from whom？</p>
+<blockquote>
+<p>如果你只是像让你的亲戚朋友不知道你的账户上有多少钱，这个是很容易办到的，如果是像silk road这样的想逃避fbi，是很难的。</p>
+</blockquote>
+<h2 id="如何提高匿名性"><a href="#如何提高匿名性" class="headerlink" title="如何提高匿名性"></a>如何提高匿名性</h2><p>假设你是一个比特币用户，你能用什么方法来提高你的匿名性？</p>
+<blockquote>
+<p>我们知道，比特币是运行在应用层的应用程序，它的底层是P2P的network，所以提高匿名性，是从两个方面入手。</p>
+<p>network layer：如果很多交易都是从一个ip地址发出来的，那么从物理世界中，通过ip地址就可以知道是谁。这个我们已经有解决方案了，比较普遍的一种方法就是使用多路径转发的方法（TOR的原理），sender不是直接发给reciever，而是中间经过很多跳，中间的结点只是知道它的上一跳是谁，而不知道最早发出这个消息的是谁，中间的结点可能是坏的，但是只要中间有一个结点是诚实的，就可以将发件人的身份隐藏起来。</p>
+<p>application layer：破坏匿名性的原因之一是，同一个人的不同的比特币账户之间会被关联起来。其中一个做法是</p>
+<p>coin mixing：把你的身份和周围的人的身份混在一起，让别人分不清谁是谁。如何做到coin mixing？有些网站专门提供coin mixing的服务，收取一定的服务费，所有想使用coin mixing的用户，把币发给这些网站，内部进行一些重组，再取回来，取回来的币就不是原来的币了，实际上是一个复杂的过程。还有一个问题是，现在这个区块里世界里，没有什么信誉度非常高的coin mixing的服务，很多提供这个服务的网站，他自己也是匿名的，卷款跑路我们一点办法也没有。</p>
+<p>我们不一定要刻意的coin mixing，我们使用的一些软件，有些自己就带有coin mixing的一些性质，比如在线钱包，存进去的币，他可能会把其他人的币混合起来，但是在线钱包并不一定要履行coin mixing的功能</p>
+<p>还有一些交易所，他天然的有coin mixing的性质，我把一些比特币存进交易所，一段时间，我觉得它的价格会下跌，于是我把他换成美元，我有可能买入以太币，又可能换成莱特币，折腾几次之后，我又可能把他买回来，这时候我账户上的比特币，就不一定是我存进去的比特币了。（coin mixing的性质）。当然这个的前提是，这个交易所不是泄漏相关的记录（相关的提币存币的记录）</p>
+</blockquote>
+<p>为什么比特币的匿名性很差，其中一个本质原因是他是公开的，而且他是不可篡改的，好像不可篡改性对比特币有好处，其实堆隐私保护是灾难性的，因为一旦你在一个交易里把你的身份暴露了，这个交易永久地写在区块链里，你想抹都抹不掉了。这也是为什么我们说账户之间的关联性也是我们需要小心的，如果账户是单独出去的，如果你暴露了一个账户，这个影响还是比较有限的，如果是关联的，一个账户暴露了，后面的就都完了。</p>
+<h2 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195428.png"></p>
+<p>比如，我要证明某个比特币账户是我的，我要证明这一点，我要怎么证明？</p>
+<blockquote>
+<p>实际上是要证明我有这个比特币账户的私钥，但是我不能把这个私钥告诉你，这时候就可以签名，你是知道这个账户的公钥的，你可以验证这个签名的合法性</p>
+</blockquote>
+<p>这个例子作为零知识证明，实际上是有争议的，我虽然没有泄露我的私钥，但是我泄露了我私钥的签名，这个和零知识证明中的无需透露该陈述是正确的外的任何信息是有冲突的。但是这里透露的额外信息要看你实际的应用场景。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195956.png"></p>
+<p>零知识证明的数学基础是同态隐藏。</p>
+<p>①不会出现哈希碰撞，如果x、y不相等，那么加密值也不相等，反过来说，如果两个加密函数值是相等的，那么原来的函数值也是相等的。</p>
+<p>②说明加密函数不可逆，密码学的哈希函数的性质和这个是类似的，hiding propetry，知道哈希值没有办法知道它的输入值。</p>
+<p>③对这些加密后的函数进行函数运算，等价于，对进行运算的函数，然后在进行加密。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200714.png"></p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200915.png"></p>
+<p>说明：</p>
+<p><code>E(X+Y) = E(7)</code>,说明没有碰撞</p>
+<p>这个版本实际上有些缺陷，Bob可以用蛮力的方式，猜出原始的x、y是多少，Bob虽然通过E(x)不能知道x是多少，但是他可以通过遍历x的取值，Alice需要在发送E(x)和E(y)之前，对x、y进行随机化处理（使得x、y加起来还是不变的）。</p>
+<p>在比特币的共识协议中，央行发行货币，有个属于他自己的签名，在前面所讲的，这样会产生double spending，所以可以在每张货币上加上一个id，记录现在这张货币在谁手里。这样的话，央行不是什么都知道了？</p>
+<p>那么，有没有什么办法，让央行做中心化的记账，但是又不让他知道呢？</p>
+<blockquote>
+<p>这个虚拟货币的编号不能是央行产生的，这个编号得是我自己产生的，我在本地产生一个编号，但是不告诉央行，这样的话，央行怎么知道这个编号是不是正确的呢？这就引入了盲签。</p>
+<p>用户A提供编号，银行是要签名的，但是他看不到内容,Token就是银行对序号的签名。</p>
+<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202409.png"></p>
+</blockquote>
+<h2 id="零币和零钞"><a href="#零币和零钞" class="headerlink" title="零币和零钞"></a>零币和零钞</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202540.png"></p>
+<p>基础币可以是比特币，你用的时候，你要证明，本来是有一个基础币的，你把这个基础币搞得是不能花了，然后换取一个零币，零币在花的时候，只需要用零知识证明你花掉的币是系统中存在的某一个合法的币就行了，但是不用透露你花的是系统中的哪一个币。</p>
+<p>这样就把关联性破坏掉了。</p>
+<p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
+<p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>区块链---总结</title>
     <url>/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​    社会上对区块链的争议是非常大的，有很多对区块链的质疑也是有道理的，其中一个原因是区块链的概念被滥用了，有些人把什么问题都往区块链上放，无论是效率上的问题，还是监管上的问题，好像区块链是解决问题的法宝，有什么问题放在区块链里好像都能解决一样，这个是不对的。</p>
@@ -1009,6 +1121,130 @@
 <p>​    去中心化一定是好事情吗？这个其实是不一定的，在现实生活中的风投决定要投哪个项目要怎么进行判断？得考察这个项目，和创始人谈判，看看这个项目是否靠谱，如果这个公司已经运行了一定时间，还要去检查一下公司的财务状况、适用一下公司的产品等等，都不是简单的投票就能解决的，所以不要以为去中心化能够解决所有问题。    </p>
 <p><img src="/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/QQ%E6%88%AA%E5%9B%BE20201208183911.png"></p>
 <p>​    不要以为所有的概念用去中心化的概念包装一下，就捧上天，去中心化的管理方式和中心化的管理方式是各有利弊的，要具体问题具体分析，像The DAO这样的基金就不应该受到热捧。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC十---回顾问答</title>
+    <url>/2020/09/14/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/</url>
+    <content><![CDATA[<h1 id="BTC问答回顾"><a href="#BTC问答回顾" class="headerlink" title="BTC问答回顾"></a>BTC问答回顾</h1><p>1.转账交易的时候，如果接收者不在线（你转账给A，但是A那时候没有连接到比特币网络上）怎么办？</p>
+<blockquote>
+<p> 这个时候不需要接收者在线，转账交易只不过要在区块链上记录一下。</p>
+</blockquote>
+<p>2.假设某个全节点收到了一个转账交易，有没有可能转账交易中接收者的收款地址是这个结点以前从来没有听说过的？</p>
+<blockquote>
+<p>可能，比特币系统在创建账户的时候是不需要通知其他人的，在本地产生一个公私钥对就可以了，只有在以后产生的收款地址收到钱的时候，其他结点才知道这个账户的存在。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>3.如果你账户的私钥丢失了该怎么办？</p>
+<blockquote>
+<p>其实是没有办法的，这个账户上的钱就变成了死钱，永远取不出来，去中心化的系统大家没有办法给你重置密码。</p>
+</blockquote>
+<p>有些加密货币的交易所，一般来说，这些交易所都是中心化的机构，那么在交易所办一个账户的时候一般来说是要提供身份证明的，这种情况下，你把你的交易货币保存在交易所里，那么私钥实际上是由交易所来保管的 ，你登陆这个交易所是按照登陆银行差不多的程序（有一个账户名，一个密码），登陆的时候，一般来说还需要二次验证（google 身份验证器），如果私钥丢失是可以在交易所查到的；</p>
+<p>有些在线钱包也提供私钥保管的功能，但并不说这些机构为我们自己保管私钥更加安全，目前这些机构仍处于缺乏监管的状态，历史上出现过交易所被黑客攻击的情况，其中最著名的例子就是Mt.Gox的例子，Mt.Gox曾经是世界上最大的交易所，交易量占到了全球的交易量的70%。后来被攻击了，CEO被判刑。</p>
+<p>相比来说，冷钱包或者硬钱包更加安全。</p>
+<p>4.如果你的私钥泄漏了怎么办？（你发现你的账户上出现了一些可疑的交易）</p>
+<blockquote>
+<p>这个时候你应该把你账户上的钱，转到另一个安全账户上。（这个也和现实中银行的体验不太一样）</p>
+<p>比特币账户创建之后，公私钥对都是没有办法修改的</p>
+</blockquote>
+<p>5.如果转账的账户地址填错了怎么办？</p>
+<blockquote>
+<p>没有办法取消以前发布的交易，比特币中转账的交易一旦发布在区块链上就没有办法取消了，它没有提供这种机制取消一个已经发布的交易，如果你知道是谁的地址，可以跟他联系一下</p>
+<p>也可能转给不存在的地址（有些地址其实不是公钥的哈希得到的：digital commitment：你想证明某个时间你知道了某个知识，可能只是一个文件取了哈希）</p>
+</blockquote>
+<p>在Proof of Burn中提到的OP_RETURN后面可以写所有的去哈希的内容，上面的内容没有人管，这是推荐采用的方法，但是有的人不这么干：有人用内容取哈希之后得到的哈希值生成一个看上去像比特币地址的东西，这时候转账给这个假的地址，这样转账的钱就变成了死钱，这种做法，就是牺牲很少一点的比特币，换取往这个区块链里写入这个哈希值的一个机会。后者的做法是不提倡的，因为这样转账交易的输出会永久的保留在UTXO里，对全节点不友好</p>
+<p>6.Proof of Burn的机制是怎么执行的，不是说OP_RETURN会无条件地返回错误吗？那这个交易是怎么通过验证的？</p>
+<blockquote>
+<p>验证时候：是把当前这个交易的输入脚本和这个交易（币的来源）的输出脚本拼接，这个过程是不可以发生错误的，关键在于，OP_RETURN是写在当前交易的输出脚本里的，所以验证当前交易的合法性的时候不会执行当前语句（因为他是输出脚本），有人想花这个钱的时候，才会执行这个输出脚本，因为OP_RETURN永远都返回错误，所以永远都不可能花出去。</p>
+</blockquote>
+<p>7.会不会有的矿工偷答案？（其他矿工发布了一个nonce，这个矿工没有找到这个nonce，他收到这个区块之后，查一下这个nonce是符合要求的，然后就把他当成自己的nonce发布出去）你怎么知道哪个nonce是属于哪个矿工的？</p>
+<blockquote>
+<p>发布的区块里，会发布一个coinBase tx，里面会填一个收款地址，谁挖到了矿，就填谁，如果你要抄答案，那么你要把收款人的地址换成自己的地址，而这个地址发生变化的话，coinBase tx的内容就会发生变化，这样会导致这个Merkle tree的根哈希值发生变化，而这个nonce在块头里，根哈希值也在块头，block header的哈希值发生变化之后，原来找到的nonce就作废了。所以你不可能偷答案，因为每个矿工挖到的nonce是和自己的收款地址绑定在一起的。</p>
+</blockquote>
+<p>8.交易费可以看作是发布区块的时候给矿工的一点小费，那么你怎么知道这个交易费该给那个矿工？事先你怎么知道哪个矿工会挖到矿？</p>
+<blockquote>
+<p>事先不需要知道哪个矿工得到这个交易费，只要total inputs &gt; total ouputs，这个差值就是交易费，给谁不需要事先知道，哪个矿工挖到矿了，就可以把这些差额收集起来，作为自己的交易费。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC四---实现</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="transaction-based-ledger"><a href="#transaction-based-ledger" class="headerlink" title="transaction-based ledger"></a>transaction-based ledger</h2><p>BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算</p>
+<p>比特币的全节点要维护一个UTXO的数据结构</p>
+<a id="more"></a>
+
+<p>UTXO:Unspent Transaction Output,还没有被花出去的交易的输出，区块链中有很多交易，有些交易的输出可能被花掉了，有些还没有被花掉，没有被花掉的交易的输出的集合叫做UTXO</p>
+<p>UTXO中的每个元素要给出产生这个输出的交易的hash值，以及他在这个交易里是第几个输出，就可以定位到这个UTXO中的输出，那么这个UTXO集合的作用是什么？为什么要维护这样一个数据结构</p>
+<p>作用：防范double spending attack，所以全节点要在内存中维护UTXO数据结构，以便快速检测double spending attack，</p>
+<p>随着交易的发布，每个交易要消耗UTXO中的输出，同时也会产生一些新的输出</p>
+<p>每个交易所有输入的金额，要等于所有输出的金额：total inputs = total outputs</p>
+<p>发布区块的那个结点为什么要把你的交易打包在区块里？这样做对她有什么好处吗？</p>
+<p>如果只有出块奖励，那么自私的结点就只会打包他自己的交易，同时也节省带宽</p>
+<p>所以比特币系统设定了第二个激励机制：交易费（transaction fee），你把我的交易打包在区块里，我给你点小费，所以就会出现total inputs &gt;= total outputs的情况，多的比特币充当了小费</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817210059.png"></p>
+<p>目前矿工去争取记账权，主要还是为了得到出块奖励，但是因为21个区块都会减少出块奖励</p>
+<p>比特币系统中差不多10分钟会创建一个区块，计算下来差不多每四年就会减半（出块奖励）</p>
+<h2 id="区块的例子"><a href="#区块的例子" class="headerlink" title="区块的例子"></a>区块的例子</h2><p>account-based ledger</p>
+<p>以太坊就是这种模式，在这种模式总，系统显式的记录每个账户上有多少个币，比特币的隐私保护就比较好一些</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/image-20200817210819638.png"></p>
+<p>Height:是区块的序号，Difficulty：挖矿的难度（每隔2016个区块要调整这个难度，保持出块时间在10分钟左右）</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211158.png"></p>
+<p>注意：计算hash值都是计算block header的哈希值，不包含block body的哈希值</p>
+<p>所谓的挖矿，就是不断地调整随机数nonce，使得整个block header的哈希值小于等于给定的目标阈值，这个目标阈值表示成16进制就是前面有一长串的0，所以凡是符合难度要求的区块，它的块头的哈希值，算出来都是要有一长串的0</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211615.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211913.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212243.png"></p>
+<p>每个发布的区块里都包含一个特殊的铸币交易</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212744.png"></p>
+<p>这个对Merkle tree的根哈希值有什么影响吗</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213102.png"></p>
+<p>coinbase中的前八个字节当作extra nonce来用nonce从2^32-&gt;2^96</p>
+<p>所以真正挖矿的时候是有两层循环的，外层循环调整coinbase域的extra nonce ，算出block header中的根哈希值之后，内层循环在调整header里的nonce</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213639.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213948.png"></p>
+<h2 id="概率分析"><a href="#概率分析" class="headerlink" title="概率分析"></a>概率分析</h2><p>每次尝试nonce可以看作是Bernoulli trial：a random experiment with binary outcome</p>
+<p>挖矿，每次尝试nonce，成功的概率是微乎其微的，大概率是不行的，如果我们做很多的Bernoulli trial，每个实验都是随机的，这些Bernoulli trial就构成了Bernoulli process：a sequence of independent Bernoulli trials，Bernoulli trial的一个性质是无记忆性：memory less，你做大量的实验，前面的结果和后面的结果是没有关系的</p>
+<p>实验很多，每次成功的概率很小，多重伯努利可以用Poisson process来近似，我们关心的是，系统中产生下一个区块的时间，这个在概率中可以推导出来出块时间是服从指数分布的exponential distribution</p>
+<p>整个系统平均的出块时间是十分钟，这个时间是比特币协议设计出来的</p>
+<p>具体到每个矿工，他能够挖到下一个区块的时间，取决于这个矿工的算力占系统算力的百分比，比如说，你的算力占到系统算力的1%，平均下来，系统里每产生一百个区块，其中有一个区块就是你挖矿挖到的，平均你要等1000分钟才能产生一个区块</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817215856.png"></p>
+<p>这个性质有时候也叫：process free，过去的process是不算数的</p>
+<p>假设一下，如果有某个puzzle不满足process free，会出现什么情况：算力强的矿工具有不成比例的优势，因为算力强的矿工过去做的工作肯定是多的，比如有两个矿工，一个矿工的算力是另一个的十倍，那么他挖到矿的概率也是另一个的十倍，这样就满足process free，如果不满足，就会大于十倍！其实process free 恰恰是挖矿公平性的保证。</p>
+<h2 id="比特币的总量"><a href="#比特币的总量" class="headerlink" title="比特币的总量"></a>比特币的总量</h2><p>挖矿获得的出矿奖励，是比特币长生的唯一途径，然而这个值每四年就会减半，比特币的总量呈现几何趋势</p>
+<p>genmetric series</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819203300.png"></p>
+<p>挖矿对维护比特币系统的安全是至关重要的：Bitcoin is secured by mining，只要大部分算力在诚实的结点手里，系统的安全就可以得到保证。出矿奖励随着出块会减半，那么人们的动力是否会减少呢？从过去的几年来看，恰恰是相反的，比特币的价格是飙升的，如果趋于0之后，是不是就没有动力挖矿了呢？还有第二种激励机制：交易费</p>
+<p>比特币的安全性的分析，①假设大部分算力是掌握在诚实的矿工手里，我们能得到什么样的安全保证，能不能保证写入区块里的交易都是合法的？如果落在了10%的不诚实的结点手里，这个节点能不能偷币？能不能把别人账上的钱转给自己？不能，因为他无法伪造别人的签名（需要知道别人的私钥）。如果把这个交易硬写道区块链里呢？</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819204852.png"></p>
+<p>②恶意的结点能不能double spending？</p>
+<p>如果M-&gt;A存在某种不可逆的效果，那么M-&gt;M’就可以从中获得不当的利益，比如网上购物，M购买了一些商品，然后网站接受比特币支付，M把帐转给这个网站，网站监听到这个交易写入到区块链里了，以为， 支付成功了，所以把商品给了M，M拿到商品之后，又发起了一个交易M-&gt;M’把钱转给自己，然后按照下面这个区块扩展最长合法链，这样上面那个交易就作废了。</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819205358.png"></p>
+<p>如何防范double spending？类似上面这种攻击</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210210.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210314.png"></p>
+<p>区块链是不可篡改的账本：irrevocable ledger，那是不是说凡是写入区块链的内容，永远改不了呢？根据上面的分析可知，这种不可篡改性，只是一种概率上的保证</p>
+<p>其实，还有一种zero confirmation，0个确认，这个意思是说，这个转账交易发布出去了，但是还没有被写入区块链里，商家就确认了这个交易，这种在现实生活中还是比较普遍的，</p>
+<p>原因：</p>
+<p>①比特币协议缺省的设置是：结点接收最先听到的那个交易，两个交易有冲突，最先听到哪个，接收哪个，所以发布一个M-&gt;A,最先听到这个，在zero confirmation的这个位置，诚实的结点有比较大的几率是不会接收M-&gt;M’这个交易的 </p>
+<p>②很多购物网站，从你支付成功，到他把货品发给你，是有一定的时间间隔的，如果发现M-&gt;M’这个转账交易没有在最长合法链里，电商就可以选择取消发货。</p>
+<p>假设某个有恶意的结点获得了记账权，他还能干什么坏事？</p>
+<p> 能不能不把某些合法的交易写道区块链里？这是可以的，但是会少交易费，比特币规定某个区块的大小是有限制的，最多不能超过1M字节，某个节点交易太多，这些交易就只能等到下个区块在发布</p>
+<p>selfish mining：在商家等待6个区块的时候，M-&gt;M’先不发布，在私下偷偷的挖矿，但是不发布，等挖矿创建的区块比6个区块多的时候，一下子全部发布，M-&gt;M’这条链就成了最长合法链；正常的情况是，挖到区块，立马发布，要不然就被别人抢了，所以selfish mining有一个前提，恶意的结点的算力要超过诚实的结点的算力，但是是不可能的</p>
+<p>selfish mining还有什么目的，上述是分叉攻击的目的，假设我们能不是为了回滚以前的交易，就是为了正常的挖矿，赚取出块奖励，selfish mining有没有什么好处？减少竞争：别人挖了一个，我已经挖了两个，然后直接抛出去两个,让别人做一些无用功。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1101,211 +1337,6 @@
 <p><strong>注意：orphan block中的奖励的比特币就无效了</strong></p>
 <h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>最后，那么比特币要取得的共识是什么？去中心化账本中的内容要取得共识，只有获得记账权的结点才能往里面写东西，</p>
 <p>我们通过算例来获得记账权，每秒钟能够试多少个nonce的数目（hash rate），hash rate越高，得到出块奖励的概率越大</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC十---回顾问答</title>
-    <url>/2020/09/14/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/</url>
-    <content><![CDATA[<h1 id="BTC问答回顾"><a href="#BTC问答回顾" class="headerlink" title="BTC问答回顾"></a>BTC问答回顾</h1><p>1.转账交易的时候，如果接收者不在线（你转账给A，但是A那时候没有连接到比特币网络上）怎么办？</p>
-<blockquote>
-<p> 这个时候不需要接收者在线，转账交易只不过要在区块链上记录一下。</p>
-</blockquote>
-<p>2.假设某个全节点收到了一个转账交易，有没有可能转账交易中接收者的收款地址是这个结点以前从来没有听说过的？</p>
-<blockquote>
-<p>可能，比特币系统在创建账户的时候是不需要通知其他人的，在本地产生一个公私钥对就可以了，只有在以后产生的收款地址收到钱的时候，其他结点才知道这个账户的存在。</p>
-</blockquote>
-<a id="more"></a>
-
-<p>3.如果你账户的私钥丢失了该怎么办？</p>
-<blockquote>
-<p>其实是没有办法的，这个账户上的钱就变成了死钱，永远取不出来，去中心化的系统大家没有办法给你重置密码。</p>
-</blockquote>
-<p>有些加密货币的交易所，一般来说，这些交易所都是中心化的机构，那么在交易所办一个账户的时候一般来说是要提供身份证明的，这种情况下，你把你的交易货币保存在交易所里，那么私钥实际上是由交易所来保管的 ，你登陆这个交易所是按照登陆银行差不多的程序（有一个账户名，一个密码），登陆的时候，一般来说还需要二次验证（google 身份验证器），如果私钥丢失是可以在交易所查到的；</p>
-<p>有些在线钱包也提供私钥保管的功能，但并不说这些机构为我们自己保管私钥更加安全，目前这些机构仍处于缺乏监管的状态，历史上出现过交易所被黑客攻击的情况，其中最著名的例子就是Mt.Gox的例子，Mt.Gox曾经是世界上最大的交易所，交易量占到了全球的交易量的70%。后来被攻击了，CEO被判刑。</p>
-<p>相比来说，冷钱包或者硬钱包更加安全。</p>
-<p>4.如果你的私钥泄漏了怎么办？（你发现你的账户上出现了一些可疑的交易）</p>
-<blockquote>
-<p>这个时候你应该把你账户上的钱，转到另一个安全账户上。（这个也和现实中银行的体验不太一样）</p>
-<p>比特币账户创建之后，公私钥对都是没有办法修改的</p>
-</blockquote>
-<p>5.如果转账的账户地址填错了怎么办？</p>
-<blockquote>
-<p>没有办法取消以前发布的交易，比特币中转账的交易一旦发布在区块链上就没有办法取消了，它没有提供这种机制取消一个已经发布的交易，如果你知道是谁的地址，可以跟他联系一下</p>
-<p>也可能转给不存在的地址（有些地址其实不是公钥的哈希得到的：digital commitment：你想证明某个时间你知道了某个知识，可能只是一个文件取了哈希）</p>
-</blockquote>
-<p>在Proof of Burn中提到的OP_RETURN后面可以写所有的去哈希的内容，上面的内容没有人管，这是推荐采用的方法，但是有的人不这么干：有人用内容取哈希之后得到的哈希值生成一个看上去像比特币地址的东西，这时候转账给这个假的地址，这样转账的钱就变成了死钱，这种做法，就是牺牲很少一点的比特币，换取往这个区块链里写入这个哈希值的一个机会。后者的做法是不提倡的，因为这样转账交易的输出会永久的保留在UTXO里，对全节点不友好</p>
-<p>6.Proof of Burn的机制是怎么执行的，不是说OP_RETURN会无条件地返回错误吗？那这个交易是怎么通过验证的？</p>
-<blockquote>
-<p>验证时候：是把当前这个交易的输入脚本和这个交易（币的来源）的输出脚本拼接，这个过程是不可以发生错误的，关键在于，OP_RETURN是写在当前交易的输出脚本里的，所以验证当前交易的合法性的时候不会执行当前语句（因为他是输出脚本），有人想花这个钱的时候，才会执行这个输出脚本，因为OP_RETURN永远都返回错误，所以永远都不可能花出去。</p>
-</blockquote>
-<p>7.会不会有的矿工偷答案？（其他矿工发布了一个nonce，这个矿工没有找到这个nonce，他收到这个区块之后，查一下这个nonce是符合要求的，然后就把他当成自己的nonce发布出去）你怎么知道哪个nonce是属于哪个矿工的？</p>
-<blockquote>
-<p>发布的区块里，会发布一个coinBase tx，里面会填一个收款地址，谁挖到了矿，就填谁，如果你要抄答案，那么你要把收款人的地址换成自己的地址，而这个地址发生变化的话，coinBase tx的内容就会发生变化，这样会导致这个Merkle tree的根哈希值发生变化，而这个nonce在块头里，根哈希值也在块头，block header的哈希值发生变化之后，原来找到的nonce就作废了。所以你不可能偷答案，因为每个矿工挖到的nonce是和自己的收款地址绑定在一起的。</p>
-</blockquote>
-<p>8.交易费可以看作是发布区块的时候给矿工的一点小费，那么你怎么知道这个交易费该给那个矿工？事先你怎么知道哪个矿工会挖到矿？</p>
-<blockquote>
-<p>事先不需要知道哪个矿工得到这个交易费，只要total inputs &gt; total ouputs，这个差值就是交易费，给谁不需要事先知道，哪个矿工挖到矿了，就可以把这些差额收集起来，作为自己的交易费。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC十一---匿名性</title>
-    <url>/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/</url>
-    <content><![CDATA[<h1 id="匿名性"><a href="#匿名性" class="headerlink" title="匿名性"></a>匿名性</h1><h2 id="匿名性介绍"><a href="#匿名性介绍" class="headerlink" title="匿名性介绍"></a>匿名性介绍</h2><p>BitCoin and anonymity</p>
-<p>一般来说，大家说的匿名是和隐私保护联系（privacy）在一起的，比特币不要求是真名，是需要公钥产生的地址即可，因此有一定的匿名性，但不是说完全没有名字，他用的是“化名”，因此有人称它为“preudonymity”，就好像很多作家有笔名一样，比特币系统中的“匿名”其实不是真的匿名。</p>
-<a id="more"></a>
-
-<p>这种匿名性能给我们带来什么样的保护呢？和现金相比，和美元，法币相比？它的匿名性没有现金好，现金是完全匿名的。比特币的匿名性和银行存款相比，因为银行账户是实名制。（其实以前国内的银行不要求实名制，可以使用化名，如果这样的话，和比特币相比，哪个匿名性更好？从某种程度上来说，这时候的匿名性就比比特币要好，比特币的账户是公开的，而银行里普通老百姓想要知道别人的账户，这个是没有办法的。）</p>
-<p>比特币系统中，什么情况下有可能破坏匿名性？有些人建议在你每次收款的时候，都创建一个新的账户，但是某些情况下，这些账户是可以被关联在一起的？（这个时候就破坏了比特币的匿名性）</p>
-<blockquote>
-<p>比如网上购物，一个交易可以有多个输入和输出。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916195151.png"></p>
-<p>这个Inputs有多个，这两个地址可能是同一个人（因为可能一个账户的钱，不够买这件商品，所以同时使用另一个账户来消费）；而Outputs其中一个一般是一个找零钱的输出。 像上图中的交易，一般都是由比特币钱包软件生成的，很多钱包软件交易的时候会生成一个新的找零钱的地址，有没有可能把输入地址和输出地址也关联起来呢？（有没有可能我们把这个找零钱的地址也找到？）</p>
-<p>比特币钱包并没有规定找零钱的地址在Outputs中出现的位置，但其实有些情况下，你可以把它分析出来，我们想要对敌人造成干扰，就可以生成一些不必要的转账地址，但是一般没有人会这么干。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200916200401.png"></p>
-</blockquote>
-<p>这就说明，我们可以生成很多的地址账户，但是这些地址账户是可以被关联起来的。第二点是，这个地址账户跟你在社会现实世界中的真实身份也产生关联，那么什么时候会知道比特币的地址账户对应现实中的某个人呢？</p>
-<blockquote>
-<p>①任何比特币系统中的地址和现实世界发生联系的时候都有可能泄漏身份。在资金转入和转出区块链的时候都有可能泄漏，我们刚开始都没有比特币，这时候需要去交易所买，在交易所登记；也有场外交易的情况（就是两个人之间私下交易，以前国外有些做场外交易的公共场所）。</p>
-<p>②很多国家有反洗钱法，那么怎么防范使用比特币洗钱的违法行为呢？</p>
-<p>盯住这个资金的转入转出链其实是一个常用手段，如果你有很大的资金像转入到比特币，或者你有很大一部分比特币，你想转成法币，这个你想不引起司法部门的注意，实际上是很难的，这也是比特币隐私有可能被破坏的一个很重要的时机。</p>
-<p>③用比特币做支付的时候，比如国外有的商家，是接受比特币支付的，咖啡店，餐馆之类（当然，这是一个bad idea，1.延迟大，等六个确认需要等待1个小时；2.交易费也很贵）。这个其实不仅仅是接受你支付的商家会知道，</p>
-<p>其他人其实也会知道：以前曾经有一家信用卡公司，为了支持学术界的科研，把他收集到的一些信用卡的记录公开，公开的时候做一些隐私保护（信用卡号码取哈希，年龄，性别 等都抹掉了），有人就做了科研（其实不是为了研究信用卡的消费行为，而是怎么通过这些公开的数据推测出这个人实际上是谁）—&gt;通过过滤在某个时间某个人在哪里消费，就可以精准地定位到某个人</p>
-</blockquote>
-<p>这就说明，信用卡记录不能公开，去了哈希值之后依然是不应该公开的，但是比特币系统本来就是公开的，这时候你去咖啡店，你把你的账户的地址告诉了营业员，你周围有其他认识你的人都会意识到这时候你在比特币网络上做了一笔消费，然后就可以在区块链中查出来。所以比特币的匿名性并不像我们想象中的那么好</p>
-<p>实际上那些用比特币的人，匿名性保存的有多好？中本聪！（因为他根本没有花钱）</p>
-<p>中本聪为什么要发明比特币，当时他在发明比特币的时候还是花了很大的功夫的，有人说是为了赚钱，但是到现在，他账户上的比特币都没有花出去过（一旦花出去，就要和现实中的银行，交易所发生联系，这样会暴露他的身份，这是他不愿做的事情），所以他不是为了钱，可能是为了某种事业或者信念。</p>
-<blockquote>
-<p>以前有个叫silk road的网站：通过比特币卖各种违禁品，最后运行了两三年就被政府查封了，这个人通过这个网站赚了很多钱，但是他只是在纸面上很多钱，十几万个比特币一个都没花，因为一花就暴露身份了。所以，比特币的匿名性没有我们想象的那么好。</p>
-</blockquote>
-<p>所以，过去的经验表明，凡是用比特币从事违法活动的，最后都能被抓起来，中本聪能这么好的保持匿名性，实际上是一个个例，而且他没有干坏事</p>
-<p>hide your indetiny from whom？</p>
-<blockquote>
-<p>如果你只是像让你的亲戚朋友不知道你的账户上有多少钱，这个是很容易办到的，如果是像silk road这样的想逃避fbi，是很难的。</p>
-</blockquote>
-<h2 id="如何提高匿名性"><a href="#如何提高匿名性" class="headerlink" title="如何提高匿名性"></a>如何提高匿名性</h2><p>假设你是一个比特币用户，你能用什么方法来提高你的匿名性？</p>
-<blockquote>
-<p>我们知道，比特币是运行在应用层的应用程序，它的底层是P2P的network，所以提高匿名性，是从两个方面入手。</p>
-<p>network layer：如果很多交易都是从一个ip地址发出来的，那么从物理世界中，通过ip地址就可以知道是谁。这个我们已经有解决方案了，比较普遍的一种方法就是使用多路径转发的方法（TOR的原理），sender不是直接发给reciever，而是中间经过很多跳，中间的结点只是知道它的上一跳是谁，而不知道最早发出这个消息的是谁，中间的结点可能是坏的，但是只要中间有一个结点是诚实的，就可以将发件人的身份隐藏起来。</p>
-<p>application layer：破坏匿名性的原因之一是，同一个人的不同的比特币账户之间会被关联起来。其中一个做法是</p>
-<p>coin mixing：把你的身份和周围的人的身份混在一起，让别人分不清谁是谁。如何做到coin mixing？有些网站专门提供coin mixing的服务，收取一定的服务费，所有想使用coin mixing的用户，把币发给这些网站，内部进行一些重组，再取回来，取回来的币就不是原来的币了，实际上是一个复杂的过程。还有一个问题是，现在这个区块里世界里，没有什么信誉度非常高的coin mixing的服务，很多提供这个服务的网站，他自己也是匿名的，卷款跑路我们一点办法也没有。</p>
-<p>我们不一定要刻意的coin mixing，我们使用的一些软件，有些自己就带有coin mixing的一些性质，比如在线钱包，存进去的币，他可能会把其他人的币混合起来，但是在线钱包并不一定要履行coin mixing的功能</p>
-<p>还有一些交易所，他天然的有coin mixing的性质，我把一些比特币存进交易所，一段时间，我觉得它的价格会下跌，于是我把他换成美元，我有可能买入以太币，又可能换成莱特币，折腾几次之后，我又可能把他买回来，这时候我账户上的比特币，就不一定是我存进去的比特币了。（coin mixing的性质）。当然这个的前提是，这个交易所不是泄漏相关的记录（相关的提币存币的记录）</p>
-</blockquote>
-<p>为什么比特币的匿名性很差，其中一个本质原因是他是公开的，而且他是不可篡改的，好像不可篡改性对比特币有好处，其实堆隐私保护是灾难性的，因为一旦你在一个交易里把你的身份暴露了，这个交易永久地写在区块链里，你想抹都抹不掉了。这也是为什么我们说账户之间的关联性也是我们需要小心的，如果账户是单独出去的，如果你暴露了一个账户，这个影响还是比较有限的，如果是关联的，一个账户暴露了，后面的就都完了。</p>
-<h2 id="零知识证明"><a href="#零知识证明" class="headerlink" title="零知识证明"></a>零知识证明</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195428.png"></p>
-<p>比如，我要证明某个比特币账户是我的，我要证明这一点，我要怎么证明？</p>
-<blockquote>
-<p>实际上是要证明我有这个比特币账户的私钥，但是我不能把这个私钥告诉你，这时候就可以签名，你是知道这个账户的公钥的，你可以验证这个签名的合法性</p>
-</blockquote>
-<p>这个例子作为零知识证明，实际上是有争议的，我虽然没有泄露我的私钥，但是我泄露了我私钥的签名，这个和零知识证明中的无需透露该陈述是正确的外的任何信息是有冲突的。但是这里透露的额外信息要看你实际的应用场景。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921195956.png"></p>
-<p>零知识证明的数学基础是同态隐藏。</p>
-<p>①不会出现哈希碰撞，如果x、y不相等，那么加密值也不相等，反过来说，如果两个加密函数值是相等的，那么原来的函数值也是相等的。</p>
-<p>②说明加密函数不可逆，密码学的哈希函数的性质和这个是类似的，hiding propetry，知道哈希值没有办法知道它的输入值。</p>
-<p>③对这些加密后的函数进行函数运算，等价于，对进行运算的函数，然后在进行加密。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200714.png"></p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921200915.png"></p>
-<p>说明：</p>
-<p><code>E(X+Y) = E(7)</code>,说明没有碰撞</p>
-<p>这个版本实际上有些缺陷，Bob可以用蛮力的方式，猜出原始的x、y是多少，Bob虽然通过E(x)不能知道x是多少，但是他可以通过遍历x的取值，Alice需要在发送E(x)和E(y)之前，对x、y进行随机化处理（使得x、y加起来还是不变的）。</p>
-<p>在比特币的共识协议中，央行发行货币，有个属于他自己的签名，在前面所讲的，这样会产生double spending，所以可以在每张货币上加上一个id，记录现在这张货币在谁手里。这样的话，央行不是什么都知道了？</p>
-<p>那么，有没有什么办法，让央行做中心化的记账，但是又不让他知道呢？</p>
-<blockquote>
-<p>这个虚拟货币的编号不能是央行产生的，这个编号得是我自己产生的，我在本地产生一个编号，但是不告诉央行，这样的话，央行怎么知道这个编号是不是正确的呢？这就引入了盲签。</p>
-<p>用户A提供编号，银行是要签名的，但是他看不到内容,Token就是银行对序号的签名。</p>
-<p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202409.png"></p>
-</blockquote>
-<h2 id="零币和零钞"><a href="#零币和零钞" class="headerlink" title="零币和零钞"></a>零币和零钞</h2><p><img src="/2020/09/17/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BF%E5%90%8D%E6%80%A7/QQ%E6%88%AA%E5%9B%BE20200921202540.png"></p>
-<p>基础币可以是比特币，你用的时候，你要证明，本来是有一个基础币的，你把这个基础币搞得是不能花了，然后换取一个零币，零币在花的时候，只需要用零知识证明你花掉的币是系统中存在的某一个合法的币就行了，但是不用透露你花的是系统中的哪一个币。</p>
-<p>这样就把关联性破坏掉了。</p>
-<p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
-<p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC四---实现</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="transaction-based-ledger"><a href="#transaction-based-ledger" class="headerlink" title="transaction-based ledger"></a>transaction-based ledger</h2><p>BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算</p>
-<p>比特币的全节点要维护一个UTXO的数据结构</p>
-<a id="more"></a>
-
-<p>UTXO:Unspent Transaction Output,还没有被花出去的交易的输出，区块链中有很多交易，有些交易的输出可能被花掉了，有些还没有被花掉，没有被花掉的交易的输出的集合叫做UTXO</p>
-<p>UTXO中的每个元素要给出产生这个输出的交易的hash值，以及他在这个交易里是第几个输出，就可以定位到这个UTXO中的输出，那么这个UTXO集合的作用是什么？为什么要维护这样一个数据结构</p>
-<p>作用：防范double spending attack，所以全节点要在内存中维护UTXO数据结构，以便快速检测double spending attack，</p>
-<p>随着交易的发布，每个交易要消耗UTXO中的输出，同时也会产生一些新的输出</p>
-<p>每个交易所有输入的金额，要等于所有输出的金额：total inputs = total outputs</p>
-<p>发布区块的那个结点为什么要把你的交易打包在区块里？这样做对她有什么好处吗？</p>
-<p>如果只有出块奖励，那么自私的结点就只会打包他自己的交易，同时也节省带宽</p>
-<p>所以比特币系统设定了第二个激励机制：交易费（transaction fee），你把我的交易打包在区块里，我给你点小费，所以就会出现total inputs &gt;= total outputs的情况，多的比特币充当了小费</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817210059.png"></p>
-<p>目前矿工去争取记账权，主要还是为了得到出块奖励，但是因为21个区块都会减少出块奖励</p>
-<p>比特币系统中差不多10分钟会创建一个区块，计算下来差不多每四年就会减半（出块奖励）</p>
-<h2 id="区块的例子"><a href="#区块的例子" class="headerlink" title="区块的例子"></a>区块的例子</h2><p>account-based ledger</p>
-<p>以太坊就是这种模式，在这种模式总，系统显式的记录每个账户上有多少个币，比特币的隐私保护就比较好一些</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/image-20200817210819638.png"></p>
-<p>Height:是区块的序号，Difficulty：挖矿的难度（每隔2016个区块要调整这个难度，保持出块时间在10分钟左右）</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211158.png"></p>
-<p>注意：计算hash值都是计算block header的哈希值，不包含block body的哈希值</p>
-<p>所谓的挖矿，就是不断地调整随机数nonce，使得整个block header的哈希值小于等于给定的目标阈值，这个目标阈值表示成16进制就是前面有一长串的0，所以凡是符合难度要求的区块，它的块头的哈希值，算出来都是要有一长串的0</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211615.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211913.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212243.png"></p>
-<p>每个发布的区块里都包含一个特殊的铸币交易</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212744.png"></p>
-<p>这个对Merkle tree的根哈希值有什么影响吗</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213102.png"></p>
-<p>coinbase中的前八个字节当作extra nonce来用nonce从2^32-&gt;2^96</p>
-<p>所以真正挖矿的时候是有两层循环的，外层循环调整coinbase域的extra nonce ，算出block header中的根哈希值之后，内层循环在调整header里的nonce</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213639.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213948.png"></p>
-<h2 id="概率分析"><a href="#概率分析" class="headerlink" title="概率分析"></a>概率分析</h2><p>每次尝试nonce可以看作是Bernoulli trial：a random experiment with binary outcome</p>
-<p>挖矿，每次尝试nonce，成功的概率是微乎其微的，大概率是不行的，如果我们做很多的Bernoulli trial，每个实验都是随机的，这些Bernoulli trial就构成了Bernoulli process：a sequence of independent Bernoulli trials，Bernoulli trial的一个性质是无记忆性：memory less，你做大量的实验，前面的结果和后面的结果是没有关系的</p>
-<p>实验很多，每次成功的概率很小，多重伯努利可以用Poisson process来近似，我们关心的是，系统中产生下一个区块的时间，这个在概率中可以推导出来出块时间是服从指数分布的exponential distribution</p>
-<p>整个系统平均的出块时间是十分钟，这个时间是比特币协议设计出来的</p>
-<p>具体到每个矿工，他能够挖到下一个区块的时间，取决于这个矿工的算力占系统算力的百分比，比如说，你的算力占到系统算力的1%，平均下来，系统里每产生一百个区块，其中有一个区块就是你挖矿挖到的，平均你要等1000分钟才能产生一个区块</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817215856.png"></p>
-<p>这个性质有时候也叫：process free，过去的process是不算数的</p>
-<p>假设一下，如果有某个puzzle不满足process free，会出现什么情况：算力强的矿工具有不成比例的优势，因为算力强的矿工过去做的工作肯定是多的，比如有两个矿工，一个矿工的算力是另一个的十倍，那么他挖到矿的概率也是另一个的十倍，这样就满足process free，如果不满足，就会大于十倍！其实process free 恰恰是挖矿公平性的保证。</p>
-<h2 id="比特币的总量"><a href="#比特币的总量" class="headerlink" title="比特币的总量"></a>比特币的总量</h2><p>挖矿获得的出矿奖励，是比特币长生的唯一途径，然而这个值每四年就会减半，比特币的总量呈现几何趋势</p>
-<p>genmetric series</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819203300.png"></p>
-<p>挖矿对维护比特币系统的安全是至关重要的：Bitcoin is secured by mining，只要大部分算力在诚实的结点手里，系统的安全就可以得到保证。出矿奖励随着出块会减半，那么人们的动力是否会减少呢？从过去的几年来看，恰恰是相反的，比特币的价格是飙升的，如果趋于0之后，是不是就没有动力挖矿了呢？还有第二种激励机制：交易费</p>
-<p>比特币的安全性的分析，①假设大部分算力是掌握在诚实的矿工手里，我们能得到什么样的安全保证，能不能保证写入区块里的交易都是合法的？如果落在了10%的不诚实的结点手里，这个节点能不能偷币？能不能把别人账上的钱转给自己？不能，因为他无法伪造别人的签名（需要知道别人的私钥）。如果把这个交易硬写道区块链里呢？</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819204852.png"></p>
-<p>②恶意的结点能不能double spending？</p>
-<p>如果M-&gt;A存在某种不可逆的效果，那么M-&gt;M’就可以从中获得不当的利益，比如网上购物，M购买了一些商品，然后网站接受比特币支付，M把帐转给这个网站，网站监听到这个交易写入到区块链里了，以为， 支付成功了，所以把商品给了M，M拿到商品之后，又发起了一个交易M-&gt;M’把钱转给自己，然后按照下面这个区块扩展最长合法链，这样上面那个交易就作废了。</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819205358.png"></p>
-<p>如何防范double spending？类似上面这种攻击</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210210.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210314.png"></p>
-<p>区块链是不可篡改的账本：irrevocable ledger，那是不是说凡是写入区块链的内容，永远改不了呢？根据上面的分析可知，这种不可篡改性，只是一种概率上的保证</p>
-<p>其实，还有一种zero confirmation，0个确认，这个意思是说，这个转账交易发布出去了，但是还没有被写入区块链里，商家就确认了这个交易，这种在现实生活中还是比较普遍的，</p>
-<p>原因：</p>
-<p>①比特币协议缺省的设置是：结点接收最先听到的那个交易，两个交易有冲突，最先听到哪个，接收哪个，所以发布一个M-&gt;A,最先听到这个，在zero confirmation的这个位置，诚实的结点有比较大的几率是不会接收M-&gt;M’这个交易的 </p>
-<p>②很多购物网站，从你支付成功，到他把货品发给你，是有一定的时间间隔的，如果发现M-&gt;M’这个转账交易没有在最长合法链里，电商就可以选择取消发货。</p>
-<p>假设某个有恶意的结点获得了记账权，他还能干什么坏事？</p>
-<p> 能不能不把某些合法的交易写道区块链里？这是可以的，但是会少交易费，比特币规定某个区块的大小是有限制的，最多不能超过1M字节，某个节点交易太多，这些交易就只能等到下个区块在发布</p>
-<p>selfish mining：在商家等待6个区块的时候，M-&gt;M’先不发布，在私下偷偷的挖矿，但是不发布，等挖矿创建的区块比6个区块多的时候，一下子全部发布，M-&gt;M’这条链就成了最长合法链；正常的情况是，挖到区块，立马发布，要不然就被别人抢了，所以selfish mining有一个前提，恶意的结点的算力要超过诚实的结点的算力，但是是不可能的</p>
-<p>selfish mining还有什么目的，上述是分叉攻击的目的，假设我们能不是为了回滚以前的交易，就是为了正常的挖矿，赚取出块奖励，selfish mining有没有什么好处？减少竞争：别人挖了一个，我已经挖了两个，然后直接抛出去两个,让别人做一些无用功。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1563,6 +1594,68 @@
       </tags>
   </entry>
   <entry>
+    <title>BTC五---网络</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
+<a id="more"></a>
+
+<p>比特币网络的工作原理</p>
+<p>The BitCoin Network，比特币工作在应用层，它的底层是一个P2P Overlay Network，所有结点都是对等的，他不想有些所谓的P2P网络有所谓的超结点(Super node | master node),你要加入比特币网络，你要至少知道一个种子结点（seed node），你和这个种子节点联系，他会告诉你他所知道的网络中的其他节点，节点之间是通过tcp通信的，这样有利于穿破防火墙，你离开的时候也不需要执行其他操作（比如通知其他结点，退出应用程序即可），别的节点没有听到你的消息，过了一段时间就会把你删掉。</p>
+<p>比特币网络的设计原则是简单（simple，robust，but not efficient），每个结点维护一个邻居节点的集合，消息传播在网络中采取flooding（泛洪）的方式，结点第一次听到某个消息的时候，把他传播给所有的邻居结点，同时记录一下，这个消息我已经记录过了，下次再收到这个消息的时候，就不用转发给邻居节点了</p>
+<p>邻居结点的选取是随机的，没有考虑底层的拓扑结构，和地区没有关系，这样的好处是增强鲁棒性，没有考虑实际的拓扑结构，但是牺牲的是效率，向身边的人转账和向美国的人转账速度其实是差不多的。</p>
+<p>比特币系统中每个节点要维护一个等待上链的交易的集合。第二次听到同样的交易就不会传播给邻居结点，避免交易在网络中无限制的传播下去，转发的前提是这个交易得是合法的，这里有一个risk condition：有可能你有两个有冲突的交易，差不多同时被广播到网络上</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/QQ%E6%88%AA%E5%9B%BE20200826201624.png"></p>
+<p>新发布的区块在网络中的传播方式和新发布的交易在网络中传播是相似的，每个结点除了要检查区块的内容之外，还要检查一下是否在最长合法链上，越是大的区块，在网络中传播的速度就越慢，比特币协议对区块大小有一个限制，1M字节的限制，1M大小的区块在区块链中的传播时间就已经达到了50秒（传播完）</p>
+<p>我们讲的比特币网络，它的传播是属于best effort，一个交易发布到网络上，不一定所有的节点都能收到，而且不同的节点收到这个交易的顺序也不一定是一样的，网络传播存在延迟，有的节点也不一定按照比特币协议的要求转发，比如有的该转发的它不转发，导致某些合法的交易收不到，有些节点也有可能转发一些不该转发的消息，比如有些不合法的交易，他也会转发，这是去中心化系统中所面临的问题</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH十二---美链</title>
+    <url>/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/</url>
+    <content><![CDATA[<h1 id="美链"><a href="#美链" class="headerlink" title="美链"></a>美链</h1><p>​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。</p>
+<a id="more"></a>
+
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204203251.png"></p>
+<blockquote>
+<p>上图中的ERC是以太坊发行代币的一个标准，ERC：Ethereum Request for comments。</p>
+</blockquote>
+<p>​    以太坊上面发行着各种各样的代币，以太币的价格上涨的一个原因是因为ICO（Initial Coin offering），这些发行的代币没有自己的区块链，而是以智能合约的形式运行在以太坊的EVM平台上，发行这个代币的智能合约对应的是以太坊状态中的一个结点，这个结点有它自己的状态余额，相当于这个智能合约一共有多少个以太币，相当于这个发行代币的智能合约总的资产有多少个以太币，然后在这个合约里，每个账户上有多少个代币，这个是作为存储树中的变量存储在智能合约的账户里的，代币的发行、转账、销毁，都是通过调用智能合约中的函数来实现的，这个也是和以太坊中的以太币不太一样的地方，他不想以太坊那样，通过挖矿来维护一个底层的基础链。以太坊上每个账户有多少个以太币，这个是直接保存在状态数上的变量，然后转账的时候以太坊上两个账户之间转账，只通过发布一个交易到区块链上，这个交易会打包到发布的区块里，而代币要转账的话，是智能合约的两个账户之间通过调用智能合约的函数就可以完成。</p>
+<p>​    每个代币可以指定自己的发行规则，比如说某一个代币是可以1个以太币兑换100个代币，比如说从你的外部账户给智能合约发进去一个以太币，那么这个智能合约就可以给你在这个合约里的代币账户上发送100个代币。每个账户上有多少个代币的这些信息都是维护在存储树中（发行这个代币的智能合约的存储树里面）。</p>
+<p>​    以太坊平台的出现为各种代币的发行提供了很大的方便，包括EOS（使用DOPS协议形成的共识），这个在上线前，也是作为以太坊上的一个代币的形式发行的，这个EOS本身的目标是做成一个基础链，和以太坊要竞争的。</p>
+<p>​    batchTransfer的实现：</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204204908.png"></p>
+<blockquote>
+<p>上图的函数有两个参数，第一个参数是接受代币的接收者的数组的地址，在函数体里，要检查一下接受者的个数要小于等于20个，第二个参数中的value是转账的金额（给每个人转多少），函数体里先算一下总的金额，每人发送value个代币，一共要amount个代币，然后检查一下发起调用的这个账户确实是有这么多代币，然后把发起调用的账户上的代币数目减去amount，之后用一个循环给每一个接收者接受value的代币。会有什么问题？这和上一个例子不是同一个问题，否则就没必要再举例了……</p>
+<p>问题出在计算总数amount上，如果value的值非常大，就是给每个receiver发送的value都很大的话，这个乘法可能溢出，发生溢出之后，amount可能是一个很小的值，所以从调用的账户上去减的时候，减的是很小的一部分代币，但是底下给每个receiver增加的代币数目仍然是value，这样做的结果相当于系统当中凭空多发行了很多的代币。</p>
+</blockquote>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210103.png"></p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210229.png"></p>
+<blockquote>
+<p>上图中红框中都是接受了很大数量的代币。</p>
+</blockquote>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210316.png"></p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210357.png"></p>
+<p>这个事情应该给我们一个什么样的反思？在写代码的时候一定要检查数值溢出的问题。</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210524.png"></p>
+<blockquote>
+<p>首先用a<em>b得到c，然后用c/a看能不能得到b，如果发生溢出的话，assert会抛出异常。a</em>b会不会精度丢失，c再除a得到的c是否还是ab的结果？但是这个问题在solidity里面是不存在的，因为ab都是整数。</p>
+</blockquote>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210954.png"></p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>BTC八---比特币脚本</title>
     <url>/2020/09/02/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E8%84%9A%E6%9C%AC/</url>
     <content><![CDATA[<h1 id="比特币脚本"><a href="#比特币脚本" class="headerlink" title="比特币脚本"></a>比特币脚本</h1><p>比特币脚本，十分简单，不像c++，java，有堆栈的概念，比特币脚本是基于栈的脚本语言</p>
@@ -1687,99 +1780,6 @@
       </categories>
       <tags>
         <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC五---网络</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
-    <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
-<a id="more"></a>
-
-<p>比特币网络的工作原理</p>
-<p>The BitCoin Network，比特币工作在应用层，它的底层是一个P2P Overlay Network，所有结点都是对等的，他不想有些所谓的P2P网络有所谓的超结点(Super node | master node),你要加入比特币网络，你要至少知道一个种子结点（seed node），你和这个种子节点联系，他会告诉你他所知道的网络中的其他节点，节点之间是通过tcp通信的，这样有利于穿破防火墙，你离开的时候也不需要执行其他操作（比如通知其他结点，退出应用程序即可），别的节点没有听到你的消息，过了一段时间就会把你删掉。</p>
-<p>比特币网络的设计原则是简单（simple，robust，but not efficient），每个结点维护一个邻居节点的集合，消息传播在网络中采取flooding（泛洪）的方式，结点第一次听到某个消息的时候，把他传播给所有的邻居结点，同时记录一下，这个消息我已经记录过了，下次再收到这个消息的时候，就不用转发给邻居节点了</p>
-<p>邻居结点的选取是随机的，没有考虑底层的拓扑结构，和地区没有关系，这样的好处是增强鲁棒性，没有考虑实际的拓扑结构，但是牺牲的是效率，向身边的人转账和向美国的人转账速度其实是差不多的。</p>
-<p>比特币系统中每个节点要维护一个等待上链的交易的集合。第二次听到同样的交易就不会传播给邻居结点，避免交易在网络中无限制的传播下去，转发的前提是这个交易得是合法的，这里有一个risk condition：有可能你有两个有冲突的交易，差不多同时被广播到网络上</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/QQ%E6%88%AA%E5%9B%BE20200826201624.png"></p>
-<p>新发布的区块在网络中的传播方式和新发布的交易在网络中传播是相似的，每个结点除了要检查区块的内容之外，还要检查一下是否在最长合法链上，越是大的区块，在网络中传播的速度就越慢，比特币协议对区块大小有一个限制，1M字节的限制，1M大小的区块在区块链中的传播时间就已经达到了50秒（传播完）</p>
-<p>我们讲的比特币网络，它的传播是属于best effort，一个交易发布到网络上，不一定所有的节点都能收到，而且不同的节点收到这个交易的顺序也不一定是一样的，网络传播存在延迟，有的节点也不一定按照比特币协议的要求转发，比如有的该转发的它不转发，导致某些合法的交易收不到，有些节点也有可能转发一些不该转发的消息，比如有些不合法的交易，他也会转发，这是去中心化系统中所面临的问题</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ETH十二---美链</title>
-    <url>/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/</url>
-    <content><![CDATA[<h1 id="美链"><a href="#美链" class="headerlink" title="美链"></a>美链</h1><p>​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。</p>
-<a id="more"></a>
-
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204203251.png"></p>
-<blockquote>
-<p>上图中的ERC是以太坊发行代币的一个标准，ERC：Ethereum Request for comments。</p>
-</blockquote>
-<p>​    以太坊上面发行着各种各样的代币，以太币的价格上涨的一个原因是因为ICO（Initial Coin offering），这些发行的代币没有自己的区块链，而是以智能合约的形式运行在以太坊的EVM平台上，发行这个代币的智能合约对应的是以太坊状态中的一个结点，这个结点有它自己的状态余额，相当于这个智能合约一共有多少个以太币，相当于这个发行代币的智能合约总的资产有多少个以太币，然后在这个合约里，每个账户上有多少个代币，这个是作为存储树中的变量存储在智能合约的账户里的，代币的发行、转账、销毁，都是通过调用智能合约中的函数来实现的，这个也是和以太坊中的以太币不太一样的地方，他不想以太坊那样，通过挖矿来维护一个底层的基础链。以太坊上每个账户有多少个以太币，这个是直接保存在状态数上的变量，然后转账的时候以太坊上两个账户之间转账，只通过发布一个交易到区块链上，这个交易会打包到发布的区块里，而代币要转账的话，是智能合约的两个账户之间通过调用智能合约的函数就可以完成。</p>
-<p>​    每个代币可以指定自己的发行规则，比如说某一个代币是可以1个以太币兑换100个代币，比如说从你的外部账户给智能合约发进去一个以太币，那么这个智能合约就可以给你在这个合约里的代币账户上发送100个代币。每个账户上有多少个代币的这些信息都是维护在存储树中（发行这个代币的智能合约的存储树里面）。</p>
-<p>​    以太坊平台的出现为各种代币的发行提供了很大的方便，包括EOS（使用DOPS协议形成的共识），这个在上线前，也是作为以太坊上的一个代币的形式发行的，这个EOS本身的目标是做成一个基础链，和以太坊要竞争的。</p>
-<p>​    batchTransfer的实现：</p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204204908.png"></p>
-<blockquote>
-<p>上图的函数有两个参数，第一个参数是接受代币的接收者的数组的地址，在函数体里，要检查一下接受者的个数要小于等于20个，第二个参数中的value是转账的金额（给每个人转多少），函数体里先算一下总的金额，每人发送value个代币，一共要amount个代币，然后检查一下发起调用的这个账户确实是有这么多代币，然后把发起调用的账户上的代币数目减去amount，之后用一个循环给每一个接收者接受value的代币。会有什么问题？这和上一个例子不是同一个问题，否则就没必要再举例了……</p>
-<p>问题出在计算总数amount上，如果value的值非常大，就是给每个receiver发送的value都很大的话，这个乘法可能溢出，发生溢出之后，amount可能是一个很小的值，所以从调用的账户上去减的时候，减的是很小的一部分代币，但是底下给每个receiver增加的代币数目仍然是value，这样做的结果相当于系统当中凭空多发行了很多的代币。</p>
-</blockquote>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210103.png"></p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210229.png"></p>
-<blockquote>
-<p>上图中红框中都是接受了很大数量的代币。</p>
-</blockquote>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210316.png"></p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210357.png"></p>
-<p>这个事情应该给我们一个什么样的反思？在写代码的时候一定要检查数值溢出的问题。</p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210524.png"></p>
-<blockquote>
-<p>首先用a<em>b得到c，然后用c/a看能不能得到b，如果发生溢出的话，assert会抛出异常。a</em>b会不会精度丢失，c再除a得到的c是否还是ab的结果？但是这个问题在solidity里面是不存在的，因为ab都是整数。</p>
-</blockquote>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210954.png"></p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CCF一---202006</title>
-    <url>/2020/08/29/ccf/202006/</url>
-    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
-
-<a id="more"></a>
-
-<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
-
-<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
-
-<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
-<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
-<p>以下就是我写的代码（测试为100分）:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>CCF</tag>
       </tags>
   </entry>
   <entry>
