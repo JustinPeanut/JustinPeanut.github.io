@@ -6,7 +6,7 @@
   <link href="http://justinpeanut.github.io.com/atom.xml" rel="self"/>
   
   <link href="http://justinpeanut.github.io.com/"/>
-  <updated>2021-01-07T08:32:26.494Z</updated>
+  <updated>2021-02-16T14:31:22.844Z</updated>
   <id>http://justinpeanut.github.io.com/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>未雨绸缪的政治(基础课)</title>
+    <link href="http://justinpeanut.github.io.com/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/"/>
+    <id>http://justinpeanut.github.io.com/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/</id>
+    <published>2021-02-16T14:19:09.000Z</published>
+    <updated>2021-02-16T14:31:22.844Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;马原基础班&quot;&gt;&lt;a href=&quot;#马原基础班&quot; class=&quot;headerlink&quot; title=&quot;马原基础班&quot;&gt;&lt;/a&gt;马原基础班&lt;/h1&gt;&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;有一说一，现在确实有点早，但是还是需要未雨绸缪的，毕竟现在也没有什么事，在休息之余可以多加深对政治的映像和理解，本文章因为是基础课，相当于预习，所以字数不会太多。本文仅供个人学习使用，另外，感谢YouTube的DayDayUp频道提供的免费课程！&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="考研" scheme="http://justinpeanut.github.io.com/categories/%E8%80%83%E7%A0%94/"/>
+    
+    
+    <category term="政治" scheme="http://justinpeanut.github.io.com/tags/%E6%94%BF%E6%B2%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>区块链---总结</title>
@@ -399,26 +418,6 @@
     
     
     <category term="Vue" scheme="http://justinpeanut.github.io.com/tags/Vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java随笔</title>
-    <link href="http://justinpeanut.github.io.com/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/"/>
-    <id>http://justinpeanut.github.io.com/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</id>
-    <published>2020-09-10T15:38:57.000Z</published>
-    <updated>2021-01-07T08:59:16.145Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。&lt;/p&gt;
-&lt;p&gt;  我自认为，在学习的时候，应该自己主动思考，如果这样的话，结果是怎么样，那样的话，结果是怎么样，我们在整个小学、初中、高中，甚至是大学，都被灌输了一种思想，就是，这样就是对的，那么当我们碰到问题的时候，往往就会一头雾水，不知如何下手，如果有主动思考的能力的话，这种问题是不是就会没有那么棘手呢？&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="随笔" scheme="http://justinpeanut.github.io.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="Java" scheme="http://justinpeanut.github.io.com/tags/Java/"/>
     
   </entry>
   
