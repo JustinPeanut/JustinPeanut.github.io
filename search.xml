@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CCF一---202006</title>
+    <url>/2020/08/29/ccf/202006/</url>
+    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
+
+<a id="more"></a>
+
+<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
+
+<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
+
+<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
+<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
+<p>以下就是我写的代码（测试为100分）:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>CCF</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LOL-show项目工程日志</title>
     <url>/2020/08/30/Java/LOL-show%E9%A1%B9%E7%9B%AE%E5%B7%A5%E7%A8%8B%E6%97%A5%E5%BF%97/</url>
     <content><![CDATA[<h1 id="初衷"><a href="#初衷" class="headerlink" title="初衷"></a>初衷</h1><p>  在我学习完了ssm框架，以及跟着B站视频练习了一个<code>尚筹网</code>的项目之后，准备在暑假巩固所学的框架搭建过程，以及业务逻辑、数据库建表、前端页面的知识，本人喜欢打游戏，所以便有了LOL-show这个项目。</p>
@@ -105,6 +136,71 @@
       </tags>
   </entry>
   <entry>
+    <title>未雨绸缪的政治(基础课)</title>
+    <url>/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/</url>
+    <content><![CDATA[<h1 id="马原基础班"><a href="#马原基础班" class="headerlink" title="马原基础班"></a>马原基础班</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>有一说一，现在确实有点早，但是还是需要未雨绸缪的，毕竟现在也没有什么事，在休息之余可以多加深对政治的映像和理解，本文章因为是基础课，相当于预习，所以字数不会太多。本文仅供个人学习使用，另外，感谢YouTube的DayDayUp频道提供的免费课程！</p>
+<a id="more"></a>
+
+<h2 id="马克思主义基本原理概论1"><a href="#马克思主义基本原理概论1" class="headerlink" title="马克思主义基本原理概论1"></a>马克思主义基本原理概论1</h2><p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6.png"></p>
+<p>①考点：谁分的马原的框架（3部分）：恩格斯——《反杜林论》</p>
+<p>②整个马原三部分的关系是什么？哲学是方法，政经是主体、科社是目的和归宿；马克思想研究什么？他想研究的是资本主义《资本论》，用哲学的方法来研究政经，科社是结论，资本主义必将灭亡，社会主义必将胜利。</p>
+<h2 id="马克思主义基本原理概论2"><a href="#马克思主义基本原理概论2" class="headerlink" title="马克思主义基本原理概论2"></a>马克思主义基本原理概论2</h2><p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210215230849.png"></p>
+<p><strong>一、什么是马哲？</strong></p>
+<p><strong>1.什么是世界观？</strong>世界观是我们对这个世界的整体看法和总体观点，这里面既包括我们对世界万事万物的看法，也包括我们对自己人生的看法，还包括我们对亲情友情各种人际关系的看法，每个成年人都会有自己的世界观，只要不践踏道德和法律的底线，没什么对错。</p>
+<p><strong>什么是方法论？</strong>和世界观对应，如果世界观是我们对这个世界的看法，那么方法论就是有了看法之后我们之后怎么做，就是依据看法去怎么做的问题。</p>
+<p><strong>2.什么叫哲学？</strong>哲学被世界观和方法论包括。每个人都会有世界观，但并不是每个人都会有自己的哲学，因为哲学是<strong>系统化、理论化</strong>的世界观和方法论（普通人和哲学家的区别）。世界观的摇摆不定有时候会给我们带来痛苦。</p>
+<p><strong>3.什么是马克思主义哲学？</strong>马克思主义学派是所有哲学学派当中唯一<strong>正确、科学的</strong>那一派。在考研政治范围内，我们信奉“废黜百家，独尊‘马’术”。</p>
+<p><u>总结：马克思主义哲学是系统化的、理论化的、科学的世界观和方法论。</u></p>
+<hr>
+<h3 id="唯物论"><a href="#唯物论" class="headerlink" title="唯物论"></a>唯物论</h3><p><strong>1.世界的本原是什么？</strong></p>
+<p>有各种观点：</p>
+<p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210215232651.png"></p>
+<p><u>马克思主义认为，世界的本原是一切<strong>客观实在</strong>：不以人的意志为转移，即物质。</u></p>
+<p><strong>2.物质如何起决定性作用？</strong></p>
+<p><u>物质派生出了意识，人的想法都是由物质派生出来的，而不是由人自行产生的。</u></p>
+<p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210215233209.png"></p>
+<p><em>我们的头脑和我们的心只是一面镜子吗？</em></p>
+<h2 id="马克思主义基本原理概述3"><a href="#马克思主义基本原理概述3" class="headerlink" title="马克思主义基本原理概述3"></a>马克思主义基本原理概述3</h2><h3 id="辨证法"><a href="#辨证法" class="headerlink" title="辨证法"></a>辨证法</h3><p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210219114417.png"></p>
+<p>在唯物论的基础之上，进一步探讨这个<strong>物质世界是怎样存在</strong>的问题。（辩证法的两大总特征）</p>
+<blockquote>
+<p>①<strong>普遍联系的</strong></p>
+<p>②<strong>永恒发展的</strong></p>
+</blockquote>
+<p><em>世界是怎么样联系的？</em></p>
+<blockquote>
+<p>事物是一对一对发生联系的，万事万物都在一张联系网里面，取其中的一对，就是未来要学习到的<strong>矛盾</strong>的概念，故世界是由一对一对矛盾相互交织在一起形成的一个矛盾的普遍联系的世界。</p>
+</blockquote>
+<p>Ⅰ.事物为什么会发展？Ⅱ.怎样发展？Ⅲ.往哪里去发展？（辩证法的三大规律）</p>
+<blockquote>
+<p>Ⅰ.对立统一：举个例子，你和你女朋友如何发展的，就是通过开始的相互吸引在一起（统一），之后会有各种各样的矛盾（对立），正是在化解矛盾和相互吸引的过程中，关系才会进一步发展。</p>
+<p>Ⅱ.量变质变：不断实现量的积累，最后实现质的突破，突破了之后在进行量的积累，然后又变成质的突破，不断向前发展的过程和状态。</p>
+<p>Ⅲ.否定之否定：比如说一颗种子，他想要发展，首先需要否定自己（是使自己不再成为自己），进入自己的对立面：开始生根发芽，开花结果，变成了一朵花，或者是果实，果实最后会枯萎，最后又变成了种子。只有从自己变成不是自己，做第一次否定，然后再变回自己，做第二次否定，这才算是完成了发展的一个完整的周期，所以万事万物往自己去发展，但是不是简单的回到了自己（种子最后可以收获一堆种子），所以朝一个更加完美的自己去发展，所有事物都是如此。</p>
+</blockquote>
+<h3 id="认识论"><a href="#认识论" class="headerlink" title="认识论"></a>认识论</h3><p><em>认识的本质是什么？</em></p>
+<blockquote>
+<p>前面所说，我们的人脑相当于一面镜子，只是一面镜子吗？不止是，因为他在映射、反映的过程当中会发挥<strong>能动性</strong>：人脑和人心会发生能动性作用，使得外部世界的东西一旦进入到脑子里面，马上会对其加工，变得和外部世界不太一样了。</p>
+<p>结论：<u>认识论的本质是对外部世界的能动反映。</u></p>
+</blockquote>
+<p>认识的过程是怎样的？</p>
+<blockquote>
+<p>实践决定认识，实践是认识的来源</p>
+<p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210219121834.png"></p>
+<p>人类的认知要经过两次飞跃：第一次从浅往深去飞跃，第二次飞跃是我获得了深刻的理性认知，然后要回过头来指导理论实践。</p>
+</blockquote>
+<p>认知的结果由什么特点？</p>
+<blockquote>
+<p><strong>真理</strong>(重点)：认识对了，真理又可分为绝对性和相对性。任何一个真理，既是绝对的，又是相对的（关键看角度），一个真理，我从它对的角度来看，他就是绝对的；从它虽然现在对，但是未来有可能被推翻的角度看，又是相对的了。</p>
+<p><strong>谬误</strong>：认识错了</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>考研</category>
+      </categories>
+      <tags>
+        <tag>政治</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>java随笔</title>
     <url>/2020/09/10/Java/java%E9%9A%8F%E7%AC%94/</url>
     <content><![CDATA[<p>  在学习的过程中，难免会碰到自己从未接触过的知识和技巧，有时候一边看过去会忘记，所以把它记录下来是最好的选择，而不是假装自己会了，又继续学习别的知识，这样的话，对后续的工作和学习都会带来一些不必要的麻烦。</p>
@@ -140,37 +236,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CCF一---202006</title>
-    <url>/2020/08/29/ccf/202006/</url>
-    <content><![CDATA[<h1 id="线性分类器"><a href="#线性分类器" class="headerlink" title="线性分类器"></a>线性分类器</h1><img src="/2020/08/29/ccf/202006/线性分类器(1).png" style="zoom:75%;">
-
-<a id="more"></a>
-
-<img src="/2020/08/29/ccf/202006/线性分类器(2).png" style="zoom:75%;">
-
-<img src="/2020/08/29/ccf/202006/线性分类器(3).png" style="zoom:75%;">
-
-<p>​    思路：读完题目发现，是有关直线和点的分布问题，所以首先想到将点代入原直线方程，如果得到的结果大于0，那么这个点就在直线的上方，反之在下方，按照这个思路，就可以去写代码了。</p>
-<p>​    数据结构：考虑到每个点有x坐标（int）、y坐标（int）和类型（String），集合以及数组都不是很好存放point的数据，所以我这里使用Node类存储每个point，然后使用List类型来存放所有的点，使用一个二位数组存放直线的z、x以及y。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>​    初始化用来存储的过程就不用多说，最主要的思路就在于如果计算，因为在原输入中已经给出了是‘A’类型还是‘B’类型，所以在计算之后要判断一下，并且设置一个总的标记<code>flag</code>，和两个A、B的标记<code>flagA</code>、<code>flagB</code>。只要不满足要求（当有两个同类型的点不在同一边）<code>flag</code>就设为false，结束循环，如果满足就一直进行下去，最后，如果<code>flag</code>为true，仍要判断<code>flagA</code>和<code>flagB</code>是否相等，如果相等，仍然不满足要求，输出No。</p>
-<p>以下就是我写的代码（测试为100分）:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x;</span><br><span class="line">        <span class="keyword">int</span> y;</span><br><span class="line">        String type;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">int</span> n = scanner.nextInt();</span><br><span class="line">        <span class="keyword">int</span> m = scanner.nextInt();</span><br><span class="line">        List&lt;Node&gt; points = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">// 初始化所有的点的集合</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> x = scanner.nextInt();</span><br><span class="line">            <span class="keyword">int</span> y = scanner.nextInt();</span><br><span class="line">            String type = scanner.next();</span><br><span class="line">            Node node = <span class="keyword">new</span> Node();</span><br><span class="line">            node.x = x;</span><br><span class="line">            node.y = y;</span><br><span class="line">            node.type = type;</span><br><span class="line">            points.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> [][] line = <span class="keyword">new</span> <span class="keyword">int</span>[m][<span class="number">3</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            line[i][<span class="number">0</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">1</span>] = scanner.nextInt();</span><br><span class="line">            line[i][<span class="number">2</span>] = scanner.nextInt();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">            <span class="keyword">int</span> flagA = -<span class="number">1</span> , flagB = -<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> z = line[i][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">int</span> x = line[i][<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">int</span> y = line[i][<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                Node node = points.get(j);</span><br><span class="line">                <span class="comment">// 大于零说明在这条直线上方</span></span><br><span class="line">                <span class="keyword">int</span> t = (z + node.x*x + node.y*y) &gt; <span class="number">0</span> ? <span class="number">1</span>: <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(node.type.equals(<span class="string">&quot;A&quot;</span>) )&#123;</span><br><span class="line">                    <span class="keyword">if</span>(flagA == -<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="comment">// 初始化A类的flag</span></span><br><span class="line">                        flagA = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span> (flagA != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (node.type.equals(<span class="string">&quot;B&quot;</span>))&#123;</span><br><span class="line">                    <span class="keyword">if</span> (flagB == -<span class="number">1</span>)&#123;</span><br><span class="line">                        flagB = t;</span><br><span class="line">                    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(flagB != t)&#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(flag &amp;&amp; flagA != flagB)&#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Yes&quot;</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;No&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>算法</category>
-      </categories>
-      <tags>
-        <tag>CCF</tag>
       </tags>
   </entry>
   <entry>
@@ -267,6 +332,106 @@
       </tags>
   </entry>
   <entry>
+    <title>ETH四---交易树和收据树</title>
+    <url>/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/</url>
+    <content><![CDATA[<h1 id="ETH-交易树和收据树"><a href="#ETH-交易树和收据树" class="headerlink" title="ETH-交易树和收据树"></a>ETH-交易树和收据树</h1><p>​    每次发布一个区块的时候，这个区块所包含的交易，会组织成一棵交易树，也是一棵Merkle tree，和比特币的情况是类似的，同时，以太坊还增加了一个收据树，每个交易执行完之后，会形成一个交易，记录这个交易的相关信息，也就是说，收据树和交易树上面的结点是一一对应的。</p>
+<a id="more"></a>
+
+<p>​    增加这个收据树主要是考虑到以太坊的智能合约执行过程比较复杂，增加收据树的结构有利于我们快速查询一些执行的结果，从数据结构上来看，收据树和交易树都是MPT（Merkle Patricia tree），和比特币有所区别，比特币中的交易树，就是用普通的Merkle tree。为什么有这个区别？可能是为了方便，以太坊中的三棵树都用同样的结构，代码比较统一，不一定有什么深层次的原因，当然，用MPT的一个好处是：它支持查找操作，它支持通过键值，从顶向下，沿着树进行查找，对于状态树来说，查找的键值，就是这个账户的地址；对于交易树和收据树来说，查找的键值就是这个交易在发布的区块里面的序号（交易的发布顺序是由发布区块的那个结点决定的）。</p>
+<p>​    交易树和收据树都是只把当前发布的区块里的交易组织起来的，而状态树，是把系统中所有账户的状态都要包含进去，不管这些账户和当前交易有没有关系。</p>
+<p>​    多个区块的状态树是共享结点的，每次新发布一个区块的时候，只有这个区块里的交易影响了账户状态那些结点需要新建一个分支，其他的结点都是沿用原来状态树上的结点就行了。相比之下，每个区块的交易树和收据树都是独立的，他们是不会共享节点的，每个区块中发布的交易本身我们也认为是独立的。</p>
+<p>​    交易树和收据树的用途？</p>
+<blockquote>
+<p>①提供Merkle Proof，就像比特币当中，交易树可以向轻结点证明某个交易被打包到某个区块里了；收据树也是类似的，你要证明某个交易的执行结果也是在收据树中提供一个Merkle Proof。</p>
+<p>②除此之外，以太坊还支持一些更加复杂的查询操作，比如说，你想找到过去十天当中，所有跟智能合约有关的交易：一种办法是，把过去十天产生交易的区块都扫描一遍，看看其中有哪些交易和智能合约相关（复杂度比较高，而且对于轻结点来说，没有交易列表，它只有一个块头信息，所有轻结点也没有办法通过扫描所有交易列表的方法，找到符合条件的交易）；以太坊中引入了bloom filter。</p>
+</blockquote>
+<h2 id="bloom-filter"><a href="#bloom-filter" class="headerlink" title="bloom filter"></a>bloom filter</h2><p>bloom filter：这个数据结构可以支持比较高效的查找某个元素是不是在一个比较大的集合里面，比如有个很大的集合，你先知道某个指定的元素是不是在这个集合里，怎么办？</p>
+<blockquote>
+<p>一种比较笨的方法，遍历集合，但是这个复杂度是线性的（这个的前提是你得有足够的存储来保存整个集合的元素），对于轻结点来说，他没有交易列表（没有整个集合的元素信息）；</p>
+<p>bloom filter使用了一种比较巧妙的思想，给这个大的集合，计算出一个很紧凑的摘要</p>
+</blockquote>
+<p>​    比如有一个128位的向量，集合中的每一个函数通过哈希函数取哈希，找到向量中的对应位置，然后把他置成1（向量每个位置的初始值为0），所有的元素都处理完了，得到的这个向量，就是原来集合的摘要，这个摘要比原来的集合要小很多，比如我们这个例子中，用一个128位的向量就可以代表一个集合了。</p>
+<p>​    这个摘要有什么用？</p>
+<blockquote>
+<p>我们现在有一个元素d，想知道d是不是在集合中，但是这个集合本身我们不一定能够保存下来，应该怎么办？</p>
+<p>我们用给定的哈希函数，给d取哈希值，看他映射的位置，如果该位置向量的值为0，说明这个元素一定不在这个集合里，假设是1，①确实是集合中的元素；②也有可能不在集合中，恰好出现了哈希碰撞而已</p>
+</blockquote>
+<p>​    所以，使用bloom filter，有可能会出现false positive，但是不会出现false negative（在里面他一定在里面，不在里面他有可能在里面）。</p>
+<p>​    有的bloom filter的设计，不是用的一种哈希函数，而是用的一组哈希函数，那么每个哈希函数，独立地把这个函数映射到向量中的某一个位置，用一组哈希函数的好处是，不会所有的哈希函数都出现碰撞。</p>
+<p>​    如果从集合中删除一个元素，该怎么操作？</p>
+<blockquote>
+<p>bloom filter的一个局限性是，不支持删除操作，把映射为1的位置改成0，可能其他的元素也映射到这里（哈希碰撞是可能的），所以简单的bloom filter是不支持删除操作的，如果要支持删除操作，就不能是0/1表示有还是没有了，得改成计数器得形式，还要考虑这个计数器会不会overflow，这样这个数据结构就很复杂了，与初衷是相违背的。</p>
+</blockquote>
+<p>​    以太坊中bloom filter的作用？</p>
+<blockquote>
+<p>每个交易执行完之后会形成一个收据，这个收据里面就会有一个bloom filter，记录这个交易的类型，地址等其他信息，发布的区块的块头里，也有一个总的bloom filter，这个总的bloom filter是这个区块里所有交易的bloom filter的一个并集</p>
+</blockquote>
+<p>​    所以你要根据条件查找交易（我要最近十天之内和智能合约相关的交易）？</p>
+<blockquote>
+<p>先查一下哪个区块的块头里的bloom filter有我要的这个交易的类型，如果块头里的bloom filter没有的话，那么这个区块就不是我们想要的，如果有的话，我们再去查找这个区块里包含的交易所对应的收据树里的那些bloom filter，有可能都没有（false positive），如果是有的话，找到相对应的交易确认。</p>
+</blockquote>
+<p>这个好处是什么？</p>
+<blockquote>
+<p>好处是能够快速过滤掉大量无关的区块，剩下的一些少数的“候选区块”我们再仔细查看，比如你是轻结点，你只有块头信息，那么根据块头，就已经可以过滤掉很多区块了，剩下有可能是你想要的区块，可以问全节点要一些进一步的信息。</p>
+</blockquote>
+<hr>
+<p>​    以太坊的三棵树的哈希值都包含在块头里面的，以太坊的运行过程可以把它看成transaction-driven state machine（交易驱动状态机），这个状态机的状态是：所有账户的状态，就是状态树中包含的内容，那么交易是：每个发布的区块中包含的交易，通过执行这些交易，驱动当前系统从当前状态转移到下一个状态。</p>
+<p>​    比特币你也可以认为是一个交易驱动的状态机，那么比特币中的状态是：UTXO（没有被花掉的交易的输出），每次新发布一个区块，会从UTXO用掉一些输出，又会增加一些输出，所以发布的这个区块会驱动这个状态机从当前状态转移到下一个状态。</p>
+<p>​    比特币和以太坊中的状态机有一个共同特点，就是状态转移得是确定性的：对一个给定的当前状态，一组给定的交易，能够确定性的转移到下一个状态，因为所有的全节点，所有的矿工，都要执行相同的状态转移，所以状态转移必须是确定性的。</p>
+<p>​    有人在以太坊上发布了一个交易，某个结点收到这个交易（A转账给B），有没有可能这个收款人的地址，以前从来没有听说过？</p>
+<blockquote>
+<p>可能的，创建账户的时候不需要通知其他人的，只有这个账户第一次收到钱的时候，其他账户才会知道这个账户的存在，这个时候要在状态树中新插入一个结点</p>
+</blockquote>
+<p>​    我们前面所讲的交易树，收据树，状态树的一个区别是状态树要包含所有账户的状态，能不能把这个状态树的设计改一下，改成状态树也只包含这个区块相关的那些账户的状态，这样就和交易树和收据树一致了，而且还大幅度的削减每个区块所对应的状态树的大小？</p>
+<blockquote>
+<p>你要想查找某个账户的状态就不方便了，还有另外一个问题在于：A要赚钱给B，你要知道A的状态才能转钱给B，也要知道B的状态是什么，当前余额是多少，因为你要收钱，所以A、B的状态都要找到，而B这个账户有可能是新创建的账户，这个时候你要找到创世纪块去，才发现B这个账户不存在。</p>
+</blockquote>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192207.png"></p>
+<blockquote>
+<p>上图第一个判断是交易树的代码，如果交易列表是空的话，那么交易树的根哈希值就是一个空哈希值，否则的话，通过调用DeriveSha来得到交易树的根哈希值，然后创建这个区块的交易列表；</p>
+<p>中间的代码是收据树，同样判断收据列表是否为空，如果是空的话，收据列表块头的哈希值就是一个空哈希值，否则的话，和交易树相同，交易列表的长度和收据列表的长度是相同的</p>
+<p>下面的代码是处理叔父区块的，首先判断叔父列表是否为空，如果是的话，舒服区块的根哈希值就是个空哈希值，否则，通过调用CalcUncleHash计算哈希值，然后通过一个循环构建区块里的叔父数组（叔父列表和交易树和收据树没有关系）</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192340.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192401.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192445.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192547.png"></p>
+<blockquote>
+<p>创建交易树和收据树使用的都是这个函数，这里创建的数据结构（收据树和交易树）是一个trie</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192610.png"></p>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192708.png"></p>
+<blockquote>
+<p>上图是Receipt的数据结构，每个交易执行完之后，形成一个收据，记录这个交易的执行结构，Bloom域就是Bloom filter，Logs为数组，每个收据可以包含多个Logs，这个收据的Bloom filter就是根据这些Logs产生出来的。</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192750.png"></p>
+<blockquote>
+<p>上图为区块的块头的数据结构，Bloom域是整个区块的Bloom filter，是由每个收据的bloom filter合并在一起得到的</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192820.png"></p>
+<blockquote>
+<p>上图中的红框中的代码就是创建区块的块头中的Bloom filter，通过调用CreateBloom这个函数</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012191502.png"></p>
+<blockquote>
+<p>三个相关的代码实现，CreateBloom的三个参数是这个区块中的所有收据，这个for循环对每个收据再通过调用LogsBloom函数生成这个收据的bloom filter，然后把生成的bloom filter使用Or操作合并起来得到整个区块的bloom filter；</p>
+<p>LogsBloom的功能是生成每个收据的bloom filter，他的参数是这个收据的Logs数组，每个收据里面包含一个Logs数组，这个函数有两层for循环，外层循环对每个一Log进行处理，首先把这个Log的地址取哈希之后加到Bloom filter里面，bloom9是bloom filter中使用的哈希函数，内层循环把这个Log中包含的每个topic加入到Bloom filter里，这样就得到了这个收据的bloom filter</p>
+<p>bloom9是bloom filter中使用的哈希函数，和我们讲的有所区别，我们例子中的哈希函数是把集合中的每个元素映射到digest中的某一个位置，我们说这个集合要生成一个digest，哈希函数就是把每个函数映射到这个digest中的某一个位置，把这个位置置为1。这里所说的bloom9是把输入映射到digest中的三个位置（也就是说，把三个位置都置为1）：b为32个字节的哈希值，r是最后返回的bloom filter，这里初始化为0，接下来循环，把刚才生成的32个字节的哈希值前六个字节，每两个字节组成一组，拼接在一起，然后&amp;2047（相当于对2048取余），得到了一个位于0-2047区间里的数，之所以要这样做，是因为以太坊中bloom filter的长度是2048位，循环的最后一行把1左移 ，然后合并到上一轮得到的bloom filter里（通过Or运算），经过三轮循环，把三个位置置为1后，返回创建的bloom filter</p>
+</blockquote>
+<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012193342.png"></p>
+<blockquote>
+<p>查询某个bloom fiter里是否包含了感兴趣的topic呢？</p>
+<p>通过调用BloomLookup函数来实现，查找bin这个bloom filter里有没有包含我们要找的topic，首先用bloom9函数将topic转换成一个byte vector，然后把他和bloom filter取And操作，看看得到的结果是不是和byte vector相等（这个bloom fiter中可能还包含别的topic，所以要先做一个And，然后再和他自身比较），相当于判断一下我们要找的topic在bloom fiter中对应的位置是不是都是1</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ETH五---以太坊中的共识机制</title>
     <url>/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h1 id="以太坊中的共识机制"><a href="#以太坊中的共识机制" class="headerlink" title="以太坊中的共识机制"></a>以太坊中的共识机制</h1><p>​    以太坊把出块时间降低到了十几秒，和比特币相比，以太坊的出块速度相当于提高了40倍，但是降低出块时间之后也带了一些新的问题：比特币和以太坊都是运行在应用层的共识协议，它的底层都是使用p2p overlay network，这个network本身传输的时间是比较长的，因为它的拓扑协议做flooding的时候是没有考虑实际的拓扑结果，这就带来一个问题，你发布一个区块之后，区块在网络上传到其他节点可能需要十几秒的时间，对于比特币来说，十分钟的出块时间相当于600秒，这个是足够让新发布的区块传播到网上的其他节点的，当然，即使这样，因为挖矿是个概率的过程，所以仍然有可能是有两个矿工同时获得记账权，同时发布区块，这种情况会带来临时性的分叉，那么对于以太坊来说，这种临时性的分叉就会变成常态，而且分叉的数目也会更多，这对于共识协议来说，有什么挑战呢？</p>
@@ -333,6 +498,220 @@
 <p>看uncle number 和block height的差值，判断，相差多少代，上图说明，系统中的大多数区块都及时地得到了合并</p>
 <p>叔父区块奖励的具体内容：</p>
 <p><img src="/2020/10/19/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E4%B8%AD%E7%9A%84%E5%85%B1%E8%AF%86%E6%9C%BA%E5%88%B6/QQ%E6%88%AA%E5%9B%BE20201019200937.png"></p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH六---以太坊挖矿算法</title>
+    <url>/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>对于基于工作量证明的区块链系统来说，挖矿是保障区块链安全的一个重要手段。</p>
+<p>​    Block chain is secured by mining.比特币中的挖矿算法，总的来说是比较成功的。</p>
+<blockquote>
+<p>bug bounty：有的公司悬赏来找软件中的漏洞，如果能找到软件中的漏洞，就可以得到一笔赏金。</p>
+<p>比特币的挖矿算法，是一个天然的bug bounty，如果你能找到里面的漏洞，或者是某一个挖矿的捷径，就能有很大的利益。所以比特币的挖矿算法，是比较成功的，能够经受时间的检验的</p>
+</blockquote>
+<a id="more"></a>
+
+<p>​    但是比特币的挖矿算法也有一些值得改进的地方，其中有一个饱受争议的问题，就是挖矿设备的专业化（用普通的计算机挖不到矿），很多人认为，这和比特币去中心化的思想时背道而驰的，也和比特币的设计初衷是相违背的（one cpu one vote，理想情况下，让普通老百姓也能参与挖矿的过程），这样有恶意的攻击者想要聚集50%的算力发动攻击，这个难度就会大得多，所以这之后的很多加密货币，包括以太坊在内，都是要做到ASIC resistance。</p>
+<p>​    如何设计一个对ASIC芯片不友好的mining puzzle？</p>
+<blockquote>
+<p>常用的做法是增加这个puzzle对内存访问的需求，也就是所谓的memory hard mining puzzle，ASIC对普通cpu的主要优势是算力强，但是在内存访问的性能上，并没有那么大的优势，所以如果我们能设计一个对内存要求很高的puzzle，那么就能够起到遏制ASIC芯片的作用。</p>
+<p>​    这里面的一个早期的例子就是LiteCoin（莱特币），曾经市值仅次于比特币的第二大加密货币，它用的puzzle是基于scrypt（对内存要求很高的哈希函数，以前用于计算机安全领域，和密码相关的），具体思想：开设一个很大的数组，然后按照顺序填充一些伪随机数</p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201027190819.png"></p>
+<p>​        注：这里的seed的去哈希，实际上是通过一些运算得到一个数</p>
+<p>​    这里我们不能真的用随机数，用随机数我们没有办法验证，这个数组的取值是有前后依赖关系的，需要求解puzzle的时候，按照伪随机的顺序，从这个数组中读取一些数，每次读取的位置，也是和前一个数是相关的（每次读取的数，通过一些运算（哈希运算），得到下一个需要读取数的位置，以此类推），如果这个数组足够的大的话，那么对于矿工来说，就是memory hard，因为如果不保存这个数组，挖矿的复杂度会大幅度上升（需要读取数组中的数的时候，没有保存这个数组，还得从第一个算，算出第一个位置的值，然后要读取第二个位置的数，还要继续计算到第二个位置的值，计算复杂度会大幅度地上升，所以要想高效的挖矿，这个内存区域是需要保存的），有的矿工可能保存一部分内存区域的内容（比如只保存奇数位置的元素，当用到偶数位置，根据另一半算一下），有时候也叫做time-memory trade off。</p>
+<p>好的地方：对矿工来说：memory hard</p>
+<p>不好的地方：对轻结点来说，也是memory hard，求解puzzle很难，但是验证应该是很简单的，这个问题就在于，验证这个puzzle需要的内存区域跟求解这个puzzle的内存区域几乎是一样大的，对于早期的计算机安全领域，没有这个问题（因为他没有轻结点），所以，这就导致，这个内存区域不能设置得太大，比如你设置的1G大小的内存区域，问题不大，但是是手机上的app，就太大了，所以实际使用莱特币的时候只有128k。</p>
+</blockquote>
+<p>​    当初，莱特币发明的目标，不止是ASIC resistance，还有GPU resistance（挖矿连GPU都不要用），大家都用普通的cpu挖矿，后来就出现了GPU挖矿，现在出现了ASIC芯片挖矿，实验证明，莱特币要求的128k内存不足以对ASIC芯片的生产和设计带来实质性的障碍，所以从这点来说，莱特币设计的目标是没有达到的，但是对于解决莱特币的能启动问题，是很有帮助的，任何一个加密货币都存在能启动的问题，包括比特币（一开始的时候没有人知道你这个货币，没有人理你，没有人参与），而且对于基于工作量证明的加密货币来说，挖矿人太少是不安全的，因为发动恶意攻击的难度就太低了，比特币的早期也是不安全的。解决能启动的问题实际上是一个循环迭代的过程，一个好的加密货币是可以经过时间的检验的。</p>
+<p>​    除了mining puzzle这个区别之外，莱特币和比特币的区别还有就是出快速度是比特币的四倍，出块间隔是两分半，除此之外，这两种加密货币基本上是一样的。</p>
+<p>​    以太坊也是一种memory hard mining puzzle，但是在设计上和莱特币有很大的不同，以太坊用的是两个数据集，一大一小，小的是一个16M的cache，大的是一个1G的dataset（DAG），这1G的数据集是从这16M的cache生成出来的，为什么要这样设计？一大一小？</p>
+<blockquote>
+<p>就是为了便于验证，轻结点只需要保存16M的cache就可以了，只有需要挖矿的矿工才需要保存1G的数据集，基本思想是：这个小的数据集cache的生成方式跟前面所讲的数组的生成方式是比较类似的，首先从一个种子节点，通过一些运算，算出数组的第一个元素，然后依次取哈希，第一个元素取哈希得到第二个元素，以此类推，将数组从前往后填充伪随机数，得到这个cache，之后就和莱特币就不一样了，</p>
+<p>莱特币：直接从数组当中按照伪随机的顺序读取一些数，然后进行运算。</p>
+<p>以太坊：先生成一个更大的数组，这个大数组比cache大得多，小的cache和大的dataset都是定期增长的，每隔一段时间，会增大，因为计算机的容量也是定期增长的，比如现在，这个大的dataset已经增长到2.5G了，大的数据集的生成方式：每个元素都是从小的cache里按照伪随机的顺序读取一些元素，方法和刚才讲的莱特币里面求解puzzle的过程是类似的：第一次比如说读取A位置的元素，读取完之后，对当前的哈希值进行一些更新迭代，算出下一个要读取的位置，比如说B位置，然后再算出下一个要读取的位置，从cache中依次读，一共读256次，最后算出来一个数，最后放在dataset的第一个元素，然后第二个元素也是一样的。</p>
+<p>求解这个puzzle的时候，用的是这个大数据集中的数，cache是不用的，按照为随机的顺序 ，从这个大的数据集中读取128个数。一开始的时候，根据这个区块的块头，包括里面的nonce，算出一个初始的哈希，根据这个哈希，映射到大数据集中的某个位置，把这个位置上的数读取出来，然后进行一些运算，得到下一个要读取的位置……（这里有个区别，除了把算出的位置要读，还要读取它的下一个位置的元素也要读出来，所以每次读的时候，回一次读取两个位置的元素，这样循环64次，每次读两个，一共128个），最后算出一个哈希值来，跟挖矿难度的目标阈值比较一下，是不是符合难度要求，如果不是的话，把block header的nonce替换一下，然后重新算</p>
+</blockquote>
+<p>​    </p>
+<p>​    ethash算法伪代码：</p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029200329.png"></p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029200958.png"></p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029201222.png"></p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029201557.png"></p>
+<blockquote>
+<p>上图中的两个函数：</p>
+<p>第一个函数，矿工用来挖矿的函数，以太坊，和比特币一样，挖矿只用到块头的信息（这样的话，轻结点只下载块头，就可以验证这个区块，是否验证这个区块是否符合挖矿的难度要求），第二个参数nonce，表示当前尝试的nonce值，第三个参数full_size是大数据集中元素的个数，每三万个区块会增加一次，增加原始大小的1/8，也就是1G的1/8，等于8M，最后的参数dataset，就是前面生成的大数据集。</p>
+<p>挖矿：首先根据块头的信息，和当前的nonce算出一个初始的哈希，然后经过64轮循环，每个循环读取大数据集中相邻的两个数，读取的位置，是由当前哈希值计算出来的，然后根据当前位置上的数值，更新当前的哈希值（每次读取的相邻位置上的值是没有联系的，虽然在位置上相邻，但是生成的过程是独立的，每个都是由前面那个16M的cache中的256个数生成的，而且这256个数的位置，是按照伪随机的顺序产生的），这和生成大数据集的元素的方法是类似的，最后返回一个哈希值，和挖矿难度的目标阈值相比较。</p>
+<p>下面这个函数，是轻结点用来验证的函数。也是有四个参数，但是含义和矿工用的函数有所不同，轻结点是不挖矿的，当他收到某个矿工发布的区块的时候，这里用来验证的这个函数的第一个参数header，是这个区块的块头，第二个nonce是发布的这个区块的nonce（是矿工选好的），轻结点的任务是验证这个nonce是否符合要求，验证用的是16M的cache，也就是最后这个参数，注意，第三个参数full_size仍然是大数据集中的元素个数</p>
+<p>验证：也是64轮循环，看上去和挖矿的过程类似，只有一个地方有区别，每次需要从大数据集读取元素的时候，因为轻结点没有保留大数据集，所以要从cache重新生成。</p>
+</blockquote>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029203435.png"></p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029203623.png"></p>
+<p>​    那以太坊设计的这个puzzle，实际效果怎么样？</p>
+<blockquote>
+<p>到目前为止，以太坊挖矿，主要还是以GPU为主，用ASIC矿机的很少，所以从这点上来说，他比莱特币要成功，起到了ASIC resistance的作用，这个和以太坊挖矿算法需要的大内存是很有关系的</p>
+</blockquote>
+<p>​    ethash：eth+hash，矿工挖矿需要1g的内存，跟莱特币的128kb，差了有8000多倍，即使16M的cache和128kb相比，爷要大了100多倍，而且还是按照这两个数据集最初的大小来算的。</p>
+<p>​    以太坊没有出现ASIC矿机，还有另外一个原因：</p>
+<blockquote>
+<p>以太坊从很早开始就计划，要从工作量证明转向权益证明（PoW-&gt;PoS[proof of stake]），就是按照所占的权益进行投票形成共识（类似股份制公司按照股份多少来投票，这样就不挖矿了），这样对于ASIC矿机的厂商来说，是一个威胁，因为ASIC矿机的生产周期是很长的，一款芯片，从设计研发到最后的生产，一年的周期就已经算是很快的了，而且研发的成本也很高，那么转向权益证明之后就不挖矿了，那么投入的研发费用都白费了。</p>
+<p>其实，以太坊到现在为止，还是基于工作量证明，转移的时间点一再往后推迟，要想达到ASIC resistance，一个简单的办法，就是不断地“吓唬大家”，以太坊成为主流的加密货币，其实也就是最近的两年的时间</p>
+</blockquote>
+<p>​    关于挖矿：以太坊采用了预挖矿的过程（pre-mining）。</p>
+<blockquote>
+<p>所谓的预挖矿，并不是说真的去挖矿，而是说在当初发行货币的时候，预留一部分货币，给以太坊的开发者，将来这个加密货币成功了的话，这些预留的币就变得很值钱了，像以太坊的早期开发者，现在都很有钱，和比特币相比，比特币就没有采用pre-mining的模式，所有的比特币都是挖出来的，只不过早些时候，挖矿的难度要容易得多，与pre-mining相关的概念叫做pre-sale（把pre-mining预留的那些币，通过出售的方式来换取一些资产，然后用于加密货币的开发工作，有点像拉风头，或者众筹）。</p>
+</blockquote>
+<p>以太坊的一些统计数据：</p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193027.png"></p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193205.png"></p>
+<p>以太坊价格变化（2017年-2018）：</p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193243.png"></p>
+<p>以太坊市值：</p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193345.png"></p>
+<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193432.png"></p>
+<blockquote>
+<p>上图中的HashRate指的是所有的矿工加在一起每秒钟计算的哈希次数</p>
+<p>不同的加密货币，如果采用的mining puzzle不同的话，那么他们的HashRate是不可比的。</p>
+</blockquote>
+<p>如果让通用计算机参与挖矿，发动攻击的成本也会大幅度得降低，如果一个大公司有几百万台甚至几千万台服务器，如果这个公司有恶意，就可以临时征用服务器，来挖矿，没有必要专门买特有的设备。所以有些人认为，让通用计算机参与挖矿是不好的。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH八---以太坊权益证明</title>
+    <url>/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/</url>
+    <content><![CDATA[<h1 id="权益证明proof-of-stake"><a href="#权益证明proof-of-stake" class="headerlink" title="权益证明proof of stake"></a>权益证明proof of stake</h1><h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><p>​    比特币和以太坊目前用的都是基于工作量证明，这种机制收到了一个普遍的批评，就是“浪费电”。</p>
+<a id="more"></a>
+
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182306.png"></p>
+<blockquote>
+<p>上图是比特币的能耗图，TWh指的是Terawatt hours (10^12)，常见的KWh：kilowatt hours（10^3），就是千瓦时，这个图上可以看出比特币的能耗随时间推移是不断增长的。</p>
+</blockquote>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182732.png"></p>
+<p>​    一个交易要花费1000度电，信用卡公司处理一个交易远远到不了这个数字。</p>
+<p>以太坊的统计数据：</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182928.png"></p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182951.png"></p>
+<p>​    根据每个区块所消耗的能源来看，以太坊比比特币要小得多，这是为什么？</p>
+<blockquote>
+<p>从交易上来看，比特币的交易都是非常简单的，而以太坊的交易有可能包含对智能合约调用，所以以太坊的能耗应该更高才对，但是实际上不是这样。</p>
+<p>出块时间：比特币要十分钟才能挖出一个区块，以太坊15秒就能挖出一个区块。</p>
+</blockquote>
+<p>​    当然，以太坊一个交易的能耗还是要比信用卡公司高上很多。</p>
+<hr>
+<p>​    把比特币和以太坊当成一个国家来看，它的能耗排名：</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110183442.png"></p>
+<h2 id="这些能耗是不是必须的？"><a href="#这些能耗是不是必须的？" class="headerlink" title="这些能耗是不是必须的？"></a>这些能耗是不是必须的？</h2><p>​    矿工为什么要挖矿？</p>
+<blockquote>
+<p>为了取得出矿奖励，获得收益。</p>
+</blockquote>
+<p>​    为什么要给矿工这些收益？</p>
+<blockquote>
+<p>激励矿工参与区块链的维护。</p>
+</blockquote>
+<p>​    矿工是怎么参与挖矿的？如果你是一个矿工，你会怎么做？</p>
+<blockquote>
+<p>需要找一大笔资金，购买一些设备（现成的，如矿机，GPU）</p>
+</blockquote>
+<p>​    挖矿的收益，有什么决定？</p>
+<blockquote>
+<p>挖了多少区块。</p>
+</blockquote>
+<p>​    挖了多少区块由什么决定？</p>
+<blockquote>
+<p>由你的算力所占比例所决定的</p>
+</blockquote>
+<p>​    你的算力由什么决定？</p>
+<blockquote>
+<p>你有多少矿机，有多少设备</p>
+</blockquote>
+<p>​    说白了，挖矿的收益是由什么决定的？靠拼钱决定的</p>
+<p>​    既然是为了拼钱，那我们直接拿钱出来比一比不就知道了吗？</p>
+<blockquote>
+<p>现在是由矿工竞争算力来决定挖矿的收益如何分配，能不能靠比钱的多少来分配收益？</p>
+<p>比如，我出一百万，你出五十万，现在的做法是，用这钱都去买矿机，大家的矿机开始挖矿，比拼一下算力，看谁挖的区块多，与其这样，还不如我们都把这钱投入到区块链的开发，将来按照资金的多少，来决定收益的分配，这就是权益证明的基本思想。有的时候把这种做法叫做：virtual mining。</p>
+</blockquote>
+<p>​    采用权益证明的加密货币，一般在正式发行之前，会先预留一部分货币，留给开发者，也会出售一部分货币，来换取开发这个加密货币所需要的资金，将来，按照权益证明的共识机制，每个人按照持有货币的数量来进行投票的，这种方法和工作量证明相比，有什么优点？</p>
+<blockquote>
+<p>省去了挖矿的过程，也避免了由此带来的能耗和对环境的影响，减少了温室气体的排放。</p>
+<p>基于工作量证明的系统，从某种意义上来说，维护这个区块链安全的资源，不是一个“闭环”（我们的矿机，是从生态系统外面得到的，这就带来一个问题：跟世界经济总量相比，是微乎其微的，所以，如果有某一个组织想要发动恶意攻击，只需要用足够的资金来购买挖矿设备，然后聚集到这个加密货币总算力一半以上的算力就行了，也就是说，发动这种攻击的资源是可以从外面的世界得到的），像比特币这种主流的货币，它的抗攻击能力相比，还是比较强的，如果是一些刚刚发行不久的小的币种，那么遇到这种攻击可能就是致命性的，如AltCoin。对矿工和早期的开发者，造成的损失可能是灾难性的。（Infanticide，“扼杀在摇篮里”），如果采用权益证明，情况会有什么不同？</p>
+<p>如果有某人像发动恶意攻击（51攻击），首先要设法获得这个币种一半以上的份额才行，发动攻击的资源，只能从这个加密货币系统内部得到，这就是为什么是一个“闭环”。无论攻击者在外部有多少钱，都不会对加密货币系统造成直接的影响，发动攻击只能大量的买币，而一旦有人大量的买币，会有什么情况？</p>
+<p>价格会大涨，本来一个刚刚发行的小币种，没有人买的，价值也不高，突然有人为了搞垮他，结果价格大涨，如果你是这个币的开发者或者投资者，出现这种情况，你就会怎么想？</p>
+<p>这不一定是坏事，我正好可以从中大赚一笔，有点类似股份制公司遭受恶意收购。</p>
+</blockquote>
+<p>​    权益证明和工作量证明并不是互斥的，有的加密货币采用的是一种混合模型，有些加密货币仍然是要挖矿的，但是挖矿的难度和你占有的权益（你持有多少币）是相关的，比如说每个矿工持有一定数量的这种币，挖矿的时候，持有的币越多，挖矿的难度就越小。当然，这么设计是有一定问题的。</p>
+<blockquote>
+<p>这样的话，系统中持有币数量最多的那个人，每次挖矿都是最容易的，所以有的加密货币要求你投入的币要被锁一段时间，不能够重复使用，比如挖这个区块的时候，你投入一定数量的币，用于降低挖矿难度，等这个区块发不出来之后，你投入的这些币就会被锁定一段时间，你下次在挖下一个区块的时候，这些币就不能用了，这个有时候管它叫做（Proof of deposit）。</p>
+</blockquote>
+<p>​    基于权益证明的共识机制该怎么设计，有很多挑战，其中早期的权益证明遇到的一个挑战就是“两边下注”的问题（nothing at stake）。如下图的区块链所示。</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112191201.png"></p>
+<blockquote>
+<p>挖矿的话，不能两边都挖，如果两边都挖，那么你的算力就分散了，挖到区块的概率就小了，但是你用权益证明的话，可以两边都下注，如果上面那条链成为最长合法链，你在下面锁定的那些币是没有影响的，你投的这些币，只是记在下面这个分叉上，并不影响你在上面分叉的使用，这就是为什么叫做nothing at stake。这也是早期基于权益证明共识机制遇到的一个问题。</p>
+</blockquote>
+<p>​    以太坊中准备采用的权益证明协议叫做Casper the Friendly Finality Gadget（FFG），在过渡阶段也是要和工作证明混合使用的，为工作量证明提供Finality，Finality是一种最终的状态，包含在Finality中的交易不会被取消，单纯基于工作量的证明，是有可能被回滚的。</p>
+<p>​    Casper协议是怎么做的？</p>
+<blockquote>
+<p>引入了一个Validator(验证者)，要想成为一个Validator，必须要投入一定数量的以太币作为保证金，这个保证金会被系统锁定，Validator的职责是推动系统达成共识，投票决定那条链是最后合法链，投票的权重取决于保证金的数目大小，有点类似数据库中的two-phase commit。</p>
+<p>还是有人挖矿的，每挖出100个区块，就作为一个epoch，然后要决定他能不能称为Finality，要通过投票，第一轮投票是一个Prepare Message，第二轮是Commit Message，Casper中规定了每一轮投票都要得到2/3以上Validator，才能通过，实际系统中，不区分两个Message，而且把这个epoch从原来的100个区块减少到50个区块，每个epoch只需要一轮投票就行了，这一轮投票对于上一个epoch来说，是Commit Message，对于下一个epoch来说，是一个Prepare Message，那么要连续两轮投票，两个epoch都得到2/3以上才算有效。</p>
+</blockquote>
+<p>​    原始的版本：</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112192940.png"></p>
+<p>​    优化之后：（要有两个连续的epoch）</p>
+<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112193242.png"></p>
+<p>​    验证者参与这个过程有什么好处？</p>
+<blockquote>
+<p>如果验证者参与这个过程的话，可以得到相应的奖励，就像挖矿能得到出块奖励一样，相反，如果验证者有不良行为，被发现的话，要受到相应的处罚，比如某个验证者，行政不作为，该投票的时候没有投，结果导致系统迟迟达不成共识，那么这种情况下要扣除它的一部分保证金，如果某个验证者乱作为（乱投票，给两个有冲突的分叉都投票），要没收全部的保证金，没收的保证金被销毁，相当于减少了系统中以太币的总供应量，每个验证者有一定的任期，即使你交了保证金，也不是说你可以永远地当验证者，任期满了之后，要经过一定时间的等待期（为了让其他的结点可以检举揭发这个验证者有没有什么不良行为，进行惩处），如果等待期过了，验证者可以取回保证金和应该得到的奖励，这就是Casper协议的过程。</p>
+</blockquote>
+<p>​    我们原来说Casper协议可以给挖矿挖出来的区块链的某种状态做一个检查点（check point），这个检查点是不是一定安全的？</p>
+<blockquote>
+<p>通过这个验证者投票达成的Finality，有没有可能被推翻？以前说的，包含在Finality中的交易不会被推翻，这个是不是绝对的？</p>
+<p>假设有某个有恶意的组织向要发动攻击，这个组织仅仅是矿工的话，那么他是没有办法推翻已经完成的Finality的，因为Finality是验证者投票投出来的，单纯是矿工的话，无论他算力有多强，如果没有验证者作为同伙，是没有办法推翻Finality，那么什么情况下会出现攻击成功的情况？</p>
+<p>一定是由大量的验证者两边下注，给前后 两个有冲突的Finality下注。我们要求Casper协议每轮投票要有2/3以上支持才算通过，所以如果出现这种情况，那么至少是有1/3的验证者两边都投票的，一旦发现，1/3验证者的保证金将会被没收。</p>
+</blockquote>
+<p>​    所以我们可以看到，基于权益证明的共识机制和基于工作量证明的共识机制是很不一样的，以太坊的设想是，要逐步成工作量证明过渡到权益证明。随着时间的推移，挖矿得到的奖励是越来越少的，权益证明获得的奖励是越来越多的，最后达到完全不用挖矿的境界。</p>
+<p>​    权益证明这么好，为什么以太坊不从一开始就用权益证明呢？</p>
+<blockquote>
+<p>因为权益证明不是很成熟，工作量证明是比较成熟的，经过了时间的检验，比特币和以太坊的挖矿算法都经过了bug bounty的检验，没有人发现什么漏洞，很多人认为权益证明是未来的方向，但是目前主流的加密货币，用的还是工作量证明。</p>
+</blockquote>
+<p>​    EOS加密货币就是完全基于权益证明的，用的协议是DPOS:Delegated Proof of stake，先用投票方法选出21个超级节点，然后再由这些超级结点产生区块。</p>
+<p>​    到目前为止，都是假设，工作量证明消耗太多的电是不好的，但是也有人持有不一样的观点，首先挖矿消耗的电并不是很多，比特币的能耗只占全世界的总能耗的0.31%，以太坊只占0.09%，很多人对工作量证明很反感，是因为做的是无用功，其实挖矿对环境的影响是有限的，挖矿为解决边远地区用不到的电提供了一个很好的手段，把多余的电能转化为了加密货币，很多比特币的矿场都是建在电力资源丰富的地方，所以，可以认为挖矿消耗电能并不一定是坏事，可以有效地带动过量电能，带动经济的发展。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH一---概述</title>
+    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<h1 id="以太坊概述"><a href="#以太坊概述" class="headerlink" title="以太坊概述"></a>以太坊概述</h1><p>比特币和以太坊是区块链中的最主要的两种加密货币，比特币被称为区块链1.0，以太坊被称为2.0</p>
+<p>以太坊对比特币运行过程中出现的问题做出了改进，比如说出块时间，比特币是十分钟，有人认为太长了，以太坊当中出块时间大幅度地降低到了十几秒，而且，为了这种出块时间，以太坊还设计了一套ghost的共识机制；另一个重大的改进是mining puzzle：比特币的mining puzzle是计算密集型的，比拼的是挖矿的计算能力，这种结果就造就了现在的挖矿设备专业化。以太坊对内存的要求是很高的，memory hard mining puzzle，这样就在一定程度上限制了ASIC芯片的使用，我们管它叫做ASIC resistance，将来以太坊还会有一些更高的改进，用proof of stake（权益证明，不挖矿，而是按照股份和权益，用类似于投票的方式来决定下一个区块该怎么产生）替换proof of work。</p>
+<a id="more"></a>
+
+<p>以太坊还增加了一个重要的功能，就是对智能合约（smart contract）的支持。智能合约？</p>
+<p>我们知道Bitcoin：decentralized currency，根据比特币成功的案例，我们知道他是去中心化的，如果货币去中心化怎么办？还有什么可以去中心化？</p>
+<blockquote>
+<p>以太坊就提出了decentralized contract（去中心化的合约）什么是decentralized contract？</p>
+<p>货币本来是由政府发行的，货币的价值建立在政府公信力的基础上，然后政府通过司法手段维护货币体系的正常运行，比特币的出现，将政府的这些职能取代了，通过密码学、共识机制来维护加密货币体系的正常运行。</p>
+<p>去中心化的合约也是类似。现实中的合约应该也是通过司法手段、通过政府来维护，那么我们能不能通过技术手段，将司法手段取代了，这就是以太坊智能合约设计的一个目的，如果合同中的内容可以通过程序代码来实现出来的，那么我们把这个代码就可以放在区块链上，通过区块链的不可篡改性，来保证这个代码的正确运行，当然，不是所有的合约的内容都可以用编程语言来实现，也不是所有的合同条款能够量化的。</p>
+</blockquote>
+<p>这种去中心化的合同有什么好处呢？</p>
+<blockquote>
+<p>首先思考去中心化的货币有什么好处？有什么应用场景？</p>
+<p>可以实现跨国转账，手续没有跨国转账那么麻烦；智能合约也有一些类似的应用场景，比如如果合同的签署方是来自世界各地的，没有一个统一的司法管辖权，这个时候如果用司法来管辖，就比较困难：比如说众筹，你都不知道每个人都来自哪，所以可以使用程序写好的规则来管辖，这时候就会比较方便。（其实，就算是所有的人都在同一个司法管辖之下的，你想真正用司法手段来维护，也是一个比较费时费力的过程）。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -455,133 +834,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ETH一---概述</title>
-    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<h1 id="以太坊概述"><a href="#以太坊概述" class="headerlink" title="以太坊概述"></a>以太坊概述</h1><p>比特币和以太坊是区块链中的最主要的两种加密货币，比特币被称为区块链1.0，以太坊被称为2.0</p>
-<p>以太坊对比特币运行过程中出现的问题做出了改进，比如说出块时间，比特币是十分钟，有人认为太长了，以太坊当中出块时间大幅度地降低到了十几秒，而且，为了这种出块时间，以太坊还设计了一套ghost的共识机制；另一个重大的改进是mining puzzle：比特币的mining puzzle是计算密集型的，比拼的是挖矿的计算能力，这种结果就造就了现在的挖矿设备专业化。以太坊对内存的要求是很高的，memory hard mining puzzle，这样就在一定程度上限制了ASIC芯片的使用，我们管它叫做ASIC resistance，将来以太坊还会有一些更高的改进，用proof of stake（权益证明，不挖矿，而是按照股份和权益，用类似于投票的方式来决定下一个区块该怎么产生）替换proof of work。</p>
-<a id="more"></a>
-
-<p>以太坊还增加了一个重要的功能，就是对智能合约（smart contract）的支持。智能合约？</p>
-<p>我们知道Bitcoin：decentralized currency，根据比特币成功的案例，我们知道他是去中心化的，如果货币去中心化怎么办？还有什么可以去中心化？</p>
-<blockquote>
-<p>以太坊就提出了decentralized contract（去中心化的合约）什么是decentralized contract？</p>
-<p>货币本来是由政府发行的，货币的价值建立在政府公信力的基础上，然后政府通过司法手段维护货币体系的正常运行，比特币的出现，将政府的这些职能取代了，通过密码学、共识机制来维护加密货币体系的正常运行。</p>
-<p>去中心化的合约也是类似。现实中的合约应该也是通过司法手段、通过政府来维护，那么我们能不能通过技术手段，将司法手段取代了，这就是以太坊智能合约设计的一个目的，如果合同中的内容可以通过程序代码来实现出来的，那么我们把这个代码就可以放在区块链上，通过区块链的不可篡改性，来保证这个代码的正确运行，当然，不是所有的合约的内容都可以用编程语言来实现，也不是所有的合同条款能够量化的。</p>
-</blockquote>
-<p>这种去中心化的合同有什么好处呢？</p>
-<blockquote>
-<p>首先思考去中心化的货币有什么好处？有什么应用场景？</p>
-<p>可以实现跨国转账，手续没有跨国转账那么麻烦；智能合约也有一些类似的应用场景，比如如果合同的签署方是来自世界各地的，没有一个统一的司法管辖权，这个时候如果用司法来管辖，就比较困难：比如说众筹，你都不知道每个人都来自哪，所以可以使用程序写好的规则来管辖，这时候就会比较方便。（其实，就算是所有的人都在同一个司法管辖之下的，你想真正用司法手段来维护，也是一个比较费时费力的过程）。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ETH四---交易树和收据树</title>
-    <url>/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/</url>
-    <content><![CDATA[<h1 id="ETH-交易树和收据树"><a href="#ETH-交易树和收据树" class="headerlink" title="ETH-交易树和收据树"></a>ETH-交易树和收据树</h1><p>​    每次发布一个区块的时候，这个区块所包含的交易，会组织成一棵交易树，也是一棵Merkle tree，和比特币的情况是类似的，同时，以太坊还增加了一个收据树，每个交易执行完之后，会形成一个交易，记录这个交易的相关信息，也就是说，收据树和交易树上面的结点是一一对应的。</p>
-<a id="more"></a>
-
-<p>​    增加这个收据树主要是考虑到以太坊的智能合约执行过程比较复杂，增加收据树的结构有利于我们快速查询一些执行的结果，从数据结构上来看，收据树和交易树都是MPT（Merkle Patricia tree），和比特币有所区别，比特币中的交易树，就是用普通的Merkle tree。为什么有这个区别？可能是为了方便，以太坊中的三棵树都用同样的结构，代码比较统一，不一定有什么深层次的原因，当然，用MPT的一个好处是：它支持查找操作，它支持通过键值，从顶向下，沿着树进行查找，对于状态树来说，查找的键值，就是这个账户的地址；对于交易树和收据树来说，查找的键值就是这个交易在发布的区块里面的序号（交易的发布顺序是由发布区块的那个结点决定的）。</p>
-<p>​    交易树和收据树都是只把当前发布的区块里的交易组织起来的，而状态树，是把系统中所有账户的状态都要包含进去，不管这些账户和当前交易有没有关系。</p>
-<p>​    多个区块的状态树是共享结点的，每次新发布一个区块的时候，只有这个区块里的交易影响了账户状态那些结点需要新建一个分支，其他的结点都是沿用原来状态树上的结点就行了。相比之下，每个区块的交易树和收据树都是独立的，他们是不会共享节点的，每个区块中发布的交易本身我们也认为是独立的。</p>
-<p>​    交易树和收据树的用途？</p>
-<blockquote>
-<p>①提供Merkle Proof，就像比特币当中，交易树可以向轻结点证明某个交易被打包到某个区块里了；收据树也是类似的，你要证明某个交易的执行结果也是在收据树中提供一个Merkle Proof。</p>
-<p>②除此之外，以太坊还支持一些更加复杂的查询操作，比如说，你想找到过去十天当中，所有跟智能合约有关的交易：一种办法是，把过去十天产生交易的区块都扫描一遍，看看其中有哪些交易和智能合约相关（复杂度比较高，而且对于轻结点来说，没有交易列表，它只有一个块头信息，所有轻结点也没有办法通过扫描所有交易列表的方法，找到符合条件的交易）；以太坊中引入了bloom filter。</p>
-</blockquote>
-<h2 id="bloom-filter"><a href="#bloom-filter" class="headerlink" title="bloom filter"></a>bloom filter</h2><p>bloom filter：这个数据结构可以支持比较高效的查找某个元素是不是在一个比较大的集合里面，比如有个很大的集合，你先知道某个指定的元素是不是在这个集合里，怎么办？</p>
-<blockquote>
-<p>一种比较笨的方法，遍历集合，但是这个复杂度是线性的（这个的前提是你得有足够的存储来保存整个集合的元素），对于轻结点来说，他没有交易列表（没有整个集合的元素信息）；</p>
-<p>bloom filter使用了一种比较巧妙的思想，给这个大的集合，计算出一个很紧凑的摘要</p>
-</blockquote>
-<p>​    比如有一个128位的向量，集合中的每一个函数通过哈希函数取哈希，找到向量中的对应位置，然后把他置成1（向量每个位置的初始值为0），所有的元素都处理完了，得到的这个向量，就是原来集合的摘要，这个摘要比原来的集合要小很多，比如我们这个例子中，用一个128位的向量就可以代表一个集合了。</p>
-<p>​    这个摘要有什么用？</p>
-<blockquote>
-<p>我们现在有一个元素d，想知道d是不是在集合中，但是这个集合本身我们不一定能够保存下来，应该怎么办？</p>
-<p>我们用给定的哈希函数，给d取哈希值，看他映射的位置，如果该位置向量的值为0，说明这个元素一定不在这个集合里，假设是1，①确实是集合中的元素；②也有可能不在集合中，恰好出现了哈希碰撞而已</p>
-</blockquote>
-<p>​    所以，使用bloom filter，有可能会出现false positive，但是不会出现false negative（在里面他一定在里面，不在里面他有可能在里面）。</p>
-<p>​    有的bloom filter的设计，不是用的一种哈希函数，而是用的一组哈希函数，那么每个哈希函数，独立地把这个函数映射到向量中的某一个位置，用一组哈希函数的好处是，不会所有的哈希函数都出现碰撞。</p>
-<p>​    如果从集合中删除一个元素，该怎么操作？</p>
-<blockquote>
-<p>bloom filter的一个局限性是，不支持删除操作，把映射为1的位置改成0，可能其他的元素也映射到这里（哈希碰撞是可能的），所以简单的bloom filter是不支持删除操作的，如果要支持删除操作，就不能是0/1表示有还是没有了，得改成计数器得形式，还要考虑这个计数器会不会overflow，这样这个数据结构就很复杂了，与初衷是相违背的。</p>
-</blockquote>
-<p>​    以太坊中bloom filter的作用？</p>
-<blockquote>
-<p>每个交易执行完之后会形成一个收据，这个收据里面就会有一个bloom filter，记录这个交易的类型，地址等其他信息，发布的区块的块头里，也有一个总的bloom filter，这个总的bloom filter是这个区块里所有交易的bloom filter的一个并集</p>
-</blockquote>
-<p>​    所以你要根据条件查找交易（我要最近十天之内和智能合约相关的交易）？</p>
-<blockquote>
-<p>先查一下哪个区块的块头里的bloom filter有我要的这个交易的类型，如果块头里的bloom filter没有的话，那么这个区块就不是我们想要的，如果有的话，我们再去查找这个区块里包含的交易所对应的收据树里的那些bloom filter，有可能都没有（false positive），如果是有的话，找到相对应的交易确认。</p>
-</blockquote>
-<p>这个好处是什么？</p>
-<blockquote>
-<p>好处是能够快速过滤掉大量无关的区块，剩下的一些少数的“候选区块”我们再仔细查看，比如你是轻结点，你只有块头信息，那么根据块头，就已经可以过滤掉很多区块了，剩下有可能是你想要的区块，可以问全节点要一些进一步的信息。</p>
-</blockquote>
-<hr>
-<p>​    以太坊的三棵树的哈希值都包含在块头里面的，以太坊的运行过程可以把它看成transaction-driven state machine（交易驱动状态机），这个状态机的状态是：所有账户的状态，就是状态树中包含的内容，那么交易是：每个发布的区块中包含的交易，通过执行这些交易，驱动当前系统从当前状态转移到下一个状态。</p>
-<p>​    比特币你也可以认为是一个交易驱动的状态机，那么比特币中的状态是：UTXO（没有被花掉的交易的输出），每次新发布一个区块，会从UTXO用掉一些输出，又会增加一些输出，所以发布的这个区块会驱动这个状态机从当前状态转移到下一个状态。</p>
-<p>​    比特币和以太坊中的状态机有一个共同特点，就是状态转移得是确定性的：对一个给定的当前状态，一组给定的交易，能够确定性的转移到下一个状态，因为所有的全节点，所有的矿工，都要执行相同的状态转移，所以状态转移必须是确定性的。</p>
-<p>​    有人在以太坊上发布了一个交易，某个结点收到这个交易（A转账给B），有没有可能这个收款人的地址，以前从来没有听说过？</p>
-<blockquote>
-<p>可能的，创建账户的时候不需要通知其他人的，只有这个账户第一次收到钱的时候，其他账户才会知道这个账户的存在，这个时候要在状态树中新插入一个结点</p>
-</blockquote>
-<p>​    我们前面所讲的交易树，收据树，状态树的一个区别是状态树要包含所有账户的状态，能不能把这个状态树的设计改一下，改成状态树也只包含这个区块相关的那些账户的状态，这样就和交易树和收据树一致了，而且还大幅度的削减每个区块所对应的状态树的大小？</p>
-<blockquote>
-<p>你要想查找某个账户的状态就不方便了，还有另外一个问题在于：A要赚钱给B，你要知道A的状态才能转钱给B，也要知道B的状态是什么，当前余额是多少，因为你要收钱，所以A、B的状态都要找到，而B这个账户有可能是新创建的账户，这个时候你要找到创世纪块去，才发现B这个账户不存在。</p>
-</blockquote>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192207.png"></p>
-<blockquote>
-<p>上图第一个判断是交易树的代码，如果交易列表是空的话，那么交易树的根哈希值就是一个空哈希值，否则的话，通过调用DeriveSha来得到交易树的根哈希值，然后创建这个区块的交易列表；</p>
-<p>中间的代码是收据树，同样判断收据列表是否为空，如果是空的话，收据列表块头的哈希值就是一个空哈希值，否则的话，和交易树相同，交易列表的长度和收据列表的长度是相同的</p>
-<p>下面的代码是处理叔父区块的，首先判断叔父列表是否为空，如果是的话，舒服区块的根哈希值就是个空哈希值，否则，通过调用CalcUncleHash计算哈希值，然后通过一个循环构建区块里的叔父数组（叔父列表和交易树和收据树没有关系）</p>
-</blockquote>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192340.png"></p>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192401.png"></p>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192445.png"></p>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192547.png"></p>
-<blockquote>
-<p>创建交易树和收据树使用的都是这个函数，这里创建的数据结构（收据树和交易树）是一个trie</p>
-</blockquote>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192610.png"></p>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192708.png"></p>
-<blockquote>
-<p>上图是Receipt的数据结构，每个交易执行完之后，形成一个收据，记录这个交易的执行结构，Bloom域就是Bloom filter，Logs为数组，每个收据可以包含多个Logs，这个收据的Bloom filter就是根据这些Logs产生出来的。</p>
-</blockquote>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192750.png"></p>
-<blockquote>
-<p>上图为区块的块头的数据结构，Bloom域是整个区块的Bloom filter，是由每个收据的bloom filter合并在一起得到的</p>
-</blockquote>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201009192820.png"></p>
-<blockquote>
-<p>上图中的红框中的代码就是创建区块的块头中的Bloom filter，通过调用CreateBloom这个函数</p>
-</blockquote>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012191502.png"></p>
-<blockquote>
-<p>三个相关的代码实现，CreateBloom的三个参数是这个区块中的所有收据，这个for循环对每个收据再通过调用LogsBloom函数生成这个收据的bloom filter，然后把生成的bloom filter使用Or操作合并起来得到整个区块的bloom filter；</p>
-<p>LogsBloom的功能是生成每个收据的bloom filter，他的参数是这个收据的Logs数组，每个收据里面包含一个Logs数组，这个函数有两层for循环，外层循环对每个一Log进行处理，首先把这个Log的地址取哈希之后加到Bloom filter里面，bloom9是bloom filter中使用的哈希函数，内层循环把这个Log中包含的每个topic加入到Bloom filter里，这样就得到了这个收据的bloom filter</p>
-<p>bloom9是bloom filter中使用的哈希函数，和我们讲的有所区别，我们例子中的哈希函数是把集合中的每个元素映射到digest中的某一个位置，我们说这个集合要生成一个digest，哈希函数就是把每个函数映射到这个digest中的某一个位置，把这个位置置为1。这里所说的bloom9是把输入映射到digest中的三个位置（也就是说，把三个位置都置为1）：b为32个字节的哈希值，r是最后返回的bloom filter，这里初始化为0，接下来循环，把刚才生成的32个字节的哈希值前六个字节，每两个字节组成一组，拼接在一起，然后&amp;2047（相当于对2048取余），得到了一个位于0-2047区间里的数，之所以要这样做，是因为以太坊中bloom filter的长度是2048位，循环的最后一行把1左移 ，然后合并到上一轮得到的bloom filter里（通过Or运算），经过三轮循环，把三个位置置为1后，返回创建的bloom filter</p>
-</blockquote>
-<p><img src="/2020/10/12/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BA%A4%E6%98%93%E6%A0%91%E5%92%8C%E6%94%B6%E6%8D%AE%E6%A0%91/QQ%E6%88%AA%E5%9B%BE20201012193342.png"></p>
-<blockquote>
-<p>查询某个bloom fiter里是否包含了感兴趣的topic呢？</p>
-<p>通过调用BloomLookup函数来实现，查找bin这个bloom filter里有没有包含我们要找的topic，首先用bloom9函数将topic转换成一个byte vector，然后把他和bloom filter取And操作，看看得到的结果是不是和byte vector相等（这个bloom fiter中可能还包含别的topic，所以要先做一个And，然后再和他自身比较），相当于判断一下我们要找的topic在bloom fiter中对应的位置是不是都是1</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ETH二---账户</title>
     <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E8%B4%A6%E6%88%B7/</url>
     <content><![CDATA[<h1 id="以太坊的账户"><a href="#以太坊的账户" class="headerlink" title="以太坊的账户"></a>以太坊的账户</h1><p>比特币是基于交易的账本模式，这种模式下，并没有显式地记录每个账户有多少钱，这种模式的好处是，隐私保护得比较好，你有多少钱，可能连你自己都说不清楚，别人就更搞不明白了。</p>
@@ -611,414 +863,6 @@
 <p>比特币基于交易的账户的好处：隐私的保护比较好一点，以太坊注重的是智能合约，要求合约参与者要有比较稳定的身份。</p>
 </blockquote>
 <p>现在有人提出的一些智能合约的衍生品：financial derivative，比如说你投钱投给一个合约账户，合约账户的地址变了，你找不到了就比较麻烦，以太坊在创建的时候，考虑到了已有的一些模型的利弊得失，最终没有采用比特币中基于交易的账户模型。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ETH六---以太坊挖矿算法</title>
-    <url>/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<p>对于基于工作量证明的区块链系统来说，挖矿是保障区块链安全的一个重要手段。</p>
-<p>​    Block chain is secured by mining.比特币中的挖矿算法，总的来说是比较成功的。</p>
-<blockquote>
-<p>bug bounty：有的公司悬赏来找软件中的漏洞，如果能找到软件中的漏洞，就可以得到一笔赏金。</p>
-<p>比特币的挖矿算法，是一个天然的bug bounty，如果你能找到里面的漏洞，或者是某一个挖矿的捷径，就能有很大的利益。所以比特币的挖矿算法，是比较成功的，能够经受时间的检验的</p>
-</blockquote>
-<a id="more"></a>
-
-<p>​    但是比特币的挖矿算法也有一些值得改进的地方，其中有一个饱受争议的问题，就是挖矿设备的专业化（用普通的计算机挖不到矿），很多人认为，这和比特币去中心化的思想时背道而驰的，也和比特币的设计初衷是相违背的（one cpu one vote，理想情况下，让普通老百姓也能参与挖矿的过程），这样有恶意的攻击者想要聚集50%的算力发动攻击，这个难度就会大得多，所以这之后的很多加密货币，包括以太坊在内，都是要做到ASIC resistance。</p>
-<p>​    如何设计一个对ASIC芯片不友好的mining puzzle？</p>
-<blockquote>
-<p>常用的做法是增加这个puzzle对内存访问的需求，也就是所谓的memory hard mining puzzle，ASIC对普通cpu的主要优势是算力强，但是在内存访问的性能上，并没有那么大的优势，所以如果我们能设计一个对内存要求很高的puzzle，那么就能够起到遏制ASIC芯片的作用。</p>
-<p>​    这里面的一个早期的例子就是LiteCoin（莱特币），曾经市值仅次于比特币的第二大加密货币，它用的puzzle是基于scrypt（对内存要求很高的哈希函数，以前用于计算机安全领域，和密码相关的），具体思想：开设一个很大的数组，然后按照顺序填充一些伪随机数</p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201027190819.png"></p>
-<p>​        注：这里的seed的去哈希，实际上是通过一些运算得到一个数</p>
-<p>​    这里我们不能真的用随机数，用随机数我们没有办法验证，这个数组的取值是有前后依赖关系的，需要求解puzzle的时候，按照伪随机的顺序，从这个数组中读取一些数，每次读取的位置，也是和前一个数是相关的（每次读取的数，通过一些运算（哈希运算），得到下一个需要读取数的位置，以此类推），如果这个数组足够的大的话，那么对于矿工来说，就是memory hard，因为如果不保存这个数组，挖矿的复杂度会大幅度上升（需要读取数组中的数的时候，没有保存这个数组，还得从第一个算，算出第一个位置的值，然后要读取第二个位置的数，还要继续计算到第二个位置的值，计算复杂度会大幅度地上升，所以要想高效的挖矿，这个内存区域是需要保存的），有的矿工可能保存一部分内存区域的内容（比如只保存奇数位置的元素，当用到偶数位置，根据另一半算一下），有时候也叫做time-memory trade off。</p>
-<p>好的地方：对矿工来说：memory hard</p>
-<p>不好的地方：对轻结点来说，也是memory hard，求解puzzle很难，但是验证应该是很简单的，这个问题就在于，验证这个puzzle需要的内存区域跟求解这个puzzle的内存区域几乎是一样大的，对于早期的计算机安全领域，没有这个问题（因为他没有轻结点），所以，这就导致，这个内存区域不能设置得太大，比如你设置的1G大小的内存区域，问题不大，但是是手机上的app，就太大了，所以实际使用莱特币的时候只有128k。</p>
-</blockquote>
-<p>​    当初，莱特币发明的目标，不止是ASIC resistance，还有GPU resistance（挖矿连GPU都不要用），大家都用普通的cpu挖矿，后来就出现了GPU挖矿，现在出现了ASIC芯片挖矿，实验证明，莱特币要求的128k内存不足以对ASIC芯片的生产和设计带来实质性的障碍，所以从这点来说，莱特币设计的目标是没有达到的，但是对于解决莱特币的能启动问题，是很有帮助的，任何一个加密货币都存在能启动的问题，包括比特币（一开始的时候没有人知道你这个货币，没有人理你，没有人参与），而且对于基于工作量证明的加密货币来说，挖矿人太少是不安全的，因为发动恶意攻击的难度就太低了，比特币的早期也是不安全的。解决能启动的问题实际上是一个循环迭代的过程，一个好的加密货币是可以经过时间的检验的。</p>
-<p>​    除了mining puzzle这个区别之外，莱特币和比特币的区别还有就是出快速度是比特币的四倍，出块间隔是两分半，除此之外，这两种加密货币基本上是一样的。</p>
-<p>​    以太坊也是一种memory hard mining puzzle，但是在设计上和莱特币有很大的不同，以太坊用的是两个数据集，一大一小，小的是一个16M的cache，大的是一个1G的dataset（DAG），这1G的数据集是从这16M的cache生成出来的，为什么要这样设计？一大一小？</p>
-<blockquote>
-<p>就是为了便于验证，轻结点只需要保存16M的cache就可以了，只有需要挖矿的矿工才需要保存1G的数据集，基本思想是：这个小的数据集cache的生成方式跟前面所讲的数组的生成方式是比较类似的，首先从一个种子节点，通过一些运算，算出数组的第一个元素，然后依次取哈希，第一个元素取哈希得到第二个元素，以此类推，将数组从前往后填充伪随机数，得到这个cache，之后就和莱特币就不一样了，</p>
-<p>莱特币：直接从数组当中按照伪随机的顺序读取一些数，然后进行运算。</p>
-<p>以太坊：先生成一个更大的数组，这个大数组比cache大得多，小的cache和大的dataset都是定期增长的，每隔一段时间，会增大，因为计算机的容量也是定期增长的，比如现在，这个大的dataset已经增长到2.5G了，大的数据集的生成方式：每个元素都是从小的cache里按照伪随机的顺序读取一些元素，方法和刚才讲的莱特币里面求解puzzle的过程是类似的：第一次比如说读取A位置的元素，读取完之后，对当前的哈希值进行一些更新迭代，算出下一个要读取的位置，比如说B位置，然后再算出下一个要读取的位置，从cache中依次读，一共读256次，最后算出来一个数，最后放在dataset的第一个元素，然后第二个元素也是一样的。</p>
-<p>求解这个puzzle的时候，用的是这个大数据集中的数，cache是不用的，按照为随机的顺序 ，从这个大的数据集中读取128个数。一开始的时候，根据这个区块的块头，包括里面的nonce，算出一个初始的哈希，根据这个哈希，映射到大数据集中的某个位置，把这个位置上的数读取出来，然后进行一些运算，得到下一个要读取的位置……（这里有个区别，除了把算出的位置要读，还要读取它的下一个位置的元素也要读出来，所以每次读的时候，回一次读取两个位置的元素，这样循环64次，每次读两个，一共128个），最后算出一个哈希值来，跟挖矿难度的目标阈值比较一下，是不是符合难度要求，如果不是的话，把block header的nonce替换一下，然后重新算</p>
-</blockquote>
-<p>​    </p>
-<p>​    ethash算法伪代码：</p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029200329.png"></p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029200958.png"></p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029201222.png"></p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029201557.png"></p>
-<blockquote>
-<p>上图中的两个函数：</p>
-<p>第一个函数，矿工用来挖矿的函数，以太坊，和比特币一样，挖矿只用到块头的信息（这样的话，轻结点只下载块头，就可以验证这个区块，是否验证这个区块是否符合挖矿的难度要求），第二个参数nonce，表示当前尝试的nonce值，第三个参数full_size是大数据集中元素的个数，每三万个区块会增加一次，增加原始大小的1/8，也就是1G的1/8，等于8M，最后的参数dataset，就是前面生成的大数据集。</p>
-<p>挖矿：首先根据块头的信息，和当前的nonce算出一个初始的哈希，然后经过64轮循环，每个循环读取大数据集中相邻的两个数，读取的位置，是由当前哈希值计算出来的，然后根据当前位置上的数值，更新当前的哈希值（每次读取的相邻位置上的值是没有联系的，虽然在位置上相邻，但是生成的过程是独立的，每个都是由前面那个16M的cache中的256个数生成的，而且这256个数的位置，是按照伪随机的顺序产生的），这和生成大数据集的元素的方法是类似的，最后返回一个哈希值，和挖矿难度的目标阈值相比较。</p>
-<p>下面这个函数，是轻结点用来验证的函数。也是有四个参数，但是含义和矿工用的函数有所不同，轻结点是不挖矿的，当他收到某个矿工发布的区块的时候，这里用来验证的这个函数的第一个参数header，是这个区块的块头，第二个nonce是发布的这个区块的nonce（是矿工选好的），轻结点的任务是验证这个nonce是否符合要求，验证用的是16M的cache，也就是最后这个参数，注意，第三个参数full_size仍然是大数据集中的元素个数</p>
-<p>验证：也是64轮循环，看上去和挖矿的过程类似，只有一个地方有区别，每次需要从大数据集读取元素的时候，因为轻结点没有保留大数据集，所以要从cache重新生成。</p>
-</blockquote>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029203435.png"></p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201029203623.png"></p>
-<p>​    那以太坊设计的这个puzzle，实际效果怎么样？</p>
-<blockquote>
-<p>到目前为止，以太坊挖矿，主要还是以GPU为主，用ASIC矿机的很少，所以从这点上来说，他比莱特币要成功，起到了ASIC resistance的作用，这个和以太坊挖矿算法需要的大内存是很有关系的</p>
-</blockquote>
-<p>​    ethash：eth+hash，矿工挖矿需要1g的内存，跟莱特币的128kb，差了有8000多倍，即使16M的cache和128kb相比，爷要大了100多倍，而且还是按照这两个数据集最初的大小来算的。</p>
-<p>​    以太坊没有出现ASIC矿机，还有另外一个原因：</p>
-<blockquote>
-<p>以太坊从很早开始就计划，要从工作量证明转向权益证明（PoW-&gt;PoS[proof of stake]），就是按照所占的权益进行投票形成共识（类似股份制公司按照股份多少来投票，这样就不挖矿了），这样对于ASIC矿机的厂商来说，是一个威胁，因为ASIC矿机的生产周期是很长的，一款芯片，从设计研发到最后的生产，一年的周期就已经算是很快的了，而且研发的成本也很高，那么转向权益证明之后就不挖矿了，那么投入的研发费用都白费了。</p>
-<p>其实，以太坊到现在为止，还是基于工作量证明，转移的时间点一再往后推迟，要想达到ASIC resistance，一个简单的办法，就是不断地“吓唬大家”，以太坊成为主流的加密货币，其实也就是最近的两年的时间</p>
-</blockquote>
-<p>​    关于挖矿：以太坊采用了预挖矿的过程（pre-mining）。</p>
-<blockquote>
-<p>所谓的预挖矿，并不是说真的去挖矿，而是说在当初发行货币的时候，预留一部分货币，给以太坊的开发者，将来这个加密货币成功了的话，这些预留的币就变得很值钱了，像以太坊的早期开发者，现在都很有钱，和比特币相比，比特币就没有采用pre-mining的模式，所有的比特币都是挖出来的，只不过早些时候，挖矿的难度要容易得多，与pre-mining相关的概念叫做pre-sale（把pre-mining预留的那些币，通过出售的方式来换取一些资产，然后用于加密货币的开发工作，有点像拉风头，或者众筹）。</p>
-</blockquote>
-<p>以太坊的一些统计数据：</p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193027.png"></p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193205.png"></p>
-<p>以太坊价格变化（2017年-2018）：</p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193243.png"></p>
-<p>以太坊市值：</p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193345.png"></p>
-<p><img src="/2020/10/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%8C%96%E7%9F%BF%E7%AE%97%E6%B3%95/QQ%E6%88%AA%E5%9B%BE20201102193432.png"></p>
-<blockquote>
-<p>上图中的HashRate指的是所有的矿工加在一起每秒钟计算的哈希次数</p>
-<p>不同的加密货币，如果采用的mining puzzle不同的话，那么他们的HashRate是不可比的。</p>
-</blockquote>
-<p>如果让通用计算机参与挖矿，发动攻击的成本也会大幅度得降低，如果一个大公司有几百万台甚至几千万台服务器，如果这个公司有恶意，就可以临时征用服务器，来挖矿，没有必要专门买特有的设备。所以有些人认为，让通用计算机参与挖矿是不好的。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC九---分叉</title>
-    <url>/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/</url>
-    <content><![CDATA[<h1 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h1><p>fork:原来是一条链，现在是两条链形成了分叉。有两种情况：</p>
-<p>①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。</p>
-<p>②比特币的协议发生了改变，要修改比特币的协议，需要软件升级，在一个去中心化的系统里，在升级软件的时候，没有办法保证所有的结点同时都升级软件，我们假设大部分结点升级了软件，少数结点因为种种原因没有升级，有可能还没有来的及升级，也可能是不同意这个协议的修改，这种分叉叫做protocol fork，因为对比特币的协议产生了分歧，因为使用不同的协议造成了分叉。</p>
-<a id="more"></a>
-
-<blockquote>
-<p>可以根据对协议修改的内容的不同，分为硬分叉（hard fork）和软分叉（soft fork）</p>
-</blockquote>
-<p>什么是硬分叉？什么是软分叉？</p>
-<h2 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h2><p>出现硬分叉的情况，如果对比特币协议增加新的特性，有一些new feature，这些没有升级软件的那些旧的节点，他是不认可这些新特性的，他认为这些new feature是不合法的。这个时候就属于我们对比特币协议的内容产生了意见分歧，就会导致分叉。一个例子就是：比特币中的区块大小限制（block size limit）。</p>
-<blockquote>
-<p>比特币规定每个区块是1M字节，有些人认为1M这个限制太小了，增加了比特币的延迟。</p>
-<p>一个交易差不多可以认为是250个字节，所以1000000字节大概是4000个交易左右，平均十分钟一个区块，算下来大概是每秒钟七笔交易</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907211038.png"></p>
-<p>我们用信用卡处理交易和这个完全不是一个数量级的，很多电商网站很多都不止这些，所以有的人认为这个区块太小了，限制了比特币的throw put（不知道老师是不是说的这个），同时也增加了延迟，因为你区块就只能装这么多区块，如果交易太多了的话，那可能有些交易，就得等到下一个区块才能被发布，平均要等十分钟</p>
-</blockquote>
-<p>我们假设有人发布了软件更新，把这个block size limit从1M增加到了4M（大多数结点更新了这个软件，少数节点没有更新【这里所说的节点数目不是按照账户的数目来算的，是按照算力的多少来算的】），这个时候系统运行起来会有什么结果？</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212426.png"></p>
-<p>备注：图中的解释有错误，应该是新产生的区块，旧结点不认可</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212813.png"></p>
-<p>备注：图中的“就”为“旧”</p>
-<p>只要这些旧结点不更新软件，分叉就不会消失，这就是为什么管他叫硬分叉（hard fork）。</p>
-<p>比特币社区中，有些人是比较保守的，像这种block size limit这种new feature，有些人真的是不会同意，而且，区块的大小不是越大越好（详情看比特币网络）。</p>
-<p>如果存在了硬分叉，那么下面的那一条链的出块奖励还有吗？</p>
-<blockquote>
-<p>是有的（在各自的链上是承认的），会造成社区的分裂，如果一直存在下去，就会分家了，相当于变成了两种币，原来没有分裂的币，应该变成上下两条链都认可。</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907214138.png"></p>
-<p>后来有了一个措施：在各自的链上加上一个chain ID</p>
-</blockquote>
-<h2 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h2><p>软分叉出现的情况？如果我们对比特币协议加一些限制。加这个限制之后，原来合法的交易或者是合法的区块，在新的协议中，有可能变得不是合法了，这就引起软分叉。</p>
-<p>举例：</p>
-<p>如果有人发布了软件更新，block size limit缩小了，由1M变成0.5M（实际上不会这样做，因为1M已经是比较小的了）</p>
-<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200909193415.png"></p>
-<p>实际当中可能出现软分叉的情况</p>
-<p>①给某些目前协议中没有规定的域增加一些新的含义，赋予他们一些新的规则：coinBase域，每个发布的区块里可以有一个铸币交易，coinBase可以有个特别的用途（作为extra nonce 拿出8bytes），其实coinBase不止8个字节，那其他字节干嘛用呢？有人就建议，把他作为UTXO集合的根哈希值，目前这个集合只是全节点自己在内存中维护这样一个集合，主要是为了快速查找能够交易是不是double spending，但是这个集合的内容并没有写到区块链，这个和我们说的Merkle proof不太一样。</p>
-<p>如果你要证明某个账户上有多少钱，如果你是全节点的话，可以算一下，就是看一下A这个账户在这个UTXO里对应的输出上面一共收到多少个币，就是A账户上有多少钱。</p>
-<p>有很多区块链钱包（手机上的app），他不可能在手机上维护一个全结点，他需要知道账户的余额，需要询问其他的全节点，那么全节点返回一个结果，你怎么知道他是不是对的？</p>
-<blockquote>
-<p>你现在是证不出来的，你自己如果没有维护一个UTXO集合，是没有办法用Merkle proof证出来的，所以有人就提议：</p>
-<p>把UTXO集合当中的内容也组织成一条Merkle tree，这个Merkle tree有一个根哈希值，这个哈希值写在coinBase中，因为你block header没有办法再改了（block header动静太大了），coinBase中的内容在网上传递的时候，最终会传递到block header中，这样的话，你就可以用Merkle proof证出来</p>
-</blockquote>
-<p>有人发布软件更新，规定coinBase域要这样写，这样是硬分叉还是软分叉？软分叉，因为新节点发布的区块，旧结点认为是合法的，因为旧结点不管你coinBase什么内容，都认为是合法的，但是旧结点发布的区块，新节点可能是不认的。</p>
-<p>比特币历史上，一个比较著名的软分叉的例子，是P2SH（Pay to Script Hash），这个在最初的比特币版本里是没有的，是后来通过软分叉加进去的：</p>
-<p>你支付的时候，不是付给一个Public Key的哈希，而是付给一个赎回脚本的哈希，这是新节点要做的；而对于旧结点，他不理解P2SH的特性，他只会做第一阶段的验证，所以，旧结点认为合法的交易，新节点可能认为是非法的</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>soft fork：只要系统中有半数以上的结点更新了软件，就不会出现永久的分叉，可能会出现临时的分叉。</p>
-<p>hard fork：必须是所有的节点都要更新软件，系统才不会出现永久性的分叉，如果有小部分节点不愿意更新，那么这个系统就会分成两条链。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ETH八---以太坊权益证明</title>
-    <url>/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/</url>
-    <content><![CDATA[<h1 id="权益证明proof-of-stake"><a href="#权益证明proof-of-stake" class="headerlink" title="权益证明proof of stake"></a>权益证明proof of stake</h1><h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><p>​    比特币和以太坊目前用的都是基于工作量证明，这种机制收到了一个普遍的批评，就是“浪费电”。</p>
-<a id="more"></a>
-
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182306.png"></p>
-<blockquote>
-<p>上图是比特币的能耗图，TWh指的是Terawatt hours (10^12)，常见的KWh：kilowatt hours（10^3），就是千瓦时，这个图上可以看出比特币的能耗随时间推移是不断增长的。</p>
-</blockquote>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182732.png"></p>
-<p>​    一个交易要花费1000度电，信用卡公司处理一个交易远远到不了这个数字。</p>
-<p>以太坊的统计数据：</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182928.png"></p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110182951.png"></p>
-<p>​    根据每个区块所消耗的能源来看，以太坊比比特币要小得多，这是为什么？</p>
-<blockquote>
-<p>从交易上来看，比特币的交易都是非常简单的，而以太坊的交易有可能包含对智能合约调用，所以以太坊的能耗应该更高才对，但是实际上不是这样。</p>
-<p>出块时间：比特币要十分钟才能挖出一个区块，以太坊15秒就能挖出一个区块。</p>
-</blockquote>
-<p>​    当然，以太坊一个交易的能耗还是要比信用卡公司高上很多。</p>
-<hr>
-<p>​    把比特币和以太坊当成一个国家来看，它的能耗排名：</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201110183442.png"></p>
-<h2 id="这些能耗是不是必须的？"><a href="#这些能耗是不是必须的？" class="headerlink" title="这些能耗是不是必须的？"></a>这些能耗是不是必须的？</h2><p>​    矿工为什么要挖矿？</p>
-<blockquote>
-<p>为了取得出矿奖励，获得收益。</p>
-</blockquote>
-<p>​    为什么要给矿工这些收益？</p>
-<blockquote>
-<p>激励矿工参与区块链的维护。</p>
-</blockquote>
-<p>​    矿工是怎么参与挖矿的？如果你是一个矿工，你会怎么做？</p>
-<blockquote>
-<p>需要找一大笔资金，购买一些设备（现成的，如矿机，GPU）</p>
-</blockquote>
-<p>​    挖矿的收益，有什么决定？</p>
-<blockquote>
-<p>挖了多少区块。</p>
-</blockquote>
-<p>​    挖了多少区块由什么决定？</p>
-<blockquote>
-<p>由你的算力所占比例所决定的</p>
-</blockquote>
-<p>​    你的算力由什么决定？</p>
-<blockquote>
-<p>你有多少矿机，有多少设备</p>
-</blockquote>
-<p>​    说白了，挖矿的收益是由什么决定的？靠拼钱决定的</p>
-<p>​    既然是为了拼钱，那我们直接拿钱出来比一比不就知道了吗？</p>
-<blockquote>
-<p>现在是由矿工竞争算力来决定挖矿的收益如何分配，能不能靠比钱的多少来分配收益？</p>
-<p>比如，我出一百万，你出五十万，现在的做法是，用这钱都去买矿机，大家的矿机开始挖矿，比拼一下算力，看谁挖的区块多，与其这样，还不如我们都把这钱投入到区块链的开发，将来按照资金的多少，来决定收益的分配，这就是权益证明的基本思想。有的时候把这种做法叫做：virtual mining。</p>
-</blockquote>
-<p>​    采用权益证明的加密货币，一般在正式发行之前，会先预留一部分货币，留给开发者，也会出售一部分货币，来换取开发这个加密货币所需要的资金，将来，按照权益证明的共识机制，每个人按照持有货币的数量来进行投票的，这种方法和工作量证明相比，有什么优点？</p>
-<blockquote>
-<p>省去了挖矿的过程，也避免了由此带来的能耗和对环境的影响，减少了温室气体的排放。</p>
-<p>基于工作量证明的系统，从某种意义上来说，维护这个区块链安全的资源，不是一个“闭环”（我们的矿机，是从生态系统外面得到的，这就带来一个问题：跟世界经济总量相比，是微乎其微的，所以，如果有某一个组织想要发动恶意攻击，只需要用足够的资金来购买挖矿设备，然后聚集到这个加密货币总算力一半以上的算力就行了，也就是说，发动这种攻击的资源是可以从外面的世界得到的），像比特币这种主流的货币，它的抗攻击能力相比，还是比较强的，如果是一些刚刚发行不久的小的币种，那么遇到这种攻击可能就是致命性的，如AltCoin。对矿工和早期的开发者，造成的损失可能是灾难性的。（Infanticide，“扼杀在摇篮里”），如果采用权益证明，情况会有什么不同？</p>
-<p>如果有某人像发动恶意攻击（51攻击），首先要设法获得这个币种一半以上的份额才行，发动攻击的资源，只能从这个加密货币系统内部得到，这就是为什么是一个“闭环”。无论攻击者在外部有多少钱，都不会对加密货币系统造成直接的影响，发动攻击只能大量的买币，而一旦有人大量的买币，会有什么情况？</p>
-<p>价格会大涨，本来一个刚刚发行的小币种，没有人买的，价值也不高，突然有人为了搞垮他，结果价格大涨，如果你是这个币的开发者或者投资者，出现这种情况，你就会怎么想？</p>
-<p>这不一定是坏事，我正好可以从中大赚一笔，有点类似股份制公司遭受恶意收购。</p>
-</blockquote>
-<p>​    权益证明和工作量证明并不是互斥的，有的加密货币采用的是一种混合模型，有些加密货币仍然是要挖矿的，但是挖矿的难度和你占有的权益（你持有多少币）是相关的，比如说每个矿工持有一定数量的这种币，挖矿的时候，持有的币越多，挖矿的难度就越小。当然，这么设计是有一定问题的。</p>
-<blockquote>
-<p>这样的话，系统中持有币数量最多的那个人，每次挖矿都是最容易的，所以有的加密货币要求你投入的币要被锁一段时间，不能够重复使用，比如挖这个区块的时候，你投入一定数量的币，用于降低挖矿难度，等这个区块发不出来之后，你投入的这些币就会被锁定一段时间，你下次在挖下一个区块的时候，这些币就不能用了，这个有时候管它叫做（Proof of deposit）。</p>
-</blockquote>
-<p>​    基于权益证明的共识机制该怎么设计，有很多挑战，其中早期的权益证明遇到的一个挑战就是“两边下注”的问题（nothing at stake）。如下图的区块链所示。</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112191201.png"></p>
-<blockquote>
-<p>挖矿的话，不能两边都挖，如果两边都挖，那么你的算力就分散了，挖到区块的概率就小了，但是你用权益证明的话，可以两边都下注，如果上面那条链成为最长合法链，你在下面锁定的那些币是没有影响的，你投的这些币，只是记在下面这个分叉上，并不影响你在上面分叉的使用，这就是为什么叫做nothing at stake。这也是早期基于权益证明共识机制遇到的一个问题。</p>
-</blockquote>
-<p>​    以太坊中准备采用的权益证明协议叫做Casper the Friendly Finality Gadget（FFG），在过渡阶段也是要和工作证明混合使用的，为工作量证明提供Finality，Finality是一种最终的状态，包含在Finality中的交易不会被取消，单纯基于工作量的证明，是有可能被回滚的。</p>
-<p>​    Casper协议是怎么做的？</p>
-<blockquote>
-<p>引入了一个Validator(验证者)，要想成为一个Validator，必须要投入一定数量的以太币作为保证金，这个保证金会被系统锁定，Validator的职责是推动系统达成共识，投票决定那条链是最后合法链，投票的权重取决于保证金的数目大小，有点类似数据库中的two-phase commit。</p>
-<p>还是有人挖矿的，每挖出100个区块，就作为一个epoch，然后要决定他能不能称为Finality，要通过投票，第一轮投票是一个Prepare Message，第二轮是Commit Message，Casper中规定了每一轮投票都要得到2/3以上Validator，才能通过，实际系统中，不区分两个Message，而且把这个epoch从原来的100个区块减少到50个区块，每个epoch只需要一轮投票就行了，这一轮投票对于上一个epoch来说，是Commit Message，对于下一个epoch来说，是一个Prepare Message，那么要连续两轮投票，两个epoch都得到2/3以上才算有效。</p>
-</blockquote>
-<p>​    原始的版本：</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112192940.png"></p>
-<p>​    优化之后：（要有两个连续的epoch）</p>
-<p><img src="/2020/11/10/%E5%8C%BA%E5%9D%97%E9%93%BE/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%9D%83%E7%9B%8A%E8%AF%81%E6%98%8E/QQ%E6%88%AA%E5%9B%BE20201112193242.png"></p>
-<p>​    验证者参与这个过程有什么好处？</p>
-<blockquote>
-<p>如果验证者参与这个过程的话，可以得到相应的奖励，就像挖矿能得到出块奖励一样，相反，如果验证者有不良行为，被发现的话，要受到相应的处罚，比如某个验证者，行政不作为，该投票的时候没有投，结果导致系统迟迟达不成共识，那么这种情况下要扣除它的一部分保证金，如果某个验证者乱作为（乱投票，给两个有冲突的分叉都投票），要没收全部的保证金，没收的保证金被销毁，相当于减少了系统中以太币的总供应量，每个验证者有一定的任期，即使你交了保证金，也不是说你可以永远地当验证者，任期满了之后，要经过一定时间的等待期（为了让其他的结点可以检举揭发这个验证者有没有什么不良行为，进行惩处），如果等待期过了，验证者可以取回保证金和应该得到的奖励，这就是Casper协议的过程。</p>
-</blockquote>
-<p>​    我们原来说Casper协议可以给挖矿挖出来的区块链的某种状态做一个检查点（check point），这个检查点是不是一定安全的？</p>
-<blockquote>
-<p>通过这个验证者投票达成的Finality，有没有可能被推翻？以前说的，包含在Finality中的交易不会被推翻，这个是不是绝对的？</p>
-<p>假设有某个有恶意的组织向要发动攻击，这个组织仅仅是矿工的话，那么他是没有办法推翻已经完成的Finality的，因为Finality是验证者投票投出来的，单纯是矿工的话，无论他算力有多强，如果没有验证者作为同伙，是没有办法推翻Finality，那么什么情况下会出现攻击成功的情况？</p>
-<p>一定是由大量的验证者两边下注，给前后 两个有冲突的Finality下注。我们要求Casper协议每轮投票要有2/3以上支持才算通过，所以如果出现这种情况，那么至少是有1/3的验证者两边都投票的，一旦发现，1/3验证者的保证金将会被没收。</p>
-</blockquote>
-<p>​    所以我们可以看到，基于权益证明的共识机制和基于工作量证明的共识机制是很不一样的，以太坊的设想是，要逐步成工作量证明过渡到权益证明。随着时间的推移，挖矿得到的奖励是越来越少的，权益证明获得的奖励是越来越多的，最后达到完全不用挖矿的境界。</p>
-<p>​    权益证明这么好，为什么以太坊不从一开始就用权益证明呢？</p>
-<blockquote>
-<p>因为权益证明不是很成熟，工作量证明是比较成熟的，经过了时间的检验，比特币和以太坊的挖矿算法都经过了bug bounty的检验，没有人发现什么漏洞，很多人认为权益证明是未来的方向，但是目前主流的加密货币，用的还是工作量证明。</p>
-</blockquote>
-<p>​    EOS加密货币就是完全基于权益证明的，用的协议是DPOS:Delegated Proof of stake，先用投票方法选出21个超级节点，然后再由这些超级结点产生区块。</p>
-<p>​    到目前为止，都是假设，工作量证明消耗太多的电是不好的，但是也有人持有不一样的观点，首先挖矿消耗的电并不是很多，比特币的能耗只占全世界的总能耗的0.31%，以太坊只占0.09%，很多人对工作量证明很反感，是因为做的是无用功，其实挖矿对环境的影响是有限的，挖矿为解决边远地区用不到的电提供了一个很好的手段，把多余的电能转化为了加密货币，很多比特币的矿场都是建在电力资源丰富的地方，所以，可以认为挖矿消耗电能并不一定是坏事，可以有效地带动过量电能，带动经济的发展。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC十二---思考</title>
-    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/</url>
-    <content><![CDATA[<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="哈希指针"><a href="#哈希指针" class="headerlink" title="哈希指针"></a>哈希指针</h2><p>比特币系统在设计的时候，很多地方都使用到了哈希指针，比如区块的块头，就包括了前一个区块的指针，指针保存的是本地内存的地址，那么只是在本地计算机上才有意义，发布到别的计算机上就没有意义了，那么哈希指针是怎么通过网络进行传输的呢？</p>
-<a id="more"></a>
-
-<blockquote>
-<p>所谓的哈希指针，只是一种形象的说法，实际系统中使用的时候，只有哈希，没有指针。</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/QQ%E6%88%AA%E5%9B%BE20200923185402.png"></p>
-<p>那么怎么找到前一个区块的内容呢？</p>
-<p>全节点一般是把这个区块存储在一个（key，value）的数据库（这里面的key就是前一个区块的哈希，value就是区块的内容）里面，常用的数据库是levelDB。</p>
-<p>所谓的区块链的链表结构，实际上是在levelDB里用哈希值串起来的，只要你掌握最后一个区块的哈希值，就可以把最后一个区块中的内容取出来，然后通过这个区块中的上一个区块的哈希值，找到前一个区块的内容，这样一步一步往前找，就可以把所有的区块都找出来。所以实际中，只有哈希，没有指针，或者可以认为哈希值就是指针。哈希指针的性质，保证了区块链中的内容是不可篡改的。</p>
-</blockquote>
-<h2 id="区块恋"><a href="#区块恋" class="headerlink" title="区块恋"></a>区块恋</h2><p>据说17年七夕的时候，有的情侣，两个人合在一起买比特币，然后把私钥从中间截断，分成两部分，每人保存其中的一段，将来如果两个人继续好下去的话，那么两段私钥合在一起就能把钱取出来，如果两个人分手了，比特币就被永久地锁在了区块链上。</p>
-<p>按照这种逻辑，如果推到n个人，如果有四个合伙人，就应该把私钥切成四份，每个人掌握其中的一份，需要用的时候，四个人的私钥合在一起才能用，这样有什么问题？</p>
-<blockquote>
-<p>①任何一个人把私钥丢了，这个钱就取不出来了。</p>
-<p>②这种截断私钥的做法，会降低比特币账户的安全性：比特币系统中账户的安全性是和每个账户私钥的长度是相关的，256位的私钥，尽管你把世界上所有的电脑集中起来破解，也是不可能成功的，但是你从中截断，128位的长度，他的可能性就远远小于2^256次方个，破解的难度变得容易很多了，如果其中三个合伙人，瞒着第四个合伙人要把钱取出来，那么他只要尝试2^64可能性就可以了。</p>
-</blockquote>
-<p>说明，对于多个人的共享账户，不要采用截断私钥的做法，那怎么办？</p>
-<blockquote>
-<p>使用多重签名，多重签名中的每一个签名都是独立产生的，而不是把一个私钥拆成若干个私钥，而且多重签名还提供了一些别的灵活性：比如n个人中，任意给出m个签名就可以了。</p>
-</blockquote>
-<p>区块恋还有另一个问题，如果这两个人分手了，那么他们购买的比特币就会永久地保存在UTXO里，这对全节点是不友好的。</p>
-<p>还有一些别的原因，钱变成’死钱’，早期有的人就是挖矿挖着玩，这种情况就造成了大量的私钥的丢失，造成了UTXO集合的膨胀。</p>
-<h2 id="分布式共识"><a href="#分布式共识" class="headerlink" title="分布式共识"></a>分布式共识</h2><p>关于分布式共识，学术界有很多不可能的结论，从理论上证明，分布式系统当中取得共识是不可能的，既然从理论上证明是不可能的，实际当中，又怎么变成可能了？</p>
-<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/QQ%E6%88%AA%E5%9B%BE20200923191841.png"></p>
-<blockquote>
-<p>严格意义上来说，比特币并没有取得真正意义上的共识，因为取得的共识，随时都可能被推翻。</p>
-<p>比如出现了分叉攻击，本来你以为已经达成了某一个共识，分叉攻击之后，系统会回滚到前一个状态，从理论上来说，甚至可能回滚到创世纪块，按照分布式系统理论的要求，共识一旦达成之后，就不应该再改了，所以从这个意义上看，比特币系统并没有绕过分布式系统那些不可能的结论，因为他根本没有达到根本意义上的共识</p>
-</blockquote>
-<p>理论和实际往往是有距离的，很多理论上的不可能结论，对于实体来说是并不适用的，这个不可能结论只是对某种固定的模型下是不可能的。</p>
-<p>你怎么判断远程的一台服务器是不是死机了？（连不上，但是是不是真的死机了？）</p>
-<blockquote>
-<p>分布式系统的理论已经证明了，在异步（通讯传输的延迟是没有上限的：我发一个消息给你，你什么时候能收到，谁也不知道）的环境中，不能区分远程的服务器，到底是死机了，还是运行缓慢。</p>
-<p>但是也并不是没有办法，打个电话给管理员，让他看看是否死机了就行了，所以这在理论上不可能的事请，又变成了可能。</p>
-<p>如果实际上，每次都给管理员打电话，也比较复杂，所以有一种做法是给服务器加一根电话线（十几年前），如果你发现连不上，就不用internet那根线连接，就用电话线连接，一般来说不会同时出现拥堵，所以你发现用电话线，还是连不上，那就是服务器死机了。</p>
-</blockquote>
-<p>说明：理论上很多不可能的结论，只是在某些特定的模型下，现实中，把模型改一改，所谓的理论上的结论也就可能不成立了。</p>
-<h2 id="比特币的稀缺性"><a href="#比特币的稀缺性" class="headerlink" title="比特币的稀缺性"></a>比特币的稀缺性</h2><p>挖矿的收益，要大于挖矿的开销，那就是有利可图的，所以，要吸引大家来挖矿，要么增加预期收益，要么降低开销。</p>
-<p>比特币是如何做到这一点的呢？</p>
-<blockquote>
-<p>早期的挖矿难度比较低很容易就可以挖到，另一方面，早期的出块奖励也非常的高。</p>
-</blockquote>
-<p>有人认为比特的设计是十分巧妙的，比特币的总量是恒定的，越到后面越难挖，所以到了后面大家都会抢着去挖，有人认为这是比特币获得成功的一个重要原因，其实，这种总量固定的东西，是不适合作为货币的。有些新型的货币，甚至要自带一种通胀的功能，每年会自动把货币的发行量提高一个比例。</p>
-<p>稀缺的东西，是不适合作为货币的，一个好的货币实际上是要有通货膨胀的功能的，如果这个东西的总量是定死的，他是不适合作为货币的（所以现在都不使用黄金作为货币：每年黄金产量增加的速度远远敢不上社会新创造财富的速度，如果我们使用黄金作为货币，这会导致黄金越来越值钱，如果祖上已经有黄金，就只需要坐等升值就行了，国内的房地产就是这种情况，一个健康向上的社会，是不应该出现这种情况的）。</p>
-<h2 id="量子计算"><a href="#量子计算" class="headerlink" title="量子计算"></a>量子计算</h2><p>比特币这种加密货币，是建立在密码学的基础上的，将来量子计算发展起来之后，这些加密货币会不会变得不安全了？</p>
-<blockquote>
-<p>传说中的量子计算，可以破解现有的各种加密算法。但是，这种担心是没有必要的</p>
-<p>①量子计算技术离使用还有很长一段距离，如果量子计算技术使用，首当其冲的是传统金融业，网上进行的很多金融活动，都会变得不安全，与其担心量子计算对比特币的冲击，还不如担心量子计算对传统金融的冲击。将来还会有量子加密算法</p>
-<p>②比特币当中并没有把账户的公钥直接暴露出来，而是用公钥取哈希之后得到一个地址，非对称加密中，私钥是可以推出公钥的，所以只要保管好私钥，公钥即使丢了也没有关系。公钥显然不能推出私钥。假如量子计算发达了，能够从公钥当中推出私钥，那怎么办？</p>
-<p>比特币在设计的时候，又加了一层保护，没有用公钥本身，而是用公钥的哈希，所以有人想偷你账户上的钱的话，</p>
-<p>首先是要用地址推导出你的公钥，相当于将公钥的哈希值逆运算，推导出真实的公钥，而这一点，即使是用量子计算机，也是没有办法完成的</p>
-</blockquote>
-<p>加密是要保证数据的完整性的，为了解密之后得到的明文不丢失信息</p>
-<p>而取哈希是可以丢失信息的，哈希算法是不可逆的过程。</p>
-<p>比特币使用的哈希算法是SHA-256，不管多大的输入，最后取哈希都变成256位的，这肯定会造成信息的丢失，而且不可逆，如果不是这样的话，变成了超级的压缩算法，这是不可行的。</p>
-<p>比特币中，如果只需要收钱的话，只提供一个公钥的哈希就可以了，将来你要取钱的时候，再提供公钥，和私钥产生的签名。假设有一个坏人，在网上监听到了你取钱的交易，知道了你的公钥，他要偷你的钱需要怎么做？</p>
-<blockquote>
-<p>他要通过你的公钥，实时的破解你的私钥，然后在产生一个把钱转到他的账户上去的交易，即时这个坏人拥有量子计算技术，也很难在几分钟内就把你的私钥破解了，而且他发布的这个交易还要抢在你这个交易的前面，一旦你把账上的钱都转走了，他这个交易就没用了。</p>
-</blockquote>
-<p>所以从安全性的角度来看，比特币的一个地址，一旦用过之后，就不要再用了。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>区块链---总结</title>
-    <url>/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/</url>
-    <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​    社会上对区块链的争议是非常大的，有很多对区块链的质疑也是有道理的，其中一个原因是区块链的概念被滥用了，有些人把什么问题都往区块链上放，无论是效率上的问题，还是监管上的问题，好像区块链是解决问题的法宝，有什么问题放在区块链里好像都能解决一样，这个是不对的。</p>
-<a id="more"></a>
-
-<p>​    国外有人提出把保险理赔业务放在区块链上，原因是现有的保险理赔过程非常慢，可能需要几个星期，甚至更长的时间，所以他们觉得放在区块链上之后（因为区块链的转账速度，比如说比特币要等6个确认区块，也就是一个小时的时间就可以完成），这比保险理赔（几个星期）的速度要快得多。这个应用场景有什么问题？</p>
-<blockquote>
-<p>保险理赔的速度慢，并不是支付技术本身的局限性，只要你决定了理赔的金额，就用普通的银行转账很快地可以转到对方的账上，那么它为什么会慢？主要是因为理赔的内容需要人工审核，你说需要理赔，汽车保险也好，还是说健康保险，很多时候都要人工审核这就是为什么它比较慢，而在这一方面，区块链并没有什么好的优势。也就是说支付技术本身不是瓶颈。</p>
-</blockquote>
-<p>​    还有一些人提出用区块链做防伪溯源的，比如有人提出把有机蔬菜生产的全过程放在区块链上（这个蔬菜从哪里生产的放在区块链上），采摘之后运输的每个环节也都放在区块链上，到最后销售的时候，到哪个市场销售的，也放在区块链上，他们的观点是：因为区块链是不可修改的，在区块链上可以查到这个有机蔬菜生产销售的全过程，所以这是一个很好的应用场景，这个应用场景由什么问题？</p>
-<blockquote>
-<p>应用场景本身没有任何的问题，但是并不是说你用区块链把整个过程记录下来，就能保证你买到的蔬菜真正是有机的？这个是不一定的，如果这块地施过化肥的，或者是蔬菜本身是撒了农药的，但是被当作有机蔬菜记录在区块链里，那么区块链技术本身是检测不出来的。同样的在运输销售过程中，被人掉包了，把某些不是有机的蔬菜当作有机蔬菜拿上去卖，这个也不是区块链能够检测出来的。区块链的不可篡改性只是内容写在区块链之后，是没有办法篡改的，但是你本身写的是假的内容，那么这个是没有办法检测出来的。</p>
-</blockquote>
-<p>​    还有一些区块链的争议是跟信任机制相关的，区块链的一个共识机制它的目的是要在互不信任的实体之间，建立共识，那么有些人认为这本来就是一个伪命题，因为互不信任的实体之间是没有办法进行交易的，比如说网上购物，假设有某个电商网站是去中心化的，你不信任它，你怎么能够在上面买东西呢？在一个中心化的世界里，信用卡有些保护措施，比如像paypal这样的机构也可以建立线上和线下的信任关系，但是在区块链上没有办法做到。这个质疑是有一定道理的，但同时中心化和去中心化的界限并不是黑白分明的，在一个成功的商业模式里面，既可以有中心化的成分，也可以有去中心化的成分，比特币只不过是一种支付方式，并不是说采用比特币作为支付方式的商业模式本身也的是去中心化的，比如说亚马逊网站，这个网站是中心化的，但是他在将来也许也可以采用比特币作为一种支付方式。所以不要因为区块链是去中心化的，就认为所有用到区块链作为支付方式的商业模式也得是去中心化的。</p>
-<p>​    区块链的不可篡改性：一个交易一旦发布到区块链上之后，是没有办法撤销的，有些人认为是有问题，比如说前面所提到的网上购物的例子。你在网上买一个东西，付款之后，对方没有给你发货，或者是发货的质量有问题，如果是用信用卡的支付方式的话，你可以找对方申诉要求退款，但是比特币转账交易写在区块链上之后就没有办法撤销了，这是有些人对区块链技术的质疑，这种说法有什么问题？</p>
-<blockquote>
-<p>我们要分清楚，所谓的退款，包括用信用卡，并不是把原来的付款交易取消掉，而是说在应用层发起一个新的交易，把原来你付的钱，还给你，比如说你用信用卡在网上买东西，支付完之后，你发现由什么问题，你要求对方退款，对方退款之后，你信用卡是有两笔交易的。用比特币支付其实也可以达到同样的效果。这个和区块链的不可篡改性实际上是没有关系的。</p>
-</blockquote>
-<p>​    还有一些质疑适合法律的监管和保护相关的，有些支付方式对用户、消费者是有一定的法律保护的，区块链目前的状态时缺乏监管的，有些人认为这是一个好事情，他们认为去中心化的一个好处就是可以不受到中心化的管理方式，但是监管本身不一定是坏事，没有法律监管同时意味着没有法律保护，出了问题没有人可以保护你，比如用信用卡支付，美国法律规定，信用卡如果被盗刷的话，只要你及时报告（2个月），你最多承受50美元的损失，剩下的损失由信用卡公司来承担。如果时储蓄卡的话，你最多承受500美元的损失。如果你用比特币支付的话，这些保护的功能就都没有了，这也是有些人反对比特币的一个原因。这里我们要注意的一点是，这些法律上的监管和保护，跟支付的技术手段其实是没有关系的。上面所说的信用卡盗刷的例子，只是在美国，不同国家不一样，甚至有些欧洲国家都没有这种保护，即使是美国，各个州的法律规定也不是完全一样的。更重要的是，比特币本来就不应该用于跟已有的支付方式进行竞争。</p>
-<p>​    既然信用卡那么好用，那为什么不用信用卡呢？加密货币应该干嘛用？应该用在已有的支付方式解决的不是很好的领域，有人说互联网是过去一个世纪以来最伟大的发明，互联网的一个重要作用使得信息传播变得非常方便，信息能够无国界的传到世界上的每一个角落，但是支付方式并没有跟上，如果你仅仅是获取信息，这个是比较容易的，网上有各种文章、论坛，但是你如果想要支付的话就会比较难。比特币被称为world wide currency是有一定道理的，因为现在的金融体系当中缺乏一种能够在全球范围内流通的电子货币，而且这个货币的支付方式要能够和信息传播的方式融合在一起，现有的体系当中，支付渠道和信息传播的渠道是分开的。</p>
-<p>​    有人说，下一代的互联网是价值交换网络（internet of value），我们现在的互联网可以认为是信息传播网络，现在问题就在于，信息传播很方便，信息的交互也比较方便，但是价值交换是不方便的（information can flow freely on the internet，but payment cannot），未来的趋势就是支付渠道和信息传播渠道将会逐渐融合，使得价值交换也会变得和信息传播一样的方便。</p>
-<p>​    还有一些质疑是和支付方式的效率相关的，有些人认为加密货币支付方式是非常低效的，无论是比特币还是以太坊，平均到每个交易上它的能耗都是很大的，比信用卡的能耗要大得多，所以有些人觉得没有什么好处。</p>
-<blockquote>
-<p>①加密货币本来就不是用于和已有的支付方式做竞争。 </p>
-<p>②随着区块链技术的发展，共识协议的不断改进，一些新的加密货币在支付效率上已经是大大提高了，原始版本的比特币，每个区块只能有1M字节，出块时间平均是10分钟，每秒钟可以支持7笔交易，现在有些新型的加密货币号称每秒钟能够支持几百万个交易，这个效率已经有了质的飞跃，其实就是以太坊和比特币相比，以太坊的支付效率也已经比比特币高很多了，这是发展的一个大的趋势。</p>
-<p>③我们评价一个支付方式效率的好坏要在当时特定的历史条件下去看，要跟当时存在的其他支付方式相比较。加密货币在某些场景下，已经是相对高效的。（跨国转账）将来随着技术的发展会有更高效的支付手段出现，这是个大趋势。</p>
-</blockquote>
-<p>​    还有一些质疑是和智能合约相关的，智能合约出现了一系列的安全漏洞之后，有些人就觉得，用智能合约由什么好处？还不如用传统的法律合同，法律合同使用自然语言书写的，老百姓还能看得懂。智能合约使用编程语言来写的，除了程序员之外其他人都看不懂，反而不利于检查安全漏洞，对于这种观点，首先程序化是一个大趋势，“software is eating the world”，也有人把它翻译成软件将会颠覆世界，任何技术，任何领域在早期都会有些问题。物理世界的取款机可以看作是一个智能合约，按照事先设定的规定操作，你把银行卡插进去，输入密码会自动把钱取出来，ATM机也会出问题。（ATM机出现了几十年，到现在还会发生故障。在ATM机刚出现的时候，发生故障的频率肯定是要高很多的）。智能合约的历史相对比较短的，所以他在早期的时候出现安全漏洞其实也不是很奇怪，很多软件都出现过各种各样的安全漏洞，随着技术的发展，将来会出现一些智能合约中的一些常用的模板。软件将会改变世界是一个大趋势，另一方面，也不要认为智能合约可以解决所有的问题，或者说以为去中心化能够解决所有的问题。</p>
-<p>​    即使The DAO不出现黑客盗币事件，The DAO的商业模式是不是就没有问题？The DAO刚刚出现众筹的时候曾经引起了一阵强大的兴奋（以前从来没有出现过如此民主的投资基金），民主一定是好事情嘛？大多数人觉得好是真的好吗？</p>
-<p>​    <img src="/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/QQ%E6%88%AA%E5%9B%BE20201208183152.png"></p>
-<p>民主制度不是一种最完美的制度，它和过去的奴隶制度、封建制度相比，它是一种历史的进步，但是民主制度也存在弊病的，包括效率上的弊病，也包括决策上的正确性这方面的问题，不要以为任何问题用民主投票的方法都可以解决。</p>
-<p>​    去中心化一定是好事情吗？这个其实是不一定的，在现实生活中的风投决定要投哪个项目要怎么进行判断？得考察这个项目，和创始人谈判，看看这个项目是否靠谱，如果这个公司已经运行了一定时间，还要去检查一下公司的财务状况、适用一下公司的产品等等，都不是简单的投票就能解决的，所以不要以为去中心化能够解决所有问题。    </p>
-<p><img src="/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/QQ%E6%88%AA%E5%9B%BE20201208183911.png"></p>
-<p>​    不要以为所有的概念用去中心化的概念包装一下，就捧上天，去中心化的管理方式和中心化的管理方式是各有利弊的，要具体问题具体分析，像The DAO这样的基金就不应该受到热捧。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC十---回顾问答</title>
-    <url>/2020/09/14/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/</url>
-    <content><![CDATA[<h1 id="BTC问答回顾"><a href="#BTC问答回顾" class="headerlink" title="BTC问答回顾"></a>BTC问答回顾</h1><p>1.转账交易的时候，如果接收者不在线（你转账给A，但是A那时候没有连接到比特币网络上）怎么办？</p>
-<blockquote>
-<p> 这个时候不需要接收者在线，转账交易只不过要在区块链上记录一下。</p>
-</blockquote>
-<p>2.假设某个全节点收到了一个转账交易，有没有可能转账交易中接收者的收款地址是这个结点以前从来没有听说过的？</p>
-<blockquote>
-<p>可能，比特币系统在创建账户的时候是不需要通知其他人的，在本地产生一个公私钥对就可以了，只有在以后产生的收款地址收到钱的时候，其他结点才知道这个账户的存在。</p>
-</blockquote>
-<a id="more"></a>
-
-<p>3.如果你账户的私钥丢失了该怎么办？</p>
-<blockquote>
-<p>其实是没有办法的，这个账户上的钱就变成了死钱，永远取不出来，去中心化的系统大家没有办法给你重置密码。</p>
-</blockquote>
-<p>有些加密货币的交易所，一般来说，这些交易所都是中心化的机构，那么在交易所办一个账户的时候一般来说是要提供身份证明的，这种情况下，你把你的交易货币保存在交易所里，那么私钥实际上是由交易所来保管的 ，你登陆这个交易所是按照登陆银行差不多的程序（有一个账户名，一个密码），登陆的时候，一般来说还需要二次验证（google 身份验证器），如果私钥丢失是可以在交易所查到的；</p>
-<p>有些在线钱包也提供私钥保管的功能，但并不说这些机构为我们自己保管私钥更加安全，目前这些机构仍处于缺乏监管的状态，历史上出现过交易所被黑客攻击的情况，其中最著名的例子就是Mt.Gox的例子，Mt.Gox曾经是世界上最大的交易所，交易量占到了全球的交易量的70%。后来被攻击了，CEO被判刑。</p>
-<p>相比来说，冷钱包或者硬钱包更加安全。</p>
-<p>4.如果你的私钥泄漏了怎么办？（你发现你的账户上出现了一些可疑的交易）</p>
-<blockquote>
-<p>这个时候你应该把你账户上的钱，转到另一个安全账户上。（这个也和现实中银行的体验不太一样）</p>
-<p>比特币账户创建之后，公私钥对都是没有办法修改的</p>
-</blockquote>
-<p>5.如果转账的账户地址填错了怎么办？</p>
-<blockquote>
-<p>没有办法取消以前发布的交易，比特币中转账的交易一旦发布在区块链上就没有办法取消了，它没有提供这种机制取消一个已经发布的交易，如果你知道是谁的地址，可以跟他联系一下</p>
-<p>也可能转给不存在的地址（有些地址其实不是公钥的哈希得到的：digital commitment：你想证明某个时间你知道了某个知识，可能只是一个文件取了哈希）</p>
-</blockquote>
-<p>在Proof of Burn中提到的OP_RETURN后面可以写所有的去哈希的内容，上面的内容没有人管，这是推荐采用的方法，但是有的人不这么干：有人用内容取哈希之后得到的哈希值生成一个看上去像比特币地址的东西，这时候转账给这个假的地址，这样转账的钱就变成了死钱，这种做法，就是牺牲很少一点的比特币，换取往这个区块链里写入这个哈希值的一个机会。后者的做法是不提倡的，因为这样转账交易的输出会永久的保留在UTXO里，对全节点不友好</p>
-<p>6.Proof of Burn的机制是怎么执行的，不是说OP_RETURN会无条件地返回错误吗？那这个交易是怎么通过验证的？</p>
-<blockquote>
-<p>验证时候：是把当前这个交易的输入脚本和这个交易（币的来源）的输出脚本拼接，这个过程是不可以发生错误的，关键在于，OP_RETURN是写在当前交易的输出脚本里的，所以验证当前交易的合法性的时候不会执行当前语句（因为他是输出脚本），有人想花这个钱的时候，才会执行这个输出脚本，因为OP_RETURN永远都返回错误，所以永远都不可能花出去。</p>
-</blockquote>
-<p>7.会不会有的矿工偷答案？（其他矿工发布了一个nonce，这个矿工没有找到这个nonce，他收到这个区块之后，查一下这个nonce是符合要求的，然后就把他当成自己的nonce发布出去）你怎么知道哪个nonce是属于哪个矿工的？</p>
-<blockquote>
-<p>发布的区块里，会发布一个coinBase tx，里面会填一个收款地址，谁挖到了矿，就填谁，如果你要抄答案，那么你要把收款人的地址换成自己的地址，而这个地址发生变化的话，coinBase tx的内容就会发生变化，这样会导致这个Merkle tree的根哈希值发生变化，而这个nonce在块头里，根哈希值也在块头，block header的哈希值发生变化之后，原来找到的nonce就作废了。所以你不可能偷答案，因为每个矿工挖到的nonce是和自己的收款地址绑定在一起的。</p>
-</blockquote>
-<p>8.交易费可以看作是发布区块的时候给矿工的一点小费，那么你怎么知道这个交易费该给那个矿工？事先你怎么知道哪个矿工会挖到矿？</p>
-<blockquote>
-<p>事先不需要知道哪个矿工得到这个交易费，只要total inputs &gt; total ouputs，这个差值就是交易费，给谁不需要事先知道，哪个矿工挖到矿了，就可以把这些差额收集起来，作为自己的交易费。</p>
-</blockquote>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1100,70 +944,67 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC四---实现</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/</url>
-    <content><![CDATA[<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="transaction-based-ledger"><a href="#transaction-based-ledger" class="headerlink" title="transaction-based ledger"></a>transaction-based ledger</h2><p>BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算</p>
-<p>比特币的全节点要维护一个UTXO的数据结构</p>
+    <title>BTC十二---思考</title>
+    <url>/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/</url>
+    <content><![CDATA[<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><h2 id="哈希指针"><a href="#哈希指针" class="headerlink" title="哈希指针"></a>哈希指针</h2><p>比特币系统在设计的时候，很多地方都使用到了哈希指针，比如区块的块头，就包括了前一个区块的指针，指针保存的是本地内存的地址，那么只是在本地计算机上才有意义，发布到别的计算机上就没有意义了，那么哈希指针是怎么通过网络进行传输的呢？</p>
 <a id="more"></a>
 
-<p>UTXO:Unspent Transaction Output,还没有被花出去的交易的输出，区块链中有很多交易，有些交易的输出可能被花掉了，有些还没有被花掉，没有被花掉的交易的输出的集合叫做UTXO</p>
-<p>UTXO中的每个元素要给出产生这个输出的交易的hash值，以及他在这个交易里是第几个输出，就可以定位到这个UTXO中的输出，那么这个UTXO集合的作用是什么？为什么要维护这样一个数据结构</p>
-<p>作用：防范double spending attack，所以全节点要在内存中维护UTXO数据结构，以便快速检测double spending attack，</p>
-<p>随着交易的发布，每个交易要消耗UTXO中的输出，同时也会产生一些新的输出</p>
-<p>每个交易所有输入的金额，要等于所有输出的金额：total inputs = total outputs</p>
-<p>发布区块的那个结点为什么要把你的交易打包在区块里？这样做对她有什么好处吗？</p>
-<p>如果只有出块奖励，那么自私的结点就只会打包他自己的交易，同时也节省带宽</p>
-<p>所以比特币系统设定了第二个激励机制：交易费（transaction fee），你把我的交易打包在区块里，我给你点小费，所以就会出现total inputs &gt;= total outputs的情况，多的比特币充当了小费</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817210059.png"></p>
-<p>目前矿工去争取记账权，主要还是为了得到出块奖励，但是因为21个区块都会减少出块奖励</p>
-<p>比特币系统中差不多10分钟会创建一个区块，计算下来差不多每四年就会减半（出块奖励）</p>
-<h2 id="区块的例子"><a href="#区块的例子" class="headerlink" title="区块的例子"></a>区块的例子</h2><p>account-based ledger</p>
-<p>以太坊就是这种模式，在这种模式总，系统显式的记录每个账户上有多少个币，比特币的隐私保护就比较好一些</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/image-20200817210819638.png"></p>
-<p>Height:是区块的序号，Difficulty：挖矿的难度（每隔2016个区块要调整这个难度，保持出块时间在10分钟左右）</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211158.png"></p>
-<p>注意：计算hash值都是计算block header的哈希值，不包含block body的哈希值</p>
-<p>所谓的挖矿，就是不断地调整随机数nonce，使得整个block header的哈希值小于等于给定的目标阈值，这个目标阈值表示成16进制就是前面有一长串的0，所以凡是符合难度要求的区块，它的块头的哈希值，算出来都是要有一长串的0</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211615.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211913.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212243.png"></p>
-<p>每个发布的区块里都包含一个特殊的铸币交易</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212744.png"></p>
-<p>这个对Merkle tree的根哈希值有什么影响吗</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213102.png"></p>
-<p>coinbase中的前八个字节当作extra nonce来用nonce从2^32-&gt;2^96</p>
-<p>所以真正挖矿的时候是有两层循环的，外层循环调整coinbase域的extra nonce ，算出block header中的根哈希值之后，内层循环在调整header里的nonce</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213639.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213948.png"></p>
-<h2 id="概率分析"><a href="#概率分析" class="headerlink" title="概率分析"></a>概率分析</h2><p>每次尝试nonce可以看作是Bernoulli trial：a random experiment with binary outcome</p>
-<p>挖矿，每次尝试nonce，成功的概率是微乎其微的，大概率是不行的，如果我们做很多的Bernoulli trial，每个实验都是随机的，这些Bernoulli trial就构成了Bernoulli process：a sequence of independent Bernoulli trials，Bernoulli trial的一个性质是无记忆性：memory less，你做大量的实验，前面的结果和后面的结果是没有关系的</p>
-<p>实验很多，每次成功的概率很小，多重伯努利可以用Poisson process来近似，我们关心的是，系统中产生下一个区块的时间，这个在概率中可以推导出来出块时间是服从指数分布的exponential distribution</p>
-<p>整个系统平均的出块时间是十分钟，这个时间是比特币协议设计出来的</p>
-<p>具体到每个矿工，他能够挖到下一个区块的时间，取决于这个矿工的算力占系统算力的百分比，比如说，你的算力占到系统算力的1%，平均下来，系统里每产生一百个区块，其中有一个区块就是你挖矿挖到的，平均你要等1000分钟才能产生一个区块</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817215856.png"></p>
-<p>这个性质有时候也叫：process free，过去的process是不算数的</p>
-<p>假设一下，如果有某个puzzle不满足process free，会出现什么情况：算力强的矿工具有不成比例的优势，因为算力强的矿工过去做的工作肯定是多的，比如有两个矿工，一个矿工的算力是另一个的十倍，那么他挖到矿的概率也是另一个的十倍，这样就满足process free，如果不满足，就会大于十倍！其实process free 恰恰是挖矿公平性的保证。</p>
-<h2 id="比特币的总量"><a href="#比特币的总量" class="headerlink" title="比特币的总量"></a>比特币的总量</h2><p>挖矿获得的出矿奖励，是比特币长生的唯一途径，然而这个值每四年就会减半，比特币的总量呈现几何趋势</p>
-<p>genmetric series</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819203300.png"></p>
-<p>挖矿对维护比特币系统的安全是至关重要的：Bitcoin is secured by mining，只要大部分算力在诚实的结点手里，系统的安全就可以得到保证。出矿奖励随着出块会减半，那么人们的动力是否会减少呢？从过去的几年来看，恰恰是相反的，比特币的价格是飙升的，如果趋于0之后，是不是就没有动力挖矿了呢？还有第二种激励机制：交易费</p>
-<p>比特币的安全性的分析，①假设大部分算力是掌握在诚实的矿工手里，我们能得到什么样的安全保证，能不能保证写入区块里的交易都是合法的？如果落在了10%的不诚实的结点手里，这个节点能不能偷币？能不能把别人账上的钱转给自己？不能，因为他无法伪造别人的签名（需要知道别人的私钥）。如果把这个交易硬写道区块链里呢？</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819204852.png"></p>
-<p>②恶意的结点能不能double spending？</p>
-<p>如果M-&gt;A存在某种不可逆的效果，那么M-&gt;M’就可以从中获得不当的利益，比如网上购物，M购买了一些商品，然后网站接受比特币支付，M把帐转给这个网站，网站监听到这个交易写入到区块链里了，以为， 支付成功了，所以把商品给了M，M拿到商品之后，又发起了一个交易M-&gt;M’把钱转给自己，然后按照下面这个区块扩展最长合法链，这样上面那个交易就作废了。</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819205358.png"></p>
-<p>如何防范double spending？类似上面这种攻击</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210210.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210314.png"></p>
-<p>区块链是不可篡改的账本：irrevocable ledger，那是不是说凡是写入区块链的内容，永远改不了呢？根据上面的分析可知，这种不可篡改性，只是一种概率上的保证</p>
-<p>其实，还有一种zero confirmation，0个确认，这个意思是说，这个转账交易发布出去了，但是还没有被写入区块链里，商家就确认了这个交易，这种在现实生活中还是比较普遍的，</p>
-<p>原因：</p>
-<p>①比特币协议缺省的设置是：结点接收最先听到的那个交易，两个交易有冲突，最先听到哪个，接收哪个，所以发布一个M-&gt;A,最先听到这个，在zero confirmation的这个位置，诚实的结点有比较大的几率是不会接收M-&gt;M’这个交易的 </p>
-<p>②很多购物网站，从你支付成功，到他把货品发给你，是有一定的时间间隔的，如果发现M-&gt;M’这个转账交易没有在最长合法链里，电商就可以选择取消发货。</p>
-<p>假设某个有恶意的结点获得了记账权，他还能干什么坏事？</p>
-<p> 能不能不把某些合法的交易写道区块链里？这是可以的，但是会少交易费，比特币规定某个区块的大小是有限制的，最多不能超过1M字节，某个节点交易太多，这些交易就只能等到下个区块在发布</p>
-<p>selfish mining：在商家等待6个区块的时候，M-&gt;M’先不发布，在私下偷偷的挖矿，但是不发布，等挖矿创建的区块比6个区块多的时候，一下子全部发布，M-&gt;M’这条链就成了最长合法链；正常的情况是，挖到区块，立马发布，要不然就被别人抢了，所以selfish mining有一个前提，恶意的结点的算力要超过诚实的结点的算力，但是是不可能的</p>
-<p>selfish mining还有什么目的，上述是分叉攻击的目的，假设我们能不是为了回滚以前的交易，就是为了正常的挖矿，赚取出块奖励，selfish mining有没有什么好处？减少竞争：别人挖了一个，我已经挖了两个，然后直接抛出去两个,让别人做一些无用功。</p>
+<blockquote>
+<p>所谓的哈希指针，只是一种形象的说法，实际系统中使用的时候，只有哈希，没有指针。</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/QQ%E6%88%AA%E5%9B%BE20200923185402.png"></p>
+<p>那么怎么找到前一个区块的内容呢？</p>
+<p>全节点一般是把这个区块存储在一个（key，value）的数据库（这里面的key就是前一个区块的哈希，value就是区块的内容）里面，常用的数据库是levelDB。</p>
+<p>所谓的区块链的链表结构，实际上是在levelDB里用哈希值串起来的，只要你掌握最后一个区块的哈希值，就可以把最后一个区块中的内容取出来，然后通过这个区块中的上一个区块的哈希值，找到前一个区块的内容，这样一步一步往前找，就可以把所有的区块都找出来。所以实际中，只有哈希，没有指针，或者可以认为哈希值就是指针。哈希指针的性质，保证了区块链中的内容是不可篡改的。</p>
+</blockquote>
+<h2 id="区块恋"><a href="#区块恋" class="headerlink" title="区块恋"></a>区块恋</h2><p>据说17年七夕的时候，有的情侣，两个人合在一起买比特币，然后把私钥从中间截断，分成两部分，每人保存其中的一段，将来如果两个人继续好下去的话，那么两段私钥合在一起就能把钱取出来，如果两个人分手了，比特币就被永久地锁在了区块链上。</p>
+<p>按照这种逻辑，如果推到n个人，如果有四个合伙人，就应该把私钥切成四份，每个人掌握其中的一份，需要用的时候，四个人的私钥合在一起才能用，这样有什么问题？</p>
+<blockquote>
+<p>①任何一个人把私钥丢了，这个钱就取不出来了。</p>
+<p>②这种截断私钥的做法，会降低比特币账户的安全性：比特币系统中账户的安全性是和每个账户私钥的长度是相关的，256位的私钥，尽管你把世界上所有的电脑集中起来破解，也是不可能成功的，但是你从中截断，128位的长度，他的可能性就远远小于2^256次方个，破解的难度变得容易很多了，如果其中三个合伙人，瞒着第四个合伙人要把钱取出来，那么他只要尝试2^64可能性就可以了。</p>
+</blockquote>
+<p>说明，对于多个人的共享账户，不要采用截断私钥的做法，那怎么办？</p>
+<blockquote>
+<p>使用多重签名，多重签名中的每一个签名都是独立产生的，而不是把一个私钥拆成若干个私钥，而且多重签名还提供了一些别的灵活性：比如n个人中，任意给出m个签名就可以了。</p>
+</blockquote>
+<p>区块恋还有另一个问题，如果这两个人分手了，那么他们购买的比特币就会永久地保存在UTXO里，这对全节点是不友好的。</p>
+<p>还有一些别的原因，钱变成’死钱’，早期有的人就是挖矿挖着玩，这种情况就造成了大量的私钥的丢失，造成了UTXO集合的膨胀。</p>
+<h2 id="分布式共识"><a href="#分布式共识" class="headerlink" title="分布式共识"></a>分布式共识</h2><p>关于分布式共识，学术界有很多不可能的结论，从理论上证明，分布式系统当中取得共识是不可能的，既然从理论上证明是不可能的，实际当中，又怎么变成可能了？</p>
+<p><img src="/2020/10/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%9D%E8%80%83/QQ%E6%88%AA%E5%9B%BE20200923191841.png"></p>
+<blockquote>
+<p>严格意义上来说，比特币并没有取得真正意义上的共识，因为取得的共识，随时都可能被推翻。</p>
+<p>比如出现了分叉攻击，本来你以为已经达成了某一个共识，分叉攻击之后，系统会回滚到前一个状态，从理论上来说，甚至可能回滚到创世纪块，按照分布式系统理论的要求，共识一旦达成之后，就不应该再改了，所以从这个意义上看，比特币系统并没有绕过分布式系统那些不可能的结论，因为他根本没有达到根本意义上的共识</p>
+</blockquote>
+<p>理论和实际往往是有距离的，很多理论上的不可能结论，对于实体来说是并不适用的，这个不可能结论只是对某种固定的模型下是不可能的。</p>
+<p>你怎么判断远程的一台服务器是不是死机了？（连不上，但是是不是真的死机了？）</p>
+<blockquote>
+<p>分布式系统的理论已经证明了，在异步（通讯传输的延迟是没有上限的：我发一个消息给你，你什么时候能收到，谁也不知道）的环境中，不能区分远程的服务器，到底是死机了，还是运行缓慢。</p>
+<p>但是也并不是没有办法，打个电话给管理员，让他看看是否死机了就行了，所以这在理论上不可能的事请，又变成了可能。</p>
+<p>如果实际上，每次都给管理员打电话，也比较复杂，所以有一种做法是给服务器加一根电话线（十几年前），如果你发现连不上，就不用internet那根线连接，就用电话线连接，一般来说不会同时出现拥堵，所以你发现用电话线，还是连不上，那就是服务器死机了。</p>
+</blockquote>
+<p>说明：理论上很多不可能的结论，只是在某些特定的模型下，现实中，把模型改一改，所谓的理论上的结论也就可能不成立了。</p>
+<h2 id="比特币的稀缺性"><a href="#比特币的稀缺性" class="headerlink" title="比特币的稀缺性"></a>比特币的稀缺性</h2><p>挖矿的收益，要大于挖矿的开销，那就是有利可图的，所以，要吸引大家来挖矿，要么增加预期收益，要么降低开销。</p>
+<p>比特币是如何做到这一点的呢？</p>
+<blockquote>
+<p>早期的挖矿难度比较低很容易就可以挖到，另一方面，早期的出块奖励也非常的高。</p>
+</blockquote>
+<p>有人认为比特的设计是十分巧妙的，比特币的总量是恒定的，越到后面越难挖，所以到了后面大家都会抢着去挖，有人认为这是比特币获得成功的一个重要原因，其实，这种总量固定的东西，是不适合作为货币的。有些新型的货币，甚至要自带一种通胀的功能，每年会自动把货币的发行量提高一个比例。</p>
+<p>稀缺的东西，是不适合作为货币的，一个好的货币实际上是要有通货膨胀的功能的，如果这个东西的总量是定死的，他是不适合作为货币的（所以现在都不使用黄金作为货币：每年黄金产量增加的速度远远敢不上社会新创造财富的速度，如果我们使用黄金作为货币，这会导致黄金越来越值钱，如果祖上已经有黄金，就只需要坐等升值就行了，国内的房地产就是这种情况，一个健康向上的社会，是不应该出现这种情况的）。</p>
+<h2 id="量子计算"><a href="#量子计算" class="headerlink" title="量子计算"></a>量子计算</h2><p>比特币这种加密货币，是建立在密码学的基础上的，将来量子计算发展起来之后，这些加密货币会不会变得不安全了？</p>
+<blockquote>
+<p>传说中的量子计算，可以破解现有的各种加密算法。但是，这种担心是没有必要的</p>
+<p>①量子计算技术离使用还有很长一段距离，如果量子计算技术使用，首当其冲的是传统金融业，网上进行的很多金融活动，都会变得不安全，与其担心量子计算对比特币的冲击，还不如担心量子计算对传统金融的冲击。将来还会有量子加密算法</p>
+<p>②比特币当中并没有把账户的公钥直接暴露出来，而是用公钥取哈希之后得到一个地址，非对称加密中，私钥是可以推出公钥的，所以只要保管好私钥，公钥即使丢了也没有关系。公钥显然不能推出私钥。假如量子计算发达了，能够从公钥当中推出私钥，那怎么办？</p>
+<p>比特币在设计的时候，又加了一层保护，没有用公钥本身，而是用公钥的哈希，所以有人想偷你账户上的钱的话，</p>
+<p>首先是要用地址推导出你的公钥，相当于将公钥的哈希值逆运算，推导出真实的公钥，而这一点，即使是用量子计算机，也是没有办法完成的</p>
+</blockquote>
+<p>加密是要保证数据的完整性的，为了解密之后得到的明文不丢失信息</p>
+<p>而取哈希是可以丢失信息的，哈希算法是不可逆的过程。</p>
+<p>比特币使用的哈希算法是SHA-256，不管多大的输入，最后取哈希都变成256位的，这肯定会造成信息的丢失，而且不可逆，如果不是这样的话，变成了超级的压缩算法，这是不可行的。</p>
+<p>比特币中，如果只需要收钱的话，只提供一个公钥的哈希就可以了，将来你要取钱的时候，再提供公钥，和私钥产生的签名。假设有一个坏人，在网上监听到了你取钱的交易，知道了你的公钥，他要偷你的钱需要怎么做？</p>
+<blockquote>
+<p>他要通过你的公钥，实时的破解你的私钥，然后在产生一个把钱转到他的账户上去的交易，即时这个坏人拥有量子计算技术，也很难在几分钟内就把你的私钥破解了，而且他发布的这个交易还要抢在你这个交易的前面，一旦你把账上的钱都转走了，他这个交易就没用了。</p>
+</blockquote>
+<p>所以从安全性的角度来看，比特币的一个地址，一旦用过之后，就不要再用了。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1173,75 +1014,54 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC七---挖矿</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/</url>
-    <content><![CDATA[<h1 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h1><h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png"></p>
+    <title>BTC九---分叉</title>
+    <url>/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/</url>
+    <content><![CDATA[<h1 id="分叉"><a href="#分叉" class="headerlink" title="分叉"></a>分叉</h1><p>fork:原来是一条链，现在是两条链形成了分叉。有两种情况：</p>
+<p>①如果同时有两个结点发布了区块，这时候就会形成分叉：state fork，由于对比特币这个区块链当前的区块状态有意见分歧而导致的分叉，forking attack也属于state fork，只不过分叉攻击这个意见分歧是故意造成的，所以有时候我们管这个叫deliberate fork。</p>
+<p>②比特币的协议发生了改变，要修改比特币的协议，需要软件升级，在一个去中心化的系统里，在升级软件的时候，没有办法保证所有的结点同时都升级软件，我们假设大部分结点升级了软件，少数结点因为种种原因没有升级，有可能还没有来的及升级，也可能是不同意这个协议的修改，这种分叉叫做protocol fork，因为对比特币的协议产生了分歧，因为使用不同的协议造成了分叉。</p>
 <a id="more"></a>
 
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210616.png"></p>
-<p>比特币网络中大部分节点是轻结点，如果只需要转账，不需要挖矿的话，没必要运行一个全节点。</p>
-<p>在挖矿过程中，如果你监听到别人发布了一个区块，这个区块是合法的，也是在延伸最长合法连，这个时候你应该停止已有的挖矿，然后重新在本地组装一个侯选区块，重新挖矿，因为你要沿着这个新发布的区块向下挖的话，那么你本地所组装的这个区块中，包含的交易就会发生变化，有些交易可能已经包含到已经被发布的这个区块里了，block header的内容也会发生变化，Merkle tree的根哈希值，以及指向前一个区块的指针，这样做是不是有些可惜？</p>
-<p>其实是不可惜的，因为前面我们提到一个挖矿的性质：无记忆性memory less（process free），所以你是坚持挖原来的区块，还是改成挖一个新组装的区块，成功的机率是一样的。</p>
-<p>即时挖到了合法的区块，发布到区块链上，也不是说就是胜利了，有可能你发布的这个区块，最终没有成为最长合法链，</p>
-<p>可能存在一些risk condition，别人同时发布了一个合法的区块，或者是存在一些你不知道的double spending，使得你这个区块中某些交易最后是有冲突的。</p>
-<p>比特币是怎么保证安全性的？两方面</p>
-<p>一方面：密码学上的保证：别人没有你的私钥，就不能伪造你的签名，这个的前提是，系统中拥有大多数算力的矿工是好的，是遵守协议的；</p>
-<p>另一方面：共识机制。</p>
-<h2 id="挖矿相关"><a href="#挖矿相关" class="headerlink" title="挖矿相关"></a>挖矿相关</h2><p>挖矿的设备：越来越趋向于专业化，最早的时候大家都是用普通的cpu去挖矿。</p>
-<p>如果现在，你专门买一台计算机用来挖矿，其实是不划算的，因为计算机中的大部分内存都是闲置的，挖矿只用到其中很小一部分内存，cpu中的大部分部件也是闲置的，因为挖矿的操作只用到了通用cpu中的很少的一部分指令，硬盘和其他很多资源也用不到。</p>
-<p>第二代：GPU–&gt;比cpu挖矿的效率高得多，GPU用于大规模的并行计算（像深度学习就用到了GPU，其中有很多矩阵的乘法），但是GPU用来挖矿，其实还是有点浪费的，里面有很多部件仍然处于闲置状态，比如用于浮点数计算的部件（比特币的挖矿只用到了整数计算）</p>
 <blockquote>
-<p>最近几年，GPU价格上涨的很快，有些人把它归于深度学习的火热，其实有很多GPU是用来挖矿的，不过有个好消息，现在比特币挖矿难度的提升，用GPU挖矿已经划不来了，所以都不竞争去买GPU用于挖矿了。</p>
+<p>可以根据对协议修改的内容的不同，分为硬分叉（hard fork）和软分叉（soft fork）</p>
 </blockquote>
-<p>现在用什么挖矿？用ASIC（Application Specific Integrated Circuit）芯片，它上面没有多余的电路逻辑，整个芯片就是为了比特币挖矿计算哈希值的操作而设计的，性价比最高，而且，为某一种加密货币设计的ASIC芯片，只能用来挖这一种加密货币，除非这两个加密货币使用同一个mining puzzle，有些加密货币新发行的时候，为了解决能源启动问题，他故意用一个已有的加密货币的mining puzzle，可以吸引更多的人来挖矿，这样的mining puzzle叫做merge mining。</p>
-<p>ASIC芯片的研发周期是很长的，比特币的ASIC的芯片需要使用一年的时间，已经算是很快了，创造了ASIC芯片史上的奇迹，在这么长的时间里面，如果比特币的价格发生了很大的变化的话，前期投入的研发费用有可能就打水漂了。</p>
-<p>即时在比特币发展的黄金时期，比特币价格上涨，挖矿是有利可图的，但是竞争也是越来越激烈的，定制的ASIC芯片可能用不了几个月就过时了，相当于一个军备竞赛。</p>
+<p>什么是硬分叉？什么是软分叉？</p>
+<h2 id="hard-fork"><a href="#hard-fork" class="headerlink" title="hard fork"></a>hard fork</h2><p>出现硬分叉的情况，如果对比特币协议增加新的特性，有一些new feature，这些没有升级软件的那些旧的节点，他是不认可这些新特性的，他认为这些new feature是不合法的。这个时候就属于我们对比特币协议的内容产生了意见分歧，就会导致分叉。一个例子就是：比特币中的区块大小限制（block size limit）。</p>
 <blockquote>
-<p>有研究表明，大部分的ASIC矿机，利润是在他上市的前两个月获得的，这个时候的算力在同类产品中最强，所以购买ASIC矿机的时机很重要，现在一般都是提前预定，如果不能及时发货，对矿工就有损利益，有些不良厂商，生产出了矿机，不立即发售，而是自己先用他挖矿</p>
+<p>比特币规定每个区块是1M字节，有些人认为1M这个限制太小了，增加了比特币的延迟。</p>
+<p>一个交易差不多可以认为是250个字节，所以1000000字节大概是4000个交易左右，平均十分钟一个区块，算下来大概是每秒钟七笔交易</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907211038.png"></p>
+<p>我们用信用卡处理交易和这个完全不是一个数量级的，很多电商网站很多都不止这些，所以有的人认为这个区块太小了，限制了比特币的throw put（不知道老师是不是说的这个），同时也增加了延迟，因为你区块就只能装这么多区块，如果交易太多了的话，那可能有些交易，就得等到下一个区块才能被发布，平均要等十分钟</p>
 </blockquote>
-<p>有些新的加密货币设计的是Alternative mining puzzle 设计的初衷是：ASIC resistance（能够抗ASIC芯片化，目的是为了让通用的计算机也能参与挖矿）</p>
-<p>挖矿的另一个趋势是：大量矿池的出现，单个矿工，即使用了ASIC芯片，挖矿从平均收益上看，是有利可图的，但是收入是十分不稳定的：比特币的平均出块时间是10分钟，但是这是总的矿工的平均，从单个矿工来看，可能他要挖一两年才出一个区块，就有点买彩票的意味了；单矿工还要面临一个困难：他除了挖矿之外，还要承担全节点的责任。</p>
-<hr>
-<p>矿池：就是把矿工组织起来，作为一个整体，矿池的架构是：一个全节点，会驱动很多的矿机</p>
-<p><code>miner</code>只负责计算哈希值，<code>pool manager</code>承担全节点的其他职责，<code>pool manager</code>负责监听网上的交易，把这些交易组织打包成一个候选区块，同时看有没有其他的节点抢先发布区块。</p>
-<p>矿池还能解决矿工收入不稳定的问题，有了收入，一起分配。分配的问题：如果矿机和矿池是分布式的（不在同一个机构），矿工和矿主不在同一个地方，矿工要加入一个矿池，就是按照这个矿池规定的通信协议，跟矿主练习，矿主把要计算的哈希值的任务分配给他，矿工计算完之后，把结果返回，有出矿奖励大家一起分配，如何分配？</p>
+<p>我们假设有人发布了软件更新，把这个block size limit从1M增加到了4M（大多数结点更新了这个软件，少数节点没有更新【这里所说的节点数目不是按照账户的数目来算的，是按照算力的多少来算的】），这个时候系统运行起来会有什么结果？</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212426.png"></p>
+<p>备注：图中的解释有错误，应该是新产生的区块，旧结点不认可</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907212813.png"></p>
+<p>备注：图中的“就”为“旧”</p>
+<p>只要这些旧结点不更新软件，分叉就不会消失，这就是为什么管他叫硬分叉（hard fork）。</p>
+<p>比特币社区中，有些人是比较保守的，像这种block size limit这种new feature，有些人真的是不会同意，而且，区块的大小不是越大越好（详情看比特币网络）。</p>
+<p>如果存在了硬分叉，那么下面的那一条链的出块奖励还有吗？</p>
 <blockquote>
-<p>平均分配？明显的问题是吃“大锅饭”，干好干坏一个样；因此要按照每个矿工的贡献大小进行分配：这个地方同时需要工作量证明，如何证明？</p>
-<p>矿工的收入不稳定是因为挖矿太难了，如果降低难度，收入就能稳定，怎么降低难度？原来的要求，找到nonce，匹配target，和block header算哈希前面至少70个零，现在降低难度，前面只要有60个零就行，这样挖到的叫做一个</p>
-<p><code>share</code>：<code>almost valid block</code>,矿工挖到这样一个share之后，把他提交给矿主。</p>
-<p>矿主拿到share有什么用？这个除了证明矿工的工作量之外，没有其他的用处，不可能发不出去，因为这个区块不是合法的，所以矿主就记录每个矿工提交了多少个share，将来等到某个矿工真的挖到了某个区块之后，再把这个出块奖励，按照每个矿工提交的share的数目分配。</p>
+<p>是有的（在各自的链上是承认的），会造成社区的分裂，如果一直存在下去，就会分家了，相当于变成了两种币，原来没有分裂的币，应该变成上下两条链都认可。</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200907214138.png"></p>
+<p>后来有了一个措施：在各自的链上加上一个chain ID</p>
 </blockquote>
-<p>每个矿工挖到矿的概率取决于他尝试的nonce的数目，尝试的nonce越多，share就越多，所以可以把share作为工作量的衡量。</p>
-<p>有没有可能矿工挖到了区块之后，不把他提交给矿主，自己独享？</p>
+<h2 id="soft-fork"><a href="#soft-fork" class="headerlink" title="soft fork"></a>soft fork</h2><p>软分叉出现的情况？如果我们对比特币协议加一些限制。加这个限制之后，原来合法的交易或者是合法的区块，在新的协议中，有可能变得不是合法了，这就引起软分叉。</p>
+<p>举例：</p>
+<p>如果有人发布了软件更新，block size limit缩小了，由1M变成0.5M（实际上不会这样做，因为1M已经是比较小的了）</p>
+<p><img src="/2020/09/09/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%88%86%E5%8F%89/QQ%E6%88%AA%E5%9B%BE20200909193415.png"></p>
+<p>实际当中可能出现软分叉的情况</p>
+<p>①给某些目前协议中没有规定的域增加一些新的含义，赋予他们一些新的规则：coinBase域，每个发布的区块里可以有一个铸币交易，coinBase可以有个特别的用途（作为extra nonce 拿出8bytes），其实coinBase不止8个字节，那其他字节干嘛用呢？有人就建议，把他作为UTXO集合的根哈希值，目前这个集合只是全节点自己在内存中维护这样一个集合，主要是为了快速查找能够交易是不是double spending，但是这个集合的内容并没有写到区块链，这个和我们说的Merkle proof不太一样。</p>
+<p>如果你要证明某个账户上有多少钱，如果你是全节点的话，可以算一下，就是看一下A这个账户在这个UTXO里对应的输出上面一共收到多少个币，就是A账户上有多少钱。</p>
+<p>有很多区块链钱包（手机上的app），他不可能在手机上维护一个全结点，他需要知道账户的余额，需要询问其他的全节点，那么全节点返回一个结果，你怎么知道他是不是对的？</p>
 <blockquote>
-<p>每个矿工的任务是由矿主来决定的，矿主负责组装好区块，然后让矿工尝试nonce，而且，光是调整nonce是不够的，还要调整coinBase parameter，所以矿主可能就是把不同的coinbase parameter对应的nonce的范围交给不同的矿工去尝试，那么这个区块里面包含了什么？</p>
-<p>coinbase transaction里面有个收款人的地址，这个地址填的是矿主的地主，如果矿工不提交给矿主，他是收不到钱的。</p>
+<p>你现在是证不出来的，你自己如果没有维护一个UTXO集合，是没有办法用Merkle proof证出来的，所以有人就提议：</p>
+<p>把UTXO集合当中的内容也组织成一条Merkle tree，这个Merkle tree有一个根哈希值，这个哈希值写在coinBase中，因为你block header没有办法再改了（block header动静太大了），coinBase中的内容在网上传递的时候，最终会传递到block header中，这样的话，你就可以用Merkle proof证出来</p>
 </blockquote>
-<p>他不可能偷出块奖励，但是她有没有可能捣乱？（平时挖到一个share，作为工作量证明，但是等他真正挖到一个合法的区块的之后，他把它扔掉）</p>
-<blockquote>
-<p>但是这样做对他来说并没有什么经济上的好处，矿池之间是存在竞争关系的，有可能为了打击竞争对手，故意派一些矿工到对手的矿池里挖矿，“卧底”！</p>
-</blockquote>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200831215109.png"></p>
-<p>​                                                                                    矿池在各个国家的分配比例</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200831215228.png"></p>
-<p>​                                                            2014年 GHash.IO矿池总算力占到了全球的51%以上</p>
-<p>已经可以发动51攻击了！（当时引起了恐慌）</p>
-<p>GHash主动降低总算力，以免动摇大家对比特币的信心</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200831215554.png"></p>
-<p>​                                                                                            2018年算力分布</p>
-<p>假设一个机构有了一半以上的算力，他不一定要把算力都集中在一个矿池里，它可以把算力分不到不同的矿池里，平时是隐藏的，真正需要发动攻击的时候就结合起来。</p>
-<p>矿工转换矿池是很容易的，所以这就是矿池带来的一个危害，如果没有矿池要发动51攻击的话，攻击者要投入大量的硬件成本来购买到足够的矿机，能够达到系统中半数以上的算力。</p>
-<p>一般来说，pool manager也要收取一部分的出块奖励作为管理费，有的有恶意的矿池在发动攻击前，故意把矿池的管理费降得特别低，甚至是赔本，吸引到足够多的矿工之后，就可以发动攻击了。</p>
-<hr>
-<p>假设有矿池达到了51%的算力，他具体能发动什么攻击呢？</p>
-<blockquote>
-<p>分叉攻击</p>
-<p>Boycott：封锁禁域。所有有关某个节点的交易，他都不包含进去，而且这个攻击也不需要等待6个确认，仗着自己的算力强，公开抵制有关某个结点的交易。</p>
-</blockquote>
-<p>攻击者的矿池中事不明真相的矿工群众，因为每个矿工只是计算哈希值，他并不知道网上有什么样的交易，发布了什么区块，并不知道double spending的存在。</p>
-<p>另外，不要把51%的阈值，当成一个门槛，这个其实都是概率，而且，每个矿池所占的算力比重，本身也是一种估计而已，而且实时变化</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大型矿池的出现，有一定的好处：给矿工减轻了负担，收入分配也更加稳定。</p>
-<p>也有一定的危害：发动51攻击更容易了 <code>on demand mining</code></p>
+<p>有人发布软件更新，规定coinBase域要这样写，这样是硬分叉还是软分叉？软分叉，因为新节点发布的区块，旧结点认为是合法的，因为旧结点不管你coinBase什么内容，都认为是合法的，但是旧结点发布的区块，新节点可能是不认的。</p>
+<p>比特币历史上，一个比较著名的软分叉的例子，是P2SH（Pay to Script Hash），这个在最初的比特币版本里是没有的，是后来通过软分叉加进去的：</p>
+<p>你支付的时候，不是付给一个Public Key的哈希，而是付给一个赎回脚本的哈希，这是新节点要做的；而对于旧结点，他不理解P2SH的特性，他只会做第一阶段的验证，所以，旧结点认为合法的交易，新节点可能认为是非法的</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>soft fork：只要系统中有半数以上的结点更新了软件，就不会出现永久的分叉，可能会出现临时的分叉。</p>
+<p>hard fork：必须是所有的节点都要更新软件，系统才不会出现永久性的分叉，如果有小部分节点不愿意更新，那么这个系统就会分成两条链。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1251,39 +1071,40 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC六---挖矿难度</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
-    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
-<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
+    <title>区块链---总结</title>
+    <url>/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>​    社会上对区块链的争议是非常大的，有很多对区块链的质疑也是有道理的，其中一个原因是区块链的概念被滥用了，有些人把什么问题都往区块链上放，无论是效率上的问题，还是监管上的问题，好像区块链是解决问题的法宝，有什么问题放在区块链里好像都能解决一样，这个是不对的。</p>
 <a id="more"></a>
 
-<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
-<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
-<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
-<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
-<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
-<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
-<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
-<p>调整的公式：</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
-<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
-<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
-<p><code>比特币系统中总算力的变化情况</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
-<p><code>算力难度的增长情况</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
-<p>符合难度调整的设计目标</p>
-<p><code>难度调整曲线</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
-<p>说明挖矿的人越来越多，设备越来越先进</p>
-<p><code>每天的出块时间</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
-<p><code>最近半年的出块事件</code></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
+<p>​    国外有人提出把保险理赔业务放在区块链上，原因是现有的保险理赔过程非常慢，可能需要几个星期，甚至更长的时间，所以他们觉得放在区块链上之后（因为区块链的转账速度，比如说比特币要等6个确认区块，也就是一个小时的时间就可以完成），这比保险理赔（几个星期）的速度要快得多。这个应用场景有什么问题？</p>
+<blockquote>
+<p>保险理赔的速度慢，并不是支付技术本身的局限性，只要你决定了理赔的金额，就用普通的银行转账很快地可以转到对方的账上，那么它为什么会慢？主要是因为理赔的内容需要人工审核，你说需要理赔，汽车保险也好，还是说健康保险，很多时候都要人工审核这就是为什么它比较慢，而在这一方面，区块链并没有什么好的优势。也就是说支付技术本身不是瓶颈。</p>
+</blockquote>
+<p>​    还有一些人提出用区块链做防伪溯源的，比如有人提出把有机蔬菜生产的全过程放在区块链上（这个蔬菜从哪里生产的放在区块链上），采摘之后运输的每个环节也都放在区块链上，到最后销售的时候，到哪个市场销售的，也放在区块链上，他们的观点是：因为区块链是不可修改的，在区块链上可以查到这个有机蔬菜生产销售的全过程，所以这是一个很好的应用场景，这个应用场景由什么问题？</p>
+<blockquote>
+<p>应用场景本身没有任何的问题，但是并不是说你用区块链把整个过程记录下来，就能保证你买到的蔬菜真正是有机的？这个是不一定的，如果这块地施过化肥的，或者是蔬菜本身是撒了农药的，但是被当作有机蔬菜记录在区块链里，那么区块链技术本身是检测不出来的。同样的在运输销售过程中，被人掉包了，把某些不是有机的蔬菜当作有机蔬菜拿上去卖，这个也不是区块链能够检测出来的。区块链的不可篡改性只是内容写在区块链之后，是没有办法篡改的，但是你本身写的是假的内容，那么这个是没有办法检测出来的。</p>
+</blockquote>
+<p>​    还有一些区块链的争议是跟信任机制相关的，区块链的一个共识机制它的目的是要在互不信任的实体之间，建立共识，那么有些人认为这本来就是一个伪命题，因为互不信任的实体之间是没有办法进行交易的，比如说网上购物，假设有某个电商网站是去中心化的，你不信任它，你怎么能够在上面买东西呢？在一个中心化的世界里，信用卡有些保护措施，比如像paypal这样的机构也可以建立线上和线下的信任关系，但是在区块链上没有办法做到。这个质疑是有一定道理的，但同时中心化和去中心化的界限并不是黑白分明的，在一个成功的商业模式里面，既可以有中心化的成分，也可以有去中心化的成分，比特币只不过是一种支付方式，并不是说采用比特币作为支付方式的商业模式本身也的是去中心化的，比如说亚马逊网站，这个网站是中心化的，但是他在将来也许也可以采用比特币作为一种支付方式。所以不要因为区块链是去中心化的，就认为所有用到区块链作为支付方式的商业模式也得是去中心化的。</p>
+<p>​    区块链的不可篡改性：一个交易一旦发布到区块链上之后，是没有办法撤销的，有些人认为是有问题，比如说前面所提到的网上购物的例子。你在网上买一个东西，付款之后，对方没有给你发货，或者是发货的质量有问题，如果是用信用卡的支付方式的话，你可以找对方申诉要求退款，但是比特币转账交易写在区块链上之后就没有办法撤销了，这是有些人对区块链技术的质疑，这种说法有什么问题？</p>
+<blockquote>
+<p>我们要分清楚，所谓的退款，包括用信用卡，并不是把原来的付款交易取消掉，而是说在应用层发起一个新的交易，把原来你付的钱，还给你，比如说你用信用卡在网上买东西，支付完之后，你发现由什么问题，你要求对方退款，对方退款之后，你信用卡是有两笔交易的。用比特币支付其实也可以达到同样的效果。这个和区块链的不可篡改性实际上是没有关系的。</p>
+</blockquote>
+<p>​    还有一些质疑适合法律的监管和保护相关的，有些支付方式对用户、消费者是有一定的法律保护的，区块链目前的状态时缺乏监管的，有些人认为这是一个好事情，他们认为去中心化的一个好处就是可以不受到中心化的管理方式，但是监管本身不一定是坏事，没有法律监管同时意味着没有法律保护，出了问题没有人可以保护你，比如用信用卡支付，美国法律规定，信用卡如果被盗刷的话，只要你及时报告（2个月），你最多承受50美元的损失，剩下的损失由信用卡公司来承担。如果时储蓄卡的话，你最多承受500美元的损失。如果你用比特币支付的话，这些保护的功能就都没有了，这也是有些人反对比特币的一个原因。这里我们要注意的一点是，这些法律上的监管和保护，跟支付的技术手段其实是没有关系的。上面所说的信用卡盗刷的例子，只是在美国，不同国家不一样，甚至有些欧洲国家都没有这种保护，即使是美国，各个州的法律规定也不是完全一样的。更重要的是，比特币本来就不应该用于跟已有的支付方式进行竞争。</p>
+<p>​    既然信用卡那么好用，那为什么不用信用卡呢？加密货币应该干嘛用？应该用在已有的支付方式解决的不是很好的领域，有人说互联网是过去一个世纪以来最伟大的发明，互联网的一个重要作用使得信息传播变得非常方便，信息能够无国界的传到世界上的每一个角落，但是支付方式并没有跟上，如果你仅仅是获取信息，这个是比较容易的，网上有各种文章、论坛，但是你如果想要支付的话就会比较难。比特币被称为world wide currency是有一定道理的，因为现在的金融体系当中缺乏一种能够在全球范围内流通的电子货币，而且这个货币的支付方式要能够和信息传播的方式融合在一起，现有的体系当中，支付渠道和信息传播的渠道是分开的。</p>
+<p>​    有人说，下一代的互联网是价值交换网络（internet of value），我们现在的互联网可以认为是信息传播网络，现在问题就在于，信息传播很方便，信息的交互也比较方便，但是价值交换是不方便的（information can flow freely on the internet，but payment cannot），未来的趋势就是支付渠道和信息传播渠道将会逐渐融合，使得价值交换也会变得和信息传播一样的方便。</p>
+<p>​    还有一些质疑是和支付方式的效率相关的，有些人认为加密货币支付方式是非常低效的，无论是比特币还是以太坊，平均到每个交易上它的能耗都是很大的，比信用卡的能耗要大得多，所以有些人觉得没有什么好处。</p>
+<blockquote>
+<p>①加密货币本来就不是用于和已有的支付方式做竞争。 </p>
+<p>②随着区块链技术的发展，共识协议的不断改进，一些新的加密货币在支付效率上已经是大大提高了，原始版本的比特币，每个区块只能有1M字节，出块时间平均是10分钟，每秒钟可以支持7笔交易，现在有些新型的加密货币号称每秒钟能够支持几百万个交易，这个效率已经有了质的飞跃，其实就是以太坊和比特币相比，以太坊的支付效率也已经比比特币高很多了，这是发展的一个大的趋势。</p>
+<p>③我们评价一个支付方式效率的好坏要在当时特定的历史条件下去看，要跟当时存在的其他支付方式相比较。加密货币在某些场景下，已经是相对高效的。（跨国转账）将来随着技术的发展会有更高效的支付手段出现，这是个大趋势。</p>
+</blockquote>
+<p>​    还有一些质疑是和智能合约相关的，智能合约出现了一系列的安全漏洞之后，有些人就觉得，用智能合约由什么好处？还不如用传统的法律合同，法律合同使用自然语言书写的，老百姓还能看得懂。智能合约使用编程语言来写的，除了程序员之外其他人都看不懂，反而不利于检查安全漏洞，对于这种观点，首先程序化是一个大趋势，“software is eating the world”，也有人把它翻译成软件将会颠覆世界，任何技术，任何领域在早期都会有些问题。物理世界的取款机可以看作是一个智能合约，按照事先设定的规定操作，你把银行卡插进去，输入密码会自动把钱取出来，ATM机也会出问题。（ATM机出现了几十年，到现在还会发生故障。在ATM机刚出现的时候，发生故障的频率肯定是要高很多的）。智能合约的历史相对比较短的，所以他在早期的时候出现安全漏洞其实也不是很奇怪，很多软件都出现过各种各样的安全漏洞，随着技术的发展，将来会出现一些智能合约中的一些常用的模板。软件将会改变世界是一个大趋势，另一方面，也不要认为智能合约可以解决所有的问题，或者说以为去中心化能够解决所有的问题。</p>
+<p>​    即使The DAO不出现黑客盗币事件，The DAO的商业模式是不是就没有问题？The DAO刚刚出现众筹的时候曾经引起了一阵强大的兴奋（以前从来没有出现过如此民主的投资基金），民主一定是好事情嘛？大多数人觉得好是真的好吗？</p>
+<p>​    <img src="/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/QQ%E6%88%AA%E5%9B%BE20201208183152.png"></p>
+<p>民主制度不是一种最完美的制度，它和过去的奴隶制度、封建制度相比，它是一种历史的进步，但是民主制度也存在弊病的，包括效率上的弊病，也包括决策上的正确性这方面的问题，不要以为任何问题用民主投票的方法都可以解决。</p>
+<p>​    去中心化一定是好事情吗？这个其实是不一定的，在现实生活中的风投决定要投哪个项目要怎么进行判断？得考察这个项目，和创始人谈判，看看这个项目是否靠谱，如果这个公司已经运行了一定时间，还要去检查一下公司的财务状况、适用一下公司的产品等等，都不是简单的投票就能解决的，所以不要以为去中心化能够解决所有问题。    </p>
+<p><img src="/2020/12/06/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%8C%BA%E5%9D%97%E9%93%BE%E6%80%BB%E7%BB%93/QQ%E6%88%AA%E5%9B%BE20201208183911.png"></p>
+<p>​    不要以为所有的概念用去中心化的概念包装一下，就捧上天，去中心化的管理方式和中心化的管理方式是各有利弊的，要具体问题具体分析，像The DAO这样的基金就不应该受到热捧。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1365,67 +1186,6 @@
 <p>这样就把关联性破坏掉了。</p>
 <p>这些零币和零钞都不是主流的加密货币：这些币为了匿名性，在性能上是有一定的损失的，而且在数学原理上，对初始化，有比较严格的要求（初始的时候用的随机源要能够销毁掉，如果没有销毁掉，会有一定的安全漏洞），更重要的是，需要强匿名性的用户本来也不是很多，大多数用户觉得比特币的这种匿名性，其实也够用了。</p>
 <p>虽然零币和零钞在数学原理上，存在很强的匿名性，但是也并不是100%匿名安全的，与实体世界发生交互的时候也会有问题。</p>
-]]></content>
-      <categories>
-        <category>区块链</category>
-      </categories>
-      <tags>
-        <tag>区块链</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>BTC二---比特币中的数据结构</title>
-    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<h1 id="比特币中的数据结构"><a href="#比特币中的数据结构" class="headerlink" title="比特币中的数据结构"></a>比特币中的数据结构</h1><h2 id="1-区块链"><a href="#1-区块链" class="headerlink" title="1.区块链"></a>1.区块链</h2><p>这里要用到一个重要的概念叫做哈希指针。</p>
-<p>hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）</p>
-<p>区块链相比较于普通的链表有何区别？</p>
-<a id="more"></a>
-
-<p>①用哈希指针替代了普通的指针</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193317.png"></p>
-<p>区块链示例</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193910.png"></p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802194121.png"></p>
-<p>这样做的好处是</p>
-<p>tamper-evident log：篡改-证明 日志，当有人篡改了区块链中某一个区块的某个内容，则它的下一个区块的哈希值就对不上了，以此类推，直到最后一个保存在系统中的哈希值也对不上了，这样我们只需要记住保存在系统中的那最后一个哈希值，就可以检测出对任意区块的修改。这也是区块链和普通链表的一个区别。（多米诺骨牌效应）</p>
-<p>有了这个性质，系统中就不需要保存整条区块链的内容，比如它可以只保存最近的几千个区块，如果要用到以前的区块怎么办？</p>
-<blockquote>
-<p>可以问系统中的其他节点，去要这个区块，有些节点可能是有恶意的（去中心化系统），那么如何知道别人给你的区块是不是正确的呢？就用到哈希指针的这个性质！别人给你的最后的那个区块，算一下哈希值，如果和系统中保存的与之对应的后一个区块的哈希值对比之后相同，则正确</p>
-</blockquote>
-<h2 id="2-Merkle-tree-默克尔树"><a href="#2-Merkle-tree-默克尔树" class="headerlink" title="2.Merkle tree(默克尔树)"></a>2.Merkle tree(默克尔树)</h2><p>和binary tree（二叉树）的区别是，用哈希指针代替了普通的指针</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200344.png"></p>
-<p>和链式结构一样，“牵一发而动全身”。</p>
-<p>各个区块由哈希指针连接在一起的，每个区块所包含的交易，是组织成一个Merkle tree的形式，最底层的数据块实际上是某个交易。</p>
-<p>每个区块都是由block header和block body组成，block header 保存这个Merkle tree 的根哈希值，不保存这个区块的交易信息，而block body保存交易信息</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200930.png"></p>
-<p>Merkle tree的作用？</p>
-<p>①提供Merkle proof</p>
-<p>比特币中的结点分为两类，一类时全节点，还有一类是轻结点</p>
-<p>全节点：保存整个区块的内容，block header和block body都有</p>
-<p>轻结点：比如手机上的比特币钱包的应用就属于轻结点，只有一个block header</p>
-<p>这样就带来一个问题，如果你想向一个轻结点证明某个交易是写入到了区块链中的 ，该怎么证明？</p>
-<p>​    比如我想买你的东西，我就需要向你转钱，我对你说，我对你转钱的交易，已经写到了区块链中了，支付已经完成了，</p>
-<p>那么你怎么知道，这个交易已经被写入区块链里了呢？这里就需要用到Merkle proof</p>
-<p>一个轻结点，向某个全节点发出请求，请求一个能够证明黄色结点这个交易，被包含在这棵Merkle tree里面的Merkle proof</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802202232.png"></p>
-<p>最后算出的根哈希值，和block header中存储的root hash比较，就可以证明出tx是否在区块链中</p>
-<p>这种证明也叫做：</p>
-<p>proof of membership</p>
-<p>或</p>
-<p>proof of inclusion</p>
-<p>如果最底下有n个交易：时间复杂度为O(log(n))</p>
-<p>那么可不可以证明，区块链中没有某个交易？也就是proof of non-membership</p>
-<p>有一种比较笨的方法，就是把这一整颗Merkle tree都传给轻结点，如果hash值都正确，如果某个交易不在叶结点中，则证明了proof of non-membership，时间复杂度为O(n)，有没有比较高效的方法证明不存在？</p>
-<p>如果我们对叶结点的排列顺序不了解，那么是没有办法证明交易不在里面的</p>
-<p>如果我们对叶结点的排列顺序做一些要求：对每个交易取哈希值，按照这个哈希值从小到大排序，这个时候是有一个好的证明方法的：但是代价是需要排序</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204313.png"></p>
-<p>sorted Merkle tree：排好序的Merkle tree</p>
-<p>比特币中没有这种排好序的Merkle tree，因为比特币中根本不需要作这种不存在证明，没有硬性需求，所以比特币中的Merkle tree 不要求排序</p>
-<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>比特币中的两种数据结构：区块链和Merkle tree</p>
-<p>除了这两种数据结构，哈希指针还用在什么地方？</p>
-<p>只要这个数据结构是无环的，都可以用哈希指针来代替普通指针，有环会带来一定的问题</p>
-<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204834.png"></p>
-<p>会出现循环依赖的问题，定不下来任何一个区块，找不到创世纪块</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1527,19 +1287,48 @@
       </tags>
   </entry>
   <entry>
-    <title>BTC五---网络</title>
-    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
-    <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
+    <title>BTC十---回顾问答</title>
+    <url>/2020/09/14/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%9B%9E%E9%A1%BE%E9%97%AE%E7%AD%94/</url>
+    <content><![CDATA[<h1 id="BTC问答回顾"><a href="#BTC问答回顾" class="headerlink" title="BTC问答回顾"></a>BTC问答回顾</h1><p>1.转账交易的时候，如果接收者不在线（你转账给A，但是A那时候没有连接到比特币网络上）怎么办？</p>
+<blockquote>
+<p> 这个时候不需要接收者在线，转账交易只不过要在区块链上记录一下。</p>
+</blockquote>
+<p>2.假设某个全节点收到了一个转账交易，有没有可能转账交易中接收者的收款地址是这个结点以前从来没有听说过的？</p>
+<blockquote>
+<p>可能，比特币系统在创建账户的时候是不需要通知其他人的，在本地产生一个公私钥对就可以了，只有在以后产生的收款地址收到钱的时候，其他结点才知道这个账户的存在。</p>
+</blockquote>
 <a id="more"></a>
 
-<p>比特币网络的工作原理</p>
-<p>The BitCoin Network，比特币工作在应用层，它的底层是一个P2P Overlay Network，所有结点都是对等的，他不想有些所谓的P2P网络有所谓的超结点(Super node | master node),你要加入比特币网络，你要至少知道一个种子结点（seed node），你和这个种子节点联系，他会告诉你他所知道的网络中的其他节点，节点之间是通过tcp通信的，这样有利于穿破防火墙，你离开的时候也不需要执行其他操作（比如通知其他结点，退出应用程序即可），别的节点没有听到你的消息，过了一段时间就会把你删掉。</p>
-<p>比特币网络的设计原则是简单（simple，robust，but not efficient），每个结点维护一个邻居节点的集合，消息传播在网络中采取flooding（泛洪）的方式，结点第一次听到某个消息的时候，把他传播给所有的邻居结点，同时记录一下，这个消息我已经记录过了，下次再收到这个消息的时候，就不用转发给邻居节点了</p>
-<p>邻居结点的选取是随机的，没有考虑底层的拓扑结构，和地区没有关系，这样的好处是增强鲁棒性，没有考虑实际的拓扑结构，但是牺牲的是效率，向身边的人转账和向美国的人转账速度其实是差不多的。</p>
-<p>比特币系统中每个节点要维护一个等待上链的交易的集合。第二次听到同样的交易就不会传播给邻居结点，避免交易在网络中无限制的传播下去，转发的前提是这个交易得是合法的，这里有一个risk condition：有可能你有两个有冲突的交易，差不多同时被广播到网络上</p>
-<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/QQ%E6%88%AA%E5%9B%BE20200826201624.png"></p>
-<p>新发布的区块在网络中的传播方式和新发布的交易在网络中传播是相似的，每个结点除了要检查区块的内容之外，还要检查一下是否在最长合法链上，越是大的区块，在网络中传播的速度就越慢，比特币协议对区块大小有一个限制，1M字节的限制，1M大小的区块在区块链中的传播时间就已经达到了50秒（传播完）</p>
-<p>我们讲的比特币网络，它的传播是属于best effort，一个交易发布到网络上，不一定所有的节点都能收到，而且不同的节点收到这个交易的顺序也不一定是一样的，网络传播存在延迟，有的节点也不一定按照比特币协议的要求转发，比如有的该转发的它不转发，导致某些合法的交易收不到，有些节点也有可能转发一些不该转发的消息，比如有些不合法的交易，他也会转发，这是去中心化系统中所面临的问题</p>
+<p>3.如果你账户的私钥丢失了该怎么办？</p>
+<blockquote>
+<p>其实是没有办法的，这个账户上的钱就变成了死钱，永远取不出来，去中心化的系统大家没有办法给你重置密码。</p>
+</blockquote>
+<p>有些加密货币的交易所，一般来说，这些交易所都是中心化的机构，那么在交易所办一个账户的时候一般来说是要提供身份证明的，这种情况下，你把你的交易货币保存在交易所里，那么私钥实际上是由交易所来保管的 ，你登陆这个交易所是按照登陆银行差不多的程序（有一个账户名，一个密码），登陆的时候，一般来说还需要二次验证（google 身份验证器），如果私钥丢失是可以在交易所查到的；</p>
+<p>有些在线钱包也提供私钥保管的功能，但并不说这些机构为我们自己保管私钥更加安全，目前这些机构仍处于缺乏监管的状态，历史上出现过交易所被黑客攻击的情况，其中最著名的例子就是Mt.Gox的例子，Mt.Gox曾经是世界上最大的交易所，交易量占到了全球的交易量的70%。后来被攻击了，CEO被判刑。</p>
+<p>相比来说，冷钱包或者硬钱包更加安全。</p>
+<p>4.如果你的私钥泄漏了怎么办？（你发现你的账户上出现了一些可疑的交易）</p>
+<blockquote>
+<p>这个时候你应该把你账户上的钱，转到另一个安全账户上。（这个也和现实中银行的体验不太一样）</p>
+<p>比特币账户创建之后，公私钥对都是没有办法修改的</p>
+</blockquote>
+<p>5.如果转账的账户地址填错了怎么办？</p>
+<blockquote>
+<p>没有办法取消以前发布的交易，比特币中转账的交易一旦发布在区块链上就没有办法取消了，它没有提供这种机制取消一个已经发布的交易，如果你知道是谁的地址，可以跟他联系一下</p>
+<p>也可能转给不存在的地址（有些地址其实不是公钥的哈希得到的：digital commitment：你想证明某个时间你知道了某个知识，可能只是一个文件取了哈希）</p>
+</blockquote>
+<p>在Proof of Burn中提到的OP_RETURN后面可以写所有的去哈希的内容，上面的内容没有人管，这是推荐采用的方法，但是有的人不这么干：有人用内容取哈希之后得到的哈希值生成一个看上去像比特币地址的东西，这时候转账给这个假的地址，这样转账的钱就变成了死钱，这种做法，就是牺牲很少一点的比特币，换取往这个区块链里写入这个哈希值的一个机会。后者的做法是不提倡的，因为这样转账交易的输出会永久的保留在UTXO里，对全节点不友好</p>
+<p>6.Proof of Burn的机制是怎么执行的，不是说OP_RETURN会无条件地返回错误吗？那这个交易是怎么通过验证的？</p>
+<blockquote>
+<p>验证时候：是把当前这个交易的输入脚本和这个交易（币的来源）的输出脚本拼接，这个过程是不可以发生错误的，关键在于，OP_RETURN是写在当前交易的输出脚本里的，所以验证当前交易的合法性的时候不会执行当前语句（因为他是输出脚本），有人想花这个钱的时候，才会执行这个输出脚本，因为OP_RETURN永远都返回错误，所以永远都不可能花出去。</p>
+</blockquote>
+<p>7.会不会有的矿工偷答案？（其他矿工发布了一个nonce，这个矿工没有找到这个nonce，他收到这个区块之后，查一下这个nonce是符合要求的，然后就把他当成自己的nonce发布出去）你怎么知道哪个nonce是属于哪个矿工的？</p>
+<blockquote>
+<p>发布的区块里，会发布一个coinBase tx，里面会填一个收款地址，谁挖到了矿，就填谁，如果你要抄答案，那么你要把收款人的地址换成自己的地址，而这个地址发生变化的话，coinBase tx的内容就会发生变化，这样会导致这个Merkle tree的根哈希值发生变化，而这个nonce在块头里，根哈希值也在块头，block header的哈希值发生变化之后，原来找到的nonce就作废了。所以你不可能偷答案，因为每个矿工挖到的nonce是和自己的收款地址绑定在一起的。</p>
+</blockquote>
+<p>8.交易费可以看作是发布区块的时候给矿工的一点小费，那么你怎么知道这个交易费该给那个矿工？事先你怎么知道哪个矿工会挖到矿？</p>
+<blockquote>
+<p>事先不需要知道哪个矿工得到这个交易费，只要total inputs &gt; total ouputs，这个差值就是交易费，给谁不需要事先知道，哪个矿工挖到矿了，就可以把这些差额收集起来，作为自己的交易费。</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1549,37 +1338,70 @@
       </tags>
   </entry>
   <entry>
-    <title>ETH十二---美链</title>
-    <url>/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/</url>
-    <content><![CDATA[<h1 id="美链"><a href="#美链" class="headerlink" title="美链"></a>美链</h1><p>​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。</p>
+    <title>BTC四---实现</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="transaction-based-ledger"><a href="#transaction-based-ledger" class="headerlink" title="transaction-based ledger"></a>transaction-based ledger</h2><p>BTC(比特币):基于交易的账本模式（transaction-based ledger），每个区块记录交易信息，但是系统中没有统一的记录，比如需要知道某个账户有多少钱，这个还需要交易记录来推算</p>
+<p>比特币的全节点要维护一个UTXO的数据结构</p>
 <a id="more"></a>
 
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204203251.png"></p>
-<blockquote>
-<p>上图中的ERC是以太坊发行代币的一个标准，ERC：Ethereum Request for comments。</p>
-</blockquote>
-<p>​    以太坊上面发行着各种各样的代币，以太币的价格上涨的一个原因是因为ICO（Initial Coin offering），这些发行的代币没有自己的区块链，而是以智能合约的形式运行在以太坊的EVM平台上，发行这个代币的智能合约对应的是以太坊状态中的一个结点，这个结点有它自己的状态余额，相当于这个智能合约一共有多少个以太币，相当于这个发行代币的智能合约总的资产有多少个以太币，然后在这个合约里，每个账户上有多少个代币，这个是作为存储树中的变量存储在智能合约的账户里的，代币的发行、转账、销毁，都是通过调用智能合约中的函数来实现的，这个也是和以太坊中的以太币不太一样的地方，他不想以太坊那样，通过挖矿来维护一个底层的基础链。以太坊上每个账户有多少个以太币，这个是直接保存在状态数上的变量，然后转账的时候以太坊上两个账户之间转账，只通过发布一个交易到区块链上，这个交易会打包到发布的区块里，而代币要转账的话，是智能合约的两个账户之间通过调用智能合约的函数就可以完成。</p>
-<p>​    每个代币可以指定自己的发行规则，比如说某一个代币是可以1个以太币兑换100个代币，比如说从你的外部账户给智能合约发进去一个以太币，那么这个智能合约就可以给你在这个合约里的代币账户上发送100个代币。每个账户上有多少个代币的这些信息都是维护在存储树中（发行这个代币的智能合约的存储树里面）。</p>
-<p>​    以太坊平台的出现为各种代币的发行提供了很大的方便，包括EOS（使用DOPS协议形成的共识），这个在上线前，也是作为以太坊上的一个代币的形式发行的，这个EOS本身的目标是做成一个基础链，和以太坊要竞争的。</p>
-<p>​    batchTransfer的实现：</p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204204908.png"></p>
-<blockquote>
-<p>上图的函数有两个参数，第一个参数是接受代币的接收者的数组的地址，在函数体里，要检查一下接受者的个数要小于等于20个，第二个参数中的value是转账的金额（给每个人转多少），函数体里先算一下总的金额，每人发送value个代币，一共要amount个代币，然后检查一下发起调用的这个账户确实是有这么多代币，然后把发起调用的账户上的代币数目减去amount，之后用一个循环给每一个接收者接受value的代币。会有什么问题？这和上一个例子不是同一个问题，否则就没必要再举例了……</p>
-<p>问题出在计算总数amount上，如果value的值非常大，就是给每个receiver发送的value都很大的话，这个乘法可能溢出，发生溢出之后，amount可能是一个很小的值，所以从调用的账户上去减的时候，减的是很小的一部分代币，但是底下给每个receiver增加的代币数目仍然是value，这样做的结果相当于系统当中凭空多发行了很多的代币。</p>
-</blockquote>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210103.png"></p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210229.png"></p>
-<blockquote>
-<p>上图中红框中都是接受了很大数量的代币。</p>
-</blockquote>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210316.png"></p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210357.png"></p>
-<p>这个事情应该给我们一个什么样的反思？在写代码的时候一定要检查数值溢出的问题。</p>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210524.png"></p>
-<blockquote>
-<p>首先用a<em>b得到c，然后用c/a看能不能得到b，如果发生溢出的话，assert会抛出异常。a</em>b会不会精度丢失，c再除a得到的c是否还是ab的结果？但是这个问题在solidity里面是不存在的，因为ab都是整数。</p>
-</blockquote>
-<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210954.png"></p>
+<p>UTXO:Unspent Transaction Output,还没有被花出去的交易的输出，区块链中有很多交易，有些交易的输出可能被花掉了，有些还没有被花掉，没有被花掉的交易的输出的集合叫做UTXO</p>
+<p>UTXO中的每个元素要给出产生这个输出的交易的hash值，以及他在这个交易里是第几个输出，就可以定位到这个UTXO中的输出，那么这个UTXO集合的作用是什么？为什么要维护这样一个数据结构</p>
+<p>作用：防范double spending attack，所以全节点要在内存中维护UTXO数据结构，以便快速检测double spending attack，</p>
+<p>随着交易的发布，每个交易要消耗UTXO中的输出，同时也会产生一些新的输出</p>
+<p>每个交易所有输入的金额，要等于所有输出的金额：total inputs = total outputs</p>
+<p>发布区块的那个结点为什么要把你的交易打包在区块里？这样做对她有什么好处吗？</p>
+<p>如果只有出块奖励，那么自私的结点就只会打包他自己的交易，同时也节省带宽</p>
+<p>所以比特币系统设定了第二个激励机制：交易费（transaction fee），你把我的交易打包在区块里，我给你点小费，所以就会出现total inputs &gt;= total outputs的情况，多的比特币充当了小费</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817210059.png"></p>
+<p>目前矿工去争取记账权，主要还是为了得到出块奖励，但是因为21个区块都会减少出块奖励</p>
+<p>比特币系统中差不多10分钟会创建一个区块，计算下来差不多每四年就会减半（出块奖励）</p>
+<h2 id="区块的例子"><a href="#区块的例子" class="headerlink" title="区块的例子"></a>区块的例子</h2><p>account-based ledger</p>
+<p>以太坊就是这种模式，在这种模式总，系统显式的记录每个账户上有多少个币，比特币的隐私保护就比较好一些</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/image-20200817210819638.png"></p>
+<p>Height:是区块的序号，Difficulty：挖矿的难度（每隔2016个区块要调整这个难度，保持出块时间在10分钟左右）</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211158.png"></p>
+<p>注意：计算hash值都是计算block header的哈希值，不包含block body的哈希值</p>
+<p>所谓的挖矿，就是不断地调整随机数nonce，使得整个block header的哈希值小于等于给定的目标阈值，这个目标阈值表示成16进制就是前面有一长串的0，所以凡是符合难度要求的区块，它的块头的哈希值，算出来都是要有一长串的0</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211615.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817211913.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212243.png"></p>
+<p>每个发布的区块里都包含一个特殊的铸币交易</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817212744.png"></p>
+<p>这个对Merkle tree的根哈希值有什么影响吗</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213102.png"></p>
+<p>coinbase中的前八个字节当作extra nonce来用nonce从2^32-&gt;2^96</p>
+<p>所以真正挖矿的时候是有两层循环的，外层循环调整coinbase域的extra nonce ，算出block header中的根哈希值之后，内层循环在调整header里的nonce</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213639.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817213948.png"></p>
+<h2 id="概率分析"><a href="#概率分析" class="headerlink" title="概率分析"></a>概率分析</h2><p>每次尝试nonce可以看作是Bernoulli trial：a random experiment with binary outcome</p>
+<p>挖矿，每次尝试nonce，成功的概率是微乎其微的，大概率是不行的，如果我们做很多的Bernoulli trial，每个实验都是随机的，这些Bernoulli trial就构成了Bernoulli process：a sequence of independent Bernoulli trials，Bernoulli trial的一个性质是无记忆性：memory less，你做大量的实验，前面的结果和后面的结果是没有关系的</p>
+<p>实验很多，每次成功的概率很小，多重伯努利可以用Poisson process来近似，我们关心的是，系统中产生下一个区块的时间，这个在概率中可以推导出来出块时间是服从指数分布的exponential distribution</p>
+<p>整个系统平均的出块时间是十分钟，这个时间是比特币协议设计出来的</p>
+<p>具体到每个矿工，他能够挖到下一个区块的时间，取决于这个矿工的算力占系统算力的百分比，比如说，你的算力占到系统算力的1%，平均下来，系统里每产生一百个区块，其中有一个区块就是你挖矿挖到的，平均你要等1000分钟才能产生一个区块</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200817215856.png"></p>
+<p>这个性质有时候也叫：process free，过去的process是不算数的</p>
+<p>假设一下，如果有某个puzzle不满足process free，会出现什么情况：算力强的矿工具有不成比例的优势，因为算力强的矿工过去做的工作肯定是多的，比如有两个矿工，一个矿工的算力是另一个的十倍，那么他挖到矿的概率也是另一个的十倍，这样就满足process free，如果不满足，就会大于十倍！其实process free 恰恰是挖矿公平性的保证。</p>
+<h2 id="比特币的总量"><a href="#比特币的总量" class="headerlink" title="比特币的总量"></a>比特币的总量</h2><p>挖矿获得的出矿奖励，是比特币长生的唯一途径，然而这个值每四年就会减半，比特币的总量呈现几何趋势</p>
+<p>genmetric series</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819203300.png"></p>
+<p>挖矿对维护比特币系统的安全是至关重要的：Bitcoin is secured by mining，只要大部分算力在诚实的结点手里，系统的安全就可以得到保证。出矿奖励随着出块会减半，那么人们的动力是否会减少呢？从过去的几年来看，恰恰是相反的，比特币的价格是飙升的，如果趋于0之后，是不是就没有动力挖矿了呢？还有第二种激励机制：交易费</p>
+<p>比特币的安全性的分析，①假设大部分算力是掌握在诚实的矿工手里，我们能得到什么样的安全保证，能不能保证写入区块里的交易都是合法的？如果落在了10%的不诚实的结点手里，这个节点能不能偷币？能不能把别人账上的钱转给自己？不能，因为他无法伪造别人的签名（需要知道别人的私钥）。如果把这个交易硬写道区块链里呢？</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819204852.png"></p>
+<p>②恶意的结点能不能double spending？</p>
+<p>如果M-&gt;A存在某种不可逆的效果，那么M-&gt;M’就可以从中获得不当的利益，比如网上购物，M购买了一些商品，然后网站接受比特币支付，M把帐转给这个网站，网站监听到这个交易写入到区块链里了，以为， 支付成功了，所以把商品给了M，M拿到商品之后，又发起了一个交易M-&gt;M’把钱转给自己，然后按照下面这个区块扩展最长合法链，这样上面那个交易就作废了。</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819205358.png"></p>
+<p>如何防范double spending？类似上面这种攻击</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210210.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E5%AE%9E%E7%8E%B0/QQ%E6%88%AA%E5%9B%BE20200819210314.png"></p>
+<p>区块链是不可篡改的账本：irrevocable ledger，那是不是说凡是写入区块链的内容，永远改不了呢？根据上面的分析可知，这种不可篡改性，只是一种概率上的保证</p>
+<p>其实，还有一种zero confirmation，0个确认，这个意思是说，这个转账交易发布出去了，但是还没有被写入区块链里，商家就确认了这个交易，这种在现实生活中还是比较普遍的，</p>
+<p>原因：</p>
+<p>①比特币协议缺省的设置是：结点接收最先听到的那个交易，两个交易有冲突，最先听到哪个，接收哪个，所以发布一个M-&gt;A,最先听到这个，在zero confirmation的这个位置，诚实的结点有比较大的几率是不会接收M-&gt;M’这个交易的 </p>
+<p>②很多购物网站，从你支付成功，到他把货品发给你，是有一定的时间间隔的，如果发现M-&gt;M’这个转账交易没有在最长合法链里，电商就可以选择取消发货。</p>
+<p>假设某个有恶意的结点获得了记账权，他还能干什么坏事？</p>
+<p> 能不能不把某些合法的交易写道区块链里？这是可以的，但是会少交易费，比特币规定某个区块的大小是有限制的，最多不能超过1M字节，某个节点交易太多，这些交易就只能等到下个区块在发布</p>
+<p>selfish mining：在商家等待6个区块的时候，M-&gt;M’先不发布，在私下偷偷的挖矿，但是不发布，等挖矿创建的区块比6个区块多的时候，一下子全部发布，M-&gt;M’这条链就成了最长合法链；正常的情况是，挖到区块，立马发布，要不然就被别人抢了，所以selfish mining有一个前提，恶意的结点的算力要超过诚实的结点的算力，但是是不可能的</p>
+<p>selfish mining还有什么目的，上述是分叉攻击的目的，假设我们能不是为了回滚以前的交易，就是为了正常的挖矿，赚取出块奖励，selfish mining有没有什么好处？减少竞争：别人挖了一个，我已经挖了两个，然后直接抛出去两个,让别人做一些无用功。</p>
 ]]></content>
       <categories>
         <category>区块链</category>
@@ -1589,68 +1411,45 @@
       </tags>
   </entry>
   <entry>
-    <title>未雨绸缪的政治(基础课)</title>
-    <url>/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/</url>
-    <content><![CDATA[<h1 id="马原基础班"><a href="#马原基础班" class="headerlink" title="马原基础班"></a>马原基础班</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>有一说一，现在确实有点早，但是还是需要未雨绸缪的，毕竟现在也没有什么事，在休息之余可以多加深对政治的映像和理解，本文章因为是基础课，相当于预习，所以字数不会太多。本文仅供个人学习使用，另外，感谢YouTube的DayDayUp频道提供的免费课程！</p>
+    <title>BTC六---挖矿难度</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/</url>
+    <content><![CDATA[<h1 id="挖矿难度"><a href="#挖矿难度" class="headerlink" title="挖矿难度"></a>挖矿难度</h1><h2 id="为什么要调整挖矿难度"><a href="#为什么要调整挖矿难度" class="headerlink" title="为什么要调整挖矿难度"></a>为什么要调整挖矿难度</h2><p>调整挖矿难度，就是调整目标空间在整个输出空间中所占的比例</p>
+<p>比特币的哈希算法是SHA-256，256位的哈希值，所以输出空间位2^256个可能取值，调整目标空间占输出空间的比例，通俗的说，就是这个哈希值前面要多少个零，合法的哈希，算出来，前面至少要有70个零，但是严格的话还是按照定义来计算哈希值。</p>
 <a id="more"></a>
 
-<h2 id="马克思主义基本原理概论1"><a href="#马克思主义基本原理概论1" class="headerlink" title="马克思主义基本原理概论1"></a>马克思主义基本原理概论1</h2><p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/%E5%9F%BA%E6%9C%AC%E6%A1%86%E6%9E%B6.png"></p>
-<p>①考点：谁分的马原的框架（3部分）：恩格斯——《反杜林论》</p>
-<p>②整个马原三部分的关系是什么？哲学是方法，政经是主体、科社是目的和归宿；马克思想研究什么？他想研究的是资本主义《资本论》，用哲学的方法来研究政经，科社是结论，资本主义必将灭亡，社会主义必将胜利。</p>
-<h2 id="马克思主义基本原理概论2"><a href="#马克思主义基本原理概论2" class="headerlink" title="马克思主义基本原理概论2"></a>马克思主义基本原理概论2</h2><p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210215230849.png"></p>
-<p><strong>一、什么是马哲？</strong></p>
-<p><strong>1.什么是世界观？</strong>世界观是我们对这个世界的整体看法和总体观点，这里面既包括我们对世界万事万物的看法，也包括我们对自己人生的看法，还包括我们对亲情友情各种人际关系的看法，每个成年人都会有自己的世界观，只要不践踏道德和法律的底线，没什么对错。</p>
-<p><strong>什么是方法论？</strong>和世界观对应，如果世界观是我们对这个世界的看法，那么方法论就是有了看法之后我们之后怎么做，就是依据看法去怎么做的问题。</p>
-<p><strong>2.什么叫哲学？</strong>哲学被世界观和方法论包括。每个人都会有世界观，但并不是每个人都会有自己的哲学，因为哲学是<strong>系统化、理论化</strong>的世界观和方法论（普通人和哲学家的区别）。世界观的摇摆不定有时候会给我们带来痛苦。</p>
-<p><strong>3.什么是马克思主义哲学？</strong>马克思主义学派是所有哲学学派当中唯一<strong>正确、科学的</strong>那一派。在考研政治范围内，我们信奉“废黜百家，独尊‘马’术”。</p>
-<p><u>总结：马克思主义哲学是系统化的、理论化的、科学的世界观和方法论。</u></p>
-<hr>
-<h3 id="唯物论"><a href="#唯物论" class="headerlink" title="唯物论"></a>唯物论</h3><p><strong>1.世界的本原是什么？</strong></p>
-<p>有各种观点：</p>
-<p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210215232651.png"></p>
-<p><u>马克思主义认为，世界的本原是一切<strong>客观实在</strong>：不以人的意志为转移，即物质。</u></p>
-<p><strong>2.物质如何起决定性作用？</strong></p>
-<p><u>物质派生出了意识，人的想法都是由物质派生出来的，而不是由人自行产生的。</u></p>
-<p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210215233209.png"></p>
-<p><em>我们的头脑和我们的心只是一面镜子吗？</em></p>
-<h2 id="马克思主义基本原理概述3"><a href="#马克思主义基本原理概述3" class="headerlink" title="马克思主义基本原理概述3"></a>马克思主义基本原理概述3</h2><h3 id="辨证法"><a href="#辨证法" class="headerlink" title="辨证法"></a>辨证法</h3><p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210219114417.png"></p>
-<p>在唯物论的基础之上，进一步探讨这个<strong>物质世界是怎样存在</strong>的问题。（辩证法的两大总特征）</p>
-<blockquote>
-<p>①<strong>普遍联系的</strong></p>
-<p>②<strong>永恒发展的</strong></p>
-</blockquote>
-<p><em>世界是怎么样联系的？</em></p>
-<blockquote>
-<p>事物是一对一对发生联系的，万事万物都在一张联系网里面，取其中的一对，就是未来要学习到的<strong>矛盾</strong>的概念，故世界是由一对一对矛盾相互交织在一起形成的一个矛盾的普遍联系的世界。</p>
-</blockquote>
-<p>Ⅰ.事物为什么会发展？Ⅱ.怎样发展？Ⅲ.往哪里去发展？（辩证法的三大规律）</p>
-<blockquote>
-<p>Ⅰ.对立统一：举个例子，你和你女朋友如何发展的，就是通过开始的相互吸引在一起（统一），之后会有各种各样的矛盾（对立），正是在化解矛盾和相互吸引的过程中，关系才会进一步发展。</p>
-<p>Ⅱ.量变质变：不断实现量的积累，最后实现质的突破，突破了之后在进行量的积累，然后又变成质的突破，不断向前发展的过程和状态。</p>
-<p>Ⅲ.否定之否定：比如说一颗种子，他想要发展，首先需要否定自己（是使自己不再成为自己），进入自己的对立面：开始生根发芽，开花结果，变成了一朵花，或者是果实，果实最后会枯萎，最后又变成了种子。只有从自己变成不是自己，做第一次否定，然后再变回自己，做第二次否定，这才算是完成了发展的一个完整的周期，所以万事万物往自己去发展，但是不是简单的回到了自己（种子最后可以收获一堆种子），所以朝一个更加完美的自己去发展，所有事物都是如此。</p>
-</blockquote>
-<h3 id="认识论"><a href="#认识论" class="headerlink" title="认识论"></a>认识论</h3><p><em>认识的本质是什么？</em></p>
-<blockquote>
-<p>前面所说，我们的人脑相当于一面镜子，只是一面镜子吗？不止是，因为他在映射、反映的过程当中会发挥<strong>能动性</strong>：人脑和人心会发生能动性作用，使得外部世界的东西一旦进入到脑子里面，马上会对其加工，变得和外部世界不太一样了。</p>
-<p>结论：<u>认识论的本质是对外部世界的能动反映。</u></p>
-</blockquote>
-<p>认识的过程是怎样的？</p>
-<blockquote>
-<p>实践决定认识，实践是认识的来源</p>
-<p><img src="/2021/02/16/%E8%80%83%E7%A0%94/%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%E7%9A%84%E6%94%BF%E6%B2%BB(%E5%9F%BA%E7%A1%80%E8%AF%BE)/QQ%E6%88%AA%E5%9B%BE20210219121834.png"></p>
-<p>人类的认知要经过两次飞跃：第一次从浅往深去飞跃，第二次飞跃是我获得了深刻的理性认知，然后要回过头来知道理论实践。</p>
-</blockquote>
-<p>认知的结果由什么特点？</p>
-<blockquote>
-<p><strong>真理</strong>(重点)：认识对了，真理又可分为绝对性和相对性。任何一个真理，既是绝对的，又是相对的（关键看角度），一个真理，我从它对的角度来看，他就是绝对的；从它虽然现在对，但是未来有可能被推翻的角度看，又是相对的了。</p>
-<p><strong>谬误</strong>：认识错了</p>
-</blockquote>
+<p>另外一种概念：挖矿难度，挖矿难度和目标阈值成反比</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826214434.png"></p>
+<p>挖矿难度最小就是1，所以这时候target很大，那我们为什么要调整挖矿难度呢？如果不调，会有什么问题：系统中的总算力越来愈强，挖矿难度不变的话，出块时间就会越来越短，一开始没什么人，按照设计是十分钟出一个区块，后来一分钟就可以出一个区块，再到后来，用的设备越来越先进，不到一秒。</p>
+<p>这么快不好吗？我每出现一个交易就可以及时的写入区块里，减少了系统的响应时间，这不是好事吗？其实不是件好事，这样会有什么问题吗？</p>
+<p>如果两个结点同时发布了一个区块，那么这个时候可能会出现分叉，分叉就成了常态，可能不仅仅是二分叉，分叉如果过多，对于系统达成共识，是没有好处的，也危害到系统的安全性，比特币系统是假设，大部分算力都掌握在诚实的结点手里，系统当中的总算力越强，安全性就越好（发动51% attack的算力要求就更大）</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200826220208.png"></p>
+<p>这个时候，可能10%的算力就可以发动攻击了，所以出块时间，不是越短越好。比特币系统中设计的10分钟的出块原则是不是最优的呢？这个不一定，这个只是说，出块时间要有一个常熟的波动范围，不能无限的减少下去，这个对于支付系统来说，其实还是比较长了。</p>
+<p>以太坊就将出块时间降低到了15秒，这样以太坊就要设计一个新的共识协议：ghost，这个之后会提到，以太坊同样也会调整挖矿难度，是出块时间保持稳定；所以，出块时间没有规定多长，但是不管多长，都要保持稳定，而不能无限地减少下去 </p>
+<h2 id="如何调整挖矿难度"><a href="#如何调整挖矿难度" class="headerlink" title="如何调整挖矿难度"></a>如何调整挖矿难度</h2><p>比特币中规定了，每隔2016个区块要重新调整目标阈值，大概是每两个星期调整一下</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828203802.png"></p>
+<p>调整的公式：</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828204035.png"></p>
+<p>实际的代码中，上调和下调实际上都是有4倍的限制的，最多增大，下调4倍</p>
+<p>那么如何让所有的矿工，都调整目标阈值呢？怎么能让大家都听话？如果恶意的区块不调整target，那么诚实的结点不会认可：检查的内容包括nBits（target的编码版本）域</p>
+<p><code>比特币系统中总算力的变化情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205244.png"></p>
+<p><code>算力难度的增长情况</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205539.png"></p>
+<p>符合难度调整的设计目标</p>
+<p><code>难度调整曲线</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205648.png"></p>
+<p>说明挖矿的人越来越多，设备越来越先进</p>
+<p><code>每天的出块时间</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205804.png"></p>
+<p><code>最近半年的出块事件</code></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828205845.png"></p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF%E9%9A%BE%E5%BA%A6/QQ%E6%88%AA%E5%9B%BE20200828210138.png"></p>
 ]]></content>
       <categories>
-        <category>考研</category>
+        <category>区块链</category>
       </categories>
       <tags>
-        <tag>政治</tag>
+        <tag>区块链</tag>
       </tags>
   </entry>
   <entry>
@@ -1712,6 +1511,207 @@
 <p>在生成比特币账户的公私钥的时候，假设前提是我们有一个好的随机源，如果随机源不好，那么这个时候还是有可能两个人的公私钥是相同的，其实不仅是生成账户的时候，在签名的时候也需要有好的随机源！</p>
 <h1 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h1><p>  密码学中，两个功能，一个是哈希，一个是签名，这两个功能是可以结合起来使用的；</p>
 <p>比特币系统中，一般是先对一个message取一个哈希，然后再对这个哈希值签名。</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC七---挖矿</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/</url>
+    <content><![CDATA[<h1 id="挖矿"><a href="#挖矿" class="headerlink" title="挖矿"></a>挖矿</h1><h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210256.png"></p>
+<a id="more"></a>
+
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200828210616.png"></p>
+<p>比特币网络中大部分节点是轻结点，如果只需要转账，不需要挖矿的话，没必要运行一个全节点。</p>
+<p>在挖矿过程中，如果你监听到别人发布了一个区块，这个区块是合法的，也是在延伸最长合法连，这个时候你应该停止已有的挖矿，然后重新在本地组装一个侯选区块，重新挖矿，因为你要沿着这个新发布的区块向下挖的话，那么你本地所组装的这个区块中，包含的交易就会发生变化，有些交易可能已经包含到已经被发布的这个区块里了，block header的内容也会发生变化，Merkle tree的根哈希值，以及指向前一个区块的指针，这样做是不是有些可惜？</p>
+<p>其实是不可惜的，因为前面我们提到一个挖矿的性质：无记忆性memory less（process free），所以你是坚持挖原来的区块，还是改成挖一个新组装的区块，成功的机率是一样的。</p>
+<p>即时挖到了合法的区块，发布到区块链上，也不是说就是胜利了，有可能你发布的这个区块，最终没有成为最长合法链，</p>
+<p>可能存在一些risk condition，别人同时发布了一个合法的区块，或者是存在一些你不知道的double spending，使得你这个区块中某些交易最后是有冲突的。</p>
+<p>比特币是怎么保证安全性的？两方面</p>
+<p>一方面：密码学上的保证：别人没有你的私钥，就不能伪造你的签名，这个的前提是，系统中拥有大多数算力的矿工是好的，是遵守协议的；</p>
+<p>另一方面：共识机制。</p>
+<h2 id="挖矿相关"><a href="#挖矿相关" class="headerlink" title="挖矿相关"></a>挖矿相关</h2><p>挖矿的设备：越来越趋向于专业化，最早的时候大家都是用普通的cpu去挖矿。</p>
+<p>如果现在，你专门买一台计算机用来挖矿，其实是不划算的，因为计算机中的大部分内存都是闲置的，挖矿只用到其中很小一部分内存，cpu中的大部分部件也是闲置的，因为挖矿的操作只用到了通用cpu中的很少的一部分指令，硬盘和其他很多资源也用不到。</p>
+<p>第二代：GPU–&gt;比cpu挖矿的效率高得多，GPU用于大规模的并行计算（像深度学习就用到了GPU，其中有很多矩阵的乘法），但是GPU用来挖矿，其实还是有点浪费的，里面有很多部件仍然处于闲置状态，比如用于浮点数计算的部件（比特币的挖矿只用到了整数计算）</p>
+<blockquote>
+<p>最近几年，GPU价格上涨的很快，有些人把它归于深度学习的火热，其实有很多GPU是用来挖矿的，不过有个好消息，现在比特币挖矿难度的提升，用GPU挖矿已经划不来了，所以都不竞争去买GPU用于挖矿了。</p>
+</blockquote>
+<p>现在用什么挖矿？用ASIC（Application Specific Integrated Circuit）芯片，它上面没有多余的电路逻辑，整个芯片就是为了比特币挖矿计算哈希值的操作而设计的，性价比最高，而且，为某一种加密货币设计的ASIC芯片，只能用来挖这一种加密货币，除非这两个加密货币使用同一个mining puzzle，有些加密货币新发行的时候，为了解决能源启动问题，他故意用一个已有的加密货币的mining puzzle，可以吸引更多的人来挖矿，这样的mining puzzle叫做merge mining。</p>
+<p>ASIC芯片的研发周期是很长的，比特币的ASIC的芯片需要使用一年的时间，已经算是很快了，创造了ASIC芯片史上的奇迹，在这么长的时间里面，如果比特币的价格发生了很大的变化的话，前期投入的研发费用有可能就打水漂了。</p>
+<p>即时在比特币发展的黄金时期，比特币价格上涨，挖矿是有利可图的，但是竞争也是越来越激烈的，定制的ASIC芯片可能用不了几个月就过时了，相当于一个军备竞赛。</p>
+<blockquote>
+<p>有研究表明，大部分的ASIC矿机，利润是在他上市的前两个月获得的，这个时候的算力在同类产品中最强，所以购买ASIC矿机的时机很重要，现在一般都是提前预定，如果不能及时发货，对矿工就有损利益，有些不良厂商，生产出了矿机，不立即发售，而是自己先用他挖矿</p>
+</blockquote>
+<p>有些新的加密货币设计的是Alternative mining puzzle 设计的初衷是：ASIC resistance（能够抗ASIC芯片化，目的是为了让通用的计算机也能参与挖矿）</p>
+<p>挖矿的另一个趋势是：大量矿池的出现，单个矿工，即使用了ASIC芯片，挖矿从平均收益上看，是有利可图的，但是收入是十分不稳定的：比特币的平均出块时间是10分钟，但是这是总的矿工的平均，从单个矿工来看，可能他要挖一两年才出一个区块，就有点买彩票的意味了；单矿工还要面临一个困难：他除了挖矿之外，还要承担全节点的责任。</p>
+<hr>
+<p>矿池：就是把矿工组织起来，作为一个整体，矿池的架构是：一个全节点，会驱动很多的矿机</p>
+<p><code>miner</code>只负责计算哈希值，<code>pool manager</code>承担全节点的其他职责，<code>pool manager</code>负责监听网上的交易，把这些交易组织打包成一个候选区块，同时看有没有其他的节点抢先发布区块。</p>
+<p>矿池还能解决矿工收入不稳定的问题，有了收入，一起分配。分配的问题：如果矿机和矿池是分布式的（不在同一个机构），矿工和矿主不在同一个地方，矿工要加入一个矿池，就是按照这个矿池规定的通信协议，跟矿主练习，矿主把要计算的哈希值的任务分配给他，矿工计算完之后，把结果返回，有出矿奖励大家一起分配，如何分配？</p>
+<blockquote>
+<p>平均分配？明显的问题是吃“大锅饭”，干好干坏一个样；因此要按照每个矿工的贡献大小进行分配：这个地方同时需要工作量证明，如何证明？</p>
+<p>矿工的收入不稳定是因为挖矿太难了，如果降低难度，收入就能稳定，怎么降低难度？原来的要求，找到nonce，匹配target，和block header算哈希前面至少70个零，现在降低难度，前面只要有60个零就行，这样挖到的叫做一个</p>
+<p><code>share</code>：<code>almost valid block</code>,矿工挖到这样一个share之后，把他提交给矿主。</p>
+<p>矿主拿到share有什么用？这个除了证明矿工的工作量之外，没有其他的用处，不可能发不出去，因为这个区块不是合法的，所以矿主就记录每个矿工提交了多少个share，将来等到某个矿工真的挖到了某个区块之后，再把这个出块奖励，按照每个矿工提交的share的数目分配。</p>
+</blockquote>
+<p>每个矿工挖到矿的概率取决于他尝试的nonce的数目，尝试的nonce越多，share就越多，所以可以把share作为工作量的衡量。</p>
+<p>有没有可能矿工挖到了区块之后，不把他提交给矿主，自己独享？</p>
+<blockquote>
+<p>每个矿工的任务是由矿主来决定的，矿主负责组装好区块，然后让矿工尝试nonce，而且，光是调整nonce是不够的，还要调整coinBase parameter，所以矿主可能就是把不同的coinbase parameter对应的nonce的范围交给不同的矿工去尝试，那么这个区块里面包含了什么？</p>
+<p>coinbase transaction里面有个收款人的地址，这个地址填的是矿主的地主，如果矿工不提交给矿主，他是收不到钱的。</p>
+</blockquote>
+<p>他不可能偷出块奖励，但是她有没有可能捣乱？（平时挖到一个share，作为工作量证明，但是等他真正挖到一个合法的区块的之后，他把它扔掉）</p>
+<blockquote>
+<p>但是这样做对他来说并没有什么经济上的好处，矿池之间是存在竞争关系的，有可能为了打击竞争对手，故意派一些矿工到对手的矿池里挖矿，“卧底”！</p>
+</blockquote>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200831215109.png"></p>
+<p>​                                                                                    矿池在各个国家的分配比例</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200831215228.png"></p>
+<p>​                                                            2014年 GHash.IO矿池总算力占到了全球的51%以上</p>
+<p>已经可以发动51攻击了！（当时引起了恐慌）</p>
+<p>GHash主动降低总算力，以免动摇大家对比特币的信心</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%8C%96%E7%9F%BF/QQ%E6%88%AA%E5%9B%BE20200831215554.png"></p>
+<p>​                                                                                            2018年算力分布</p>
+<p>假设一个机构有了一半以上的算力，他不一定要把算力都集中在一个矿池里，它可以把算力分不到不同的矿池里，平时是隐藏的，真正需要发动攻击的时候就结合起来。</p>
+<p>矿工转换矿池是很容易的，所以这就是矿池带来的一个危害，如果没有矿池要发动51攻击的话，攻击者要投入大量的硬件成本来购买到足够的矿机，能够达到系统中半数以上的算力。</p>
+<p>一般来说，pool manager也要收取一部分的出块奖励作为管理费，有的有恶意的矿池在发动攻击前，故意把矿池的管理费降得特别低，甚至是赔本，吸引到足够多的矿工之后，就可以发动攻击了。</p>
+<hr>
+<p>假设有矿池达到了51%的算力，他具体能发动什么攻击呢？</p>
+<blockquote>
+<p>分叉攻击</p>
+<p>Boycott：封锁禁域。所有有关某个节点的交易，他都不包含进去，而且这个攻击也不需要等待6个确认，仗着自己的算力强，公开抵制有关某个结点的交易。</p>
+</blockquote>
+<p>攻击者的矿池中事不明真相的矿工群众，因为每个矿工只是计算哈希值，他并不知道网上有什么样的交易，发布了什么区块，并不知道double spending的存在。</p>
+<p>另外，不要把51%的阈值，当成一个门槛，这个其实都是概率，而且，每个矿池所占的算力比重，本身也是一种估计而已，而且实时变化</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>大型矿池的出现，有一定的好处：给矿工减轻了负担，收入分配也更加稳定。</p>
+<p>也有一定的危害：发动51攻击更容易了 <code>on demand mining</code></p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC五---网络</title>
+    <url>/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/</url>
+    <content><![CDATA[<h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>新发布的区块，新发布的交易，再区块链中是怎么传播的？</p>
+<a id="more"></a>
+
+<p>比特币网络的工作原理</p>
+<p>The BitCoin Network，比特币工作在应用层，它的底层是一个P2P Overlay Network，所有结点都是对等的，他不想有些所谓的P2P网络有所谓的超结点(Super node | master node),你要加入比特币网络，你要至少知道一个种子结点（seed node），你和这个种子节点联系，他会告诉你他所知道的网络中的其他节点，节点之间是通过tcp通信的，这样有利于穿破防火墙，你离开的时候也不需要执行其他操作（比如通知其他结点，退出应用程序即可），别的节点没有听到你的消息，过了一段时间就会把你删掉。</p>
+<p>比特币网络的设计原则是简单（simple，robust，but not efficient），每个结点维护一个邻居节点的集合，消息传播在网络中采取flooding（泛洪）的方式，结点第一次听到某个消息的时候，把他传播给所有的邻居结点，同时记录一下，这个消息我已经记录过了，下次再收到这个消息的时候，就不用转发给邻居节点了</p>
+<p>邻居结点的选取是随机的，没有考虑底层的拓扑结构，和地区没有关系，这样的好处是增强鲁棒性，没有考虑实际的拓扑结构，但是牺牲的是效率，向身边的人转账和向美国的人转账速度其实是差不多的。</p>
+<p>比特币系统中每个节点要维护一个等待上链的交易的集合。第二次听到同样的交易就不会传播给邻居结点，避免交易在网络中无限制的传播下去，转发的前提是这个交易得是合法的，这里有一个risk condition：有可能你有两个有冲突的交易，差不多同时被广播到网络上</p>
+<p><img src="/2020/08/30/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BD%91%E7%BB%9C/QQ%E6%88%AA%E5%9B%BE20200826201624.png"></p>
+<p>新发布的区块在网络中的传播方式和新发布的交易在网络中传播是相似的，每个结点除了要检查区块的内容之外，还要检查一下是否在最长合法链上，越是大的区块，在网络中传播的速度就越慢，比特币协议对区块大小有一个限制，1M字节的限制，1M大小的区块在区块链中的传播时间就已经达到了50秒（传播完）</p>
+<p>我们讲的比特币网络，它的传播是属于best effort，一个交易发布到网络上，不一定所有的节点都能收到，而且不同的节点收到这个交易的顺序也不一定是一样的，网络传播存在延迟，有的节点也不一定按照比特币协议的要求转发，比如有的该转发的它不转发，导致某些合法的交易收不到，有些节点也有可能转发一些不该转发的消息，比如有些不合法的交易，他也会转发，这是去中心化系统中所面临的问题</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BTC二---比特币中的数据结构</title>
+    <url>/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</url>
+    <content><![CDATA[<h1 id="比特币中的数据结构"><a href="#比特币中的数据结构" class="headerlink" title="比特币中的数据结构"></a>比特币中的数据结构</h1><h2 id="1-区块链"><a href="#1-区块链" class="headerlink" title="1.区块链"></a>1.区块链</h2><p>这里要用到一个重要的概念叫做哈希指针。</p>
+<p>hash pointers，哈希指针，除了要保存这个结构体的地址之外，还要保存这个结构的的哈希值（不仅可以知道这个结构体在内存中的位置，还可以知道这个结构体的内容有没有被篡改）</p>
+<p>区块链相比较于普通的链表有何区别？</p>
+<a id="more"></a>
+
+<p>①用哈希指针替代了普通的指针</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193317.png"></p>
+<p>区块链示例</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802193910.png"></p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802194121.png"></p>
+<p>这样做的好处是</p>
+<p>tamper-evident log：篡改-证明 日志，当有人篡改了区块链中某一个区块的某个内容，则它的下一个区块的哈希值就对不上了，以此类推，直到最后一个保存在系统中的哈希值也对不上了，这样我们只需要记住保存在系统中的那最后一个哈希值，就可以检测出对任意区块的修改。这也是区块链和普通链表的一个区别。（多米诺骨牌效应）</p>
+<p>有了这个性质，系统中就不需要保存整条区块链的内容，比如它可以只保存最近的几千个区块，如果要用到以前的区块怎么办？</p>
+<blockquote>
+<p>可以问系统中的其他节点，去要这个区块，有些节点可能是有恶意的（去中心化系统），那么如何知道别人给你的区块是不是正确的呢？就用到哈希指针的这个性质！别人给你的最后的那个区块，算一下哈希值，如果和系统中保存的与之对应的后一个区块的哈希值对比之后相同，则正确</p>
+</blockquote>
+<h2 id="2-Merkle-tree-默克尔树"><a href="#2-Merkle-tree-默克尔树" class="headerlink" title="2.Merkle tree(默克尔树)"></a>2.Merkle tree(默克尔树)</h2><p>和binary tree（二叉树）的区别是，用哈希指针代替了普通的指针</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200344.png"></p>
+<p>和链式结构一样，“牵一发而动全身”。</p>
+<p>各个区块由哈希指针连接在一起的，每个区块所包含的交易，是组织成一个Merkle tree的形式，最底层的数据块实际上是某个交易。</p>
+<p>每个区块都是由block header和block body组成，block header 保存这个Merkle tree 的根哈希值，不保存这个区块的交易信息，而block body保存交易信息</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802200930.png"></p>
+<p>Merkle tree的作用？</p>
+<p>①提供Merkle proof</p>
+<p>比特币中的结点分为两类，一类时全节点，还有一类是轻结点</p>
+<p>全节点：保存整个区块的内容，block header和block body都有</p>
+<p>轻结点：比如手机上的比特币钱包的应用就属于轻结点，只有一个block header</p>
+<p>这样就带来一个问题，如果你想向一个轻结点证明某个交易是写入到了区块链中的 ，该怎么证明？</p>
+<p>​    比如我想买你的东西，我就需要向你转钱，我对你说，我对你转钱的交易，已经写到了区块链中了，支付已经完成了，</p>
+<p>那么你怎么知道，这个交易已经被写入区块链里了呢？这里就需要用到Merkle proof</p>
+<p>一个轻结点，向某个全节点发出请求，请求一个能够证明黄色结点这个交易，被包含在这棵Merkle tree里面的Merkle proof</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802202232.png"></p>
+<p>最后算出的根哈希值，和block header中存储的root hash比较，就可以证明出tx是否在区块链中</p>
+<p>这种证明也叫做：</p>
+<p>proof of membership</p>
+<p>或</p>
+<p>proof of inclusion</p>
+<p>如果最底下有n个交易：时间复杂度为O(log(n))</p>
+<p>那么可不可以证明，区块链中没有某个交易？也就是proof of non-membership</p>
+<p>有一种比较笨的方法，就是把这一整颗Merkle tree都传给轻结点，如果hash值都正确，如果某个交易不在叶结点中，则证明了proof of non-membership，时间复杂度为O(n)，有没有比较高效的方法证明不存在？</p>
+<p>如果我们对叶结点的排列顺序不了解，那么是没有办法证明交易不在里面的</p>
+<p>如果我们对叶结点的排列顺序做一些要求：对每个交易取哈希值，按照这个哈希值从小到大排序，这个时候是有一个好的证明方法的：但是代价是需要排序</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204313.png"></p>
+<p>sorted Merkle tree：排好序的Merkle tree</p>
+<p>比特币中没有这种排好序的Merkle tree，因为比特币中根本不需要作这种不存在证明，没有硬性需求，所以比特币中的Merkle tree 不要求排序</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>比特币中的两种数据结构：区块链和Merkle tree</p>
+<p>除了这两种数据结构，哈希指针还用在什么地方？</p>
+<p>只要这个数据结构是无环的，都可以用哈希指针来代替普通指针，有环会带来一定的问题</p>
+<p><img src="/2020/08/29/%E5%8C%BA%E5%9D%97%E9%93%BE/%E6%AF%94%E7%89%B9%E5%B8%81%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/QQ%E6%88%AA%E5%9B%BE20200802204834.png"></p>
+<p>会出现循环依赖的问题，定不下来任何一个区块，找不到创世纪块</p>
+]]></content>
+      <categories>
+        <category>区块链</category>
+      </categories>
+      <tags>
+        <tag>区块链</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ETH十二---美链</title>
+    <url>/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/</url>
+    <content><![CDATA[<h1 id="美链"><a href="#美链" class="headerlink" title="美链"></a>美链</h1><p>​    上篇文章The DAO的例子是2016年发生的，美链这个例子是2018年四月才发生的，出问题的智能合约叫做美链—Beauty Chain。</p>
+<a id="more"></a>
+
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204203251.png"></p>
+<blockquote>
+<p>上图中的ERC是以太坊发行代币的一个标准，ERC：Ethereum Request for comments。</p>
+</blockquote>
+<p>​    以太坊上面发行着各种各样的代币，以太币的价格上涨的一个原因是因为ICO（Initial Coin offering），这些发行的代币没有自己的区块链，而是以智能合约的形式运行在以太坊的EVM平台上，发行这个代币的智能合约对应的是以太坊状态中的一个结点，这个结点有它自己的状态余额，相当于这个智能合约一共有多少个以太币，相当于这个发行代币的智能合约总的资产有多少个以太币，然后在这个合约里，每个账户上有多少个代币，这个是作为存储树中的变量存储在智能合约的账户里的，代币的发行、转账、销毁，都是通过调用智能合约中的函数来实现的，这个也是和以太坊中的以太币不太一样的地方，他不想以太坊那样，通过挖矿来维护一个底层的基础链。以太坊上每个账户有多少个以太币，这个是直接保存在状态数上的变量，然后转账的时候以太坊上两个账户之间转账，只通过发布一个交易到区块链上，这个交易会打包到发布的区块里，而代币要转账的话，是智能合约的两个账户之间通过调用智能合约的函数就可以完成。</p>
+<p>​    每个代币可以指定自己的发行规则，比如说某一个代币是可以1个以太币兑换100个代币，比如说从你的外部账户给智能合约发进去一个以太币，那么这个智能合约就可以给你在这个合约里的代币账户上发送100个代币。每个账户上有多少个代币的这些信息都是维护在存储树中（发行这个代币的智能合约的存储树里面）。</p>
+<p>​    以太坊平台的出现为各种代币的发行提供了很大的方便，包括EOS（使用DOPS协议形成的共识），这个在上线前，也是作为以太坊上的一个代币的形式发行的，这个EOS本身的目标是做成一个基础链，和以太坊要竞争的。</p>
+<p>​    batchTransfer的实现：</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204204908.png"></p>
+<blockquote>
+<p>上图的函数有两个参数，第一个参数是接受代币的接收者的数组的地址，在函数体里，要检查一下接受者的个数要小于等于20个，第二个参数中的value是转账的金额（给每个人转多少），函数体里先算一下总的金额，每人发送value个代币，一共要amount个代币，然后检查一下发起调用的这个账户确实是有这么多代币，然后把发起调用的账户上的代币数目减去amount，之后用一个循环给每一个接收者接受value的代币。会有什么问题？这和上一个例子不是同一个问题，否则就没必要再举例了……</p>
+<p>问题出在计算总数amount上，如果value的值非常大，就是给每个receiver发送的value都很大的话，这个乘法可能溢出，发生溢出之后，amount可能是一个很小的值，所以从调用的账户上去减的时候，减的是很小的一部分代币，但是底下给每个receiver增加的代币数目仍然是value，这样做的结果相当于系统当中凭空多发行了很多的代币。</p>
+</blockquote>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210103.png"></p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210229.png"></p>
+<blockquote>
+<p>上图中红框中都是接受了很大数量的代币。</p>
+</blockquote>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210316.png"></p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210357.png"></p>
+<p>这个事情应该给我们一个什么样的反思？在写代码的时候一定要检查数值溢出的问题。</p>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210524.png"></p>
+<blockquote>
+<p>首先用a<em>b得到c，然后用c/a看能不能得到b，如果发生溢出的话，assert会抛出异常。a</em>b会不会精度丢失，c再除a得到的c是否还是ab的结果？但是这个问题在solidity里面是不存在的，因为ab都是整数。</p>
+</blockquote>
+<p><img src="/2020/12/04/%E5%8C%BA%E5%9D%97%E9%93%BE/%E7%BE%8E%E9%93%BE/QQ%E6%88%AA%E5%9B%BE20201204210954.png"></p>
 ]]></content>
       <categories>
         <category>区块链</category>
